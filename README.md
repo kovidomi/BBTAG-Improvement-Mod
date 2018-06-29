@@ -55,5 +55,5 @@ Your contributions are speeding up the development. Please consider donating as 
 * Everybody in the BlazBlue PC community that has given support or feedback of any kind!
 
 ## Extra thanks to:
-Atom0s for their DirectX9.0 Hooking tut<br>
+Atom0s for their DirectX9.0 Hooking article<br>
 Durante for their dsfix source
