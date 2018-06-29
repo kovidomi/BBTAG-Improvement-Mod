@@ -2,14 +2,14 @@ FEATURES
 
 //DONE// #1 windowed/borderless/fullscreen mode
 #2 pc specs and game settings info dumper (?)
-#3 allow other buttons to assign in the settings file (right now its only F1-F9)
-#4 show when astral is available on the custom hud
-#5 show when burst is disallowed on the custom hud
+#3 allow other buttons to be assigned in the settings file (right now its only F1-F9)
+#4 show astral availability on the custom hud
+#5 show burst inability on the custom hud
 //DONE// #6 make custom hud scaleable
 //DONE// #7 spawn window in the center of the screen
 //DONE// #8 hide mod window upon start
 //DONE// #9 option to keep the prompt layout blinking instead of fixing to one only
-#10 when dragging a Player1 custom hud element, mirror the Player2's to the other side of the screen
+#10 when dragging any Player1 custom hud element, mirror the position of the matching Player2 element on the other side of the screen
 #11 custom fonts for the custom hud
 #12 ingame palette editor
 #13 render the custom hud behind the characters
