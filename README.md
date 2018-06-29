@@ -34,11 +34,12 @@ Copy the compiled binary and the settings.ini file from the bin/ folder into the
 * "main.h" file contains the defines for logging
 * "containers.h" file contains global variables that are used across the entire project
 * "D3D9ExWrapper" folders contain straightforward D3D wrapping
+* "SteamApiWrapper" folder contains straightforward Steam API wrapping
+* "WindowManager" folder contains the implementation of the mod's custom windows using the ImGui library
 * "Hooks/hooks_bbtag" implements game functions overriding
 * "Hooks/hooks_importAddressTable" implements imported functions overriding using the Detours library
 * "Hooks/hooks_steamApiWrapper" implements Steam API overriding
-* "SteamApiWrapper" folder contains straightforward Steam API wrapping
-* "WindowManager" folder contains the implementation of the mod's custom windows using the ImGui library
+
 
 ## Support
 Your contributions are speeding up the development. Please consider donating as it enables me spending more time working on the mod.
