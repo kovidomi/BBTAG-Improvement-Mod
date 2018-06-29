@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{2CD295F9-FB73-47B9-A937-E44865E7C386}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>BBTAG_IM</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>bin\$(Configuration)\</OutDir>
+    <IntDir>build\$(Configuration)\</IntDir>
+    <TargetName>dinput8</TargetName>
+    <IncludePath>$(SolutionDir)\depends\detour;$(SolutionDir)\depends\imgui;$(SolutionDir)\depends\directx_sdk\Include;$(SolutionDir)\depends\steam_api\public\steam;$(SolutionDir)\depends\winhttpclient\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\depends\steam_api\redistributable_bin;$(SolutionDir)\depends\directx_sdk\Lib\x86;$(SolutionDir)\depends\detour;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)\depends\directx_sdk\Include;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\imgui;$(SolutionDir)\depends\steamworks_sdk_142\sdk\public\steam;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\depends\directx_sdk\Lib\x86;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\steamworks_sdk_142\sdk\redistributable_bin;$(LibraryPath)</LibraryPath>
+    <OutDir>bin\$(Configuration)\</OutDir>
+    <IntDir>build\$(Configuration)\</IntDir>
+    <TargetName>dinput8</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BBTAG_IM_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <SDLCheck>true</SDLCheck>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>comsuppw.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>export/dinput8.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;BBTAG_IM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BBTAG_IM_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>export/dinput8.def</ModuleDefinitionFile>
+      <AdditionalDependencies>comsuppw.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;BBTAG_IM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="export\dinput8.def" />
+    <None Include="include\settings.def" />
+    <None Include="resource\settings.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="depends\imgui\imgui.cpp" />
+    <ClCompile Include="depends\imgui\imgui_demo.cpp" />
+    <ClCompile Include="depends\imgui\imgui_draw.cpp" />
+    <ClCompile Include="depends\imgui\imgui_impl_dx9.cpp" />
+    <ClCompile Include="src\D3D9EXWrapper\D3D9Utils.cpp" />
+    <ClCompile Include="src\Hooks\HookManager.cpp" />
+    <ClCompile Include="src\Hooks\hooks_bbtag.cpp" />
+    <ClCompile Include="src\Hooks\hooks_importAddressTable.cpp" />
+    <ClCompile Include="src\Hooks\hooks_steamApiWrapper.cpp" />
+    <ClCompile Include="src\bbtag_im.cpp" />
+    <ClCompile Include="src\charobj.cpp" />
+    <ClCompile Include="src\containers.cpp" />
+    <ClCompile Include="src\crashdump.cpp" />
+    <ClCompile Include="src\D3D9EXWrapper\D3DXMath.cpp" />
+    <ClCompile Include="src\D3D9EXWrapper\ID3D9EXWrapper.cpp" />
+    <ClCompile Include="src\D3D9EXWrapper\ID3D9EXWrapper_Device.cpp" />
+    <ClCompile Include="src\D3D9EXWrapper\ID3D9Wrapper_Sprite.cpp" />
+    <ClCompile Include="src\D3D9EXWrapper\ID3DXWrapper_Effect.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\logger.cpp" />
+    <ClCompile Include="src\playermeters.cpp" />
+    <ClCompile Include="src\settings.cpp" />
+    <ClCompile Include="src\SteamApiWrapper\SteamFriendsWrapper.cpp" />
+    <ClCompile Include="src\SteamApiWrapper\SteamMatchmakingWrapper.cpp" />
+    <ClCompile Include="src\SteamApiWrapper\SteamNetworkingWrapper.cpp" />
+    <ClCompile Include="src\SteamApiWrapper\SteamUserStatsWrapper.cpp" />
+    <ClCompile Include="src\SteamApiWrapper\SteamUserWrapper.cpp" />
+    <ClCompile Include="src\SteamApiWrapper\SteamUtilsWrapper.cpp" />
+    <ClCompile Include="src\steamapi_helper.cpp" />
+    <ClCompile Include="src\update_check.cpp" />
+    <ClCompile Include="src\utils.cpp" />
+    <ClCompile Include="src\WindowManager\CustomHud.cpp" />
+    <ClCompile Include="src\WindowManager\fonts.cpp" />
+    <ClCompile Include="src\WindowManager\WindowManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="depends\imgui\imconfig.h" />
+    <ClInclude Include="depends\imgui\imgui.h" />
+    <ClInclude Include="depends\imgui\imgui_impl_dx9.h" />
+    <ClInclude Include="depends\imgui\imgui_internal.h" />
+    <ClInclude Include="depends\imgui\stb_rect_pack.h" />
+    <ClInclude Include="depends\imgui\stb_textedit.h" />
+    <ClInclude Include="depends\imgui\stb_truetype.h" />
+    <ClInclude Include="include\D3D9EXWrapper\d3d9.h" />
+    <ClInclude Include="include\D3D9EXWrapper\D3D9Utils.h" />
+    <ClInclude Include="include\bbtag_im.h" />
+    <ClInclude Include="include\charobj.h" />
+    <ClInclude Include="include\containers.h" />
+    <ClInclude Include="include\crashdump.h" />
+    <ClInclude Include="include\D3D9EXWrapper\D3DXMath.h" />
+    <ClInclude Include="include\D3D9EXWrapper\ID3D9EXWrapper.h" />
+    <ClInclude Include="include\D3D9EXWrapper\ID3D9EXWrapper_Device.h" />
+    <ClInclude Include="include\D3D9EXWrapper\ID3D9Wrapper_Sprite.h" />
+    <ClInclude Include="include\D3D9EXWrapper\ID3DXWrapper_Effect.h" />
+    <ClInclude Include="include\Hooks\HookManager.h" />
+    <ClInclude Include="include\Hooks\hooks_bbtag.h" />
+    <ClInclude Include="include\Hooks\hooks_importAddressTable.h" />
+    <ClInclude Include="include\Hooks\hooks_steamApiWrapper.h" />
+    <ClInclude Include="include\logger.h" />
+    <ClInclude Include="include\main.h" />
+    <ClInclude Include="include\playermeters.h" />
+    <ClInclude Include="include\settings.h" />
+    <ClInclude Include="include\SteamApiWrapper\SteamFriendsWrapper.h" />
+    <ClInclude Include="include\SteamApiWrapper\SteamMatchmakingWrapper.h" />
+    <ClInclude Include="include\SteamApiWrapper\SteamNetworkingWrapper.h" />
+    <ClInclude Include="include\SteamApiWrapper\SteamUserStatsWrapper.h" />
+    <ClInclude Include="include\SteamApiWrapper\SteamUserWrapper.h" />
+    <ClInclude Include="include\SteamApiWrapper\SteamUtilsWrapper.h" />
+    <ClInclude Include="include\steamapi_helper.h" />
+    <ClInclude Include="include\update_check.h" />
+    <ClInclude Include="include\utils.h" />
+    <ClInclude Include="include\WindowManager\CustomHud.h" />
+    <ClInclude Include="include\WindowManager\fonts.h" />
+    <ClInclude Include="include\WindowManager\WindowManager.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <Target Name="AfterBuild">
+    <Copy SourceFiles="$(ProjectDir)resource\settings.ini" DestinationFolder="$(ProjectDir)$(OutDir)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+  </Target>
+</Project>

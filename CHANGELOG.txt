@@ -1,0 +1,29 @@
+21-06-2018 -- version 1.03
+===============================
+- Added character specific meters to the custom HUD for Aegis, Chie, Makoto, Naoto, Platinum, Rachel, and Yukiko
+- Added CustomHUDScale option
+- Added PromptButtonLayout option that prevents the game from blinking the button prompts between PS4 and PC layouts
+- Added a tooltip to the "Reset custom HUD positions" button to avoid confusion about its purpose
+- The game's window is now always positioned to the middle of the screen when DisplayMode is set to Windowed(1) in the settings.ini
+- The mod's main window now automatically disappears within 10 seconds after the title screen
+- Fixed custom HUD HP bars not switching immediately after characters die
+- Fixed alt tabbing in fullscreen causing all custom HUD elements being thrown into the top left corner
+
+16-06-2018 -- version 1.02
+===============================
+- Added Custom HUD
+- Added ToggleCustomHUDButton option
+- Added ForceCustomHUD option
+- Added DisplayMode option
+- Added FullscreenHz option
+- Added "Reset custom HUD positions" button
+- Removed palette folders being created in BBTAG_IM folder
+
+07-06-2018 -- version 1.01
+===============================
+- Added togglable HUD option (temporary solution for performance problems during matches)
+- Fixed gamewindow getting keyboard inputs while not in focus
+
+06-06-2018 -- version 1.00
+===============================
+- Initial release
