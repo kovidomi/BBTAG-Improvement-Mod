@@ -11,7 +11,7 @@ FEATURES
 //DONE// #9 option to keep the prompt layout blinking instead of fixing to one only
 #10 when dragging any Player1 custom hud element, mirror the position of the matching Player2 element on the other side of the screen
 #11 custom fonts for the custom hud
-#12 ingame palette editor
+//DONE// #12 ingame palette editor
 #13 render the custom hud behind the characters
 #14 show player names on the custom HUD in online matches
 #15 sync the custom HUD's visibility with the real one
@@ -24,10 +24,10 @@ BUGS
 #2 Regionlock seems to be still in place
 //DONE// #3 some laptop users are unable to use the F keys
 //DONE// #4 the custom HUD elements get thrown into the top left corner after alt tabbing in fullscreen
-#5 The custom HUD is not updated while the game's window is not focused
+//DONE// #5 The custom HUD is not updated while the game's window is not focused
 #6 DisplayMode = 3 in the settings file doesnt force the game to fullscreen anymore since official v1.03 patch of the game
 //DONE// #7 The custom HUD is missing character specific meters (Rachel, Yukiko, etc).
 #8 rendersize issues between windowed and fullscreen (the window titlebar's size is not taken into consideration if the game is set to windowed displaymode in the game's settings )
 #9 mod grabbed incorrect window handle and sizes for one user. gotta look into it
-#10 unable to take steam screenshots (edit: cannot reproduce this, need more confirmation)
+// DONE // #10 unable to take steam screenshots (edit: cannot reproduce this, need more confirmation)
 #11 the background text on the stage "Duel Field" gets scaled incorrectly

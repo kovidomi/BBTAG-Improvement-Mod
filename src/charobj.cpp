@@ -1,4 +1,4 @@
-#include "../include/charobj.h"
+#include "charobj.h"
 
 char* charnames[TOTAL_CHAR_INDEXES]
 {
@@ -43,4 +43,49 @@ char* charnames[TOTAL_CHAR_INDEXES]
 	"Blake",	// 38,
 	"Yang",		// 39,
 	"Boss",		// 40
+};
+
+wchar_t* wcharnames[TOTAL_CHAR_INDEXES]
+{
+	L"Ragna",	// 0,
+	L"Jin",		// 1,
+	L"Noel",	// 2,
+	L"Rachel",	// 3,
+	L"Tager",	// 4,
+	L"Hakumen",	// 5,
+	L"Nu",		// 6,
+	L"Hazama",	// 7,
+	L"Makoto",	// 8,
+	L"Platinum", // 9,
+	L"Izayoi",	// 10,
+	L"Azrael",	// 11,
+	L"Nine",	// 12,
+	L"Es",		// 13,
+	L"Mai",		// 14,
+	L"Jubei",	// 15,
+	L"Yu",		// 16,
+	L"Yosuke",	// 17,
+	L"Chie",	// 18,
+	L"Yukiko",	// 19,
+	L"Kanji",	// 20,
+	L"Naoto",	// 21,
+	L"Mitsuru",	// 22,
+	L"Akihiko",	// 23,
+	L"Aegis",	// 24,
+	L"Labrys",	// 25,
+	L"Hyde",	// 26,
+	L"Linne",	// 27,
+	L"Waldstein",// 28,
+	L"Carmine",	// 29,
+	L"Orie",	// 30,
+	L"Gordeau",	// 31,
+	L"Merkava",	// 32,
+	L"Vatista",	// 33,
+	L"Yuzuriha",// 34,
+	L"Mika",	// 35,
+	L"Ruby",	// 36,
+	L"Weiss",	// 37,
+	L"Blake",	// 38,
+	L"Yang",	// 39,
+	L"Boss",	// 40
 };

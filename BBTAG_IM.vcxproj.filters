@@ -7,32 +7,14 @@
     <Filter Include="src">
       <UniqueIdentifier>{622d0f9a-1d95-48e1-bf42-f07e40fce4e2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include">
-      <UniqueIdentifier>{7e2da361-7307-4e2b-ad57-83c4532ab3ec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="resource">
       <UniqueIdentifier>{8724deac-d808-468f-9f39-0607600d5104}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\SteamApiWrapper">
       <UniqueIdentifier>{ec107f8a-7e00-4c72-ab8e-6eb2405e45b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\SteamApiWrapper">
-      <UniqueIdentifier>{1eedc5ff-2a24-406a-bda0-fdc83f9018b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\D3D9ExWrapper">
-      <UniqueIdentifier>{d8c23db3-c46b-437b-bd08-7be4fc21cf9e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\D3D9ExWrapper">
-      <UniqueIdentifier>{61d9aa73-5286-48a2-87b3-fd874d650113}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\WindowManager">
-      <UniqueIdentifier>{6f175f73-6860-421b-ad2c-1520770941bf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\WindowManager">
       <UniqueIdentifier>{b8bad0c3-f7c5-436e-8fad-34c5d2285fd4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\Hooks">
-      <UniqueIdentifier>{56d62b57-9387-4ef2-9fd0-a780c9a2ff12}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Hooks">
       <UniqueIdentifier>{ddd334d6-1846-4358-a268-a1b9d5aaaa6e}</UniqueIdentifier>
@@ -43,6 +25,12 @@
     <Filter Include="depends\ImGui">
       <UniqueIdentifier>{ae4e1725-3232-439d-a1e8-ef5d955d7e27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\PaletteManager">
+      <UniqueIdentifier>{02c18b71-e60a-4dac-a70d-f7d3f019a4e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\D3D9EXWrapper">
+      <UniqueIdentifier>{61d9aa73-5286-48a2-87b3-fd874d650113}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="export\dinput8.def">
@@ -51,14 +39,11 @@
     <None Include="resource\settings.ini">
       <Filter>resource</Filter>
     </None>
-    <None Include="include\settings.def">
-      <Filter>include</Filter>
+    <None Include="src\settings.def">
+      <Filter>src</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\containers.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\crashdump.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -99,19 +84,19 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\D3D9EXWrapper\D3DXMath.cpp">
-      <Filter>src\D3D9ExWrapper</Filter>
+      <Filter>src\D3D9EXWrapper</Filter>
     </ClCompile>
     <ClCompile Include="src\D3D9EXWrapper\ID3D9EXWrapper.cpp">
-      <Filter>src\D3D9ExWrapper</Filter>
+      <Filter>src\D3D9EXWrapper</Filter>
     </ClCompile>
     <ClCompile Include="src\D3D9EXWrapper\ID3D9EXWrapper_Device.cpp">
-      <Filter>src\D3D9ExWrapper</Filter>
+      <Filter>src\D3D9EXWrapper</Filter>
     </ClCompile>
     <ClCompile Include="src\D3D9EXWrapper\ID3D9Wrapper_Sprite.cpp">
-      <Filter>src\D3D9ExWrapper</Filter>
+      <Filter>src\D3D9EXWrapper</Filter>
     </ClCompile>
     <ClCompile Include="src\D3D9EXWrapper\ID3DXWrapper_Effect.cpp">
-      <Filter>src\D3D9ExWrapper</Filter>
+      <Filter>src\D3D9EXWrapper</Filter>
     </ClCompile>
     <ClCompile Include="src\charobj.cpp">
       <Filter>src</Filter>
@@ -129,7 +114,7 @@
       <Filter>src\WindowManager</Filter>
     </ClCompile>
     <ClCompile Include="src\D3D9EXWrapper\D3D9Utils.cpp">
-      <Filter>src\D3D9ExWrapper</Filter>
+      <Filter>src\D3D9EXWrapper</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
@@ -158,101 +143,20 @@
     <ClCompile Include="depends\imgui\imgui_impl_dx9.cpp">
       <Filter>depends\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\PaletteManager\CharPalInfo.cpp">
+      <Filter>src\PaletteManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\globals.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WindowManager\PaletteEditor.cpp">
+      <Filter>src\WindowManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PaletteManager\PaletteManager.cpp">
+      <Filter>src\PaletteManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\containers.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\crashdump.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\logger.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\settings.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\steamapi_helper.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\update_check.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\utils.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SteamApiWrapper\SteamFriendsWrapper.h">
-      <Filter>include\SteamApiWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SteamApiWrapper\SteamMatchmakingWrapper.h">
-      <Filter>include\SteamApiWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SteamApiWrapper\SteamNetworkingWrapper.h">
-      <Filter>include\SteamApiWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SteamApiWrapper\SteamUserStatsWrapper.h">
-      <Filter>include\SteamApiWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SteamApiWrapper\SteamUserWrapper.h">
-      <Filter>include\SteamApiWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SteamApiWrapper\SteamUtilsWrapper.h">
-      <Filter>include\SteamApiWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\bbtag_im.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\D3D9EXWrapper\D3DXMath.h">
-      <Filter>include\D3D9ExWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\D3D9EXWrapper\ID3D9EXWrapper.h">
-      <Filter>include\D3D9ExWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\D3D9EXWrapper\ID3D9EXWrapper_Device.h">
-      <Filter>include\D3D9ExWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\D3D9EXWrapper\ID3D9Wrapper_Sprite.h">
-      <Filter>include\D3D9ExWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\D3D9EXWrapper\ID3DXWrapper_Effect.h">
-      <Filter>include\D3D9ExWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\charobj.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\playermeters.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\WindowManager\fonts.h">
-      <Filter>include\WindowManager</Filter>
-    </ClInclude>
-    <ClInclude Include="include\WindowManager\WindowManager.h">
-      <Filter>include\WindowManager</Filter>
-    </ClInclude>
-    <ClInclude Include="include\WindowManager\CustomHud.h">
-      <Filter>include\WindowManager</Filter>
-    </ClInclude>
-    <ClInclude Include="include\D3D9EXWrapper\D3D9Utils.h">
-      <Filter>include\D3D9ExWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\main.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\D3D9EXWrapper\d3d9.h">
-      <Filter>include\D3D9ExWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Hooks\HookManager.h">
-      <Filter>include\Hooks</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Hooks\hooks_bbtag.h">
-      <Filter>include\Hooks</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Hooks\hooks_steamApiWrapper.h">
-      <Filter>include\Hooks</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Hooks\hooks_importAddressTable.h">
-      <Filter>include\Hooks</Filter>
-    </ClInclude>
     <ClInclude Include="depends\imgui\imconfig.h">
       <Filter>depends\ImGui</Filter>
     </ClInclude>
@@ -273,6 +177,114 @@
     </ClInclude>
     <ClInclude Include="depends\imgui\stb_truetype.h">
       <Filter>depends\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bbtag_im.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\charobj.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\crashdump.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gamestate_defines.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\globals.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logger.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\main.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\playermeters.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\settings.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steamapi_helper.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\update_check.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WindowManager\CustomHud.h">
+      <Filter>src\WindowManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WindowManager\fonts.h">
+      <Filter>src\WindowManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WindowManager\PaletteEditor.h">
+      <Filter>src\WindowManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WindowManager\WindowManager.h">
+      <Filter>src\WindowManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SteamApiWrapper\SteamFriendsWrapper.h">
+      <Filter>src\SteamApiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SteamApiWrapper\SteamMatchmakingWrapper.h">
+      <Filter>src\SteamApiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SteamApiWrapper\SteamNetworkingWrapper.h">
+      <Filter>src\SteamApiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SteamApiWrapper\SteamUserStatsWrapper.h">
+      <Filter>src\SteamApiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SteamApiWrapper\SteamUserWrapper.h">
+      <Filter>src\SteamApiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SteamApiWrapper\SteamUtilsWrapper.h">
+      <Filter>src\SteamApiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PaletteManager\CharPalInfo.h">
+      <Filter>src\PaletteManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PaletteManager\impl_format.h">
+      <Filter>src\PaletteManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PaletteManager\PaletteManager.h">
+      <Filter>src\PaletteManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hooks\HookManager.h">
+      <Filter>src\Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hooks\hooks_bbtag.h">
+      <Filter>src\Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hooks\hooks_importAddressTable.h">
+      <Filter>src\Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hooks\hooks_steamApiWrapper.h">
+      <Filter>src\Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9EXWrapper\d3d9.h">
+      <Filter>src\D3D9EXWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9EXWrapper\D3D9Utils.h">
+      <Filter>src\D3D9EXWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9EXWrapper\D3DXMath.h">
+      <Filter>src\D3D9EXWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9EXWrapper\ID3D9EXWrapper.h">
+      <Filter>src\D3D9EXWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9EXWrapper\ID3D9EXWrapper_Device.h">
+      <Filter>src\D3D9EXWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9EXWrapper\ID3D9Wrapper_Sprite.h">
+      <Filter>src\D3D9EXWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9EXWrapper\ID3DXWrapper_Effect.h">
+      <Filter>src\D3D9EXWrapper</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

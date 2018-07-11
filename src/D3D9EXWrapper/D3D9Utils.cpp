@@ -1,4 +1,4 @@
-#include "../../include/D3D9EXWrapper/D3D9Utils.h"
+#include "D3D9Utils.h"
 #include <sstream>
 
 std::vector<long> D3D9Utils::texturePointers;

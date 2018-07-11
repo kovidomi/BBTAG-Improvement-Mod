@@ -1,7 +1,7 @@
-#include "../include/update_check.h"
-#include "../include/WindowManager/WindowManager.h"
-#include "../include/settings.h"
-#include "../include/logger.h"
+#include "update_check.h"
+#include "WindowManager/WindowManager.h"
+#include "settings.h"
+#include "logger.h"
 #include <regex>
 #include <cstring>
 #include <wininet.h>

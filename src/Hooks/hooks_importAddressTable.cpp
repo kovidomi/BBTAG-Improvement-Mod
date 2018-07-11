@@ -1,12 +1,12 @@
-#include "../../include/Hooks/hooks_importAddressTable.h"
-#include "../../include/D3D9EXWrapper/ID3D9Wrapper_Sprite.h"
-#include "../../include/D3D9EXWrapper/ID3DXWrapper_Effect.h"
-#include "../../include/D3D9EXWrapper/ID3D9EXWrapper.h"
-#include "../../include/SteamApiWrapper/SteamMatchmakingWrapper.h"
-#include "../../include/SteamApiWrapper/SteamNetworkingWrapper.h"
-#include "../../include/Hooks/HookManager.h"
-#include "../../include/containers.h"
-#include "../../include/logger.h"
+#include "hooks_importAddressTable.h"
+#include "HookManager.h"
+#include "../D3D9EXWrapper/ID3D9Wrapper_Sprite.h"
+#include "../D3D9EXWrapper/ID3DXWrapper_Effect.h"
+#include "../D3D9EXWrapper/ID3D9EXWrapper.h"
+#include "../SteamApiWrapper/SteamMatchmakingWrapper.h"
+#include "../SteamApiWrapper/SteamNetworkingWrapper.h"
+#include "../globals.h"
+#include "../logger.h"
 #include <detours.h>
 #include <steam_api.h>
 
@@ -76,7 +76,7 @@ void __declspec(naked)GetSteamMatchmaking()
 		pushad
 		add esi, 10h
 		//mov steamMatchmakingPtrAddr, esi
-		mov Containers::tempVals.ppSteamMatchmaking, esi
+		mov g_tempVals.ppSteamMatchmaking, esi
 		popad
 		/////
 		mov[esi + 10h], eax
@@ -96,7 +96,7 @@ void __declspec(naked)GetSteamNetworking()
 		pushad
 		add esi, 20h
 		//mov steamNetworkingPtrAddr, esi
-		mov Containers::tempVals.ppSteamNetworking, esi
+		mov g_tempVals.ppSteamNetworking, esi
 		popad
 		/////
 		mov[esi + 20h], eax
@@ -115,7 +115,7 @@ void __declspec(naked)GetSteamUser()
 		/////
 		pushad
 		add esi, 4h
-		mov Containers::tempVals.ppSteamUser, esi
+		mov g_tempVals.ppSteamUser, esi
 		popad
 		/////
 		mov[esi + 4h], eax
@@ -134,7 +134,7 @@ void __declspec(naked)GetSteamFriends()
 		/////
 		pushad
 		add esi, 8h
-		mov Containers::tempVals.ppSteamFriends, esi
+		mov g_tempVals.ppSteamFriends, esi
 		popad
 		/////
 		mov[esi + 8h], eax
@@ -154,7 +154,7 @@ void __declspec(naked)GetSteamUtils()
 		/////
 		pushad
 		add esi, 0Ch
-		mov Containers::tempVals.ppSteamUtils, esi
+		mov g_tempVals.ppSteamUtils, esi
 		popad
 		/////
 		mov[esi + 0Ch], eax
@@ -174,7 +174,7 @@ void __declspec(naked)GetSteamUserStats()
 		/////
 		pushad
 		add esi, 14h
-		mov Containers::tempVals.ppSteamUserStats, esi
+		mov g_tempVals.ppSteamUserStats, esi
 		popad
 		/////
 		mov[esi + 14h], eax
@@ -203,7 +203,7 @@ HWND WINAPI hook_CreateWindowExW(DWORD dwExStyle, LPCWSTR lpClassName, LPCWSTR l
 {
 	LOG(2, "CreateWindowExW X:%d Y:%d nWidth:%d nHeight:%d ", X, Y, nWidth, nHeight);
 
-	if (nWidth > 1280 && !Containers::gameProc.hWndGameWindow)
+	if (nWidth > 1280 && !g_gameProc.hWndGameWindow)
 	{
 		nWidth = Settings::settingsIni.windowwidth;
 		nHeight = Settings::settingsIni.windowheight;
@@ -213,10 +213,10 @@ HWND WINAPI hook_CreateWindowExW(DWORD dwExStyle, LPCWSTR lpClassName, LPCWSTR l
 	if (SUCCEEDED(hWnd))
 	{
 		LOG(7, "\tSuccess: 0x%p\n", hWnd);
-		if (nWidth > 0 && !Containers::gameProc.hWndGameWindow) // 2nd created window should be the correct one according to process hacker
+		if (nWidth > 0 && !g_gameProc.hWndGameWindow) // 2nd created window should be the correct one according to process hacker
 		{
 			LOG(2, "Correct window: 0x%p\n", hWnd);
-			Containers::gameProc.hWndGameWindow = hWnd;
+			g_gameProc.hWndGameWindow = hWnd;
 
 			//adjusting rendering resolution, due to the window borders
 			if (Settings::settingsIni.displaymode == DISPLAYMODE_WINDOWED &&
@@ -247,7 +247,7 @@ BOOL WINAPI hook_SetWindowPos(_In_ HWND hWnd, _In_opt_ HWND hWndInsertAfter, _In
 	_In_ int Y, _In_ int cx, _In_ int cy, _In_ UINT uFlags)
 {
 	LOG(2, "hook_SetWindowPos: Hwnd: 0x%p, X: %d, Y: %d, Flags: 0x%p\n", hWnd, cx, cy, uFlags);
-	if (Containers::gameProc.hWndGameWindow == hWnd && Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)
+	if (g_gameProc.hWndGameWindow == hWnd && Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)
 	{
 		cx = Settings::settingsIni.windowwidth;
 		cy = Settings::settingsIni.windowheight;
@@ -291,6 +291,7 @@ bool placeHooks_importAddressTable()
 	PBYTE pSteamAPI_Init = (PBYTE)GetProcAddress(hM_steam_api, "SteamAPI_Init");
 	PBYTE pCreateWindowExW = (PBYTE)GetProcAddress(hM_user32, "CreateWindowExW");
 	PBYTE pSetWindowPos = (PBYTE)GetProcAddress(hM_user32, "SetWindowPos");
+	PBYTE pGetFocus = (PBYTE)GetProcAddress(hM_user32, "GetFocus");
 
 	if (!checkHookSuccess((PBYTE)pDirect3DCreate9Ex, "Direct3DCreate9Ex"))
 		return false;

@@ -1,4 +1,4 @@
-#include "../include/playermeters.h"
+#include "playermeters.h"
 
 char* metercharnames[TOTAL_CHAR_INDEXES]
 {
@@ -65,24 +65,24 @@ ImVec4 get_char_unique_meter_color(CharObj *CharObjInstance)
 
 	switch (CharObjInstance->char_index)
 	{
-	case CharIndex::Aegis:
+	case CharIndex_Aegis:
 		ret = meter_color_aegis;
 		break;
-	case CharIndex::Rachel:
+	case CharIndex_Rachel:
 		ret = meter_color_rachel;
 		if (CharObjInstance->unique_meter_cur_val < CharObjInstance->unique_meter_max_val)
 			ret = meter_color_rachel_recover;
 		break;
-	case CharIndex::Yukiko:
+	case CharIndex_Yukiko:
 		ret = meter_color_yukiko;
 		break;
-	case CharIndex::Platinum:
+	case CharIndex_Platinum:
 		ret = meter_color_platinum;
 		break;
-	case CharIndex::Naoto:
+	case CharIndex_Naoto:
 		ret = meter_color_naoto;
 		break;
-	case CharIndex::Chie:
+	case CharIndex_Chie:
 		switch (CharObjInstance->chie_charge_lvl)
 		{
 		case 2:
@@ -97,7 +97,7 @@ ImVec4 get_char_unique_meter_color(CharObj *CharObjInstance)
 			break;
 		}
 		break;
-	case CharIndex::Makoto:
+	case CharIndex_Makoto:
 		if (CharObjInstance->unique_meter_cur_val > 15)
 			ret = meter_color_makoto_full;
 		else
@@ -164,15 +164,15 @@ float total_cross_to_bar_percent(int cross_value)
 bool show_char_unique_meter_num(CharObj *CharObjInstance)
 {
 	//always show
-	if (CharObjInstance->char_index == CharIndex::Yukiko)
+	if (CharObjInstance->char_index == CharIndex_Yukiko)
 		return true;
 
 	//only show something for naoto if she has marked someone for death
-	if (CharObjInstance->char_index == CharIndex::Naoto && CharObjInstance->naoto_is_enemy_marked)
+	if (CharObjInstance->char_index == CharIndex_Naoto && CharObjInstance->naoto_is_enemy_marked)
 		return true;
 
 	//only show if chie has charge lvl higher than 0
-	if (CharObjInstance->char_index == CharIndex::Chie && CharObjInstance->unique_meter_cur_val > 0)
+	if (CharObjInstance->char_index == CharIndex_Chie && CharObjInstance->unique_meter_cur_val > 0)
 	{
 		return true;
 	}
@@ -187,16 +187,16 @@ bool show_char_unique_meter_bar(CharObj *CharObjInstance)
 	//always show 
 	switch (CharObjInstance->char_index)
 	{
-	case CharIndex::Aegis:
-	case CharIndex::Rachel:
-	case CharIndex::Yukiko:
+	case CharIndex_Aegis:
+	case CharIndex_Rachel:
+	case CharIndex_Yukiko:
 		ret = true;
 	}
 
 	//only show if their meter is not null
-	if ((CharObjInstance->char_index == CharIndex::Chie || 
-		CharObjInstance->char_index == CharIndex::Platinum ||
-		CharObjInstance->char_index == CharIndex::Makoto) &&
+	if ((CharObjInstance->char_index == CharIndex_Chie || 
+		CharObjInstance->char_index == CharIndex_Platinum ||
+		CharObjInstance->char_index == CharIndex_Makoto) &&
 		CharObjInstance->unique_meter_cur_val > 0)
 	{
 		ret = true;
@@ -209,13 +209,13 @@ bool char_has_unique_meter(CharIndex index)
 {
 	switch (index)
 	{
-	case CharIndex::Aegis:
-	case CharIndex::Rachel:
-	case CharIndex::Yukiko:
-	case CharIndex::Chie:
-	case CharIndex::Platinum:
-	case CharIndex::Naoto:
-	case CharIndex::Makoto:
+	case CharIndex_Aegis:
+	case CharIndex_Rachel:
+	case CharIndex_Yukiko:
+	case CharIndex_Chie:
+	case CharIndex_Platinum:
+	case CharIndex_Naoto:
+	case CharIndex_Makoto:
 		return true;
 	default:
 		return false;

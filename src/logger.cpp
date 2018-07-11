@@ -1,4 +1,4 @@
-#include "../include/logger.h"
+#include "logger.h"
 #include <time.h>
 #include <fstream>
 
@@ -104,7 +104,7 @@ void logSettingsIni()
 		printText += ": %.2f\n"; \
 	if(strcmp(#_type, "std::string") != 0) { \
 		LOG(1, printText.c_str(), Settings::settingsIni.##_var); }
-#include "../include/settings.def"
+#include "settings.def"
 #undef SETTING
 
 }

@@ -1,6 +1,6 @@
-#include "../../include/SteamApiWrapper/SteamFriendsWrapper.h"
-#include "../../include/utils.h"
-#include "../../include/logger.h"
+#include "SteamFriendsWrapper.h"
+#include "../utils.h"
+#include "../logger.h"
 
 SteamFriendsWrapper::SteamFriendsWrapper(ISteamFriends** pSteamFriends)
 {

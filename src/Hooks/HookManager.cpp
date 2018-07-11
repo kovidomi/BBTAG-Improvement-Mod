@@ -1,5 +1,5 @@
-#include "../../include/Hooks/HookManager.h"
-#include "../../include/logger.h"
+#include "HookManager.h"
+#include "../logger.h"
 #include <Psapi.h>
 
 std::vector<functionhook_t> HookManager::hooks;

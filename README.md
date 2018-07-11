@@ -24,7 +24,7 @@ Can only be compiled in the Release/Win32 config.<br>
 Copy the compiled binary and the settings.ini file from the bin/ folder into the game's root folder.
 
 ## Requirements:
-* Visual Studio 2017 (v141)
+* Visual Studio 2017 (v141) (Windows SDK 8.1)
 * Detours 1.5
 * DirectX SDK
 * Steamworks SDK (v1.42)
@@ -32,7 +32,7 @@ Copy the compiled binary and the settings.ini file from the bin/ folder into the
 ## Quick file overview
 * "TODO.txt" contains a list of things you can start working on
 * "main.h" file contains the defines for logging
-* "containers.h" file contains global variables that are used across the entire project
+* "globals.h" file contains global variables that are used across the entire project
 * "D3D9ExWrapper" folders contain straightforward D3D wrapping
 * "SteamApiWrapper" folder contains straightforward Steam API wrapping
 * "WindowManager" folder contains the implementation of the mod's custom windows using the ImGui library
@@ -42,7 +42,7 @@ Copy the compiled binary and the settings.ini file from the bin/ folder into the
 
 
 ## Support
-Your contributions are speeding up the development. Please consider donating as it enables me spending more time working on the mod.
+If you feel like throwing some dollars my way feel free to, it enables me spending more time working on the mod.
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8EDR78DJ8PU2)
 

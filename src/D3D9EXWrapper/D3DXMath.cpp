@@ -1,6 +1,6 @@
-#include "../../include/D3D9ExWrapper/D3DXMath.h"
-#include "../../include/D3D9EXWrapper/d3d9.h"
-#include "../../include/logger.h"
+#include "D3DXMath.h"
+#include "d3d9.h"
+#include "../logger.h"
 #include <detours.h>
 
 #pragma comment(lib, "detours.lib")

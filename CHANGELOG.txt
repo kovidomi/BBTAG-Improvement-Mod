@@ -1,3 +1,11 @@
+??-??-2018 -- version 1.04
+===============================
+- Added ingame palette editor
+- Fixed the custom HUD not being updated while the game's window is not focused
+- Fixed mistakenly calling the Steam Controller as PS4 controller all over the place
+- Added extra option for the ForcePromptButtonLayout that keeps the button prompt layout blinking
+- Added button link for the mod's GitHub page
+
 21-06-2018 -- version 1.03
 ===============================
 - Added character specific meters to the custom HUD for Aegis, Chie, Makoto, Naoto, Platinum, Rachel, and Yukiko

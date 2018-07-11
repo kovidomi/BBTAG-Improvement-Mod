@@ -1,5 +1,5 @@
-#include "../include/crashdump.h"
-#include "../include/containers.h"
+#include "crashdump.h"
+#include "globals.h"
 #include <dbghelp.h>
 #include <shlobj.h>
 #include <tchar.h>

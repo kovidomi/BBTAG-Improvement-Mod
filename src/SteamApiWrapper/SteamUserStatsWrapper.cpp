@@ -1,6 +1,6 @@
-#include "../../include/SteamApiWrapper/SteamUserStatsWrapper.h"
-#include "../../include/utils.h"
-#include "../../include/logger.h"
+#include "SteamUserStatsWrapper.h"
+#include "../utils.h"
+#include "../logger.h"
 
 SteamUserStatsWrapper::SteamUserStatsWrapper(ISteamUserStats** pSteamUserStats)
 {

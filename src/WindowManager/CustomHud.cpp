@@ -1,6 +1,6 @@
-#include "../../include/WindowManager/CustomHud.h"
-#include "../../include/containers.h"
-#include "../../include/logger.h"
+#include "CustomHud.h"
+#include "../globals.h"
+#include "../logger.h"
 #include <imgui.h>
 
 ImGuiWindowFlags customHUDWindowFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar;
@@ -28,22 +28,27 @@ void CustomHud::Update(bool show_custom_hud, bool show_main_window)
 		return;
 	
 	//sanity check 1
-	if (!Containers::gameVals.CharObj_P1Char1 || !Containers::gameVals.CharObj_P1Char2 ||
-		!Containers::gameVals.CharObj_P2Char1 || !Containers::gameVals.CharObj_P2Char2)
+	if (!g_gameVals.CharObj_P1Char1 || !g_gameVals.CharObj_P1Char2 ||
+		!g_gameVals.CharObj_P2Char1 || !g_gameVals.CharObj_P2Char2)
 	{
+		LOG(2, "One of g_gameVals.CharObj is NULL !!!!!\n");
 		return;
 	}
 
 	//sanity check 2
-	if (!*Containers::gameVals.CharObj_P1Char1 || !*Containers::gameVals.CharObj_P1Char2 ||
-		!*Containers::gameVals.CharObj_P2Char1 || !*Containers::gameVals.CharObj_P2Char2)
+	if (!*g_gameVals.CharObj_P1Char1 || !*g_gameVals.CharObj_P1Char2 ||
+		!*g_gameVals.CharObj_P2Char1 || !*g_gameVals.CharObj_P2Char2)
 	{
+		LOG(2, "One of *g_gameVals.CharObj is NULL !!!!\n");
 		return;
 	}
 
 	//sanity check 3
-	if (!Containers::gameVals.PlayerMetersObj)
+	if (!g_gameVals.PlayerMetersObj)
+	{
+		LOG(2, "g_gameVals.PlayerMetersObj is NULL !!!!\n");
 		return;
+	}
 
 	if (show_main_window)
 		customHUDWindowFlags &= ~ImGuiWindowFlags_NoMove; //clear the flag
@@ -56,7 +61,7 @@ void CustomHud::Update(bool show_custom_hud, bool show_main_window)
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f)); //black
 	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.286f, 0.286f, 0.286f, 0.54f)); //grey
 
-	if (Containers::gameVals.PlayerMetersObj->P1_is_blaze_active || Containers::gameVals.PlayerMetersObj->P2_is_blaze_active)
+	if (g_gameVals.PlayerMetersObj->P1_is_blaze_active || g_gameVals.PlayerMetersObj->P2_is_blaze_active)
 	{
 		ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.0f, 1.0f, 1.0f, 1.0f)); //cyan
 	}
@@ -65,70 +70,70 @@ void CustomHud::Update(bool show_custom_hud, bool show_main_window)
 
 	//render top part of the hud
 	{
-		UpdateTimer(Containers::gameVals.pGameTimer);
+		UpdateTimer(g_gameVals.pGameTimer);
 
-		if ((*Containers::gameVals.CharObj_P1Char1)->is_char_active)
+		if ((*g_gameVals.CharObj_P1Char1)->is_char_active)
 		{
-			UpdateHP(*Containers::gameVals.CharObj_P1Char1);
-			UpdateHP(*Containers::gameVals.CharObj_P1Char2);
+			UpdateHP(*g_gameVals.CharObj_P1Char1);
+			UpdateHP(*g_gameVals.CharObj_P1Char2);
 		}
 		else
 		{
-			UpdateHP(*Containers::gameVals.CharObj_P1Char2);
-			UpdateHP(*Containers::gameVals.CharObj_P1Char1);
+			UpdateHP(*g_gameVals.CharObj_P1Char2);
+			UpdateHP(*g_gameVals.CharObj_P1Char1);
 		}
 
-		if ((*Containers::gameVals.CharObj_P2Char1)->is_char_active)
+		if ((*g_gameVals.CharObj_P2Char1)->is_char_active)
 		{
-			UpdateHP(*Containers::gameVals.CharObj_P2Char1, true);
-			UpdateHP(*Containers::gameVals.CharObj_P2Char2, true);
+			UpdateHP(*g_gameVals.CharObj_P2Char1, true);
+			UpdateHP(*g_gameVals.CharObj_P2Char2, true);
 		}
 		else
 		{
-			UpdateHP(*Containers::gameVals.CharObj_P2Char2, true);
-			UpdateHP(*Containers::gameVals.CharObj_P2Char1, true);
+			UpdateHP(*g_gameVals.CharObj_P2Char2, true);
+			UpdateHP(*g_gameVals.CharObj_P2Char1, true);
 		}
 	}
 
 	//render bottom part of the hud
 	{
-		UpdateMeters(Containers::gameVals.PlayerMetersObj->P1_cur_skill, Containers::gameVals.PlayerMetersObj->P1_cur_cross,
-			Containers::gameVals.PlayerMetersObj->P1_cur_blaze, Containers::gameVals.PlayerMetersObj->P1_is_blaze_available,
-			Containers::gameVals.PlayerMetersObj->P1_is_blaze_active, false);
+		UpdateMeters(g_gameVals.PlayerMetersObj->P1_cur_skill, g_gameVals.PlayerMetersObj->P1_cur_cross,
+			g_gameVals.PlayerMetersObj->P1_cur_blaze, g_gameVals.PlayerMetersObj->P1_is_blaze_available,
+			g_gameVals.PlayerMetersObj->P1_is_blaze_active, false);
 
-		UpdateMeters(Containers::gameVals.PlayerMetersObj->P2_cur_skill, Containers::gameVals.PlayerMetersObj->P2_cur_cross,
-			Containers::gameVals.PlayerMetersObj->P2_cur_blaze, Containers::gameVals.PlayerMetersObj->P2_is_blaze_available,
-			Containers::gameVals.PlayerMetersObj->P2_is_blaze_active, true);
+		UpdateMeters(g_gameVals.PlayerMetersObj->P2_cur_skill, g_gameVals.PlayerMetersObj->P2_cur_cross,
+			g_gameVals.PlayerMetersObj->P2_cur_blaze, g_gameVals.PlayerMetersObj->P2_is_blaze_available,
+			g_gameVals.PlayerMetersObj->P2_is_blaze_active, true);
 
 		//render unique meters
 		{
-			if ((*Containers::gameVals.CharObj_P1Char1)->is_char_active)
+			if ((*g_gameVals.CharObj_P1Char1)->is_char_active)
 			{
-				UpdateCharSpecificMeters(*Containers::gameVals.CharObj_P1Char1);
-				UpdateCharSpecificMeters(*Containers::gameVals.CharObj_P1Char2);
+				UpdateCharSpecificMeters(*g_gameVals.CharObj_P1Char1);
+				UpdateCharSpecificMeters(*g_gameVals.CharObj_P1Char2);
 			}
 			else
 			{
-				UpdateCharSpecificMeters(*Containers::gameVals.CharObj_P1Char2);
-				UpdateCharSpecificMeters(*Containers::gameVals.CharObj_P1Char1);
+				UpdateCharSpecificMeters(*g_gameVals.CharObj_P1Char2);
+				UpdateCharSpecificMeters(*g_gameVals.CharObj_P1Char1);
 			}
 
-			if ((*Containers::gameVals.CharObj_P2Char1)->is_char_active)
+			if ((*g_gameVals.CharObj_P2Char1)->is_char_active)
 			{
-				UpdateCharSpecificMeters(*Containers::gameVals.CharObj_P2Char1, true);
-				UpdateCharSpecificMeters(*Containers::gameVals.CharObj_P2Char2, true);
+				UpdateCharSpecificMeters(*g_gameVals.CharObj_P2Char1, true);
+				UpdateCharSpecificMeters(*g_gameVals.CharObj_P2Char2, true);
 			}
 			else
 			{
-				UpdateCharSpecificMeters(*Containers::gameVals.CharObj_P2Char2, true);
-				UpdateCharSpecificMeters(*Containers::gameVals.CharObj_P2Char1, true);
+				UpdateCharSpecificMeters(*g_gameVals.CharObj_P2Char2, true);
+				UpdateCharSpecificMeters(*g_gameVals.CharObj_P2Char1, true);
 			}
 		}
 	}
 
 	ImGui::PopFont();
 
-	if (Containers::gameVals.PlayerMetersObj->P1_is_blaze_active || Containers::gameVals.PlayerMetersObj->P2_is_blaze_active)
+	if (g_gameVals.PlayerMetersObj->P1_is_blaze_active || g_gameVals.PlayerMetersObj->P2_is_blaze_active)
 		ImGui::PopStyleColor();
 
 	ImGui::PopStyleColor(2);
@@ -221,7 +226,7 @@ void CustomHud::UpdateTimer(int *timer)
 	ImGui::Text("TIME");
 
 	char time[32];
-	sprintf(time, "%d", *Containers::gameVals.pGameTimer);
+	sprintf(time, "%d", *g_gameVals.pGameTimer);
 	ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (ImGui::CalcTextSize(time).x / 2));
 	ImGui::Text(time);
 	ImGui::End();
@@ -358,13 +363,13 @@ void CustomHud::UpdateCharSpecificMeters(CharObj * CharInstance, bool right_side
 
 	switch (CharInstance->char_index)
 	{
-	case CharIndex::Yukiko:
+	case CharIndex_Yukiko:
 		sprintf(meter_num, "%d", CharInstance->unique_meter_cur_val);
 		break;
-	case CharIndex::Naoto:
+	case CharIndex_Naoto:
 		sprintf(meter_num, "%s", CharInstance->naoto_is_enemy_marked == 1 ? "X" : " ");
 		break;
-	case CharIndex::Chie:
+	case CharIndex_Chie:
 		sprintf(meter_num, "%d", CharInstance->chie_charge_lvl);
 		break;
 	}

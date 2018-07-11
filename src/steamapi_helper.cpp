@@ -1,6 +1,6 @@
-#include "../include/steamapi_helper.h"
-#include "../include/WindowManager/WindowManager.h"
-#include "../include/logger.h"
+#include "steamapi_helper.h"
+#include "WindowManager/WindowManager.h"
+#include "logger.h"
 
 //note: commented out functions are not working
 

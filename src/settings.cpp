@@ -1,6 +1,6 @@
-#include "../include/settings.h"
-#include "../include/containers.h"
-#include "../include/logger.h"
+#include "settings.h"
+#include "globals.h"
+#include "logger.h"
 #include <ctime>
 #include <atlstr.h>
 
@@ -57,7 +57,6 @@ void Settings::applySettingsIni(D3DPRESENT_PARAMETERS* pPresentationParameters)
 		pPresentationParameters->PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 		break;
 	case VSYNC_ON:
-	default:
 		// vsync on 
 		pPresentationParameters->PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
 		break;
@@ -121,7 +120,7 @@ void *iniPtr = 0;
 		*(float*)iniPtr = readSettingsFilePropertyFloat(L##_inistring, L##_defaultval, strINIPath); } \
 	else if (strcmp(#_type, "std::string") == 0) { \
 		*(std::string*)iniPtr = readSettingsFilePropertyString(L##_inistring, L##_defaultval, strINIPath); }
-#include "../include/settings.def"
+#include "settings.def"
 #undef SETTING
 
 //set buttons back to default if their values are incorrect

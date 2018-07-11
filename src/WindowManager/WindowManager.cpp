@@ -1,10 +1,10 @@
-#include "../../include/WindowManager/WindowManager.h"
-#include "../../include/settings.h"
-#include "../../include/WindowManager/fonts.h"
-#include "../../include/utils.h"
-#include "../../include/update_check.h"
-#include "../../include/steamapi_helper.h"
-#include "../../include/logger.h"
+#include "WindowManager.h"
+#include "fonts.h"
+#include "../settings.h"
+#include "../utils.h"
+#include "../update_check.h"
+#include "../steamapi_helper.h"
+#include "../logger.h"
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
 #include <shellapi.h>
@@ -12,13 +12,14 @@
 #include <time.h>
 
 #define MAX_LOG_MSG_LEN 1024
-#define MAIN_WINDOW_DISAPPEAR_TIME 15.0f
+#define MAIN_WINDOW_DISAPPEAR_TIME_SECONDS 15.0f
 #define DEFAULT_ALPHA 0.87f
 
 bool WindowManager::IsUpdateAvailable = false;
 bool WindowManager::DoLogging = true;
 bool WindowManager::Initialized = false;
 CustomHud* WindowManager::m_customHud = 0;
+PaletteEditor* WindowManager::m_paletteEditor = 0;
 
 bool show_main_window = true;
 bool show_demo_window = false;
@@ -29,7 +30,9 @@ bool show_debug_window = false;
 bool show_custom_hud = false;
 bool *NO_CLOSE_FLAG = NULL;
 
-float main_window_disappear_time = MAIN_WINDOW_DISAPPEAR_TIME;
+bool show_palette_editor = false;
+
+float main_window_disappear_time = MAIN_WINDOW_DISAPPEAR_TIME_SECONDS;
 
 std::string notificationText;
 float notificationTimer = 0;
@@ -132,6 +135,19 @@ struct ImGuiLog
 
 ImGuiLog WindowManager::Log;
 
+void WindowManager::OnMatchInit()
+{
+	if (!Initialized || !m_paletteEditor)
+		return;
+
+	m_paletteEditor->OnMatchInit();
+
+	g_interfaces.pPaletteManager->OnMatchInit(g_interfaces.pCharPalInfos->P1Char1,
+		g_interfaces.pCharPalInfos->P1Char2,
+		g_interfaces.pCharPalInfos->P2Char1,
+		g_interfaces.pCharPalInfos->P2Char2);
+}
+
 void WindowManager::SetMainWindowTitle(const char *text)
 {
 	if (text)
@@ -216,6 +232,8 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	LOG(2, "hud_scale_y: %f\n", hud_scale_y);
 
 	m_customHud = new CustomHud(hud_scale_x, hud_scale_y);
+	m_paletteEditor = new PaletteEditor();
+	g_interfaces.pPaletteManager->LoadPalettesFromFolder();
 
 	if (Settings::settingsIni.checkupdates)
 	{
@@ -224,8 +242,8 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 			CloseHandle(thread);
 	}
 
-	if (Containers::g_interfaces.pSteamUserStatsWrapper && Containers::g_interfaces.pSteamFriendsWrapper)
-		Containers::g_interfaces.pSteamApiHelper = new SteamApiHelper(Containers::g_interfaces.pSteamUserStatsWrapper, Containers::g_interfaces.pSteamFriendsWrapper);
+	if (g_interfaces.pSteamUserStatsWrapper && g_interfaces.pSteamFriendsWrapper)
+		g_interfaces.pSteamApiHelper = new SteamApiHelper(g_interfaces.pSteamUserStatsWrapper, g_interfaces.pSteamFriendsWrapper);
 
 	//Add the default font
 	ImFontConfig cfg;
@@ -266,6 +284,7 @@ void WindowManager::Shutdown()
 	WriteLogToFile();
 
 	SAFE_DELETE(m_customHud);
+	SAFE_DELETE(m_paletteEditor);
 
 	ImGui_ImplDX9_Shutdown();
 }
@@ -304,23 +323,30 @@ void WindowManager::Update()
 
 	LOG(7, "WindowManager::HandleImGui\n");
 
+	//allowing palette updates
+	g_interfaces.pPaletteManager->UnlockUpdates(
+		g_interfaces.pCharPalInfos->P1Char1,
+		g_interfaces.pCharPalInfos->P1Char2,
+		g_interfaces.pCharPalInfos->P2Char1, 
+		g_interfaces.pCharPalInfos->P2Char2);
+
 	//constantly overriding the visibility of the game's HUD if the custom hud is forced on
 	if (Settings::settingsIni.forcecustomhud)
 	{
-		if (Containers::gameVals.pIsHUDHidden)
+		if (g_gameVals.pIsHUDHidden)
 		{
-			if (*Containers::gameVals.pIsHUDHidden == 0)
-				*Containers::gameVals.pIsHUDHidden = 1;
+			if (*g_gameVals.pIsHUDHidden == 0)
+				*g_gameVals.pIsHUDHidden = 1;
 		}
 	}
 
-	//start making the mod's menu disappear upon start, within MAIN_WINDOW_DISAPPEAR_TIME
+	//start making the mod's menu disappear upon start, within MAIN_WINDOW_DISAPPEAR_TIME_SECONDS
 	if (main_window_disappear_time > 0)
 	{
 		main_window_disappear_time -= ImGui::GetIO().DeltaTime;
 		
 		if(main_window_disappear_time > 0)
-			ImGui::GetStyle().Alpha = main_window_disappear_time / MAIN_WINDOW_DISAPPEAR_TIME;
+			ImGui::GetStyle().Alpha = main_window_disappear_time / MAIN_WINDOW_DISAPPEAR_TIME_SECONDS;
 
 		//disappear upon reaching main_window_disappear_time = 0
 		if (main_window_disappear_time <= 0)
@@ -330,12 +356,8 @@ void WindowManager::Update()
 		}
 	}
 
-	//prevent getting input while window is not focused
-	if (GetForegroundWindow() != Containers::gameProc.hWndGameWindow)
-		return;
-
 	//return if game window is minimized, to avoid the custom hud elements being thrown in the upper left corner due to resolution shrinking
-	if (IsIconic(Containers::gameProc.hWndGameWindow))
+	if (IsIconic(g_gameProc.hWndGameWindow))
 		return;
 
 	HandleButtons();
@@ -356,7 +378,7 @@ void WindowManager::Update()
 
 	ImGuiIO& io = ImGui::GetIO();
 
-	io.MouseDrawCursor = show_log_window | show_notification_window | show_main_window | IsUpdateAvailable | show_demo_window;
+	io.MouseDrawCursor = show_main_window |show_log_window | show_notification_window | show_palette_editor | IsUpdateAvailable | show_demo_window;
 
 	if (Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)
 	{
@@ -390,6 +412,20 @@ void WindowManager::Update()
 			ImGui::EndTooltip();
 		}
 
+		if (ImGui::CollapsingHeader("Custom Palettes"))
+		{
+			m_paletteEditor->ShowAllPaletteSelections();
+
+			ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
+			m_paletteEditor->ShowReloadAllPalettesButton();
+
+			ImGui::Text(" "); ImGui::SameLine();
+			if (ImGui::Button("Palette editor"))
+			{
+				show_palette_editor ^= 1;
+			}
+		}
+
 		if (ImGui::CollapsingHeader("Loaded settings.ini values"))
 		{
 			ShowLoadedIniSettings();
@@ -405,10 +441,10 @@ void WindowManager::Update()
 			show_log_window ^= 1;
 
 		ImGui::Text("Current online players:"); ImGui::SameLine();
-		if (Containers::g_interfaces.pSteamApiHelper)
+		if (g_interfaces.pSteamApiHelper)
 		{
 			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "%s",
-				Containers::g_interfaces.pSteamApiHelper->current_players <= 0 ? "<No data>" : std::to_string(Containers::g_interfaces.pSteamApiHelper->current_players).c_str());
+				g_interfaces.pSteamApiHelper->current_players <= 0 ? "<No data>" : std::to_string(g_interfaces.pSteamApiHelper->current_players).c_str());
 		}
 		else
 		{
@@ -423,6 +459,9 @@ void WindowManager::Update()
 		ImGui::SameLine();
 		if (ImGui::Button("Nexusmods"))
 			ShellExecute(NULL, L"open", MOD_LINK_NEXUSMODS, NULL, NULL, SW_SHOWNORMAL);
+		ImGui::SameLine();
+		if(ImGui::Button("GitHub"))
+			ShellExecute(NULL, L"open", MOD_LINK_GITHUB, NULL, NULL, SW_SHOWNORMAL);
 
 		ImGui::End();
 	}
@@ -439,6 +478,9 @@ void WindowManager::Update()
 
 	if (show_debug_window)
 		ShowDebugWindow(&show_debug_window);
+
+	if (show_palette_editor)
+		m_paletteEditor->ShowPaletteEditorWindow(&show_palette_editor);
 #endif
 
 	if (show_notification)
@@ -452,7 +494,7 @@ void WindowManager::Update()
 
 	ImGui::PopStyleVar();
 
-	ImGui::EndFrame();
+	//ImGui::EndFrame();
 
 	LOG(7, "END OF WindowManager::HandleImGui\n");
 }
@@ -606,7 +648,7 @@ void WindowManager::WriteLogToFile()
 		printText += ": %.2f\n"; \
 	if(strcmp(#_type, "std::string") != 0) \
 		fprintf(file, printText.c_str(), Settings::settingsIni.##_var);
-#include "../../include/settings.def"
+#include "../settings.def"
 #undef SETTING
 
 	fprintf(file, "\n");
@@ -621,17 +663,6 @@ void WindowManager::WriteLogToFile()
 
 void WindowManager::ShowLogWindow(bool* p_open)
 {
-	// Demo: add random items (if Ctrl is held)
-	//#ifndef RELEASE_VER
-	//	static float last_time = -1.0f;
-	//	float time = ImGui::GetTime();
-	//	if (time - last_time >= 0.20f && ImGui::GetIO().KeyCtrl)
-	//	{
-	//		const char* random_words[] = { "system", "info", "warning", "error", "fatal", "notice", "log" };
-	//		ImGuiSystem::AddLog("[%s] Hello, time is %.1f, frame count is %d\n", random_words[rand() % IM_ARRAYSIZE(random_words)], time, ImGui::GetFrameCount());
-	//		last_time = time;
-	//	}
-	//#endif
 	WindowManager::Log._Draw("Log", p_open);
 }
 
@@ -687,30 +718,68 @@ void WindowManager::ShowLoadedIniSettings()
 	else if(strcmp(#_type, "float") == 0) \
 		printText = "= %.2f"; \
 	ImGui::Text(printText.c_str(), Settings::settingsIni.##_var); ImGui::Separator(); }
-#include "../../include/settings.def"
+#include "../settings.def"
 #undef SETTING
 
 }
 
 void WindowManager::ShowDebugWindow(bool * p_open)
 {
-	ImGui::Begin("DEBUG", &show_debug_window);
+	ImGui::Begin("DEBUG", p_open);
 
 	if (ImGui::CollapsingHeader("Gameval addresses"))
 	{
-		ImGui::Text("P1Char1 0x%p", *Containers::gameVals.CharObj_P1Char1);
-		ImGui::Text("P1Char2 0x%p", *Containers::gameVals.CharObj_P1Char2);
-		ImGui::Text("P2Char1 0x%p", *Containers::gameVals.CharObj_P2Char1);
-		ImGui::Text("P2Char2 0x%p", *Containers::gameVals.CharObj_P2Char2);
+		if(g_gameVals.CharObj_P1Char1)
+			ImGui::Text("P1Char1 0x%p", *g_gameVals.CharObj_P1Char1);
+
+		if(g_gameVals.CharObj_P1Char2)
+			ImGui::Text("P1Char2 0x%p", *g_gameVals.CharObj_P1Char2);
+
+		if(g_gameVals.CharObj_P2Char1)
+			ImGui::Text("P2Char1 0x%p", *g_gameVals.CharObj_P2Char1);
+
+		if(g_gameVals.CharObj_P2Char2)
+			ImGui::Text("P2Char2 0x%p", *g_gameVals.CharObj_P2Char2);
+
 		ImGui::Separator();
-		ImGui::Text("Meters 0x%p", Containers::gameVals.PlayerMetersObj);
+		ImGui::Text("Meters 0x%p", g_gameVals.PlayerMetersObj);
+
 		ImGui::Separator();
-		ImGui::Text("PalIndex_P1Char1 0x%p", Containers::gameVals.PalIndex_P1Char1);
-		ImGui::Text("PalIndex_P1Char2 0x%p", Containers::gameVals.PalIndex_P1Char2);
-		ImGui::Text("PalIndex_P2Char1 0x%p", Containers::gameVals.PalIndex_P2Char1);
-		ImGui::Text("PalIndex_P2Char2 0x%p", Containers::gameVals.PalIndex_P2Char2);
+		//ImGui::Text("PalIndex_P1Char1 0x%p", &(*g_interfaces.pPaletteManager)[CharPalInfoIndex::P1Char1]->GetPalIndexRef());
+		//if (g_gameVals.PalIndex_P1Char1)
+
+			//ImGui::SliderInt("PalIndex_P1Char1", &(*g_interfaces.pPaletteManager)[CharPalInfoIndex::P1Char1]->GetPalIndexRef(), 0, 15);
+
+			//if (ImGui::CollapsingHeader("P1Char1 palarray"))
+			//{
+			//	ImGui::Text("%p", (*g_interfaces.pPaletteManager)[CharPalInfoIndex::P1Char1]->getPaletteArray(NULL, 0, 0));
+			//}
+
+		//ImGui::Text("PalIndex_P1Char2 0x%p", g_gameVals.PalIndex_P1Char2);
+		//if (g_gameVals.PalIndex_P1Char2)
+		//	ImGui::SliderInt("PalIndex_P1Char2", g_gameVals.PalIndex_P1Char2, 0, 15);
+
+		//ImGui::Text("PalIndex_P2Char1 0x%p", g_gameVals.PalIndex_P2Char1);
+		//if (g_gameVals.PalIndex_P2Char1)
+		//	ImGui::SliderInt("PalIndex_P2Char1", g_gameVals.PalIndex_P2Char1, 0, 15);
+
+		//ImGui::Text("PalIndex_P2Char2 0x%p", g_gameVals.PalIndex_P2Char2);
+		//if (g_gameVals.PalIndex_P2Char2)
+		//	ImGui::SliderInt("PalIndex_P2Char2", g_gameVals.PalIndex_P2Char2, 0, 15);
+
+		//ImGui::Separator();
+		//ImGui::Text("PalBaseAddrP1Char1 0x%p", g_gameVals.PalBaseAddrP1Char1);
+		//ImGui::Text("PalBaseAddrP1Char2 0x%p", g_gameVals.PalBaseAddrP1Char2);
+		//ImGui::Text("PalBaseAddrP2Char1 0x%p", g_gameVals.PalBaseAddrP2Char1);
+		//ImGui::Text("PalBaseAddrP2Char2 0x%p", g_gameVals.PalBaseAddrP2Char2);
+
+
 		ImGui::Separator();
-		ImGui::Text("pIsHUDHidden: 0x%p", Containers::gameVals.pIsHUDHidden);
+		ImGui::Text("pGameState: 0x%p : %d", g_gameVals.pGameState, *g_gameVals.pGameState);
+		ImGui::Text("pGameMode: 0x%p : %d", g_gameVals.pGameMode, *g_gameVals.pGameMode);
+		ImGui::Text("pIsHUDHidden: 0x%p", g_gameVals.pIsHUDHidden);
+		if (g_gameVals.pIsHUDHidden)
+			ImGui::Checkbox("pIsHUDHidden", (bool*)g_gameVals.pIsHUDHidden);
 	}
 	if (ImGui::CollapsingHeader("Color tester"))
 	{
@@ -725,15 +794,9 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 
 void WindowManager::HandleButtons()
 {
-	if (ImGui::IsKeyPressed(toggleHUD_key))
+	if (ImGui::IsKeyPressed(toggleHUD_key) && g_gameVals.pIsHUDHidden)
 	{
-		if (Containers::gameVals.pIsHUDHidden)
-		{
-			if (*Containers::gameVals.pIsHUDHidden == 0)
-				*Containers::gameVals.pIsHUDHidden = 1;
-			else if (*Containers::gameVals.pIsHUDHidden == 1)
-				*Containers::gameVals.pIsHUDHidden = 0;
-		}
+		*g_gameVals.pIsHUDHidden ^= 1;
 	}
 
 	if (ImGui::IsKeyPressed(toggleCustomHUD_key))

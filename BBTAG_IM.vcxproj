@@ -163,8 +163,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="export\dinput8.def" />
-    <None Include="include\settings.def" />
     <None Include="resource\settings.ini" />
+    <None Include="src\settings.def" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="depends\imgui\imgui.cpp" />
@@ -178,7 +178,7 @@
     <ClCompile Include="src\Hooks\hooks_steamApiWrapper.cpp" />
     <ClCompile Include="src\bbtag_im.cpp" />
     <ClCompile Include="src\charobj.cpp" />
-    <ClCompile Include="src\containers.cpp" />
+    <ClCompile Include="src\globals.cpp" />
     <ClCompile Include="src\crashdump.cpp" />
     <ClCompile Include="src\D3D9EXWrapper\D3DXMath.cpp" />
     <ClCompile Include="src\D3D9EXWrapper\ID3D9EXWrapper.cpp" />
@@ -187,6 +187,8 @@
     <ClCompile Include="src\D3D9EXWrapper\ID3DXWrapper_Effect.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\logger.cpp" />
+    <ClCompile Include="src\PaletteManager\CharPalInfo.cpp" />
+    <ClCompile Include="src\PaletteManager\PaletteManager.cpp" />
     <ClCompile Include="src\playermeters.cpp" />
     <ClCompile Include="src\settings.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamFriendsWrapper.cpp" />
@@ -200,6 +202,7 @@
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\WindowManager\CustomHud.cpp" />
     <ClCompile Include="src\WindowManager\fonts.cpp" />
+    <ClCompile Include="src\WindowManager\PaletteEditor.cpp" />
     <ClCompile Include="src\WindowManager\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -210,37 +213,42 @@
     <ClInclude Include="depends\imgui\stb_rect_pack.h" />
     <ClInclude Include="depends\imgui\stb_textedit.h" />
     <ClInclude Include="depends\imgui\stb_truetype.h" />
-    <ClInclude Include="include\D3D9EXWrapper\d3d9.h" />
-    <ClInclude Include="include\D3D9EXWrapper\D3D9Utils.h" />
-    <ClInclude Include="include\bbtag_im.h" />
-    <ClInclude Include="include\charobj.h" />
-    <ClInclude Include="include\containers.h" />
-    <ClInclude Include="include\crashdump.h" />
-    <ClInclude Include="include\D3D9EXWrapper\D3DXMath.h" />
-    <ClInclude Include="include\D3D9EXWrapper\ID3D9EXWrapper.h" />
-    <ClInclude Include="include\D3D9EXWrapper\ID3D9EXWrapper_Device.h" />
-    <ClInclude Include="include\D3D9EXWrapper\ID3D9Wrapper_Sprite.h" />
-    <ClInclude Include="include\D3D9EXWrapper\ID3DXWrapper_Effect.h" />
-    <ClInclude Include="include\Hooks\HookManager.h" />
-    <ClInclude Include="include\Hooks\hooks_bbtag.h" />
-    <ClInclude Include="include\Hooks\hooks_importAddressTable.h" />
-    <ClInclude Include="include\Hooks\hooks_steamApiWrapper.h" />
-    <ClInclude Include="include\logger.h" />
-    <ClInclude Include="include\main.h" />
-    <ClInclude Include="include\playermeters.h" />
-    <ClInclude Include="include\settings.h" />
-    <ClInclude Include="include\SteamApiWrapper\SteamFriendsWrapper.h" />
-    <ClInclude Include="include\SteamApiWrapper\SteamMatchmakingWrapper.h" />
-    <ClInclude Include="include\SteamApiWrapper\SteamNetworkingWrapper.h" />
-    <ClInclude Include="include\SteamApiWrapper\SteamUserStatsWrapper.h" />
-    <ClInclude Include="include\SteamApiWrapper\SteamUserWrapper.h" />
-    <ClInclude Include="include\SteamApiWrapper\SteamUtilsWrapper.h" />
-    <ClInclude Include="include\steamapi_helper.h" />
-    <ClInclude Include="include\update_check.h" />
-    <ClInclude Include="include\utils.h" />
-    <ClInclude Include="include\WindowManager\CustomHud.h" />
-    <ClInclude Include="include\WindowManager\fonts.h" />
-    <ClInclude Include="include\WindowManager\WindowManager.h" />
+    <ClInclude Include="src\bbtag_im.h" />
+    <ClInclude Include="src\charobj.h" />
+    <ClInclude Include="src\crashdump.h" />
+    <ClInclude Include="src\D3D9EXWrapper\d3d9.h" />
+    <ClInclude Include="src\D3D9EXWrapper\D3D9Utils.h" />
+    <ClInclude Include="src\D3D9EXWrapper\D3DXMath.h" />
+    <ClInclude Include="src\D3D9EXWrapper\ID3D9EXWrapper.h" />
+    <ClInclude Include="src\D3D9EXWrapper\ID3D9EXWrapper_Device.h" />
+    <ClInclude Include="src\D3D9EXWrapper\ID3D9Wrapper_Sprite.h" />
+    <ClInclude Include="src\D3D9EXWrapper\ID3DXWrapper_Effect.h" />
+    <ClInclude Include="src\gamestate_defines.h" />
+    <ClInclude Include="src\globals.h" />
+    <ClInclude Include="src\Hooks\HookManager.h" />
+    <ClInclude Include="src\Hooks\hooks_bbtag.h" />
+    <ClInclude Include="src\Hooks\hooks_importAddressTable.h" />
+    <ClInclude Include="src\Hooks\hooks_steamApiWrapper.h" />
+    <ClInclude Include="src\logger.h" />
+    <ClInclude Include="src\main.h" />
+    <ClInclude Include="src\PaletteManager\CharPalInfo.h" />
+    <ClInclude Include="src\PaletteManager\impl_format.h" />
+    <ClInclude Include="src\PaletteManager\PaletteManager.h" />
+    <ClInclude Include="src\playermeters.h" />
+    <ClInclude Include="src\settings.h" />
+    <ClInclude Include="src\SteamApiWrapper\SteamFriendsWrapper.h" />
+    <ClInclude Include="src\SteamApiWrapper\SteamMatchmakingWrapper.h" />
+    <ClInclude Include="src\SteamApiWrapper\SteamNetworkingWrapper.h" />
+    <ClInclude Include="src\SteamApiWrapper\SteamUserStatsWrapper.h" />
+    <ClInclude Include="src\SteamApiWrapper\SteamUserWrapper.h" />
+    <ClInclude Include="src\SteamApiWrapper\SteamUtilsWrapper.h" />
+    <ClInclude Include="src\steamapi_helper.h" />
+    <ClInclude Include="src\update_check.h" />
+    <ClInclude Include="src\utils.h" />
+    <ClInclude Include="src\WindowManager\CustomHud.h" />
+    <ClInclude Include="src\WindowManager\fonts.h" />
+    <ClInclude Include="src\WindowManager\PaletteEditor.h" />
+    <ClInclude Include="src\WindowManager\WindowManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

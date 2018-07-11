@@ -189,6 +189,7 @@ static bool IsAnyMouseButtonDown()
 IMGUI_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     ImGuiIO& io = ImGui::GetIO();
+
     switch (msg)
     {
     case WM_LBUTTONDOWN:

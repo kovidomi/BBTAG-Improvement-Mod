@@ -1,9 +1,10 @@
-#include "../../include/D3D9ExWrapper/ID3D9EXWrapper_Device.h"
-#include "../../include/WindowManager/WindowManager.h"
-#include "../../include/Hooks/hooks_bbtag.h"
-#include "../../include/containers.h"
-#include "../../include/D3D9EXWrapper/D3D9Utils.h"
-#include "../../include/logger.h"
+#include "ID3D9EXWrapper_Device.h"
+#include "D3D9Utils.h"
+#include "../WindowManager/WindowManager.h"
+#include "../Hooks/hooks_bbtag.h"
+#include "../globals.h"
+#include "../logger.h"
+#include "../gamestate_defines.h"
 #include <steam_api.h>
 
 #pragma comment(lib, "steam_api.lib")
@@ -17,7 +18,7 @@ Direct3DDevice9ExWrapper::Direct3DDevice9ExWrapper(IDirect3DDevice9Ex **ppReturn
 	m_Direct3D9Ex = pIDirect3D9Ex;
 
 	//grab pointer
-	Containers::g_interfaces.pD3D9ExWrapper = *ppReturnedDeviceInterface;
+	g_interfaces.pD3D9ExWrapper = *ppReturnedDeviceInterface;
 
 	//place all other hooks that can only be placed after steamDRM unpacks the .exe in memory!!!
 	placeHooks_bbtag();
