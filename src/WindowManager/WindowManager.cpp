@@ -5,6 +5,7 @@
 #include "../update_check.h"
 #include "../SteamApiWrapper/SteamApiHelper.h"
 #include "../logger.h"
+#include "../Game/gamestates.h"
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
 #include <shellapi.h>
@@ -143,10 +144,10 @@ void WindowManager::OnMatchInit()
 	m_paletteEditor->OnMatchInit();
 
 	g_interfaces.pPaletteManager->OnMatchInit(
-		g_interfaces.player1.Char1().PalHandle(),
-		g_interfaces.player1.Char2().PalHandle(),
-		g_interfaces.player2.Char1().PalHandle(),
-		g_interfaces.player2.Char2().PalHandle());
+		g_interfaces.player1.GetChar1().GetPalHandle(),
+		g_interfaces.player1.GetChar2().GetPalHandle(),
+		g_interfaces.player2.GetChar1().GetPalHandle(),
+		g_interfaces.player2.GetChar2().GetPalHandle());
 }
 
 void WindowManager::SetMainWindowTitle(const char *text)
@@ -326,10 +327,10 @@ void WindowManager::Update()
 
 	//allowing palette updates
 	g_interfaces.pPaletteManager->UnlockUpdates(
-		g_interfaces.player1.Char1().PalHandle(),
-		g_interfaces.player1.Char2().PalHandle(),
-		g_interfaces.player2.Char1().PalHandle(),
-		g_interfaces.player2.Char2().PalHandle());
+		g_interfaces.player1.GetChar1().GetPalHandle(),
+		g_interfaces.player1.GetChar2().GetPalHandle(),
+		g_interfaces.player2.GetChar1().GetPalHandle(),
+		g_interfaces.player2.GetChar2().GetPalHandle());
 
 	//constantly overriding the visibility of the game's HUD if the custom hud is forced on
 	if (Settings::settingsIni.forcecustomhud)
@@ -415,15 +416,27 @@ void WindowManager::Update()
 
 		if (ImGui::CollapsingHeader("Custom Palettes"))
 		{
-			m_paletteEditor->ShowAllPaletteSelections();
+			if (*g_gameVals.pGameState != GameState_Match)
+				ImGui::TextDisabled("Not in match!");
+			else
+				m_paletteEditor->ShowAllPaletteSelections();
 
 			ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
 			m_paletteEditor->ShowReloadAllPalettesButton();
 
 			ImGui::Text(" "); ImGui::SameLine();
-			if (ImGui::Button("Palette editor"))
+			bool pressed = ImGui::Button("Palette editor");
+
+			if(*g_gameVals.pGameMode != GameMode_Tutorial)
 			{
-				show_palette_editor ^= 1;
+				ImGui::SameLine(); ImGui::TextDisabled("Not in tutorial mode!");
+			}
+			else
+			{
+				if (pressed)
+				{
+					show_palette_editor ^= 1;
+				}
 			}
 		}
 
@@ -730,21 +743,21 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 
 	if (ImGui::CollapsingHeader("Gameval addresses"))
 	{
-		if(!g_interfaces.player1.Char1().IsNullPtrCharData())
-			ImGui::Text("P1Char1 Data 0x%p", g_interfaces.player1.Char1().Data());
+		if(!g_interfaces.player1.GetChar1().IsNullPtrCharData())
+			ImGui::Text("P1Char1 Data 0x%p", g_interfaces.player1.GetChar1().GetData());
 
-		if(!g_interfaces.player1.Char2().IsNullPtrCharData())
-			ImGui::Text("P1Char2 Data 0x%p", g_interfaces.player1.Char2().Data());
+		if(!g_interfaces.player1.GetChar2().IsNullPtrCharData())
+			ImGui::Text("P1Char2 Data 0x%p", g_interfaces.player1.GetChar2().GetData());
 
-		if(!g_interfaces.player2.Char1().IsNullPtrCharData())
-			ImGui::Text("P2Char1 Data 0x%p", g_interfaces.player2.Char1().Data());
+		if(!g_interfaces.player2.GetChar1().IsNullPtrCharData())
+			ImGui::Text("P2Char1 Data 0x%p", g_interfaces.player2.GetChar1().GetData());
 
-		if(!g_interfaces.player2.Char2().IsNullPtrCharData())
-			ImGui::Text("P2Char2 Data 0x%p", g_interfaces.player2.Char2().Data());
+		if(!g_interfaces.player2.GetChar2().IsNullPtrCharData())
+			ImGui::Text("P2Char2 Data 0x%p", g_interfaces.player2.GetChar2().GetData());
 
 		ImGui::Separator();
-		ImGui::Text("P1Meters 0x%p", g_interfaces.player1.Meters());
-		ImGui::Text("P2Meters 0x%p", g_interfaces.player2.Meters());
+		ImGui::Text("P1Meters 0x%p", g_interfaces.player1.GetMeters());
+		ImGui::Text("P2Meters 0x%p", g_interfaces.player2.GetMeters());
 
 		ImGui::Separator();
 		//ImGui::Text("PalIndex_P1Char1 0x%p", &(*g_interfaces.pPaletteManager)[CharPalInfoIndex::P1Char1]->GetPalIndexRef());

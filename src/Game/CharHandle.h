@@ -10,8 +10,9 @@ class CharHandle
 	//CharIndex charIndex;
 
 public:
+	const CharInfo* GetData() const;
+	CharPaletteHandle& GetPalHandle();
+
 	void SetCharDataPtr(const void* addr);
 	bool IsNullPtrCharData() const;
-	const CharInfo* Data() const;
-	CharPaletteHandle& PalHandle();
 };

@@ -178,18 +178,18 @@ void PaletteManager::ReloadPalettesFromFolder()
 	LoadPalettesFromFolder();
 }
 
-bool PaletteManager::SwitchPalette(CharIndex charIndex, int customPalIndex, CharPaletteHandle& palHandle)
+bool PaletteManager::SwitchPalette(CharIndex charIndex, CharPaletteHandle& palHandle, int newCustomPalIndex)
 {
 	int totalCharPals = m_customPalettes[charIndex].size();
-	if (customPalIndex >= totalCharPals)
+	if (newCustomPalIndex >= totalCharPals)
 		return false;
 
-	palHandle.SetSelectedCustomPalIndex(customPalIndex);
-	palHandle.ReplaceAllPalFiles(&m_customPalettes[charIndex][customPalIndex]);
+	palHandle.SetSelectedCustomPalIndex(newCustomPalIndex);
+	palHandle.ReplaceAllPalFiles(&m_customPalettes[charIndex][newCustomPalIndex]);
 	return true;
 }
 
-void PaletteManager::ReplacePaletteFile(char * newPalData, PaletteFile palFile, CharPaletteHandle& palHandle)
+void PaletteManager::ReplacePaletteFile(const char * newPalData, PaletteFile palFile, CharPaletteHandle& palHandle)
 {
 	palHandle.ReplaceSinglePalFile(newPalData, palFile);
 }

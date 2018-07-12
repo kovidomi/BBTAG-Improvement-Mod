@@ -10,9 +10,9 @@ class Player
 
 public:
 	Player();
-	CharHandle& Char1();
-	CharHandle& Char2();
-	const MeterInfo* Meters() const;
+	CharHandle& GetChar1();
+	CharHandle& GetChar2();
+	const MeterInfo* GetMeters() const;
 
 	void SetMeterPtr(const void* addr);
 	bool IsNullPtrMeters() const;

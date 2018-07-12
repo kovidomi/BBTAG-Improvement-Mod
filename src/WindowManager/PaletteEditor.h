@@ -46,5 +46,6 @@ private:
 	void ShowPaletteSelect(CharHandle & charHandle, const char* btnText, const char* popupID);
 	void ShowHoveredPaletteToolTip(CharIndex charIndex, int palIndex);
 	void CopyToEditorArray(const char* pSrc);
+	void CopyPalFileToEditorArray(PaletteFile palFile, CharPaletteHandle &charPalHandle);
 	void UpdateHighlightArray(int selectedBoxIndex);
 };

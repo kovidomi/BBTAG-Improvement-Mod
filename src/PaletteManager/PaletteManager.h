@@ -13,11 +13,13 @@ public:
 	PaletteManager();
 	~PaletteManager();
 	std::vector<std::vector<IMPL_data_t>> &GetCustomPalettesVector();
+
 	bool WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filledPalData);
 	void ReloadPalettesFromFolder();
 	void LoadPalettesFromFolder();
-	bool SwitchPalette(CharIndex charIndex, int customPalIndex, CharPaletteHandle& palHandle);
-	void ReplacePaletteFile(char* newPalData, PaletteFile palFile, CharPaletteHandle& palHandle);
+
+	bool SwitchPalette(CharIndex charIndex, CharPaletteHandle& palHandle, int newCustomPalIndex);
+	void ReplacePaletteFile(const char* newPalData, PaletteFile palFile, CharPaletteHandle& palHandle);
 	char* GetPalFileAddr(PaletteFile palFile, CharPaletteHandle& palHandle);
 	int GetCurrentCustomPalIndex(CharPaletteHandle& palHandle);
 	const IMPL_data_t &GetCurrentPalData(CharPaletteHandle& palHandle);

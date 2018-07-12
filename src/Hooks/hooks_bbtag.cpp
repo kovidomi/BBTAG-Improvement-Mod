@@ -165,13 +165,13 @@ void __declspec(naked)GetCharObjects()
 		mov addr, ecx
 	}
 
-	g_interfaces.player1.Char1().SetCharDataPtr(addr);
+	g_interfaces.player1.GetChar1().SetCharDataPtr(addr);
 	addr += 0x4;
-	g_interfaces.player2.Char1().SetCharDataPtr(addr);
+	g_interfaces.player2.GetChar1().SetCharDataPtr(addr);
 	addr += 0x4;
-	g_interfaces.player1.Char2().SetCharDataPtr(addr);
+	g_interfaces.player1.GetChar2().SetCharDataPtr(addr);
 	addr += 0x4;
-	g_interfaces.player2.Char2().SetCharDataPtr(addr);
+	g_interfaces.player2.GetChar2().SetCharDataPtr(addr);
 
 	__asm
 	{
@@ -300,10 +300,10 @@ void __declspec(naked)GetP1CharsPaletteIndexes()
 	}
 
 	__asm pushad
-	if (g_interfaces.player1.Char1().PalHandle().IsNullPointerPalIndex())
-		g_interfaces.player1.Char1().PalHandle().SetPointerPalIndex(pPalIndex);
-	else if (g_interfaces.player1.Char2().PalHandle().IsNullPointerPalIndex())
-		g_interfaces.player1.Char2().PalHandle().SetPointerPalIndex(pPalIndex);
+	if (g_interfaces.player1.GetChar1().GetPalHandle().IsNullPointerPalIndex())
+		g_interfaces.player1.GetChar1().GetPalHandle().SetPointerPalIndex(pPalIndex);
+	else if (g_interfaces.player1.GetChar2().GetPalHandle().IsNullPointerPalIndex())
+		g_interfaces.player1.GetChar2().GetPalHandle().SetPointerPalIndex(pPalIndex);
 	__asm popad
 
 	__asm
@@ -331,10 +331,10 @@ void __declspec(naked)GetP2CharsPaletteIndexes()
 	}
 
 	__asm pushad
-	if (g_interfaces.player2.Char1().PalHandle().IsNullPointerPalIndex())
-		g_interfaces.player2.Char1().PalHandle().SetPointerPalIndex(pPalIndex);
-	else if (g_interfaces.player2.Char2().PalHandle().IsNullPointerPalIndex())
-		g_interfaces.player2.Char2().PalHandle().SetPointerPalIndex(pPalIndex);
+	if (g_interfaces.player2.GetChar1().GetPalHandle().IsNullPointerPalIndex())
+		g_interfaces.player2.GetChar1().GetPalHandle().SetPointerPalIndex(pPalIndex);
+	else if (g_interfaces.player2.GetChar2().GetPalHandle().IsNullPointerPalIndex())
+		g_interfaces.player2.GetChar2().GetPalHandle().SetPointerPalIndex(pPalIndex);
 	__asm popad
 
 	__asm
@@ -370,16 +370,16 @@ void __declspec(naked)GetPalBaseAddresses()
 	switch (counter)
 	{
 	case 0:
-		g_interfaces.player1.Char1().PalHandle().SetPointerBasePal(palPointer);
+		g_interfaces.player1.GetChar1().GetPalHandle().SetPointerBasePal(palPointer);
 		break;
 	case 1:
-		g_interfaces.player2.Char1().PalHandle().SetPointerBasePal(palPointer);
+		g_interfaces.player2.GetChar1().GetPalHandle().SetPointerBasePal(palPointer);
 		break;
 	case 2:
-		g_interfaces.player1.Char2().PalHandle().SetPointerBasePal(palPointer);
+		g_interfaces.player1.GetChar2().GetPalHandle().SetPointerBasePal(palPointer);
 		break;
 	case 3:
-		g_interfaces.player2.Char2().PalHandle().SetPointerBasePal(palPointer);
+		g_interfaces.player2.GetChar2().GetPalHandle().SetPointerBasePal(palPointer);
 		break;
 	default:
 		counter = -1; // -1 so it becomes 0 when we increment it in the following statement

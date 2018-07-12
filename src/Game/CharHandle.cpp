@@ -13,12 +13,12 @@ bool CharHandle::IsNullPtrCharData() const
 	return *m_charData == 0;
 }
 
-const CharInfo * CharHandle::Data() const
+const CharInfo * CharHandle::GetData() const
 {
 	return *m_charData;
 }
 
-CharPaletteHandle & CharHandle::PalHandle()
+CharPaletteHandle & CharHandle::GetPalHandle()
 {
 	return m_charPalHandler;
 }

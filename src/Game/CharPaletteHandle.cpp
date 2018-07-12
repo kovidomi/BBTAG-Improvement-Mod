@@ -3,7 +3,7 @@
 
 char* palFileNames[TOTAL_PALETTE_FILES] = { "Character", "Effect01", "Effect02", "Effect03", "Effect04", "Effect05", "Effect06", "Effect07" };
 
-char * CharPaletteHandle::GetPalFileAddr(char * base, int palIndex, int fileID)
+char * CharPaletteHandle::GetPalFileAddr(const char * base, int palIndex, int fileID)
 {
 	//dereferencing the multi-level pointer:
 	// [[[[baseaddr] + 0x4] + palIndex * 0x20] + fileID * 0x4] + 0x1C
@@ -50,7 +50,7 @@ void CharPaletteHandle::ReplaceAllPalFiles(IMPL_data_t *newPaletteData)
 	UpdatePalette();
 }
 
-void CharPaletteHandle::ReplaceSinglePalFile(char * newPalData, PaletteFile palFile)
+void CharPaletteHandle::ReplaceSinglePalFile(const char * newPalData, PaletteFile palFile)
 {
 	char* pDst1 = GetPalFileAddr(m_pPalBaseAddr, m_switchPalIndex1, (int)palFile);
 	char* pDst2 = GetPalFileAddr(m_pPalBaseAddr, m_switchPalIndex2, (int)palFile);

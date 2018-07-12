@@ -4,17 +4,17 @@ Player::Player() //: m_char1(CharHandle()), m_char2(CharHandle())
 {
 }
 
-CharHandle & Player::Char1()
+CharHandle & Player::GetChar1()
 {
 	return m_char1;
 }
 
-CharHandle & Player::Char2()
+CharHandle & Player::GetChar2()
 {
 	return m_char2;
 }
 
-const MeterInfo * Player::Meters() const
+const MeterInfo * Player::GetMeters() const
 {
 	return m_meters;
 }
