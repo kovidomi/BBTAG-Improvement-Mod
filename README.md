@@ -24,21 +24,34 @@ Can only be compiled in the Release/Win32 config.<br>
 Copy the compiled binary and the settings.ini file from the bin/ folder into the game's root folder.
 
 ## Requirements:
-* Visual Studio 2017 (v141) (Windows SDK 8.1)
-* Detours 1.5
-* DirectX SDK
-* Steamworks SDK (v1.42)
+- Visual Studio 2017 (v141) (Windows SDK 8.1)
+- Detours 1.5
+- DirectX SDK
+- Steamworks SDK (v1.42)
 
 ## Quick file overview
-* "TODO.txt" contains a list of things you can start working on
-* "main.h" file contains the defines for logging
-* "globals.h" file contains global variables that are used across the entire project
-* "D3D9ExWrapper" folders contain straightforward D3D wrapping
-* "SteamApiWrapper" folder contains straightforward Steam API wrapping
-* "WindowManager" folder contains the implementation of the mod's custom windows using the ImGui library
-* "Hooks/hooks_bbtag" implements game functions overriding
-* "Hooks/hooks_importAddressTable" implements imported functions overriding using the Detours library
-* "Hooks/hooks_steamApiWrapper" implements Steam API overriding
+- **TODO.txt** <br>
+list of things you can start working on
+- **main.h** <br>
+defines for logging
+- **interfaces.h** <br>
+access to all the wrappers and hooked game variables
+- **D3D9ExWrapper** <br>
+straightforward D3D wrapping
+- **Game** <br>
+player, ingame characters, meters information
+- **PaletteManager** <br>
+custom palette loading related class
+- **SteamApiWrapper** <br>
+straightforward Steam API wrapping
+- **WindowManager** <br>
+implementation of the mod's windows using the ImGui library
+- **Hooks/hooks_bbtag** <br>
+implements game functions overriding
+- **Hooks/hooks_detours** <br>
+implements imported functions overriding using the Detours library
+- **Hooks/hooks_steamApiWrapper** <br>
+implements Steam API overriding
 
 
 ## Support
