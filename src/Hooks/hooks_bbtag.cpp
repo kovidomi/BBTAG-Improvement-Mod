@@ -4,7 +4,7 @@
 #include "../SteamApiWrapper/SteamMatchmakingWrapper.h"
 #include "../SteamApiWrapper/SteamNetworkingWrapper.h"
 #include "../WindowManager/WindowManager.h"
-#include "../gamestate_defines.h"
+#include "../Game/gamestates.h"
 #include "../globals.h"
 #include "../logger.h"
 
@@ -154,22 +154,28 @@ void __declspec(naked)GetIsHUDHidden()
 DWORD GetCharObjectsJmpBackAddr = 0;
 void __declspec(naked)GetCharObjects()
 {
+	static char* addr;
 	LOG_ASM(2, "GetCharObjects\n");
 
 	__asm
 	{
 		mov     dword ptr[ecx], 0
 
-		push ecx
-		mov g_gameVals.CharObj_P1Char1, ecx
-		add ecx, 4
-		mov g_gameVals.CharObj_P2Char1, ecx
-		add ecx, 4
-		mov g_gameVals.CharObj_P1Char2, ecx
-		add ecx, 4
-		mov g_gameVals.CharObj_P2Char2, ecx
-		pop ecx
+		pushad
+		mov addr, ecx
+	}
 
+	g_interfaces.Player1.Char1().SetCharDataPtr(addr);
+	addr += 0x4;
+	g_interfaces.Player2.Char1().SetCharDataPtr(addr);
+	addr += 0x4;
+	g_interfaces.Player1.Char2().SetCharDataPtr(addr);
+	addr += 0x4;
+	g_interfaces.Player2.Char2().SetCharDataPtr(addr);
+
+	__asm
+	{
+		popad
 		jmp[GetCharObjectsJmpBackAddr]
 	}
 }
@@ -203,11 +209,21 @@ void __declspec(naked)GetTimer()
 DWORD GetPlayerMetersJmpBackAddr = 0;
 void __declspec(naked)GetPlayerMeters()
 {
+	static char* addr;
 	LOG_ASM(2, "GetPlayerMeters\n");
 
 	__asm
 	{
-		mov		g_gameVals.PlayerMetersObj, ebx
+		mov addr, ebx
+	}
+
+	__asm pushad
+	g_interfaces.Player1.SetMeterPtr(addr);
+	g_interfaces.Player2.SetMeterPtr(addr + 0x4);
+	__asm popad
+
+	__asm
+	{
 		sub     eax, esi
 		mov     dword ptr[ebx + esi * 4 + 20h], 0
 		jmp[GetPlayerMetersJmpBackAddr]
@@ -284,10 +300,10 @@ void __declspec(naked)GetP1CharsPaletteIndexes()
 	}
 
 	__asm pushad
-	if (g_interfaces.pCharPalInfos->P1Char1->IsNullPointerPalIndex())
-		g_interfaces.pCharPalInfos->P1Char1->SetPointerPalIndex(pPalIndex);
-	else if (g_interfaces.pCharPalInfos->P1Char2->IsNullPointerPalIndex())
-		g_interfaces.pCharPalInfos->P1Char2->SetPointerPalIndex(pPalIndex);
+	if (g_interfaces.Player1.Char1().PalHandle().IsNullPointerPalIndex())
+		g_interfaces.Player1.Char1().PalHandle().SetPointerPalIndex(pPalIndex);
+	else if (g_interfaces.Player1.Char2().PalHandle().IsNullPointerPalIndex())
+		g_interfaces.Player1.Char2().PalHandle().SetPointerPalIndex(pPalIndex);
 	__asm popad
 
 	__asm
@@ -315,10 +331,10 @@ void __declspec(naked)GetP2CharsPaletteIndexes()
 	}
 
 	__asm pushad
-	if (g_interfaces.pCharPalInfos->P2Char1->IsNullPointerPalIndex())
-		g_interfaces.pCharPalInfos->P2Char1->SetPointerPalIndex(pPalIndex);
-	else if (g_interfaces.pCharPalInfos->P2Char2->IsNullPointerPalIndex())
-		g_interfaces.pCharPalInfos->P2Char2->SetPointerPalIndex(pPalIndex);
+	if (g_interfaces.Player2.Char1().PalHandle().IsNullPointerPalIndex())
+		g_interfaces.Player2.Char1().PalHandle().SetPointerPalIndex(pPalIndex);
+	else if (g_interfaces.Player2.Char2().PalHandle().IsNullPointerPalIndex())
+		g_interfaces.Player2.Char2().PalHandle().SetPointerPalIndex(pPalIndex);
 	__asm popad
 
 	__asm
@@ -354,16 +370,16 @@ void __declspec(naked)GetPalBaseAddresses()
 	switch (counter)
 	{
 	case 0:
-		g_interfaces.pCharPalInfos->P1Char1->SetPointerBasePal(palPointer);
+		g_interfaces.Player1.Char1().PalHandle().SetPointerBasePal(palPointer);
 		break;
 	case 1:
-		g_interfaces.pCharPalInfos->P2Char1->SetPointerBasePal(palPointer);
+		g_interfaces.Player2.Char1().PalHandle().SetPointerBasePal(palPointer);
 		break;
 	case 2:
-		g_interfaces.pCharPalInfos->P1Char2->SetPointerBasePal(palPointer);
+		g_interfaces.Player1.Char2().PalHandle().SetPointerBasePal(palPointer);
 		break;
 	case 3:
-		g_interfaces.pCharPalInfos->P2Char2->SetPointerBasePal(palPointer);
+		g_interfaces.Player2.Char2().PalHandle().SetPointerBasePal(palPointer);
 		break;
 	default:
 		counter = -1; // -1 so it becomes 0 when we increment it in the following statement

@@ -1,7 +1,7 @@
 #pragma once
 #include "impl_format.h"
-#include "CharPalInfo.h"
-#include "../charobj.h"
+#include "../Game/CharPaletteHandle.h"
+#include "../Game/characters.h"
 #include <vector>
 
 class PaletteManager
@@ -16,15 +16,15 @@ public:
 	bool WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filledPalData);
 	void ReloadPalettesFromFolder();
 	void LoadPalettesFromFolder();
-	bool SwitchPalette(CharIndex charIndex, int customPalIndex, CharPalInfo* charPalInfoObj);
-	void ReplacePaletteFile(char* newPalData, PaletteFile palFile, CharPalInfo* charPalInfoObj);
-	char* GetPalFileAddr(PaletteFile palFile, CharPalInfo* charPalInfoObj);
-	int GetCurrentCustomPalIndex(CharPalInfo* charPalInfoObj);
-	IMPL_data_t &GetCurrentPalData(CharPalInfo* charPalInfoObj);
+	bool SwitchPalette(CharIndex charIndex, int customPalIndex, CharPaletteHandle* palHandle);
+	void ReplacePaletteFile(char* newPalData, PaletteFile palFile, CharPaletteHandle* palHandle);
+	char* GetPalFileAddr(PaletteFile palFile, CharPaletteHandle* palHandle);
+	int GetCurrentCustomPalIndex(CharPaletteHandle* palHandle);
+	const IMPL_data_t &GetCurrentPalData(CharPaletteHandle* palHandle);
 	//Remember to call it ONCE per frame 
-	void UnlockUpdates(CharPalInfo* P1Ch1, CharPalInfo* P1Ch2, CharPalInfo* P2Ch1, CharPalInfo* P2Ch2);
+	void UnlockUpdates(CharPaletteHandle& P1Ch1, CharPaletteHandle& P1Ch2, CharPaletteHandle& P2Ch1, CharPaletteHandle& P2Ch2);
 	//Remember to call it ONCE upon match start
-	void OnMatchInit(CharPalInfo* P1Ch1, CharPalInfo* P1Ch2, CharPalInfo* P2Ch1, CharPalInfo* P2Ch2);
+	void OnMatchInit(CharPaletteHandle& P1Ch1, CharPaletteHandle& P1Ch2, CharPaletteHandle& P2Ch1, CharPaletteHandle& P2Ch2);
 
 private:
 	void CreatePaletteFolders();

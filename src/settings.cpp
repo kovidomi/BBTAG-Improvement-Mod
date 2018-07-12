@@ -1,4 +1,4 @@
-#include "settings.h"
+#include "Settings.h"
 #include "globals.h"
 #include "logger.h"
 #include <ctime>

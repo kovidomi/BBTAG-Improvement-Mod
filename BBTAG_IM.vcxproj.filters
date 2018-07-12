@@ -31,7 +31,7 @@
     <Filter Include="src\D3D9EXWrapper">
       <UniqueIdentifier>{61d9aa73-5286-48a2-87b3-fd874d650113}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Player">
+    <Filter Include="src\Game">
       <UniqueIdentifier>{3d209caf-f580-415c-afde-1c675ac882db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -51,12 +51,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\logger.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\settings.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\steamapi_helper.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\update_check.cpp">
@@ -101,12 +95,6 @@
     <ClCompile Include="src\D3D9EXWrapper\ID3DXWrapper_Effect.cpp">
       <Filter>src\D3D9EXWrapper</Filter>
     </ClCompile>
-    <ClCompile Include="src\charobj.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\playermeters.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\WindowManager\fonts.cpp">
       <Filter>src\WindowManager</Filter>
     </ClCompile>
@@ -146,9 +134,6 @@
     <ClCompile Include="depends\imgui\imgui_impl_dx9.cpp">
       <Filter>depends\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\PaletteManager\CharPalInfo.cpp">
-      <Filter>src\PaletteManager</Filter>
-    </ClCompile>
     <ClCompile Include="src\globals.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -158,20 +143,26 @@
     <ClCompile Include="src\PaletteManager\PaletteManager.cpp">
       <Filter>src\PaletteManager</Filter>
     </ClCompile>
-    <ClCompile Include="src\Player\Player.cpp">
-      <Filter>src\Player</Filter>
+    <ClCompile Include="src\Game\characters.cpp">
+      <Filter>src\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\Player\CharHandle.cpp">
-      <Filter>src\Player</Filter>
+    <ClCompile Include="src\Game\CharHandle.cpp">
+      <Filter>src\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\Player\CharPaletteHandle.cpp">
-      <Filter>src\Player</Filter>
+    <ClCompile Include="src\Game\CharPaletteHandle.cpp">
+      <Filter>src\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\Player\MeterInfo.cpp">
-      <Filter>src\Player</Filter>
+    <ClCompile Include="src\Game\MeterInfo.cpp">
+      <Filter>src\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\Player\characters.cpp">
-      <Filter>src\Player</Filter>
+    <ClCompile Include="src\Game\Player.cpp">
+      <Filter>src\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Settings.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SteamApiWrapper\SteamApiHelper.cpp">
+      <Filter>src\SteamApiWrapper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,13 +190,7 @@
     <ClInclude Include="src\bbtag_im.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\charobj.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\crashdump.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gamestate_defines.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\globals.h">
@@ -215,15 +200,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\main.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\playermeters.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\settings.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\steamapi_helper.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\update_check.h">
@@ -261,9 +237,6 @@
     </ClInclude>
     <ClInclude Include="src\SteamApiWrapper\SteamUtilsWrapper.h">
       <Filter>src\SteamApiWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PaletteManager\CharPalInfo.h">
-      <Filter>src\PaletteManager</Filter>
     </ClInclude>
     <ClInclude Include="src\PaletteManager\impl_format.h">
       <Filter>src\PaletteManager</Filter>
@@ -304,23 +277,32 @@
     <ClInclude Include="src\D3D9EXWrapper\ID3DXWrapper_Effect.h">
       <Filter>src\D3D9EXWrapper</Filter>
     </ClInclude>
-    <ClInclude Include="src\Player\CharHandle.h">
-      <Filter>src\Player</Filter>
+    <ClInclude Include="src\Game\characters.h">
+      <Filter>src\Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Player\CharPaletteHandle.h">
-      <Filter>src\Player</Filter>
+    <ClInclude Include="src\Game\CharHandle.h">
+      <Filter>src\Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Player\Player.h">
-      <Filter>src\Player</Filter>
+    <ClInclude Include="src\Game\CharInfo.h">
+      <Filter>src\Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Player\MeterInfo.h">
-      <Filter>src\Player</Filter>
+    <ClInclude Include="src\Game\CharPaletteHandle.h">
+      <Filter>src\Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Player\CharInfo.h">
-      <Filter>src\Player</Filter>
+    <ClInclude Include="src\Game\MeterInfo.h">
+      <Filter>src\Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Player\characters.h">
-      <Filter>src\Player</Filter>
+    <ClInclude Include="src\Game\Player.h">
+      <Filter>src\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game\gamestates.h">
+      <Filter>src\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Settings.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SteamApiWrapper\SteamApiHelper.h">
+      <Filter>src\SteamApiWrapper</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

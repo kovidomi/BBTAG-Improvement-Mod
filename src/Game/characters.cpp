@@ -1,6 +1,6 @@
 #include "characters.h"
 
-char* charNames[TOTAL_CHAR_INDEXES]
+const char* charNames[TOTAL_CHAR_INDEXES]
 {
 	"Ragna",	// 0,
 	"Jin",		// 1,
@@ -45,7 +45,7 @@ char* charNames[TOTAL_CHAR_INDEXES]
 	"Boss",		// 40
 };
 
-wchar_t* wCharNames[TOTAL_CHAR_INDEXES]
+const wchar_t* wCharNames[TOTAL_CHAR_INDEXES]
 {
 	L"Ragna",	// 0,
 	L"Jin",		// 1,

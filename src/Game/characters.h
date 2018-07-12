@@ -2,8 +2,8 @@
 
 #define TOTAL_CHAR_INDEXES 41
 
-extern char* charNames[TOTAL_CHAR_INDEXES];
-extern wchar_t* wCharNames[TOTAL_CHAR_INDEXES];
+extern const char* charNames[TOTAL_CHAR_INDEXES];
+extern const wchar_t* wCharNames[TOTAL_CHAR_INDEXES];
 
 enum CharIndex
 {

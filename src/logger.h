@@ -1,7 +1,7 @@
 #pragma once
 #include "main.h"
 #include "D3D9EXWrapper\d3d9.h"
-#include "settings.h"
+#include "Settings.h"
 
 #ifndef RELEASE_VER
 #define LOG(_level, _str, ...) { \

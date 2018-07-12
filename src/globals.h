@@ -5,12 +5,10 @@
 #include "SteamApiWrapper\SteamUserStatsWrapper.h"
 #include "SteamApiWrapper\SteamUserWrapper.h"
 #include "SteamApiWrapper\SteamUtilsWrapper.h"
-#include "steamapi_helper.h"
+#include "SteamApiWrapper/SteamApiHelper.h"
 #include "D3D9EXWrapper\ID3D9ExWrapper_Device.h"
-#include "PaletteManager\CharPalInfo.h"
+#include "Game\Player.h"
 #include "PaletteManager\PaletteManager.h"
-#include "charobj.h"
-#include "playermeters.h"
 #include <steam_api.h>
 
 struct g_interfaces_t
@@ -24,8 +22,9 @@ struct g_interfaces_t
 	IDirect3DDevice9Ex* pD3D9ExWrapper;
 	SteamApiHelper* pSteamApiHelper;
 
-	CharPalInfos* pCharPalInfos;
 	PaletteManager* pPaletteManager;
+	Player Player1;
+	Player Player2;
 };
 
 struct gameVals_t
@@ -35,13 +34,6 @@ struct gameVals_t
 
 	int* pGameState;
 	int* pGameMode;
-
-	CharObj **CharObj_P1Char1;
-	CharObj **CharObj_P1Char2;
-	CharObj **CharObj_P2Char1;
-	CharObj **CharObj_P2Char2;
-
-	PlayerMeters *PlayerMetersObj;
 
 	bool isPaletteModePaused;
 };
@@ -67,4 +59,5 @@ extern gameProc_t g_gameProc;
 extern gameVals_t g_gameVals;
 extern temps_t g_tempVals;
 
+void InitGlobals();
 void CleanupGlobals();

@@ -25,7 +25,7 @@ void PaletteManager::CreatePaletteFolders()
 	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
 	for (int i = 0; i < (TOTAL_CHAR_INDEXES - 1); i++)
 	{
-		path = std::wstring(L"BBTAG_IM\\Palettes\\") + wcharnames[i];
+		path = std::wstring(L"BBTAG_IM\\Palettes\\") + wCharNames[i];
 		CreateDirectory(path.c_str(), NULL);
 	}
 }
@@ -56,7 +56,7 @@ void PaletteManager::LoadPalettesFromFolder()
 	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
 	for (int i = 0; i < (TOTAL_CHAR_INDEXES - 1); i++)
 	{
-		path = std::wstring(L"BBTAG_IM\\Palettes\\") + wcharnames[i] + L"\\*";
+		path = std::wstring(L"BBTAG_IM\\Palettes\\") + wCharNames[i] + L"\\*";
 		LoadPalettesIntoVector((CharIndex)i, path.c_str());
 	}
 	WindowManager::AddLog("[system] Finished loading custom palettes\n");
@@ -144,7 +144,7 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, const wchar_t* 
 
 bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filledPalData)
 {
-	std::string path = std::string("BBTAG_IM\\Palettes\\") + charnames[charIndex] + "\\" + filledPalData->palname + ".impl";
+	std::string path = std::string("BBTAG_IM\\Palettes\\") + charNames[charIndex] + "\\" + filledPalData->palname + ".impl";
 
 	IMPL_t IMPL_file;
 
@@ -178,59 +178,51 @@ void PaletteManager::ReloadPalettesFromFolder()
 	LoadPalettesFromFolder();
 }
 
-bool PaletteManager::SwitchPalette(CharIndex charIndex, int customPalIndex, CharPalInfo* charPalInfoObj)
+bool PaletteManager::SwitchPalette(CharIndex charIndex, int customPalIndex, CharPaletteHandle* palHandle)
 {
 	int totalCharPals = m_customPalettes[charIndex].size();
 	if (customPalIndex >= totalCharPals)
 		return false;
 
-	charPalInfoObj->SetSelectedCustomPalIndex(customPalIndex);
-	charPalInfoObj->ReplaceAllPalFiles(&m_customPalettes[charIndex][customPalIndex]);
+	palHandle->SetSelectedCustomPalIndex(customPalIndex);
+	palHandle->ReplaceAllPalFiles(&m_customPalettes[charIndex][customPalIndex]);
 	return true;
 }
 
-void PaletteManager::ReplacePaletteFile(char * newPalData, PaletteFile palFile, CharPalInfo * charPalInfoObj)
+void PaletteManager::ReplacePaletteFile(char * newPalData, PaletteFile palFile, CharPaletteHandle* palHandle)
 {
-	charPalInfoObj->ReplaceSinglePalFile(newPalData, palFile);
+	palHandle->ReplaceSinglePalFile(newPalData, palFile);
 }
 
-char * PaletteManager::GetPalFileAddr(PaletteFile palFile, CharPalInfo * charPalInfoObj)
+char * PaletteManager::GetPalFileAddr(PaletteFile palFile, CharPaletteHandle* palHandle)
 {
-	return charPalInfoObj->GetOrigPalFileAddr(palFile);
+	return palHandle->GetOrigPalFileAddr(palFile);
 }
 
-int PaletteManager::GetCurrentCustomPalIndex(CharPalInfo * charPalInfoObj)
+int PaletteManager::GetCurrentCustomPalIndex(CharPaletteHandle* palHandle)
 {
-	return charPalInfoObj->GetSelectedCustomPalIndex();
+	return palHandle->GetSelectedCustomPalIndex();
 }
 
-IMPL_data_t & PaletteManager::GetCurrentPalData(CharPalInfo * charPalInfoObj)
+const IMPL_data_t & PaletteManager::GetCurrentPalData(CharPaletteHandle* palHandle)
 {
-	return charPalInfoObj->GetCurrentPalData();
+	return palHandle->GetCurrentPalData();
 }
 
-void PaletteManager::UnlockUpdates(CharPalInfo * P1Ch1, CharPalInfo * P1Ch2, CharPalInfo * P2Ch1, CharPalInfo * P2Ch2)
+void PaletteManager::UnlockUpdates(CharPaletteHandle& P1Ch1, CharPaletteHandle& P1Ch2, CharPaletteHandle& P2Ch1, CharPaletteHandle& P2Ch2)
 {
-	if (P1Ch1)
-		P1Ch1->UnlockUpdate();
-	if (P1Ch2)
-		P1Ch2->UnlockUpdate();
-	if (P2Ch1)
-		P2Ch1->UnlockUpdate();
-	if (P2Ch2)
-		P2Ch2->UnlockUpdate();
+	P1Ch1.UnlockUpdate();
+	P1Ch2.UnlockUpdate();
+	P2Ch1.UnlockUpdate();
+	P2Ch2.UnlockUpdate();
 }
 
-void PaletteManager::OnMatchInit(CharPalInfo * P1Ch1, CharPalInfo * P1Ch2, CharPalInfo * P2Ch1, CharPalInfo * P2Ch2)
+void PaletteManager::OnMatchInit(CharPaletteHandle& P1Ch1, CharPaletteHandle& P1Ch2, CharPaletteHandle& P2Ch1, CharPaletteHandle& P2Ch2)
 {
-	if (P1Ch1)
-		P1Ch1->OnMatchInit();
-	if (P1Ch2)
-		P1Ch2->OnMatchInit();
-	if (P2Ch1)
-		P2Ch1->OnMatchInit();
-	if (P2Ch2)
-		P2Ch2->OnMatchInit();
+	P1Ch1.OnMatchInit();
+	P1Ch2.OnMatchInit();
+	P2Ch1.OnMatchInit();
+	P2Ch2.OnMatchInit();
 }
 
 std::vector<std::vector<IMPL_data_t>>& PaletteManager::GetCustomPalettesVector()

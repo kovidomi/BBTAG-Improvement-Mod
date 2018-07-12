@@ -1,6 +1,6 @@
 #include "update_check.h"
 #include "WindowManager/WindowManager.h"
-#include "settings.h"
+#include "Settings.h"
 #include "logger.h"
 #include <regex>
 #include <cstring>
@@ -51,7 +51,10 @@ void CheckUpdate()
 	InternetCloseHandle(connect);
 
 	data = data.substr(0, 950).c_str();
-	std::regex r("<title>.+(v\\d\.\\d\\d)"); //look for the title of the site
+
+	//fits on: <title>[BBTAG IMPROVEMENT MOD] (v1.03
+	//and captures: v1.03
+	std::regex r("<title>.+(v\\d\.\\d\\d)");
 	std::smatch m;
 	std::regex_search(data, m, r);
 

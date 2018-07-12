@@ -1,6 +1,6 @@
 #include "MeterInfo.h"
 
-char* meterCharNames[TOTAL_CHAR_INDEXES]
+const char* meterCharNames[TOTAL_CHAR_INDEXES]
 {
 	"Ragna",	// 0,
 	"Jin",		// 1,
@@ -59,18 +59,18 @@ ImVec4 meter_color_makoto(0.282f, 0.260f, 1.000f, 1.000f);
 ImVec4 meter_color_makoto_full(0.828f, 0.025f, 1.000f, 1.000f);
 ImVec4 meter_color_default(1.0f, 1.0f, 1.0f, 1.0f);
 
-ImVec4 get_char_unique_meter_color(const CharInfo& CharDataInst)
+ImVec4 get_char_unique_meter_color(const CharInfo& charData)
 {
 	ImVec4 ret;
 
-	switch (CharDataInst.char_index)
+	switch (charData.char_index)
 	{
 	case CharIndex_Aegis:
 		ret = meter_color_aegis;
 		break;
 	case CharIndex_Rachel:
 		ret = meter_color_rachel;
-		if (CharDataInst.unique_meter_cur_val < CharDataInst.unique_meter_max_val)
+		if (charData.unique_meter_cur_val < charData.unique_meter_max_val)
 			ret = meter_color_rachel_recover;
 		break;
 	case CharIndex_Yukiko:
@@ -83,7 +83,7 @@ ImVec4 get_char_unique_meter_color(const CharInfo& CharDataInst)
 		ret = meter_color_naoto;
 		break;
 	case CharIndex_Chie:
-		switch (CharDataInst.chie_charge_lvl)
+		switch (charData.chie_charge_lvl)
 		{
 		case 2:
 			ret = meter_color_chie_lvl2;
@@ -98,7 +98,7 @@ ImVec4 get_char_unique_meter_color(const CharInfo& CharDataInst)
 		}
 		break;
 	case CharIndex_Makoto:
-		if (CharDataInst.unique_meter_cur_val > 15)
+		if (charData.unique_meter_cur_val > 15)
 			ret = meter_color_makoto_full;
 		else
 			ret = meter_color_makoto;
@@ -161,18 +161,18 @@ float total_cross_to_bar_percent(int cross_value)
 	return (float)cross_value / (float)CROSS_GAUGE_MAX_VALUE;
 }
 
-bool show_char_unique_meter_num(const CharInfo& CharDataInst)
+bool show_char_unique_meter_num(const CharInfo& charData)
 {
 	//always show
-	if (CharDataInst.char_index == CharIndex_Yukiko)
+	if (charData.char_index == CharIndex_Yukiko)
 		return true;
 
 	//only show something for naoto if she has marked someone for death
-	if (CharDataInst.char_index == CharIndex_Naoto && CharDataInst.naoto_is_enemy_marked)
+	if (charData.char_index == CharIndex_Naoto && charData.naoto_is_enemy_marked)
 		return true;
 
 	//only show if chie has charge lvl higher than 0
-	if (CharDataInst.char_index == CharIndex_Chie && CharDataInst.unique_meter_cur_val > 0)
+	if (charData.char_index == CharIndex_Chie && charData.unique_meter_cur_val > 0)
 	{
 		return true;
 	}
@@ -180,12 +180,12 @@ bool show_char_unique_meter_num(const CharInfo& CharDataInst)
 	return false;
 }
 
-bool show_char_unique_meter_bar(const CharInfo& CharDataInst)
+bool show_char_unique_meter_bar(const CharInfo& charData)
 {
 	bool ret = false;
 
 	//always show 
-	switch (CharDataInst.char_index)
+	switch (charData.char_index)
 	{
 	case CharIndex_Aegis:
 	case CharIndex_Rachel:
@@ -194,10 +194,10 @@ bool show_char_unique_meter_bar(const CharInfo& CharDataInst)
 	}
 
 	//only show if their meter is not null
-	if ((CharDataInst.char_index == CharIndex_Chie ||
-		CharDataInst.char_index == CharIndex_Platinum ||
-		CharDataInst.char_index == CharIndex_Makoto) &&
-		CharDataInst.unique_meter_cur_val > 0)
+	if ((charData.char_index == CharIndex_Chie ||
+		charData.char_index == CharIndex_Platinum ||
+		charData.char_index == CharIndex_Makoto) &&
+		charData.unique_meter_cur_val > 0)
 	{
 		ret = true;
 	}

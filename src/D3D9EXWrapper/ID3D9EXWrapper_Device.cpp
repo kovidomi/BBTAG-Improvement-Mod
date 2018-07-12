@@ -4,7 +4,6 @@
 #include "../Hooks/hooks_bbtag.h"
 #include "../globals.h"
 #include "../logger.h"
-#include "../gamestate_defines.h"
 #include <steam_api.h>
 
 #pragma comment(lib, "steam_api.lib")

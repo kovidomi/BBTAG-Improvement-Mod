@@ -17,6 +17,5 @@ void CleanupGlobals()
 	SAFE_DELETE(g_interfaces.pSteamUtilsWrapper);
 	SAFE_DELETE(g_interfaces.pSteamApiHelper);
 
-	SAFE_DELETE(g_interfaces.pCharPalInfos);
 	SAFE_DELETE(g_interfaces.pPaletteManager);
 }

@@ -2,7 +2,7 @@
 #include "WindowManager.h"
 #include "../globals.h"
 #include "../logger.h"
-#include "../gamestate_defines.h"
+#include "../Game/gamestates.h"
 #include "../PaletteManager/impl_format.h"
 #include <Shlwapi.h>
 #include <imgui.h>
@@ -44,10 +44,10 @@ void PaletteEditor::ShowAllPaletteSelections()
 	if (HasNullPointer())
 		return;
 
-	ShowPaletteSelect(*g_gameVals.CharObj_P1Char1, g_interfaces.pCharPalInfos->P1Char1, "P1Ch1 palette", "select1-1");
-	ShowPaletteSelect(*g_gameVals.CharObj_P1Char2, g_interfaces.pCharPalInfos->P1Char2, "P1Ch2 palette", "select1-2");
-	ShowPaletteSelect(*g_gameVals.CharObj_P2Char1, g_interfaces.pCharPalInfos->P2Char1, "P2Ch1 palette", "select2-1");
-	ShowPaletteSelect(*g_gameVals.CharObj_P2Char2, g_interfaces.pCharPalInfos->P2Char2, "P2Ch2 palette", "select2-2");
+	ShowPaletteSelect(&g_interfaces.Player1.Char1(), "P1Ch1 palette", "select1-1");
+	ShowPaletteSelect(&g_interfaces.Player1.Char2(), "P1Ch2 palette", "select1-2");
+	ShowPaletteSelect(&g_interfaces.Player2.Char1(), "P2Ch1 palette", "select2-1");
+	ShowPaletteSelect(&g_interfaces.Player2.Char2(), "P2Ch2 palette", "select2-2");
 }
 
 void PaletteEditor::ShowReloadAllPalettesButton()
@@ -70,9 +70,9 @@ void PaletteEditor::OnMatchInit()
 
 	customPaletteVector = g_interfaces.pPaletteManager->GetCustomPalettesVector();
 
-	selectedCharIndex = (CharIndex)(*g_gameVals.CharObj_P1Char1)->char_index;
+	selectedCharIndex = (CharIndex)allSelectedCharObjs[0]->char_index;
 	selectedCharName = allSelectedCharNames[0];
-	selectedCharPalInfo = g_interfaces.pCharPalInfos->P1Char1;
+	selectedCharPalInfo = allSelectedCharPalInfos[0];
 	selectedPalIndex = 0;
 	selectedFile = PaletteFile_Character;
 
@@ -88,26 +88,10 @@ void PaletteEditor::OnMatchInit()
 
 bool PaletteEditor::HasNullPointer()
 {
-	if (g_interfaces.pCharPalInfos->P1Char1 == 0 ||
-		g_interfaces.pCharPalInfos->P1Char2 == 0 ||
-		g_interfaces.pCharPalInfos->P2Char1 == 0 ||
-		g_interfaces.pCharPalInfos->P2Char2 == 0)
-	{
-		return true;
-	}
-
-	if (g_gameVals.CharObj_P1Char1 == 0 ||
-		g_gameVals.CharObj_P1Char2 == 0 ||
-		g_gameVals.CharObj_P2Char1 == 0 ||
-		g_gameVals.CharObj_P2Char2 == 0)
-	{
-		return true;
-	}
-
-	if (*g_gameVals.CharObj_P1Char1 == 0 ||
-		*g_gameVals.CharObj_P1Char2 == 0 ||
-		*g_gameVals.CharObj_P2Char1 == 0 ||
-		*g_gameVals.CharObj_P2Char2 == 0)
+	if (g_interfaces.Player1.Char1().IsNullPtrCharData() ||
+		g_interfaces.Player1.Char2().IsNullPtrCharData() ||
+		g_interfaces.Player2.Char1().IsNullPtrCharData() ||
+		g_interfaces.Player2.Char2().IsNullPtrCharData())
 	{
 		return true;
 	}
@@ -117,20 +101,20 @@ bool PaletteEditor::HasNullPointer()
 
 void PaletteEditor::InitializeSelectedCharacters()
 {
-	allSelectedCharNames[0] = charnames[(*g_gameVals.CharObj_P1Char1)->char_index];
-	allSelectedCharNames[1] = charnames[(*g_gameVals.CharObj_P1Char2)->char_index];
-	allSelectedCharNames[2] = charnames[(*g_gameVals.CharObj_P2Char1)->char_index];
-	allSelectedCharNames[3] = charnames[(*g_gameVals.CharObj_P2Char2)->char_index];
+	allSelectedCharObjs[0] = g_interfaces.Player1.Char1().Data();
+	allSelectedCharObjs[1] = g_interfaces.Player1.Char2().Data();
+	allSelectedCharObjs[2] = g_interfaces.Player2.Char1().Data();
+	allSelectedCharObjs[3] = g_interfaces.Player2.Char2().Data();
 
-	allSelectedCharPalInfos[0] = g_interfaces.pCharPalInfos->P1Char1;
-	allSelectedCharPalInfos[1] = g_interfaces.pCharPalInfos->P1Char2;
-	allSelectedCharPalInfos[2] = g_interfaces.pCharPalInfos->P2Char1;
-	allSelectedCharPalInfos[3] = g_interfaces.pCharPalInfos->P2Char2;
+	allSelectedCharNames[0] = charNames[allSelectedCharObjs[0]->char_index];
+	allSelectedCharNames[1] = charNames[allSelectedCharObjs[1]->char_index];
+	allSelectedCharNames[2] = charNames[allSelectedCharObjs[2]->char_index];
+	allSelectedCharNames[3] = charNames[allSelectedCharObjs[3]->char_index];
 
-	allSelectedCharObjs[0] = *g_gameVals.CharObj_P1Char1;
-	allSelectedCharObjs[1] = *g_gameVals.CharObj_P1Char2;
-	allSelectedCharObjs[2] = *g_gameVals.CharObj_P2Char1;
-	allSelectedCharObjs[3] = *g_gameVals.CharObj_P2Char2;
+	allSelectedCharPalInfos[0] = &g_interfaces.Player1.Char1().PalHandle();
+	allSelectedCharPalInfos[1] = &g_interfaces.Player1.Char2().PalHandle();
+	allSelectedCharPalInfos[2] = &g_interfaces.Player2.Char1().PalHandle();
+	allSelectedCharPalInfos[3] = &g_interfaces.Player2.Char2().PalHandle();
 }
 
 void PaletteEditor::CharacterSelection()
@@ -371,7 +355,7 @@ void PaletteEditor::SavePaletteToFile()
 		std::wstring fullPath = std::wstring(pathBuf).substr(0, pos);
 
 		fullPath += L"\\BBTAG_IM\\Palettes\\";
-		fullPath += wcharnames[selectedCharIndex];
+		fullPath += wCharNames[selectedCharIndex];
 		fullPath += L"\\";
 
 		std::string filenameTemp(palNameBuf);
@@ -455,10 +439,11 @@ void PaletteEditor::CheckSelectedPalOutOfBound()
 	}
 }
 
-void PaletteEditor::ShowPaletteSelect(CharObj * charObjInst, CharPalInfo * charPalInfoInst, const char * btnText, const char * popupID)
+void PaletteEditor::ShowPaletteSelect(CharHandle * charHandle, const char * btnText, const char * popupID)
 {
-	int selected_pal_index = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(charPalInfoInst);
-	CharIndex charIndex = (CharIndex)charObjInst->char_index;
+	CharPaletteHandle& charPalHandle = charHandle->PalHandle();
+	int selected_pal_index = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(&charPalHandle);
+	CharIndex charIndex = (CharIndex)charHandle->Data()->char_index;
 
 	ImGui::Text(" "); ImGui::SameLine();
 	if (ImGui::Button(btnText))
@@ -469,18 +454,20 @@ void PaletteEditor::ShowPaletteSelect(CharObj * charObjInst, CharPalInfo * charP
 
 	if (ImGui::BeginPopup(popupID))
 	{
-		ImGui::Text(charnames[charIndex]);
+		ImGui::Text(charNames[charIndex]);
 		ImGui::Separator();
 		for (int i = 0; i < customPaletteVector[charIndex].size(); i++)
 		{
 			if (ImGui::Selectable(customPaletteVector[charIndex][i].palname))
 			{
-				g_interfaces.pPaletteManager->SwitchPalette(charIndex, i, charPalInfoInst);
+				g_interfaces.pPaletteManager->SwitchPalette(charIndex, i, &charPalHandle);
 
 				//updating palette editor's array if this is the currently selected character
-				if (charPalInfoInst == selectedCharPalInfo)
+				if (&charPalHandle == selectedCharPalInfo)
 				{
-					char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, charPalInfoInst);
+					DisableHighlightModes();
+
+					char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, &charPalHandle);
 					CopyToEditorArray(fileAddr);
 				}
 			}

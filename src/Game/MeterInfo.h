@@ -12,7 +12,7 @@
 #define BLAZE_GAUGE_GAIN_STAR3	67000
 #define BLAZE_GAUGE_MAX_VALUE	100000
 
-extern char* meterCharNames[TOTAL_CHAR_INDEXES];
+extern const char* meterCharNames[TOTAL_CHAR_INDEXES];
 
 int		blaze_to_single_digit(int blaze_value);
 //helps to fill up the skill gauge several times, like the original HUD does
@@ -20,12 +20,12 @@ int		total_skill_to_single_bar_value(int skill_value);
 float	total_skill_to_single_bar_percent(int skill_value, bool is_blaze_active);
 int		total_skill_to_single_digit(int skill_value);
 float	total_cross_to_bar_percent(int cross_value);
-bool	show_char_unique_meter_num(const CharInfo& CharDataInst);
-bool	show_char_unique_meter_bar(const CharInfo& CharDataInst);
+bool	show_char_unique_meter_num(const CharInfo& charData);
+bool	show_char_unique_meter_bar(const CharInfo& charData);
 bool	char_has_unique_meter(CharIndex index);
-ImVec4	get_char_unique_meter_color(const CharInfo& CharDataInst);
+ImVec4	get_char_unique_meter_color(const CharInfo& charData);
 
-   //for player2 we put this interface on base + 4bytes offset
+//for player2 we put this interface on base + 4bytes offset
 class MeterInfo
 {
 public:

@@ -1,6 +1,7 @@
 #pragma once
-#include "../PaletteManager/CharPalInfo.h"
-#include "../charobj.h"
+#include "../Game/CharPaletteHandle.h"
+#include "../Game/CharHandle.h"
+#include "../Game/characters.h"
 #include <vector>
 
 class PaletteEditor
@@ -8,13 +9,13 @@ class PaletteEditor
 private:
 	std::vector<std::vector<IMPL_data_t>> customPaletteVector;
 
-	char* allSelectedCharNames[4];
-	char* selectedCharName;
+	const char* allSelectedCharNames[4];
+	const char* selectedCharName;
 
-	CharPalInfo* allSelectedCharPalInfos[4];
-	CharPalInfo* selectedCharPalInfo;
+	CharPaletteHandle* allSelectedCharPalInfos[4];
+	CharPaletteHandle* selectedCharPalInfo;
 
-	CharObj* allSelectedCharObjs[4];
+	const CharInfo* allSelectedCharObjs[4];
 
 	CharIndex selectedCharIndex;
 	int selectedPalIndex;
@@ -45,7 +46,7 @@ private:
 	void DisableHighlightModes();
 	void SavePaletteToFile();
 	void CheckSelectedPalOutOfBound();
-	void ShowPaletteSelect(CharObj * charObjInst, CharPalInfo * charPalInfoInst, const char* btnText, const char* popupID);
+	void ShowPaletteSelect(CharHandle * charHandle, const char* btnText, const char* popupID);
 	void ShowHoveredPaletteToolTip(CharIndex charIndex, int palIndex);
 	void CopyToEditorArray(char* pSrc);
 	void UpdateHighlightArray(int selectedBoxIndex);

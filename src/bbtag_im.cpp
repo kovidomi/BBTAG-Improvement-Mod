@@ -4,7 +4,7 @@
 #include "globals.h"
 #include "crashdump.h"
 #include "logger.h"
-#include "settings.h"
+#include "Settings.h"
 #include "PaletteManager/PaletteManager.h"
 
 void CreateCustomDirectories()
@@ -30,7 +30,6 @@ void BBTAG_IM_Start()
 
 		CreateCustomDirectories();
 		g_interfaces.pPaletteManager = new PaletteManager();
-		g_interfaces.pCharPalInfos = new CharPalInfos();
 
 		SetUnhandledExceptionFilter(UnhandledExFilter);
 	}

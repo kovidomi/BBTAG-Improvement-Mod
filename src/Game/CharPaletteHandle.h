@@ -19,7 +19,7 @@ enum PaletteFile
 	PaletteFile_Effect7
 };
 
-class CharPaletteHandler
+class CharPaletteHandle
 {
 	int* m_pCurPalIndex;
 	char* m_pPalBaseAddr;
@@ -35,7 +35,7 @@ public:
 	void SetPointerBasePal(char* pPalBaseAddr);
 	bool IsNullPointerPalIndex();
 
-private:
+//private:
 	void SetPaletteIndex(int palIndex);
 	int& GetPalIndexRef();
 	void ReplaceAllPalFiles(IMPL_data_t *newPaletteData);

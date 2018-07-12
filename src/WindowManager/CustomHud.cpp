@@ -1,5 +1,6 @@
 #include "CustomHud.h"
 #include "../globals.h"
+#include "../Game/MeterInfo.h"
 #include "../logger.h"
 #include <imgui.h>
 
@@ -28,25 +29,20 @@ void CustomHud::Update(bool show_custom_hud, bool show_main_window)
 		return;
 	
 	//sanity check 1
-	if (!g_gameVals.CharObj_P1Char1 || !g_gameVals.CharObj_P1Char2 ||
-		!g_gameVals.CharObj_P2Char1 || !g_gameVals.CharObj_P2Char2)
+	if (g_interfaces.Player1.Char1().IsNullPtrCharData() ||
+		g_interfaces.Player1.Char2().IsNullPtrCharData() ||
+		g_interfaces.Player2.Char1().IsNullPtrCharData() ||
+		g_interfaces.Player2.Char2().IsNullPtrCharData())
 	{
-		LOG(2, "One of g_gameVals.CharObj is NULL !!!!!\n");
+		LOG(2, "One of Player.Char() is NULL !!!!!\n");
 		return;
 	}
 
 	//sanity check 2
-	if (!*g_gameVals.CharObj_P1Char1 || !*g_gameVals.CharObj_P1Char2 ||
-		!*g_gameVals.CharObj_P2Char1 || !*g_gameVals.CharObj_P2Char2)
+	if (g_interfaces.Player1.IsNullPtrMeters() ||
+		g_interfaces.Player2.IsNullPtrMeters())
 	{
-		LOG(2, "One of *g_gameVals.CharObj is NULL !!!!\n");
-		return;
-	}
-
-	//sanity check 3
-	if (!g_gameVals.PlayerMetersObj)
-	{
-		LOG(2, "g_gameVals.PlayerMetersObj is NULL !!!!\n");
+		LOG(2, "One of Player.Meter() is NULL !!!!\n");
 		return;
 	}
 
@@ -61,7 +57,15 @@ void CustomHud::Update(bool show_custom_hud, bool show_main_window)
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f)); //black
 	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.286f, 0.286f, 0.286f, 0.54f)); //grey
 
-	if (g_gameVals.PlayerMetersObj->P1_is_blaze_active || g_gameVals.PlayerMetersObj->P2_is_blaze_active)
+	const MeterInfo& p1Meters = *g_interfaces.Player1.Meters();
+	const MeterInfo& p2Meters = *g_interfaces.Player2.Meters();
+
+	const CharInfo& p1Ch1Info = *g_interfaces.Player1.Char1().Data();
+	const CharInfo& p1Ch2Info = *g_interfaces.Player1.Char2().Data();
+	const CharInfo& p2Ch1Info = *g_interfaces.Player2.Char1().Data();
+	const CharInfo& p2Ch2Info = *g_interfaces.Player2.Char2().Data();
+
+	if (p1Meters.is_blaze_active || p2Meters.is_blaze_active)
 	{
 		ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.0f, 1.0f, 1.0f, 1.0f)); //cyan
 	}
@@ -72,79 +76,76 @@ void CustomHud::Update(bool show_custom_hud, bool show_main_window)
 	{
 		UpdateTimer(g_gameVals.pGameTimer);
 
-		if ((*g_gameVals.CharObj_P1Char1)->is_char_active)
+		if (p1Ch1Info.is_char_active)
 		{
-			UpdateHP(*g_gameVals.CharObj_P1Char1);
-			UpdateHP(*g_gameVals.CharObj_P1Char2);
+			UpdateHP(p1Ch1Info);
+			UpdateHP(p1Ch2Info);
 		}
 		else
 		{
-			UpdateHP(*g_gameVals.CharObj_P1Char2);
-			UpdateHP(*g_gameVals.CharObj_P1Char1);
+			UpdateHP(p1Ch2Info);
+			UpdateHP(p1Ch1Info);
 		}
 
-		if ((*g_gameVals.CharObj_P2Char1)->is_char_active)
+		if (p2Ch1Info.is_char_active)
 		{
-			UpdateHP(*g_gameVals.CharObj_P2Char1, true);
-			UpdateHP(*g_gameVals.CharObj_P2Char2, true);
+			UpdateHP(p2Ch1Info, true);
+			UpdateHP(p2Ch2Info, true);
 		}
 		else
 		{
-			UpdateHP(*g_gameVals.CharObj_P2Char2, true);
-			UpdateHP(*g_gameVals.CharObj_P2Char1, true);
+			UpdateHP(p2Ch2Info, true);
+			UpdateHP(p2Ch1Info, true);
 		}
 	}
 
 	//render bottom part of the hud
 	{
-		UpdateMeters(g_gameVals.PlayerMetersObj->P1_cur_skill, g_gameVals.PlayerMetersObj->P1_cur_cross,
-			g_gameVals.PlayerMetersObj->P1_cur_blaze, g_gameVals.PlayerMetersObj->P1_is_blaze_available,
-			g_gameVals.PlayerMetersObj->P1_is_blaze_active, false);
+		UpdateMeters(p1Meters.cur_skill, p1Meters.cur_cross,
+			p1Meters.cur_blaze, p1Meters.is_blaze_available,
+			p1Meters.is_blaze_active, false);
 
-		UpdateMeters(g_gameVals.PlayerMetersObj->P2_cur_skill, g_gameVals.PlayerMetersObj->P2_cur_cross,
-			g_gameVals.PlayerMetersObj->P2_cur_blaze, g_gameVals.PlayerMetersObj->P2_is_blaze_available,
-			g_gameVals.PlayerMetersObj->P2_is_blaze_active, true);
+		UpdateMeters(p2Meters.cur_skill, p2Meters.cur_cross,
+			p2Meters.cur_blaze, p2Meters.is_blaze_available,
+			p2Meters.is_blaze_active, true);
 
 		//render unique meters
 		{
-			if ((*g_gameVals.CharObj_P1Char1)->is_char_active)
+			if (p1Ch1Info.is_char_active)
 			{
-				UpdateCharSpecificMeters(*g_gameVals.CharObj_P1Char1);
-				UpdateCharSpecificMeters(*g_gameVals.CharObj_P1Char2);
+				UpdateCharSpecificMeters(p1Ch1Info);
+				UpdateCharSpecificMeters(p1Ch2Info);
 			}
 			else
 			{
-				UpdateCharSpecificMeters(*g_gameVals.CharObj_P1Char2);
-				UpdateCharSpecificMeters(*g_gameVals.CharObj_P1Char1);
+				UpdateCharSpecificMeters(p1Ch2Info);
+				UpdateCharSpecificMeters(p1Ch1Info);
 			}
 
-			if ((*g_gameVals.CharObj_P2Char1)->is_char_active)
+			if (p2Ch1Info.is_char_active)
 			{
-				UpdateCharSpecificMeters(*g_gameVals.CharObj_P2Char1, true);
-				UpdateCharSpecificMeters(*g_gameVals.CharObj_P2Char2, true);
+				UpdateCharSpecificMeters(p2Ch1Info, true);
+				UpdateCharSpecificMeters(p2Ch2Info, true);
 			}
 			else
 			{
-				UpdateCharSpecificMeters(*g_gameVals.CharObj_P2Char2, true);
-				UpdateCharSpecificMeters(*g_gameVals.CharObj_P2Char1, true);
+				UpdateCharSpecificMeters(p2Ch2Info, true);
+				UpdateCharSpecificMeters(p2Ch1Info, true);
 			}
 		}
 	}
 
 	ImGui::PopFont();
 
-	if (g_gameVals.PlayerMetersObj->P1_is_blaze_active || g_gameVals.PlayerMetersObj->P2_is_blaze_active)
+	if (p1Meters.is_blaze_active || p2Meters.is_blaze_active)
 		ImGui::PopStyleColor();
 
 	ImGui::PopStyleColor(2);
 	ImGui::PopStyleVar(2);
 }
 
-void CustomHud::UpdateHP(CharObj *CharInstance, bool right_side)
+void CustomHud::UpdateHP(const CharInfo &charInfo, bool right_side)
 {
-	if (!CharInstance)
-		return;
-
 	char wndtitle[36];
 	bool swap_bar_dir = false;
 
@@ -158,7 +159,7 @@ void CustomHud::UpdateHP(CharObj *CharInstance, bool right_side)
 
 	ImGui::Begin(wndtitle, NULL, customHUDWindowFlags);
 
-	float cur_hp_percent = (float)CharInstance->cur_hp / (float)CharInstance->max_hp;
+	float cur_hp_percent = (float)charInfo.cur_hp / (float)charInfo.max_hp;
 
 	ImVec4 hp_color;
 	ImVec4 recoverable_hp_color(0.7f, 0.0f, 0.0f, 0.75f);
@@ -176,8 +177,8 @@ void CustomHud::UpdateHP(CharObj *CharInstance, bool right_side)
 
 	//recoverable hp
 	float recoverable_hp_percent = 0.0f;
-	if (CharInstance->recoverable_hp > 0)
-		recoverable_hp_percent = (float)(CharInstance->recoverable_hp + CharInstance->cur_hp) / (float)CharInstance->max_hp;
+	if (charInfo.recoverable_hp > 0)
+		recoverable_hp_percent = (float)(charInfo.recoverable_hp + charInfo.cur_hp) / (float)charInfo.max_hp;
 
 	ImGui::ColoredProgressBar(recoverable_hp_percent, ImVec2(bar_width, bar_height), recoverable_hp_color, NULL, false, swap_bar_dir);
 
@@ -189,15 +190,15 @@ void CustomHud::UpdateHP(CharObj *CharInstance, bool right_side)
 	ImGui::SetCursorPosY(ImGui::GetCursorPosY() - size.y - ImGui::GetStyle().ItemSpacing.y);
 
 	//char bufhp[32];
-	//sprintf(bufhp, "%d", CharInstance->cur_hp);
+	//sprintf(bufhp, "%d", charInfo.cur_hp);
 	ImGui::ColoredProgressBar(cur_hp_percent, ImVec2(bar_width, bar_height), hp_color, NULL, false, swap_bar_dir);
 
 	ImVec2 origPos = ImGui::GetCursorPos();
 
 	///////////////////////////
-	char* charname;
-	if (CharInstance->char_index < TOTAL_CHAR_INDEXES)
-		charname = charnames[CharInstance->char_index];
+	const char* charname;
+	if (charInfo.char_index < TOTAL_CHAR_INDEXES)
+		charname = charNames[charInfo.char_index];
 	else
 		charname = "<UNKNOWN>";
 
@@ -333,16 +334,16 @@ void CustomHud::UpdateMeters(int cur_skill_val, int cur_cross_val, int cur_blaze
 	ImGui::End();
 }
 
-void CustomHud::UpdateCharSpecificMeters(CharObj * CharInstance, bool right_side)
+void CustomHud::UpdateCharSpecificMeters(const CharInfo & charInfo, bool right_side)
 {
 
-	if (!char_has_unique_meter((CharIndex)CharInstance->char_index))
+	if (!char_has_unique_meter((CharIndex)charInfo.char_index))
 		return;
 
-	bool show_unique_bar = show_char_unique_meter_bar(CharInstance);
-	bool show_unique_num = show_char_unique_meter_num(CharInstance);
+	bool show_unique_bar = show_char_unique_meter_bar(charInfo);
+	bool show_unique_num = show_char_unique_meter_num(charInfo);
 
-	if ((!show_unique_bar && !show_unique_num) || CharInstance->cur_hp == 0)
+	if ((!show_unique_bar && !show_unique_num) || charInfo.cur_hp == 0)
 		return;
 
 	char wndtitle[36];
@@ -357,27 +358,27 @@ void CustomHud::UpdateCharSpecificMeters(CharObj * CharInstance, bool right_side
 	ImGui::Begin(wndtitle, NULL, customHUDWindowFlags);
 
 	ImVec2 bar_size(140.0f * hud_scale_x, 20.0f * hud_scale_y);
-	ImVec4 num_bar_color = get_char_unique_meter_color(CharInstance);
+	ImVec4 num_bar_color = get_char_unique_meter_color(charInfo);
 
 	char meter_num[32] = "?";
 
-	switch (CharInstance->char_index)
+	switch (charInfo.char_index)
 	{
 	case CharIndex_Yukiko:
-		sprintf(meter_num, "%d", CharInstance->unique_meter_cur_val);
+		sprintf(meter_num, "%d", charInfo.unique_meter_cur_val);
 		break;
 	case CharIndex_Naoto:
-		sprintf(meter_num, "%s", CharInstance->naoto_is_enemy_marked == 1 ? "X" : " ");
+		sprintf(meter_num, "%s", charInfo.naoto_is_enemy_marked == 1 ? "X" : " ");
 		break;
 	case CharIndex_Chie:
-		sprintf(meter_num, "%d", CharInstance->chie_charge_lvl);
+		sprintf(meter_num, "%d", charInfo.chie_charge_lvl);
 		break;
 	}
 
 	float bar_percent = 0.0f;
 
 	if (show_unique_bar)
-		bar_percent = (float)CharInstance->unique_meter_cur_val / (float)CharInstance->unique_meter_max_val;
+		bar_percent = (float)charInfo.unique_meter_cur_val / (float)charInfo.unique_meter_max_val;
 
 	if (right_side)
 	{
@@ -399,11 +400,11 @@ void CustomHud::UpdateCharSpecificMeters(CharObj * CharInstance, bool right_side
 		}
 
 		ImGui::SameLine();
-		ImGui::Text("%s", metercharnames[CharInstance->char_index]);
+		ImGui::Text("%s", meterCharNames[charInfo.char_index]);
 	}
 	else
 	{
-		ImGui::Text("%s", metercharnames[CharInstance->char_index]);
+		ImGui::Text("%s", meterCharNames[charInfo.char_index]);
 		ImGui::SameLine();
 
 		if (show_unique_bar)
