@@ -1,5 +1,5 @@
 #include "CustomHud.h"
-#include "../globals.h"
+#include "../interfaces.h"
 #include "../Game/MeterInfo.h"
 #include "../logger.h"
 #include <imgui.h>
@@ -29,18 +29,18 @@ void CustomHud::Update(bool show_custom_hud, bool show_main_window)
 		return;
 	
 	//sanity check 1
-	if (g_interfaces.Player1.Char1().IsNullPtrCharData() ||
-		g_interfaces.Player1.Char2().IsNullPtrCharData() ||
-		g_interfaces.Player2.Char1().IsNullPtrCharData() ||
-		g_interfaces.Player2.Char2().IsNullPtrCharData())
+	if (g_interfaces.player1.Char1().IsNullPtrCharData() ||
+		g_interfaces.player1.Char2().IsNullPtrCharData() ||
+		g_interfaces.player2.Char1().IsNullPtrCharData() ||
+		g_interfaces.player2.Char2().IsNullPtrCharData())
 	{
 		LOG(2, "One of Player.Char() is NULL !!!!!\n");
 		return;
 	}
 
 	//sanity check 2
-	if (g_interfaces.Player1.IsNullPtrMeters() ||
-		g_interfaces.Player2.IsNullPtrMeters())
+	if (g_interfaces.player1.IsNullPtrMeters() ||
+		g_interfaces.player2.IsNullPtrMeters())
 	{
 		LOG(2, "One of Player.Meter() is NULL !!!!\n");
 		return;
@@ -57,13 +57,13 @@ void CustomHud::Update(bool show_custom_hud, bool show_main_window)
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f)); //black
 	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.286f, 0.286f, 0.286f, 0.54f)); //grey
 
-	const MeterInfo& p1Meters = *g_interfaces.Player1.Meters();
-	const MeterInfo& p2Meters = *g_interfaces.Player2.Meters();
+	const MeterInfo& p1Meters = *g_interfaces.player1.Meters();
+	const MeterInfo& p2Meters = *g_interfaces.player2.Meters();
 
-	const CharInfo& p1Ch1Info = *g_interfaces.Player1.Char1().Data();
-	const CharInfo& p1Ch2Info = *g_interfaces.Player1.Char2().Data();
-	const CharInfo& p2Ch1Info = *g_interfaces.Player2.Char1().Data();
-	const CharInfo& p2Ch2Info = *g_interfaces.Player2.Char2().Data();
+	const CharInfo& p1Ch1Info = *g_interfaces.player1.Char1().Data();
+	const CharInfo& p1Ch2Info = *g_interfaces.player1.Char2().Data();
+	const CharInfo& p2Ch1Info = *g_interfaces.player2.Char1().Data();
+	const CharInfo& p2Ch2Info = *g_interfaces.player2.Char2().Data();
 
 	if (p1Meters.is_blaze_active || p2Meters.is_blaze_active)
 	{

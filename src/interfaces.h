@@ -11,7 +11,7 @@
 #include "PaletteManager\PaletteManager.h"
 #include <steam_api.h>
 
-struct g_interfaces_t
+struct interfaces_t
 {
 	SteamFriendsWrapper* pSteamFriendsWrapper;
 	SteamMatchmakingWrapper* pSteamMatchmakingWrapper;
@@ -21,10 +21,10 @@ struct g_interfaces_t
 	SteamUtilsWrapper* pSteamUtilsWrapper;
 	IDirect3DDevice9Ex* pD3D9ExWrapper;
 	SteamApiHelper* pSteamApiHelper;
-
 	PaletteManager* pPaletteManager;
-	Player Player1;
-	Player Player2;
+
+	Player player1;
+	Player player2;
 };
 
 struct gameVals_t
@@ -54,10 +54,9 @@ struct temps_t
 	ISteamUtils** ppSteamUtils;
 };
 
-extern g_interfaces_t g_interfaces;
+extern interfaces_t g_interfaces;
 extern gameProc_t g_gameProc;
 extern gameVals_t g_gameVals;
 extern temps_t g_tempVals;
 
-void InitGlobals();
-void CleanupGlobals();
+void CleanupInterfaces();

@@ -178,35 +178,35 @@ void PaletteManager::ReloadPalettesFromFolder()
 	LoadPalettesFromFolder();
 }
 
-bool PaletteManager::SwitchPalette(CharIndex charIndex, int customPalIndex, CharPaletteHandle* palHandle)
+bool PaletteManager::SwitchPalette(CharIndex charIndex, int customPalIndex, CharPaletteHandle& palHandle)
 {
 	int totalCharPals = m_customPalettes[charIndex].size();
 	if (customPalIndex >= totalCharPals)
 		return false;
 
-	palHandle->SetSelectedCustomPalIndex(customPalIndex);
-	palHandle->ReplaceAllPalFiles(&m_customPalettes[charIndex][customPalIndex]);
+	palHandle.SetSelectedCustomPalIndex(customPalIndex);
+	palHandle.ReplaceAllPalFiles(&m_customPalettes[charIndex][customPalIndex]);
 	return true;
 }
 
-void PaletteManager::ReplacePaletteFile(char * newPalData, PaletteFile palFile, CharPaletteHandle* palHandle)
+void PaletteManager::ReplacePaletteFile(char * newPalData, PaletteFile palFile, CharPaletteHandle& palHandle)
 {
-	palHandle->ReplaceSinglePalFile(newPalData, palFile);
+	palHandle.ReplaceSinglePalFile(newPalData, palFile);
 }
 
-char * PaletteManager::GetPalFileAddr(PaletteFile palFile, CharPaletteHandle* palHandle)
+char * PaletteManager::GetPalFileAddr(PaletteFile palFile, CharPaletteHandle& palHandle)
 {
-	return palHandle->GetOrigPalFileAddr(palFile);
+	return palHandle.GetOrigPalFileAddr(palFile);
 }
 
-int PaletteManager::GetCurrentCustomPalIndex(CharPaletteHandle* palHandle)
+int PaletteManager::GetCurrentCustomPalIndex(CharPaletteHandle& palHandle)
 {
-	return palHandle->GetSelectedCustomPalIndex();
+	return palHandle.GetSelectedCustomPalIndex();
 }
 
-const IMPL_data_t & PaletteManager::GetCurrentPalData(CharPaletteHandle* palHandle)
+const IMPL_data_t & PaletteManager::GetCurrentPalData(CharPaletteHandle& palHandle)
 {
-	return palHandle->GetCurrentPalData();
+	return palHandle.GetCurrentPalData();
 }
 
 void PaletteManager::UnlockUpdates(CharPaletteHandle& P1Ch1, CharPaletteHandle& P1Ch2, CharPaletteHandle& P2Ch1, CharPaletteHandle& P2Ch2)

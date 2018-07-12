@@ -119,9 +119,6 @@
     <ClCompile Include="src\Hooks\hooks_steamApiWrapper.cpp">
       <Filter>src\Hooks</Filter>
     </ClCompile>
-    <ClCompile Include="src\Hooks\hooks_importAddressTable.cpp">
-      <Filter>src\Hooks</Filter>
-    </ClCompile>
     <ClCompile Include="depends\imgui\imgui.cpp">
       <Filter>depends\ImGui</Filter>
     </ClCompile>
@@ -133,9 +130,6 @@
     </ClCompile>
     <ClCompile Include="depends\imgui\imgui_impl_dx9.cpp">
       <Filter>depends\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\globals.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\WindowManager\PaletteEditor.cpp">
       <Filter>src\WindowManager</Filter>
@@ -164,6 +158,12 @@
     <ClCompile Include="src\SteamApiWrapper\SteamApiHelper.cpp">
       <Filter>src\SteamApiWrapper</Filter>
     </ClCompile>
+    <ClCompile Include="src\interfaces.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hooks\hooks_detours.cpp">
+      <Filter>src\Hooks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -191,9 +191,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\crashdump.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\globals.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\logger.h">
@@ -250,9 +247,6 @@
     <ClInclude Include="src\Hooks\hooks_bbtag.h">
       <Filter>src\Hooks</Filter>
     </ClInclude>
-    <ClInclude Include="src\Hooks\hooks_importAddressTable.h">
-      <Filter>src\Hooks</Filter>
-    </ClInclude>
     <ClInclude Include="src\Hooks\hooks_steamApiWrapper.h">
       <Filter>src\Hooks</Filter>
     </ClInclude>
@@ -303,6 +297,12 @@
     </ClInclude>
     <ClInclude Include="src\SteamApiWrapper\SteamApiHelper.h">
       <Filter>src\SteamApiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interfaces.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hooks\hooks_detours.h">
+      <Filter>src\Hooks</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

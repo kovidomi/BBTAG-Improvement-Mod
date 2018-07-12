@@ -1,7 +1,7 @@
 #include "bbtag_im.h"
-#include "Hooks/hooks_importAddressTable.h"
+#include "Hooks/hooks_detours.h"
 #include "WindowManager/WindowManager.h"
-#include "globals.h"
+#include "interfaces.h"
 #include "crashdump.h"
 #include "logger.h"
 #include "Settings.h"
@@ -21,7 +21,7 @@ void BBTAG_IM_Start()
 		logSettingsIni();
 		Settings::initSavedSettings();
 
-		if (!placeHooks_importAddressTable())
+		if (!placeHooks_detours())
 		{
 			MessageBoxA(NULL, "Failed IAT hook", "BBTAGIM", MB_OK);
 			BBTAG_IM_Shutdown();
@@ -39,7 +39,7 @@ void BBTAG_IM_Shutdown()
 {
 	WindowManager::Shutdown();
 
-	CleanupGlobals();
+	CleanupInterfaces();
 
 	closeLogger();
 }

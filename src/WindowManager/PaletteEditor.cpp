@@ -1,6 +1,6 @@
 #include "PaletteEditor.h"
 #include "WindowManager.h"
-#include "../globals.h"
+#include "../interfaces.h"
 #include "../logger.h"
 #include "../Game/gamestates.h"
 #include "../PaletteManager/impl_format.h"
@@ -44,10 +44,10 @@ void PaletteEditor::ShowAllPaletteSelections()
 	if (HasNullPointer())
 		return;
 
-	ShowPaletteSelect(&g_interfaces.Player1.Char1(), "P1Ch1 palette", "select1-1");
-	ShowPaletteSelect(&g_interfaces.Player1.Char2(), "P1Ch2 palette", "select1-2");
-	ShowPaletteSelect(&g_interfaces.Player2.Char1(), "P2Ch1 palette", "select2-1");
-	ShowPaletteSelect(&g_interfaces.Player2.Char2(), "P2Ch2 palette", "select2-2");
+	ShowPaletteSelect(g_interfaces.player1.Char1(), "P1Ch1 palette", "select1-1");
+	ShowPaletteSelect(g_interfaces.player1.Char2(), "P1Ch2 palette", "select1-2");
+	ShowPaletteSelect(g_interfaces.player2.Char1(), "P2Ch1 palette", "select2-1");
+	ShowPaletteSelect(g_interfaces.player2.Char2(), "P2Ch2 palette", "select2-2");
 }
 
 void PaletteEditor::ShowReloadAllPalettesButton()
@@ -70,9 +70,9 @@ void PaletteEditor::OnMatchInit()
 
 	customPaletteVector = g_interfaces.pPaletteManager->GetCustomPalettesVector();
 
-	selectedCharIndex = (CharIndex)allSelectedCharObjs[0]->char_index;
+	selectedCharIndex = (CharIndex)allSelectedCharHandles[0]->Data()->char_index;
 	selectedCharName = allSelectedCharNames[0];
-	selectedCharPalInfo = allSelectedCharPalInfos[0];
+	selectedCharPalHandle = &allSelectedCharHandles[0]->PalHandle();
 	selectedPalIndex = 0;
 	selectedFile = PaletteFile_Character;
 
@@ -80,7 +80,7 @@ void PaletteEditor::OnMatchInit()
 	highlight_mode = false;
 	show_alpha = false;
 
-	char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, selectedCharPalInfo);
+	char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, *selectedCharPalHandle);
 	CopyToEditorArray(fileAddr);
 
 	g_gameVals.isPaletteModePaused = false;
@@ -88,10 +88,10 @@ void PaletteEditor::OnMatchInit()
 
 bool PaletteEditor::HasNullPointer()
 {
-	if (g_interfaces.Player1.Char1().IsNullPtrCharData() ||
-		g_interfaces.Player1.Char2().IsNullPtrCharData() ||
-		g_interfaces.Player2.Char1().IsNullPtrCharData() ||
-		g_interfaces.Player2.Char2().IsNullPtrCharData())
+	if (g_interfaces.player1.Char1().IsNullPtrCharData() ||
+		g_interfaces.player1.Char2().IsNullPtrCharData() ||
+		g_interfaces.player2.Char1().IsNullPtrCharData() ||
+		g_interfaces.player2.Char2().IsNullPtrCharData())
 	{
 		return true;
 	}
@@ -101,20 +101,15 @@ bool PaletteEditor::HasNullPointer()
 
 void PaletteEditor::InitializeSelectedCharacters()
 {
-	allSelectedCharObjs[0] = g_interfaces.Player1.Char1().Data();
-	allSelectedCharObjs[1] = g_interfaces.Player1.Char2().Data();
-	allSelectedCharObjs[2] = g_interfaces.Player2.Char1().Data();
-	allSelectedCharObjs[3] = g_interfaces.Player2.Char2().Data();
+	allSelectedCharHandles[0] = &g_interfaces.player1.Char1();
+	allSelectedCharHandles[1] = &g_interfaces.player1.Char2();
+	allSelectedCharHandles[2] = &g_interfaces.player2.Char1();
+	allSelectedCharHandles[3] = &g_interfaces.player2.Char2();
 
-	allSelectedCharNames[0] = charNames[allSelectedCharObjs[0]->char_index];
-	allSelectedCharNames[1] = charNames[allSelectedCharObjs[1]->char_index];
-	allSelectedCharNames[2] = charNames[allSelectedCharObjs[2]->char_index];
-	allSelectedCharNames[3] = charNames[allSelectedCharObjs[3]->char_index];
-
-	allSelectedCharPalInfos[0] = &g_interfaces.Player1.Char1().PalHandle();
-	allSelectedCharPalInfos[1] = &g_interfaces.Player1.Char2().PalHandle();
-	allSelectedCharPalInfos[2] = &g_interfaces.Player2.Char1().PalHandle();
-	allSelectedCharPalInfos[3] = &g_interfaces.Player2.Char2().PalHandle();
+	allSelectedCharNames[0] = charNames[allSelectedCharHandles[0]->Data()->char_index];
+	allSelectedCharNames[1] = charNames[allSelectedCharHandles[1]->Data()->char_index];
+	allSelectedCharNames[2] = charNames[allSelectedCharHandles[2]->Data()->char_index];
+	allSelectedCharNames[3] = charNames[allSelectedCharHandles[3]->Data()->char_index];
 }
 
 void PaletteEditor::CharacterSelection()
@@ -138,12 +133,12 @@ void PaletteEditor::CharacterSelection()
 			{
 				DisableHighlightModes();
 
-				selectedCharIndex = (CharIndex)allSelectedCharObjs[i]->char_index;
+				selectedCharIndex = (CharIndex)allSelectedCharHandles[i]->Data()->char_index;
 				selectedCharName = allSelectedCharNames[i];
-				selectedCharPalInfo = allSelectedCharPalInfos[i];
-				selectedPalIndex = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(selectedCharPalInfo);
+				selectedCharPalHandle = &allSelectedCharHandles[i]->PalHandle();
+				selectedPalIndex = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(*selectedCharPalHandle);
 
-				char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, selectedCharPalInfo);
+				char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, *selectedCharPalHandle);
 				CopyToEditorArray(fileAddr);
 
 				ImGui::PopID();
@@ -161,7 +156,7 @@ void PaletteEditor::PaletteSelection()
 		ImGui::OpenPopup("select_custom_pal");
 
 	//keep updating it, incase palette is changed on the menu
-	selectedPalIndex = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(selectedCharPalInfo);
+	selectedPalIndex = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(*selectedCharPalHandle);
 
 	ImGui::SameLine();
 	ImGui::Text(customPaletteVector[selectedCharIndex][selectedPalIndex].palname);
@@ -175,8 +170,8 @@ void PaletteEditor::PaletteSelection()
 				DisableHighlightModes();
 
 				selectedPalIndex = i;
-				g_interfaces.pPaletteManager->SwitchPalette(selectedCharIndex, i, selectedCharPalInfo);
-				char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, selectedCharPalInfo);
+				g_interfaces.pPaletteManager->SwitchPalette(selectedCharIndex, i, *selectedCharPalHandle);
+				char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, *selectedCharPalHandle);
 				CopyToEditorArray(fileAddr);
 			}
 			ShowHoveredPaletteToolTip(selectedCharIndex, i);
@@ -205,7 +200,7 @@ void PaletteEditor::FileSelection()
 
 				selectedFile = (PaletteFile)(i);
 
-				char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, selectedCharPalInfo);
+				char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, *selectedCharPalHandle);
 				CopyToEditorArray(fileAddr);
 			}
 		}
@@ -238,7 +233,7 @@ void PaletteEditor::EditingModesSelection()
 			{
 				((int*)highlightArray)[i] = COLOR_BLACK;
 			}
-			g_interfaces.pPaletteManager->ReplacePaletteFile(highlightArray, selectedFile, selectedCharPalInfo);
+			g_interfaces.pPaletteManager->ReplacePaletteFile(highlightArray, selectedFile, *selectedCharPalHandle);
 		}
 		else
 		{
@@ -275,7 +270,7 @@ void PaletteEditor::ShowPaletteBoxes()
 			}
 			else
 			{
-				g_interfaces.pPaletteManager->ReplacePaletteFile(paletteEditorArray, selectedFile, selectedCharPalInfo);
+				g_interfaces.pPaletteManager->ReplacePaletteFile(paletteEditorArray, selectedFile, *selectedCharPalHandle);
 			}
 		}
 
@@ -298,7 +293,7 @@ void PaletteEditor::ShowPaletteBoxes()
 void PaletteEditor::DisableHighlightModes()
 {
 	highlight_mode = false;
-	g_interfaces.pPaletteManager->ReplacePaletteFile(paletteEditorArray, selectedFile, selectedCharPalInfo);
+	g_interfaces.pPaletteManager->ReplacePaletteFile(paletteEditorArray, selectedFile, *selectedCharPalHandle);
 }
 
 void PaletteEditor::SavePaletteToFile()
@@ -402,7 +397,7 @@ void PaletteEditor::SavePaletteToFile()
 			overwrite = false;
 		}
 
-		IMPL_data_t curPalData = g_interfaces.pPaletteManager->GetCurrentPalData(selectedCharPalInfo);
+		IMPL_data_t curPalData = g_interfaces.pPaletteManager->GetCurrentPalData(*selectedCharPalHandle);
 
 		strncpy(curPalData.creator, palCreatorBuf, IMPL_CREATOR_LENGTH);
 		strncpy(curPalData.palname, palNameBuf, IMPL_PALNAME_LENGTH);
@@ -433,17 +428,17 @@ void PaletteEditor::CheckSelectedPalOutOfBound()
 	{
 		//reset back to default
 		selectedPalIndex = 0;
-		g_interfaces.pPaletteManager->SwitchPalette(selectedCharIndex, selectedPalIndex, selectedCharPalInfo);
-		char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, selectedCharPalInfo);
+		g_interfaces.pPaletteManager->SwitchPalette(selectedCharIndex, selectedPalIndex, *selectedCharPalHandle);
+		char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, *selectedCharPalHandle);
 		CopyToEditorArray(fileAddr);
 	}
 }
 
-void PaletteEditor::ShowPaletteSelect(CharHandle * charHandle, const char * btnText, const char * popupID)
+void PaletteEditor::ShowPaletteSelect(CharHandle & charHandle, const char * btnText, const char * popupID)
 {
-	CharPaletteHandle& charPalHandle = charHandle->PalHandle();
-	int selected_pal_index = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(&charPalHandle);
-	CharIndex charIndex = (CharIndex)charHandle->Data()->char_index;
+	CharPaletteHandle& charPalHandle = charHandle.PalHandle();
+	int selected_pal_index = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(charPalHandle);
+	CharIndex charIndex = (CharIndex)charHandle.Data()->char_index;
 
 	ImGui::Text(" "); ImGui::SameLine();
 	if (ImGui::Button(btnText))
@@ -460,14 +455,14 @@ void PaletteEditor::ShowPaletteSelect(CharHandle * charHandle, const char * btnT
 		{
 			if (ImGui::Selectable(customPaletteVector[charIndex][i].palname))
 			{
-				g_interfaces.pPaletteManager->SwitchPalette(charIndex, i, &charPalHandle);
+				g_interfaces.pPaletteManager->SwitchPalette(charIndex, i, charPalHandle);
 
 				//updating palette editor's array if this is the currently selected character
-				if (&charPalHandle == selectedCharPalInfo)
+				if (&charPalHandle == selectedCharPalHandle)
 				{
 					DisableHighlightModes();
 
-					char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, &charPalHandle);
+					char* fileAddr = g_interfaces.pPaletteManager->GetPalFileAddr(selectedFile, charPalHandle);
 					CopyToEditorArray(fileAddr);
 				}
 			}
@@ -501,7 +496,7 @@ void PaletteEditor::ShowHoveredPaletteToolTip(CharIndex charIndex, int palIndex)
 	}
 }
 
-void PaletteEditor::CopyToEditorArray(char * pSrc)
+void PaletteEditor::CopyToEditorArray(const char * pSrc)
 {
 	memcpy(paletteEditorArray, pSrc, IMPL_PALETTE_DATALEN);
 }
@@ -518,5 +513,5 @@ void PaletteEditor::UpdateHighlightArray(int selectedBoxIndex)
 	//setting currently pressed box to white
 	((int*)highlightArray)[selected_highlight_box] = COLOR_WHITE;
 
-	g_interfaces.pPaletteManager->ReplacePaletteFile(highlightArray, selectedFile, selectedCharPalInfo);
+	g_interfaces.pPaletteManager->ReplacePaletteFile(highlightArray, selectedFile, *selectedCharPalHandle);
 }

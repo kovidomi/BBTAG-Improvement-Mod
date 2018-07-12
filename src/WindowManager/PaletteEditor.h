@@ -9,14 +9,11 @@ class PaletteEditor
 private:
 	std::vector<std::vector<IMPL_data_t>> customPaletteVector;
 
+	CharHandle* allSelectedCharHandles[4];
 	const char* allSelectedCharNames[4];
+
 	const char* selectedCharName;
-
-	CharPaletteHandle* allSelectedCharPalInfos[4];
-	CharPaletteHandle* selectedCharPalInfo;
-
-	const CharInfo* allSelectedCharObjs[4];
-
+	CharPaletteHandle* selectedCharPalHandle;
 	CharIndex selectedCharIndex;
 	int selectedPalIndex;
 	PaletteFile selectedFile;
@@ -46,8 +43,8 @@ private:
 	void DisableHighlightModes();
 	void SavePaletteToFile();
 	void CheckSelectedPalOutOfBound();
-	void ShowPaletteSelect(CharHandle * charHandle, const char* btnText, const char* popupID);
+	void ShowPaletteSelect(CharHandle & charHandle, const char* btnText, const char* popupID);
 	void ShowHoveredPaletteToolTip(CharIndex charIndex, int palIndex);
-	void CopyToEditorArray(char* pSrc);
+	void CopyToEditorArray(const char* pSrc);
 	void UpdateHighlightArray(int selectedBoxIndex);
 };

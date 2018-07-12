@@ -16,11 +16,11 @@ public:
 	bool WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filledPalData);
 	void ReloadPalettesFromFolder();
 	void LoadPalettesFromFolder();
-	bool SwitchPalette(CharIndex charIndex, int customPalIndex, CharPaletteHandle* palHandle);
-	void ReplacePaletteFile(char* newPalData, PaletteFile palFile, CharPaletteHandle* palHandle);
-	char* GetPalFileAddr(PaletteFile palFile, CharPaletteHandle* palHandle);
-	int GetCurrentCustomPalIndex(CharPaletteHandle* palHandle);
-	const IMPL_data_t &GetCurrentPalData(CharPaletteHandle* palHandle);
+	bool SwitchPalette(CharIndex charIndex, int customPalIndex, CharPaletteHandle& palHandle);
+	void ReplacePaletteFile(char* newPalData, PaletteFile palFile, CharPaletteHandle& palHandle);
+	char* GetPalFileAddr(PaletteFile palFile, CharPaletteHandle& palHandle);
+	int GetCurrentCustomPalIndex(CharPaletteHandle& palHandle);
+	const IMPL_data_t &GetCurrentPalData(CharPaletteHandle& palHandle);
 	//Remember to call it ONCE per frame 
 	void UnlockUpdates(CharPaletteHandle& P1Ch1, CharPaletteHandle& P1Ch2, CharPaletteHandle& P2Ch1, CharPaletteHandle& P2Ch2);
 	//Remember to call it ONCE upon match start

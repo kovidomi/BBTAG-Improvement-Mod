@@ -2,7 +2,7 @@
 #include "D3D9Utils.h"
 #include "../WindowManager/WindowManager.h"
 #include "../Hooks/hooks_bbtag.h"
-#include "../globals.h"
+#include "../interfaces.h"
 #include "../logger.h"
 #include <steam_api.h>
 

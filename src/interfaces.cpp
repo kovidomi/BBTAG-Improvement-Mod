@@ -1,12 +1,12 @@
-#include "globals.h"
+#include "interfaces.h"
 #include "utils.h"
 
-g_interfaces_t g_interfaces = {};
+interfaces_t g_interfaces = {};
 gameProc_t g_gameProc = {};
 gameVals_t g_gameVals = {};
 temps_t g_tempVals = {};
 
-void CleanupGlobals()
+void CleanupInterfaces()
 {
 	SAFE_DELETE(g_interfaces.pD3D9ExWrapper);
 	SAFE_DELETE(g_interfaces.pSteamFriendsWrapper);

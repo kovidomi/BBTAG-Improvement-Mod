@@ -143,10 +143,10 @@ void WindowManager::OnMatchInit()
 	m_paletteEditor->OnMatchInit();
 
 	g_interfaces.pPaletteManager->OnMatchInit(
-		g_interfaces.Player1.Char1().PalHandle(),
-		g_interfaces.Player1.Char2().PalHandle(),
-		g_interfaces.Player2.Char1().PalHandle(),
-		g_interfaces.Player2.Char2().PalHandle());
+		g_interfaces.player1.Char1().PalHandle(),
+		g_interfaces.player1.Char2().PalHandle(),
+		g_interfaces.player2.Char1().PalHandle(),
+		g_interfaces.player2.Char2().PalHandle());
 }
 
 void WindowManager::SetMainWindowTitle(const char *text)
@@ -326,10 +326,10 @@ void WindowManager::Update()
 
 	//allowing palette updates
 	g_interfaces.pPaletteManager->UnlockUpdates(
-		g_interfaces.Player1.Char1().PalHandle(),
-		g_interfaces.Player1.Char2().PalHandle(),
-		g_interfaces.Player2.Char1().PalHandle(),
-		g_interfaces.Player2.Char2().PalHandle());
+		g_interfaces.player1.Char1().PalHandle(),
+		g_interfaces.player1.Char2().PalHandle(),
+		g_interfaces.player2.Char1().PalHandle(),
+		g_interfaces.player2.Char2().PalHandle());
 
 	//constantly overriding the visibility of the game's HUD if the custom hud is forced on
 	if (Settings::settingsIni.forcecustomhud)
@@ -730,21 +730,21 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 
 	if (ImGui::CollapsingHeader("Gameval addresses"))
 	{
-		if(!g_interfaces.Player1.Char1().IsNullPtrCharData())
-			ImGui::Text("P1Char1 Data 0x%p", g_interfaces.Player1.Char1().Data());
+		if(!g_interfaces.player1.Char1().IsNullPtrCharData())
+			ImGui::Text("P1Char1 Data 0x%p", g_interfaces.player1.Char1().Data());
 
-		if(!g_interfaces.Player1.Char2().IsNullPtrCharData())
-			ImGui::Text("P1Char2 Data 0x%p", g_interfaces.Player1.Char2().Data());
+		if(!g_interfaces.player1.Char2().IsNullPtrCharData())
+			ImGui::Text("P1Char2 Data 0x%p", g_interfaces.player1.Char2().Data());
 
-		if(!g_interfaces.Player2.Char1().IsNullPtrCharData())
-			ImGui::Text("P2Char1 Data 0x%p", g_interfaces.Player2.Char1().Data());
+		if(!g_interfaces.player2.Char1().IsNullPtrCharData())
+			ImGui::Text("P2Char1 Data 0x%p", g_interfaces.player2.Char1().Data());
 
-		if(!g_interfaces.Player2.Char2().IsNullPtrCharData())
-			ImGui::Text("P2Char2 Data 0x%p", g_interfaces.Player2.Char2().Data());
+		if(!g_interfaces.player2.Char2().IsNullPtrCharData())
+			ImGui::Text("P2Char2 Data 0x%p", g_interfaces.player2.Char2().Data());
 
 		ImGui::Separator();
-		ImGui::Text("P1Meters 0x%p", g_interfaces.Player1.Meters());
-		ImGui::Text("P2Meters 0x%p", g_interfaces.Player2.Meters());
+		ImGui::Text("P1Meters 0x%p", g_interfaces.player1.Meters());
+		ImGui::Text("P2Meters 0x%p", g_interfaces.player2.Meters());
 
 		ImGui::Separator();
 		//ImGui::Text("PalIndex_P1Char1 0x%p", &(*g_interfaces.pPaletteManager)[CharPalInfoIndex::P1Char1]->GetPalIndexRef());

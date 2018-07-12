@@ -1,5 +1,5 @@
 #include "Settings.h"
-#include "globals.h"
+#include "interfaces.h"
 #include "logger.h"
 #include <ctime>
 #include <atlstr.h>

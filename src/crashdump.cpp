@@ -1,5 +1,5 @@
 #include "crashdump.h"
-#include "globals.h"
+#include "interfaces.h"
 #include <dbghelp.h>
 #include <shlobj.h>
 #include <tchar.h>
