@@ -36,15 +36,15 @@ list of things you can start working on
 defines for logging
 - **interfaces.h** <br>
 access to all the wrappers and hooked game variables
-- **D3D9ExWrapper** <br>
+- **D3D9ExWrapper/** <br>
 straightforward D3D wrapping
-- **Game** <br>
+- **Game/** <br>
 player, ingame characters, meters information
-- **PaletteManager** <br>
+- **PaletteManager/** <br>
 custom palette loading related class
-- **SteamApiWrapper** <br>
+- **SteamApiWrapper/** <br>
 straightforward Steam API wrapping
-- **WindowManager** <br>
+- **WindowManager/** <br>
 implementation of the mod's windows using the ImGui library
 - **Hooks/hooks_bbtag** <br>
 implements game functions overriding
