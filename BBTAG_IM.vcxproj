@@ -190,6 +190,11 @@
     <ClCompile Include="src\PaletteManager\CharPalInfo.cpp" />
     <ClCompile Include="src\PaletteManager\PaletteManager.cpp" />
     <ClCompile Include="src\playermeters.cpp" />
+    <ClCompile Include="src\Player\characters.cpp" />
+    <ClCompile Include="src\Player\CharHandle.cpp" />
+    <ClCompile Include="src\Player\CharPaletteHandle.cpp" />
+    <ClCompile Include="src\Player\MeterInfo.cpp" />
+    <ClCompile Include="src\Player\Player.cpp" />
     <ClCompile Include="src\settings.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamFriendsWrapper.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamMatchmakingWrapper.cpp" />
@@ -235,6 +240,12 @@
     <ClInclude Include="src\PaletteManager\impl_format.h" />
     <ClInclude Include="src\PaletteManager\PaletteManager.h" />
     <ClInclude Include="src\playermeters.h" />
+    <ClInclude Include="src\Player\characters.h" />
+    <ClInclude Include="src\Player\CharInfo.h" />
+    <ClInclude Include="src\Player\CharHandle.h" />
+    <ClInclude Include="src\Player\CharPaletteHandle.h" />
+    <ClInclude Include="src\Player\MeterInfo.h" />
+    <ClInclude Include="src\Player\Player.h" />
     <ClInclude Include="src\settings.h" />
     <ClInclude Include="src\SteamApiWrapper\SteamFriendsWrapper.h" />
     <ClInclude Include="src\SteamApiWrapper\SteamMatchmakingWrapper.h" />

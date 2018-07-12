@@ -31,6 +31,9 @@
     <Filter Include="src\D3D9EXWrapper">
       <UniqueIdentifier>{61d9aa73-5286-48a2-87b3-fd874d650113}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Player">
+      <UniqueIdentifier>{3d209caf-f580-415c-afde-1c675ac882db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="export\dinput8.def">
@@ -154,6 +157,21 @@
     </ClCompile>
     <ClCompile Include="src\PaletteManager\PaletteManager.cpp">
       <Filter>src\PaletteManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player\Player.cpp">
+      <Filter>src\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player\CharHandle.cpp">
+      <Filter>src\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player\CharPaletteHandle.cpp">
+      <Filter>src\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player\MeterInfo.cpp">
+      <Filter>src\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player\characters.cpp">
+      <Filter>src\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +303,24 @@
     </ClInclude>
     <ClInclude Include="src\D3D9EXWrapper\ID3DXWrapper_Effect.h">
       <Filter>src\D3D9EXWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player\CharHandle.h">
+      <Filter>src\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player\CharPaletteHandle.h">
+      <Filter>src\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player\Player.h">
+      <Filter>src\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player\MeterInfo.h">
+      <Filter>src\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player\CharInfo.h">
+      <Filter>src\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player\characters.h">
+      <Filter>src\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
