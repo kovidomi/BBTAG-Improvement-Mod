@@ -450,8 +450,8 @@ void PaletteEditor::ShowPaletteSelect(CharHandle & charHandle, const char * btnT
 				//updating palette editor's array if this is the currently selected character
 				if (&charPalHandle == selectedCharPalHandle)
 				{
-					DisableHighlightModes();
 					CopyPalFileToEditorArray(selectedFile, charPalHandle);
+					DisableHighlightModes();
 				}
 			}
 

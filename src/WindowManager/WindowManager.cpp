@@ -417,7 +417,9 @@ void WindowManager::Update()
 		if (ImGui::CollapsingHeader("Custom Palettes"))
 		{
 			if (*g_gameVals.pGameState != GameState_Match)
-				ImGui::TextDisabled("Not in match!");
+			{
+				ImGui::Text(" "); ImGui::SameLine(); ImGui::TextDisabled("Not in match!");
+			}
 			else
 				m_paletteEditor->ShowAllPaletteSelections();
 

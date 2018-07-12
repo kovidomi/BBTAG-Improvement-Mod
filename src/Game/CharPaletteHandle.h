@@ -24,7 +24,7 @@ class CharPaletteHandle
 	friend class PaletteManager;
 
 	int* m_pCurPalIndex;
-	char* m_pPalBaseAddr;
+	const char* m_pPalBaseAddr;
 	IMPL_data_t m_origPalBackup;
 	IMPL_data_t m_CurrentPalData;
 	int m_switchPalIndex1;

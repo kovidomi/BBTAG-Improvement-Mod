@@ -125,7 +125,7 @@ void CharPaletteHandle::ReplaceAllPalFiles(IMPL_data_t *newPaletteData, int palI
 
 	for (int i = 0; i < TOTAL_PALETTE_FILES; i++)
 	{
-		char* pSrc = newPaletteData->file0 + (i * IMPL_PALETTE_DATALEN);
+		const char* pSrc = newPaletteData->file0 + (i * IMPL_PALETTE_DATALEN);
 		if (!memcmp(NULLBLOCK, pSrc, IMPL_PALETTE_DATALEN))
 			continue;
 		char* pDst = GetPalFileAddr(m_pPalBaseAddr, palIndex, i);
