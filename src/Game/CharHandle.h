@@ -14,5 +14,5 @@ public:
 	CharPaletteHandle& GetPalHandle();
 
 	void SetCharDataPtr(const void* addr);
-	bool IsNullPtrCharData() const;
+	bool IsCharDataNullPtr() const;
 };

@@ -5,7 +5,7 @@ void CharHandle::SetCharDataPtr(const void * addr)
 	m_charData = (CharInfo**)addr;
 }
 
-bool CharHandle::IsNullPtrCharData() const
+bool CharHandle::IsCharDataNullPtr() const
 {
 	if (m_charData == 0)
 		return true;

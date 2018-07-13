@@ -87,10 +87,10 @@ void PaletteEditor::OnMatchInit()
 
 bool PaletteEditor::HasNullPointer()
 {
-	if (g_interfaces.player1.GetChar1().IsNullPtrCharData() ||
-		g_interfaces.player1.GetChar2().IsNullPtrCharData() ||
-		g_interfaces.player2.GetChar1().IsNullPtrCharData() ||
-		g_interfaces.player2.GetChar2().IsNullPtrCharData())
+	if (g_interfaces.player1.GetChar1().IsCharDataNullPtr() ||
+		g_interfaces.player1.GetChar2().IsCharDataNullPtr() ||
+		g_interfaces.player2.GetChar1().IsCharDataNullPtr() ||
+		g_interfaces.player2.GetChar2().IsCharDataNullPtr())
 	{
 		return true;
 	}

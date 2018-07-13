@@ -15,5 +15,5 @@ public:
 	const MeterInfo* GetMeters() const;
 
 	void SetMeterPtr(const void* addr);
-	bool IsNullPtrMeters() const;
+	bool IsMetersNullPtr() const;
 };

@@ -745,16 +745,16 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 
 	if (ImGui::CollapsingHeader("Gameval addresses"))
 	{
-		if(!g_interfaces.player1.GetChar1().IsNullPtrCharData())
+		if(!g_interfaces.player1.GetChar1().IsCharDataNullPtr())
 			ImGui::Text("P1Char1 Data 0x%p", g_interfaces.player1.GetChar1().GetData());
 
-		if(!g_interfaces.player1.GetChar2().IsNullPtrCharData())
+		if(!g_interfaces.player1.GetChar2().IsCharDataNullPtr())
 			ImGui::Text("P1Char2 Data 0x%p", g_interfaces.player1.GetChar2().GetData());
 
-		if(!g_interfaces.player2.GetChar1().IsNullPtrCharData())
+		if(!g_interfaces.player2.GetChar1().IsCharDataNullPtr())
 			ImGui::Text("P2Char1 Data 0x%p", g_interfaces.player2.GetChar1().GetData());
 
-		if(!g_interfaces.player2.GetChar2().IsNullPtrCharData())
+		if(!g_interfaces.player2.GetChar2().IsCharDataNullPtr())
 			ImGui::Text("P2Char2 Data 0x%p", g_interfaces.player2.GetChar2().GetData());
 
 		ImGui::Separator();

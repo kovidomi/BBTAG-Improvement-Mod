@@ -24,7 +24,7 @@ void Player::SetMeterPtr(const void * addr)
 	m_meters = (MeterInfo*)addr;
 }
 
-bool Player::IsNullPtrMeters() const
+bool Player::IsMetersNullPtr() const
 {
 	return m_meters == 0;
 }
