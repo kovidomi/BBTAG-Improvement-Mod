@@ -10,3 +10,4 @@
 #define MOD_LINK_FORUM L"https://steamcommunity.com/app/702890/discussions/0/1694923613855843759/"
 #define MOD_LINK_NEXUSMODS L"https://www.nexusmods.com/blazbluecrosstagbattle/mods/1"
 #define MOD_LINK_GITHUB L"https://github.com/kovidomi/BBTAG-Improvement-Mod"
+#define MOD_LINK_DONATE L"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8EDR78DJ8PU2"

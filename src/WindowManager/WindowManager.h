@@ -28,6 +28,8 @@ public:
 	// start message with one of these: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 	static void AddLog(const char* message, ...);
 	static void AddLogSeparator();
+	static void DisableLogging();
+	static void EnableLogging();
 	static void SetNotification(const char *text, float timeToShowInSec = 5.0, bool showNotificationWindow = false);
 private:
 	static void SetMainWindowTitle(const char *text = 0);

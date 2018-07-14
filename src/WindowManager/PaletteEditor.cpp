@@ -52,7 +52,7 @@ void PaletteEditor::ShowAllPaletteSelections()
 
 void PaletteEditor::ShowReloadAllPalettesButton()
 {
-	if (ImGui::Button("Reload Custom Palettes"))
+	if (ImGui::Button("Reload custom palettes"))
 	{
 		g_interfaces.pPaletteManager->ReloadPalettesFromFolder();
 
@@ -325,7 +325,6 @@ void PaletteEditor::SavePaletteToFile()
 
 	static bool show_overwrite_popup = false;
 
-
 	if (pressed || show_overwrite_popup)
 	{
 		if (strncmp(palNameBuf, "", IMPL_PALNAME_LENGTH) == 0)
@@ -338,79 +337,116 @@ void PaletteEditor::SavePaletteToFile()
 		TCHAR pathBuf[MAX_PATH];
 		GetModuleFileName(NULL, pathBuf, MAX_PATH);
 		std::wstring::size_type pos = std::wstring(pathBuf).find_last_of(L"\\");
-		std::wstring fullPath = std::wstring(pathBuf).substr(0, pos);
+		std::wstring wFullPath = std::wstring(pathBuf).substr(0, pos);
 
-		fullPath += L"\\BBTAG_IM\\Palettes\\";
-		fullPath += wCharNames[selectedCharIndex];
-		fullPath += L"\\";
+		wFullPath += L"\\BBTAG_IM\\Palettes\\";
+		wFullPath += wCharNames[selectedCharIndex];
+		wFullPath += L"\\";
 
 		std::string filenameTemp(palNameBuf);
-		std::wstring filename(filenameTemp.begin(), filenameTemp.end());
-		fullPath += filename;
+		std::wstring wFilename(filenameTemp.begin(), filenameTemp.end());
+		wFullPath += wFilename;
 
-		if (filename.find(L".impl") == std::wstring::npos)
+		if (wFilename.find(L".impl") == std::wstring::npos)
 		{
-			fullPath += L".impl";
+			wFullPath += L".impl";
 			filenameTemp += ".impl";
 		}
 
-		std::string path(fullPath.begin(), fullPath.end());
+		if (ShowOverwritePopup(&show_overwrite_popup, wFullPath.c_str(), filenameTemp.c_str()))
+		{
 
-		//overwrite popup code start
-		if (PathFileExists(fullPath.c_str()))
-		{
-			ImGui::OpenPopup("Overwrite?");
-			show_overwrite_popup = true;
-		}
-		if (ImGui::BeginPopupModal("Overwrite?", NULL, ImGuiWindowFlags_AlwaysAutoResize))
-		{
-			static bool overwrite = false;
-			ImGui::Text("'%s' already exists.\nAre you sure you want to overwrite it?\n\n", filenameTemp.c_str());
-			ImGui::Separator();
-			if (ImGui::Button("OK", ImVec2(120, 0)))
+			IMPL_data_t curPalData = g_interfaces.pPaletteManager->GetCurrentPalData(*selectedCharPalHandle);
+
+			strncpy(curPalData.creator, palCreatorBuf, IMPL_CREATOR_LENGTH);
+			strncpy(curPalData.palname, palNameBuf, IMPL_PALNAME_LENGTH);
+			strncpy(curPalData.desc, palDescBuf, IMPL_DESC_LENGTH);
+
+			std::string messageText = "'";
+			messageText += filenameTemp.c_str();
+
+			if (g_interfaces.pPaletteManager->WritePaletteToFile(selectedCharIndex, &curPalData))
 			{
-				ImGui::CloseCurrentPopup();
-				show_overwrite_popup = false;
-				overwrite = true;
+				std::string fullPath(wFullPath.begin(), wFullPath.end());
+				WindowManager::AddLog("[system] Custom palette '%s' successfully saved to:\n'%s'\n", filenameTemp.c_str(), fullPath.c_str());
+				messageText += "' saved successfully";
+
+				ReloadSavedPalette(palNameBuf);
 			}
-			ImGui::SameLine();
-			if (ImGui::Button("Cancel", ImVec2(120, 0)))
+			else
 			{
-				ImGui::CloseCurrentPopup();
-				show_overwrite_popup = false;
-				overwrite = false;
+				WindowManager::AddLog("[error] Custom palette '%s' failed to be saved.\n", filenameTemp.c_str());
+				messageText += "' save failed";
 			}
-			ImGui::EndPopup();
 
-			if (!overwrite)
-				return;
-
-			overwrite = false;
+			memcpy(message, messageText.c_str(), messageText.length() + 1);
 		}
-
-		IMPL_data_t curPalData = g_interfaces.pPaletteManager->GetCurrentPalData(*selectedCharPalHandle);
-
-		strncpy(curPalData.creator, palCreatorBuf, IMPL_CREATOR_LENGTH);
-		strncpy(curPalData.palname, palNameBuf, IMPL_PALNAME_LENGTH);
-		strncpy(curPalData.desc, palDescBuf, IMPL_DESC_LENGTH);
-
-		std::string messageText = "'";
-		messageText += filenameTemp.c_str();
-
-		if (g_interfaces.pPaletteManager->WritePaletteToFile(selectedCharIndex, &curPalData))
-		{
-			WindowManager::AddLog("[system] Custom palette '%s' successfully saved.\n", filenameTemp.c_str());	
-			messageText += "' saved successfully";
-		}
-		else
-		{ 
-			WindowManager::AddLog("[system] Custom palette '%s' failed to be saved.\n", filenameTemp.c_str());
-			messageText += "' save failed";
-		}
-		memcpy(message, messageText.c_str(), messageText.length() + 1);
-
-		//TODO: load the newly saved palette into the customPaletteVector
 	}
+}
+
+void PaletteEditor::ReloadSavedPalette(const char* palName)
+{
+	WindowManager::DisableLogging();
+	g_interfaces.pPaletteManager->ReloadPalettesFromFolder();
+	WindowManager::EnableLogging();
+
+	//refresh the paletteVector variable
+	customPaletteVector = g_interfaces.pPaletteManager->GetCustomPalettesVector();
+
+	//find the newly loaded custom pal
+	selectedPalIndex = -1;
+	for (int i = 0; i < customPaletteVector[selectedCharIndex].size(); i++)
+	{
+		if (strcmp(palName, customPaletteVector[selectedCharIndex][i].palname) == 0)
+		{
+			selectedPalIndex = i;
+			break;
+		}
+	}
+
+	if (selectedPalIndex == -1)
+	{
+		WindowManager::AddLog("[error] Saved custom palette couldn't be reloaded. Not found.\n");
+		selectedPalIndex = 0;
+	}
+
+	g_interfaces.pPaletteManager->SwitchPalette(selectedCharIndex, *selectedCharPalHandle, selectedPalIndex);
+	CopyPalFileToEditorArray(selectedFile, *selectedCharPalHandle);
+}
+
+bool PaletteEditor::ShowOverwritePopup(bool *p_open, const wchar_t* wFullPath, const char* filename)
+{
+	bool isOverwriteAllowed = true;
+
+	if (PathFileExists(wFullPath))
+	{
+		ImGui::OpenPopup("Overwrite?");
+		*p_open = true;
+	}
+	if (ImGui::BeginPopupModal("Overwrite?", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::Text("'%s' already exists.\nAre you sure you want to overwrite it?\n\n", filename);
+		ImGui::Separator();
+		if (ImGui::Button("OK", ImVec2(120, 0)))
+		{
+			ImGui::CloseCurrentPopup();
+			*p_open = false;
+			isOverwriteAllowed = true;
+			return isOverwriteAllowed;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel", ImVec2(120, 0)))
+		{
+			ImGui::CloseCurrentPopup();
+			*p_open = false;
+			isOverwriteAllowed = false;
+		}
+		ImGui::EndPopup();
+
+		isOverwriteAllowed = false;
+	}
+
+	return isOverwriteAllowed;
 }
 
 void PaletteEditor::CheckSelectedPalOutOfBound()

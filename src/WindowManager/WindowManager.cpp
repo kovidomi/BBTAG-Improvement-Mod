@@ -493,8 +493,20 @@ void WindowManager::AddLog(const char* message, ...)
 
 void WindowManager::AddLogSeparator()
 {
-	if (DoLogging)
-		WindowManager::Log._AddLog("------------------------------------------------------------------\n");
+	if (!DoLogging)
+		return;
+
+	WindowManager::Log._AddLog("------------------------------------------------------------------\n");
+}
+
+void WindowManager::DisableLogging()
+{
+	DoLogging = false;
+}
+
+void WindowManager::EnableLogging()
+{
+	DoLogging = true;
 }
 
 void WindowManager::WriteLogToFile()
@@ -700,31 +712,38 @@ void WindowManager::ShowMainWindow(bool * p_open)
 		ImGui::Separator();
 		ImGui::Text("");
 
-		if (ImGui::Button("Reset custom HUD positions"))
+		if (ImGui::CollapsingHeader("Custom HUD"))
 		{
-			ImGui::SetWindowPos("P1_meters", middlescreen);
-			ImGui::SetWindowPos("P2_meters", middlescreen);
-			ImGui::SetWindowPos("P1_hp_gauge", middlescreen);
-			ImGui::SetWindowPos("P2_hp_gauge", middlescreen);
-			ImGui::SetWindowPos("P1_unique_meters", middlescreen);
-			ImGui::SetWindowPos("P2_unique_meters", middlescreen);
-			ImGui::SetWindowPos("TIMER", middlescreen);
-		}
-		if (ImGui::IsItemHovered())
-		{
-			ImGui::BeginTooltip();
-			ImGui::Text("Used to recover elements of the custom HUD that have\nbecome unrecoverable due to going beyond the screen");
-			ImGui::EndTooltip();
+			ImGui::Text(" "); ImGui::SameLine();
+			if (ImGui::Button("Reset custom HUD positions"))
+			{
+				ImGui::SetWindowPos("P1_meters", middlescreen);
+				ImGui::SetWindowPos("P2_meters", middlescreen);
+				ImGui::SetWindowPos("P1_hp_gauge", middlescreen);
+				ImGui::SetWindowPos("P2_hp_gauge", middlescreen);
+				ImGui::SetWindowPos("P1_unique_meters", middlescreen);
+				ImGui::SetWindowPos("P2_unique_meters", middlescreen);
+				ImGui::SetWindowPos("TIMER", middlescreen);
+			}
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::BeginTooltip();
+				ImGui::Text("Used to recover elements of the custom HUD that have\nbecome unrecoverable due to going beyond the screen");
+				ImGui::EndTooltip();
+			}
 		}
 
-		if (ImGui::CollapsingHeader("Custom Palettes"))
+		if (ImGui::CollapsingHeader("Custom palettes"))
 		{
 			if (*g_gameVals.pGameState != GameState_Match)
 			{
-				ImGui::Text(" "); ImGui::SameLine(); ImGui::TextDisabled("Not in match!");
+				ImGui::Text(" "); ImGui::SameLine(); 
+				ImGui::TextDisabled("Not in match!");
 			}
 			else
+			{
 				m_paletteEditor->ShowAllPaletteSelections();
+			}
 
 			ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
 			m_paletteEditor->ShowReloadAllPalettesButton();
@@ -732,16 +751,13 @@ void WindowManager::ShowMainWindow(bool * p_open)
 			ImGui::Text(" "); ImGui::SameLine();
 			bool pressed = ImGui::Button("Palette editor");
 
-			if (*g_gameVals.pGameMode != GameMode_Tutorial)
+			if (*g_gameVals.pGameMode == GameMode_Tutorial && pressed)
 			{
-				ImGui::SameLine(); ImGui::TextDisabled("Not in tutorial mode!");
+				show_palette_editor ^= 1;
 			}
 			else
 			{
-				if (pressed)
-				{
-					show_palette_editor ^= 1;
-				}
+				ImGui::SameLine(); ImGui::TextDisabled("Not in tutorial mode!");
 			}
 		}
 
@@ -789,9 +805,12 @@ void WindowManager::ShowLinks()
 	if (ImGui::Button("Nexusmods"))
 		ShellExecute(NULL, L"open", MOD_LINK_NEXUSMODS, NULL, NULL, SW_SHOWNORMAL);
 
-	ImGui::SameLine();
 	if (ImGui::Button("GitHub"))
 		ShellExecute(NULL, L"open", MOD_LINK_GITHUB, NULL, NULL, SW_SHOWNORMAL);
+
+	ImGui::SameLine();
+	if (ImGui::Button("Donate"))
+		ShellExecute(NULL, L"open", MOD_LINK_DONATE, NULL, NULL, SW_SHOWNORMAL);
 }
 
 void WindowManager::ShowAllWindows()
