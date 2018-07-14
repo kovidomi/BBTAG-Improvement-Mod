@@ -125,7 +125,7 @@ void PaletteEditor::CharacterSelection()
 	{
 		const int NUMBER_OF_CHARS = 4;
 		
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < NUMBER_OF_CHARS; i++)
 		{
 			ImGui::PushID(i);
 			if (ImGui::Selectable(allSelectedCharNames[i]))

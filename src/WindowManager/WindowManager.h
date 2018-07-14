@@ -12,22 +12,23 @@ private:
 	static CustomHud* m_customHud;
 	static PaletteEditor* m_paletteEditor;
 	static ImGuiLog Log;
+	static bool Initialized;
+	static bool DoLogging;
+public:
+	static bool IsUpdateAvailable;
 
 public:
-	static bool Initialized;
 	static bool Init(void *hwnd, IDirect3DDevice9 *device);
 	static void Update();
 	static void Render();
 	static void Shutdown();
 	static void InvalidateDeviceObjects();
 	static void CreateDeviceObjects();
+	static void OnMatchInit();
 	// start message with one of these: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 	static void AddLog(const char* message, ...);
 	static void AddLogSeparator();
 	static void SetNotification(const char *text, float timeToShowInSec = 5.0, bool showNotificationWindow = false);
-	static bool IsUpdateAvailable;
-	static bool DoLogging;
-	static void OnMatchInit();
 private:
 	static void SetMainWindowTitle(const char *text = 0);
 	static void HandleNotification();
