@@ -35,8 +35,11 @@ private:
 	static void ShowNotificationWindow();
 	static void ShowLogWindow(bool* p_open);
 	static void ShowUpdateWindow();
-	static void ShowLoadedIniSettings();
+	static void ShowLoadedSettingsValues();
 	static void ShowDebugWindow(bool* p_open);
+	static void ShowMainWindow(bool* p_open);
+	static void ShowLinks();
+	static void ShowAllWindows();
 	static void WriteLogToFile();
 	static void HandleButtons();
 };

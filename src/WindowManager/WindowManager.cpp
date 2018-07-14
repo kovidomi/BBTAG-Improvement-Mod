@@ -325,7 +325,7 @@ void WindowManager::Update()
 
 	LOG(7, "WindowManager::HandleImGui\n");
 
-	//allowing palette updates
+	//re-allowing palette updates
 	g_interfaces.pPaletteManager->UnlockUpdates(
 		g_interfaces.player1.GetChar1().GetPalHandle(),
 		g_interfaces.player1.GetChar2().GetPalHandle(),
@@ -387,128 +387,7 @@ void WindowManager::Update()
 		io.DisplaySize = ImVec2((float)Settings::settingsIni.renderwidth, (float)Settings::settingsIni.renderheight);
 	}
 
-	if (show_main_window)
-	{
-		ImGui::Begin(main_title.c_str(), NO_CLOSE_FLAG, ImGuiWindowFlags_AlwaysAutoResize);
-
-		ImGui::Text("Toggle me with %s", Settings::settingsIni.togglebutton.c_str());
-		ImGui::Text("Toggle HUD with %s", Settings::settingsIni.toggleHUDbutton.c_str());
-		ImGui::Text("Toggle Custom HUD with %s", Settings::settingsIni.togglecustomHUDbutton.c_str());
-		ImGui::Separator();
-		ImGui::Text("");
-
-		if (ImGui::Button("Reset custom HUD positions"))
-		{
-			ImGui::SetWindowPos("P1_meters", middlescreen);
-			ImGui::SetWindowPos("P2_meters", middlescreen);
-			ImGui::SetWindowPos("P1_hp_gauge", middlescreen);
-			ImGui::SetWindowPos("P2_hp_gauge", middlescreen);
-			ImGui::SetWindowPos("P1_unique_meters", middlescreen);
-			ImGui::SetWindowPos("P2_unique_meters", middlescreen);
-			ImGui::SetWindowPos("TIMER", middlescreen);
-		}
-		if (ImGui::IsItemHovered())
-		{
-			ImGui::BeginTooltip();
-			ImGui::Text("Used to recover elements of the custom HUD that have\nbecome unrecoverable due to going beyond the screen");
-			ImGui::EndTooltip();
-		}
-
-		if (ImGui::CollapsingHeader("Custom Palettes"))
-		{
-			if (*g_gameVals.pGameState != GameState_Match)
-			{
-				ImGui::Text(" "); ImGui::SameLine(); ImGui::TextDisabled("Not in match!");
-			}
-			else
-				m_paletteEditor->ShowAllPaletteSelections();
-
-			ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
-			m_paletteEditor->ShowReloadAllPalettesButton();
-
-			ImGui::Text(" "); ImGui::SameLine();
-			bool pressed = ImGui::Button("Palette editor");
-
-			if(*g_gameVals.pGameMode != GameMode_Tutorial)
-			{
-				ImGui::SameLine(); ImGui::TextDisabled("Not in tutorial mode!");
-			}
-			else
-			{
-				if (pressed)
-				{
-					show_palette_editor ^= 1;
-				}
-			}
-		}
-
-		if (ImGui::CollapsingHeader("Loaded settings.ini values"))
-		{
-			ShowLoadedIniSettings();
-		}
-
-#ifndef RELEASE_VER
-		if (ImGui::Button("Demo"))
-			show_demo_window ^= 1;
-		if (ImGui::Button("DEBUG"))
-			show_debug_window ^= 1;
-#endif
-		if (ImGui::Button("Log"))
-			show_log_window ^= 1;
-
-		ImGui::Text("Current online players:"); ImGui::SameLine();
-		if (g_interfaces.pSteamApiHelper)
-		{
-			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "%s",
-				g_interfaces.pSteamApiHelper->current_players <= 0 ? "<No data>" : std::to_string(g_interfaces.pSteamApiHelper->current_players).c_str());
-		}
-		else
-		{
-			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "%s", "<No data>");
-		}
-
-		if (ImGui::Button("Discord"))
-			ShellExecute(NULL, L"open", MOD_LINK_DISCORD, NULL, NULL, SW_SHOWNORMAL);
-		ImGui::SameLine();
-		if (ImGui::Button("Forum"))
-			ShellExecute(NULL, L"open", MOD_LINK_FORUM, NULL, NULL, SW_SHOWNORMAL);
-		ImGui::SameLine();
-		if (ImGui::Button("Nexusmods"))
-			ShellExecute(NULL, L"open", MOD_LINK_NEXUSMODS, NULL, NULL, SW_SHOWNORMAL);
-		ImGui::SameLine();
-		if(ImGui::Button("GitHub"))
-			ShellExecute(NULL, L"open", MOD_LINK_GITHUB, NULL, NULL, SW_SHOWNORMAL);
-
-		ImGui::End();
-	}
-
-	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, DEFAULT_ALPHA);
-
-	// 3. Show the other windows!
-#ifndef RELEASE_VER
-	if (show_demo_window)
-	{
-		ImGui::SetNextWindowPos(ImVec2(550, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!
-		ImGui::ShowDemoWindow(&show_demo_window);
-	}
-
-	if (show_debug_window)
-		ShowDebugWindow(&show_debug_window);
-
-	if (show_palette_editor)
-		m_paletteEditor->ShowPaletteEditorWindow(&show_palette_editor);
-#endif
-
-	if (show_notification)
-		HandleNotification();
-
-	if (show_log_window && show_main_window)
-		ShowLogWindow(&show_log_window);
-
-	if (IsUpdateAvailable)
-		ShowUpdateWindow();
-
-	ImGui::PopStyleVar();
+	ShowAllWindows();
 
 	//ImGui::EndFrame();
 
@@ -701,7 +580,7 @@ void WindowManager::ShowUpdateWindow()
 	ImGui::End();
 }
 
-void WindowManager::ShowLoadedIniSettings()
+void WindowManager::ShowLoadedSettingsValues()
 {
 	//not using ImGui columns here because they are bugged if the window has always_autoresize flag. The window 
 	//starts extending to infinity, if the left edge of the window touches any edges of the screen
@@ -807,6 +686,146 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		ImGui::ColorEdit4("ColEdit", col);
 	}
 	ImGui::End();
+}
+
+void WindowManager::ShowMainWindow(bool * p_open)
+{
+	if (*p_open)
+	{
+		ImGui::Begin(main_title.c_str(), NO_CLOSE_FLAG, ImGuiWindowFlags_AlwaysAutoResize);
+
+		ImGui::Text("Toggle me with %s", Settings::settingsIni.togglebutton.c_str());
+		ImGui::Text("Toggle HUD with %s", Settings::settingsIni.toggleHUDbutton.c_str());
+		ImGui::Text("Toggle Custom HUD with %s", Settings::settingsIni.togglecustomHUDbutton.c_str());
+		ImGui::Separator();
+		ImGui::Text("");
+
+		if (ImGui::Button("Reset custom HUD positions"))
+		{
+			ImGui::SetWindowPos("P1_meters", middlescreen);
+			ImGui::SetWindowPos("P2_meters", middlescreen);
+			ImGui::SetWindowPos("P1_hp_gauge", middlescreen);
+			ImGui::SetWindowPos("P2_hp_gauge", middlescreen);
+			ImGui::SetWindowPos("P1_unique_meters", middlescreen);
+			ImGui::SetWindowPos("P2_unique_meters", middlescreen);
+			ImGui::SetWindowPos("TIMER", middlescreen);
+		}
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Used to recover elements of the custom HUD that have\nbecome unrecoverable due to going beyond the screen");
+			ImGui::EndTooltip();
+		}
+
+		if (ImGui::CollapsingHeader("Custom Palettes"))
+		{
+			if (*g_gameVals.pGameState != GameState_Match)
+			{
+				ImGui::Text(" "); ImGui::SameLine(); ImGui::TextDisabled("Not in match!");
+			}
+			else
+				m_paletteEditor->ShowAllPaletteSelections();
+
+			ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
+			m_paletteEditor->ShowReloadAllPalettesButton();
+
+			ImGui::Text(" "); ImGui::SameLine();
+			bool pressed = ImGui::Button("Palette editor");
+
+			if (*g_gameVals.pGameMode != GameMode_Tutorial)
+			{
+				ImGui::SameLine(); ImGui::TextDisabled("Not in tutorial mode!");
+			}
+			else
+			{
+				if (pressed)
+				{
+					show_palette_editor ^= 1;
+				}
+			}
+		}
+
+		if (ImGui::CollapsingHeader("Loaded settings.ini values"))
+		{
+			ShowLoadedSettingsValues();
+		}
+
+#ifndef RELEASE_VER
+		if (ImGui::Button("Demo"))
+			show_demo_window ^= 1;
+		if (ImGui::Button("DEBUG"))
+			show_debug_window ^= 1;
+#endif
+		if (ImGui::Button("Log"))
+			show_log_window ^= 1;
+
+		ImGui::Text("Current online players:"); ImGui::SameLine();
+		if (g_interfaces.pSteamApiHelper)
+		{
+			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "%s",
+				g_interfaces.pSteamApiHelper->current_players <= 0 ? "<No data>" : std::to_string(g_interfaces.pSteamApiHelper->current_players).c_str());
+		}
+		else
+		{
+			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "%s", "<No data>");
+		}
+
+		ShowLinks();
+
+		ImGui::End();
+	}
+}
+
+void WindowManager::ShowLinks()
+{
+	if (ImGui::Button("Discord"))
+		ShellExecute(NULL, L"open", MOD_LINK_DISCORD, NULL, NULL, SW_SHOWNORMAL);
+
+	ImGui::SameLine();
+	if (ImGui::Button("Forum"))
+		ShellExecute(NULL, L"open", MOD_LINK_FORUM, NULL, NULL, SW_SHOWNORMAL);
+
+	ImGui::SameLine();
+	if (ImGui::Button("Nexusmods"))
+		ShellExecute(NULL, L"open", MOD_LINK_NEXUSMODS, NULL, NULL, SW_SHOWNORMAL);
+
+	ImGui::SameLine();
+	if (ImGui::Button("GitHub"))
+		ShellExecute(NULL, L"open", MOD_LINK_GITHUB, NULL, NULL, SW_SHOWNORMAL);
+}
+
+void WindowManager::ShowAllWindows()
+{
+	ShowMainWindow(&show_main_window);
+
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, DEFAULT_ALPHA);
+
+	if (show_palette_editor)
+		m_paletteEditor->ShowPaletteEditorWindow(&show_palette_editor);
+
+	if (show_notification)
+		HandleNotification();
+
+	if (show_log_window && show_main_window)
+		ShowLogWindow(&show_log_window);
+
+	if (IsUpdateAvailable)
+		ShowUpdateWindow();
+
+////////////// DEBUG Windows
+#ifndef RELEASE_VER
+	if (show_demo_window)
+	{
+		ImGui::SetNextWindowPos(ImVec2(550, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!
+		ImGui::ShowDemoWindow(&show_demo_window);
+	}
+
+	if (show_debug_window)
+		ShowDebugWindow(&show_debug_window);
+#endif
+////////////// 
+
+	ImGui::PopStyleVar();
 }
 
 void WindowManager::HandleButtons()
