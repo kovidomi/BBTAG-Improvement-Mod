@@ -12,7 +12,7 @@ std::vector<std::string>& GetDonators()
 	return donators;
 }
 
-void DownloadPalette()
+void DownloadPaletteFile()
 {
 	int bufSize = sizeof(IMPL_t);
 	char* implFile = new char[bufSize];

@@ -13,4 +13,5 @@
 #define MOD_LINK_NEXUSMODS L"https://www.nexusmods.com/blazbluecrosstagbattle/mods/1"
 #define MOD_LINK_GITHUB L"https://github.com/kovidomi/BBTAG-Improvement-Mod"
 #define MOD_LINK_DONATE L"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8EDR78DJ8PU2"
-#define MOD_LINK_DONATORS L"https://raw.githubusercontent.com/kovidomi/BBTAG-Improvement-Mod/master/resource/donators.txt"
+#define MOD_LINK_DONATORS L"https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/donators.txt"
+//#define MOD_LINK_DONATOR_PALETTES L"https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/donators.txt"
