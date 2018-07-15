@@ -249,8 +249,8 @@ bool PaletteManager::CreatePaletteSlotsFile()
 		"# 4=\"Panda\"\t\t\t\t\t\t\t\t\t     #\r\n" \
 		"# 6=\"Fox\"\t\t\t\t\t\t\t\t\t     #\r\n" \
 		"# 14=\"Fox\"\t\t\t\t\t\t\t\t\t     #\r\n" \
-		"# Will make the mod load the palette file Fox.impl on ingame palettes 1, 6, 14,\t     #\r\n" \
-		"# and load the palette file Panda.impl on ingame palettes 3, 4\t\t\t     #\r\n" \
+		"# Will make the mod load the palette file \"Fox.impl\" on ingame palettes 1, 6, 14,    #\r\n" \
+		"# and load the palette file \"Panda.impl\" on ingame palettes 3, 4\t\t     #\r\n" \
 		"######################################################################################\r\n\r\n"
 	};
 	size_t infoSize = strlen(info);
