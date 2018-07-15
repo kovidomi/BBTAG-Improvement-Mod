@@ -24,7 +24,7 @@ public:
 	int GetCurrentCustomPalIndex(CharPaletteHandle& palHandle);
 	const IMPL_data_t &GetCurrentPalData(CharPaletteHandle& palHandle);
 	//Remember to call it ONCE per frame 
-	void UnlockUpdates(CharPaletteHandle& P1Ch1, CharPaletteHandle& P1Ch2, CharPaletteHandle& P2Ch1, CharPaletteHandle& P2Ch2);
+	void OnUpdate(CharPaletteHandle& P1Ch1, CharPaletteHandle& P1Ch2, CharPaletteHandle& P2Ch1, CharPaletteHandle& P2Ch2);
 	//Remember to call it ONCE upon match start
 	void OnMatchInit(CharPaletteHandle& P1Ch1, CharPaletteHandle& P1Ch2, CharPaletteHandle& P2Ch1, CharPaletteHandle& P2Ch2);
 

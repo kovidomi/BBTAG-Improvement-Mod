@@ -5,7 +5,7 @@ class CustomHud
 {
 public:
 	CustomHud(float hud_scale_x, float hud_scale_y);
-	void Update(bool show_custom_hud, bool show_main_window);
+	void OnUpdate(bool show_custom_hud, bool show_main_window);
 private:
 	void UpdateHP(const CharInfo &charInfo, bool right_side = false);
 	void UpdateTimer(int *timer);

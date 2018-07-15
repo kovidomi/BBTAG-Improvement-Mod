@@ -23,7 +23,7 @@ CustomHud::CustomHud(float hud_scale_x, float hud_scale_y)
 	this->hud_scale_y = hud_scale_y;
 }
 
-void CustomHud::Update(bool show_custom_hud, bool show_main_window)
+void CustomHud::OnUpdate(bool show_custom_hud, bool show_main_window)
 {
 	if (!show_custom_hud)
 		return;

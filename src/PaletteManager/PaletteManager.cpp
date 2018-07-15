@@ -209,7 +209,7 @@ const IMPL_data_t & PaletteManager::GetCurrentPalData(CharPaletteHandle& palHand
 	return palHandle.GetCurrentPalData();
 }
 
-void PaletteManager::UnlockUpdates(CharPaletteHandle& P1Ch1, CharPaletteHandle& P1Ch2, CharPaletteHandle& P2Ch1, CharPaletteHandle& P2Ch2)
+void PaletteManager::OnUpdate(CharPaletteHandle & P1Ch1, CharPaletteHandle & P1Ch2, CharPaletteHandle & P2Ch1, CharPaletteHandle & P2Ch2)
 {
 	P1Ch1.UnlockUpdate();
 	P1Ch2.UnlockUpdate();

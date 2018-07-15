@@ -309,24 +309,23 @@ void WindowManager::CreateDeviceObjects()
 	ImGui_ImplDX9_CreateDeviceObjects();
 }
 
-void WindowManager::Render()
+void WindowManager::OnRender()
 {
 	if (!Initialized)
 		return;
 
-	LOG(7, "WindowManager::Render\n");
+	LOG(7, "WindowManager::OnRender\n");
 	ImGui::Render();
 }
 
-void WindowManager::Update()
+void WindowManager::OnUpdate()
 {
 	if (!Initialized)
 		return;
 
 	LOG(7, "WindowManager::HandleImGui\n");
 
-	//re-allowing palette updates
-	g_interfaces.pPaletteManager->UnlockUpdates(
+	g_interfaces.pPaletteManager->OnUpdate(
 		g_interfaces.player1.GetChar1().GetPalHandle(),
 		g_interfaces.player1.GetChar2().GetPalHandle(),
 		g_interfaces.player2.GetChar1().GetPalHandle(),
@@ -366,7 +365,7 @@ void WindowManager::Update()
 
 	ImGui_ImplDX9_NewFrame();
 
-	m_customHud->Update(show_custom_hud, show_main_window);
+	m_customHud->OnUpdate(show_custom_hud, show_main_window);
 
 	//First run settings
 	ImGui::SetWindowPos(main_title.c_str(), ImVec2(12, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!

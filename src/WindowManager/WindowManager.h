@@ -19,8 +19,8 @@ public:
 
 public:
 	static bool Init(void *hwnd, IDirect3DDevice9 *device);
-	static void Update();
-	static void Render();
+	static void OnUpdate();
+	static void OnRender();
 	static void Shutdown();
 	static void InvalidateDeviceObjects();
 	static void CreateDeviceObjects();

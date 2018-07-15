@@ -342,7 +342,7 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::BeginScene()
 {
 	LOG(7, "BeginScene\n");
 
-	WindowManager::Update();
+	WindowManager::OnUpdate();
 
 	return m_Direct3DDevice9Ex->BeginScene();
 }
@@ -351,7 +351,7 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::EndScene()
 {
 	LOG(7, "EndScene\n");
 
-	WindowManager::Render();
+	WindowManager::OnRender();
 
 	return m_Direct3DDevice9Ex->EndScene();
 }
