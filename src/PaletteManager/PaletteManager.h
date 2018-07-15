@@ -15,6 +15,7 @@ public:
 	~PaletteManager();
 	std::vector<std::vector<IMPL_data_t>> &GetCustomPalettesVector();
 
+	void LoadImplFile(IMPL_t &filledPal);
 	bool WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filledPalData);
 
 	void LoadAllPalettes();

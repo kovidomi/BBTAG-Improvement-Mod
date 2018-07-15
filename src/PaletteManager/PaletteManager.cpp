@@ -285,6 +285,13 @@ void PaletteManager::InitPaletteSlotsVector()
 	}
 }
 
+void PaletteManager::LoadImplFile(IMPL_t & filledPal)
+{
+	CharIndex charIndex = (CharIndex)filledPal.header.charindex;
+	m_customPalettes[charIndex].push_back(filledPal.paldata);
+	WindowManager::AddLog("[system] Loaded '%s'\n", filledPal.paldata.palname);
+}
+
 bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filledPalData)
 {
 	std::string path = std::string("BBTAG_IM\\Palettes\\") + charNames[charIndex] + "\\" + filledPalData->palname + ".impl";

@@ -40,3 +40,40 @@ std::string DownloadUrl(std::wstring& wUrl)
 
 	return receivedData;
 }
+
+unsigned long DownloadUrlBinary(std::wstring& wUrl, void* buffer, unsigned long bufSize)
+{
+	std::string url(wUrl.begin(), wUrl.end());
+
+	HINTERNET connect = InternetOpen(L"MyBrowser", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
+
+	if (!connect)
+	{
+		WindowManager::AddLog("[error] DownloadUrlBinary failed. Connection Failed or Syntax error with URL\n'%s'\n", url.c_str());
+		return 0;
+	}
+
+	HINTERNET OpenAddress = InternetOpenUrl(connect, wUrl.c_str(), NULL, 0, INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_KEEP_CONNECTION, 0);
+
+	if (!OpenAddress)
+	{
+		DWORD ErrorNum = GetLastError();
+		WindowManager::AddLog("[error] DownloadUrlBinary failed. Failed to open URL\n'%s'\ncode: %d\n", url.c_str(), ErrorNum);
+		InternetCloseHandle(connect);
+		return 0;
+	}
+
+	DWORD numberOfBytesRead = 0;
+	DWORD returnedBytesRead = 0;
+	bool result = false;
+	do
+	{
+		result = InternetReadFile(OpenAddress, buffer, bufSize, &numberOfBytesRead);
+		returnedBytesRead += numberOfBytesRead;
+	} while (result && numberOfBytesRead);
+
+	InternetCloseHandle(OpenAddress);
+	InternetCloseHandle(connect);
+
+	return returnedBytesRead;
+}
