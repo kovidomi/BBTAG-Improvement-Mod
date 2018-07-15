@@ -717,10 +717,21 @@ void WindowManager::ShowMainWindow(bool * p_open)
 
 		if (GetDonators().size() > 0)
 		{
-			const float SPEED = 1.5f;
+			const float SPEED = 2.0f;
 			int passedTime = (int)(ImGui::GetTime() / SPEED);
+			static int prevPassedTime = 0;
 			int donatorSize = GetDonators().size()-1;
-			std::string donatorName = GetDonators()[passedTime & donatorSize];
+			static int index = 0;
+
+			if (passedTime > prevPassedTime)
+			{
+				prevPassedTime = passedTime;
+				index++;
+				if (index > donatorSize)
+					index = 0;
+			}
+			
+			std::string donatorName = GetDonators()[index];
 
 			ImGui::Text("Donators %c %s", "|/-\\"[passedTime & 3], donatorName.c_str());
 		}
