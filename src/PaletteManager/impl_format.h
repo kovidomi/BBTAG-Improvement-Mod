@@ -10,6 +10,8 @@ struct IMPL_header_t
 	char filesig[8] = "IMPL";
 	int headerlen;
 	int datalen;
+	short charindex;
+	short RESERVED; //padding
 };
 
 struct IMPL_data_t
@@ -30,5 +32,5 @@ struct IMPL_data_t
 struct IMPL_t
 {
 	IMPL_header_t header;
-	IMPL_data_t palData;
+	IMPL_data_t paldata;
 };

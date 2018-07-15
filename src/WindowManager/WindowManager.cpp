@@ -141,13 +141,13 @@ void WindowManager::OnMatchInit()
 	if (!Initialized || !m_paletteEditor)
 		return;
 
-	m_paletteEditor->OnMatchInit();
-
 	g_interfaces.pPaletteManager->OnMatchInit(
-		g_interfaces.player1.GetChar1().GetPalHandle(),
-		g_interfaces.player1.GetChar2().GetPalHandle(),
-		g_interfaces.player2.GetChar1().GetPalHandle(),
-		g_interfaces.player2.GetChar2().GetPalHandle());
+		g_interfaces.player1.GetChar1(),
+		g_interfaces.player1.GetChar2(),
+		g_interfaces.player2.GetChar1(),
+		g_interfaces.player2.GetChar2());
+
+	m_paletteEditor->OnMatchInit();
 }
 
 void WindowManager::SetMainWindowTitle(const char *text)
@@ -235,7 +235,7 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 
 	m_customHud = new CustomHud(hud_scale_x, hud_scale_y);
 	m_paletteEditor = new PaletteEditor();
-	g_interfaces.pPaletteManager->LoadPalettesFromFolder();
+	g_interfaces.pPaletteManager->LoadAllPalettes();
 
 	if (Settings::settingsIni.checkupdates)
 	{
@@ -750,13 +750,13 @@ void WindowManager::ShowMainWindow(bool * p_open)
 			ImGui::Text(" "); ImGui::SameLine();
 			bool pressed = ImGui::Button("Palette editor");
 
-			if (*g_gameVals.pGameMode == GameMode_Tutorial && pressed)
-			{
-				show_palette_editor ^= 1;
-			}
-			else
+			if (*g_gameVals.pGameMode != GameMode_Tutorial)
 			{
 				ImGui::SameLine(); ImGui::TextDisabled("Not in tutorial mode!");
+			}
+			else if (*g_gameVals.pGameMode == GameMode_Tutorial && pressed)
+			{
+				show_palette_editor ^= 1;
 			}
 		}
 

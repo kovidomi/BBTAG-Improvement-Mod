@@ -24,6 +24,7 @@ class CharPaletteHandle
 	friend class PaletteManager;
 
 	int* m_pCurPalIndex;
+	int m_origPalIndex;
 	const char* m_pPalBaseAddr;
 	IMPL_data_t m_origPalBackup;
 	IMPL_data_t m_CurrentPalData;
@@ -39,6 +40,7 @@ public:
 
 private:
 	void SetPaletteIndex(int palIndex);
+	int GetOrigPalIndex() const;
 	int& GetPalIndexRef();
 	void ReplaceAllPalFiles(IMPL_data_t *newPaletteData);
 	void ReplaceSinglePalFile(const char* newPalData, PaletteFile palFile);

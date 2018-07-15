@@ -4,6 +4,7 @@
 
 extern const char* charNames[TOTAL_CHAR_INDEXES];
 extern const wchar_t* wCharNames[TOTAL_CHAR_INDEXES];
+extern const wchar_t* wOrderedCharNames[TOTAL_CHAR_INDEXES];
 
 enum CharIndex
 {

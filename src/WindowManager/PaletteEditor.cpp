@@ -54,7 +54,7 @@ void PaletteEditor::ShowReloadAllPalettesButton()
 {
 	if (ImGui::Button("Reload custom palettes"))
 	{
-		g_interfaces.pPaletteManager->ReloadPalettesFromFolder();
+		g_interfaces.pPaletteManager->ReloadAllPalettes();
 
 		//refresh the paletteVector variable
 		customPaletteVector = g_interfaces.pPaletteManager->GetCustomPalettesVector();
@@ -387,24 +387,16 @@ void PaletteEditor::SavePaletteToFile()
 void PaletteEditor::ReloadSavedPalette(const char* palName)
 {
 	WindowManager::DisableLogging();
-	g_interfaces.pPaletteManager->ReloadPalettesFromFolder();
+	g_interfaces.pPaletteManager->ReloadAllPalettes();
 	WindowManager::EnableLogging();
 
 	//refresh the paletteVector variable
 	customPaletteVector = g_interfaces.pPaletteManager->GetCustomPalettesVector();
 
 	//find the newly loaded custom pal
-	selectedPalIndex = -1;
-	for (int i = 0; i < customPaletteVector[selectedCharIndex].size(); i++)
-	{
-		if (strcmp(palName, customPaletteVector[selectedCharIndex][i].palname) == 0)
-		{
-			selectedPalIndex = i;
-			break;
-		}
-	}
+	selectedPalIndex = g_interfaces.pPaletteManager->FindCustomPalIndex(selectedCharIndex, palName);
 
-	if (selectedPalIndex == -1)
+	if (selectedPalIndex < 0)
 	{
 		WindowManager::AddLog("[error] Saved custom palette couldn't be reloaded. Not found.\n");
 		selectedPalIndex = 0;

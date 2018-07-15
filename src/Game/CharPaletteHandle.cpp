@@ -29,6 +29,11 @@ void CharPaletteHandle::SetPaletteIndex(int palIndex)
 	*m_pCurPalIndex = palIndex;
 }
 
+int CharPaletteHandle::GetOrigPalIndex() const
+{
+	return m_origPalIndex;
+}
+
 bool CharPaletteHandle::IsNullPointerPalIndex()
 {
 	if (m_pCurPalIndex)
@@ -62,6 +67,8 @@ void CharPaletteHandle::ReplaceSinglePalFile(const char * newPalData, PaletteFil
 
 void CharPaletteHandle::OnMatchInit()
 {
+	m_origPalIndex = *m_pCurPalIndex;
+
 	BackupCurrentPal();
 
 	m_selectedCustomPalIndex = 0;

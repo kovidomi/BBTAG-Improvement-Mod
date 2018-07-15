@@ -89,3 +89,50 @@ const wchar_t* wCharNames[TOTAL_CHAR_INDEXES]
 	L"Yang",	// 39,
 	L"Boss",	// 40
 };
+
+
+//Ordered by name
+const wchar_t* wOrderedCharNames[TOTAL_CHAR_INDEXES]
+{
+	L"Aegis",	// 24
+	L"Akihiko",	// 23
+	L"Azrael",	// 11
+	L"Blake",	// 38
+	L"Carmine",	// 29
+	L"Chie",	// 18
+	L"Es",		// 13
+	L"Gordeau",	// 31
+	L"Hakumen",	// 5
+	L"Hazama",	// 7
+	L"Hyde",	// 26
+	L"Izayoi",	// 10
+	L"Jin",		// 1
+	L"Jubei",	// 15
+	L"Kanji",	// 20
+	L"Labrys",	// 25
+	L"Linne",	// 27
+	L"Mai",		// 14
+	L"Makoto",	// 8
+	L"Merkava",	// 32
+	L"Mika",	// 35
+	L"Mitsuru",	// 22
+	L"Naoto",	// 21
+	L"Nine",	// 12
+	L"Noel",	// 2
+	L"Nu",		// 6
+	L"Orie",	// 30
+	L"Platinum",// 9
+	L"Rachel",	// 3
+	L"Ragna",	// 0
+	L"Ruby",	// 36
+	L"Tager",	// 4
+	L"Vatista",	// 33
+	L"Waldstein",// 28
+	L"Weiss",	// 37
+	L"Yang",	// 39
+	L"Yosuke",	// 17
+	L"Yu",		// 16
+	L"Yukiko",	// 19
+	L"Yuzuriha",// 34
+	L"UNKNOWN",	// ?? boss
+};
