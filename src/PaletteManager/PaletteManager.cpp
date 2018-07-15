@@ -185,7 +185,6 @@ void PaletteManager::LoadPaletteSlotsFile()
 
 	for (int i = 0; i < (TOTAL_CHAR_INDEXES - 1); i++)
 	{
-		//WritePrivateProfileString(wOrderedCharNames[i], L"1", L"\"Default\"\r\n", wFullPath.c_str());
 		for (int iSlot = 1; iSlot <= MAX_NUM_OF_PAL_INDEXES; iSlot++)
 		{
 			CString strBuffer;
@@ -281,7 +280,6 @@ void PaletteManager::InitPaletteSlotsVector()
 	{
 		for (int iSlot = 0; iSlot < MAX_NUM_OF_PAL_INDEXES; iSlot++)
 		{
-			//make the character palette array's 0th element an empty one, that will be used to set back to the default palette
 			m_paletteSlots[i].push_back("");
 		}
 	}

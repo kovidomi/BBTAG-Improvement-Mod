@@ -2,7 +2,8 @@
 #include "fonts.h"
 #include "../Settings.h"
 #include "../utils.h"
-#include "../update_check.h"
+#include "../Web/update_check.h"
+#include "../Web/donators_fetch.h"
 #include "../SteamApiWrapper/SteamApiHelper.h"
 #include "../logger.h"
 #include "../Game/gamestates.h"
@@ -239,10 +240,14 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 
 	if (Settings::settingsIni.checkupdates)
 	{
-		HANDLE thread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)CheckUpdate, NULL, NULL, NULL);
-		if(thread)
-			CloseHandle(thread);
+		HANDLE updateThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)CheckUpdate, NULL, NULL, NULL);
+		if(updateThread)
+			CloseHandle(updateThread);
 	}
+
+	HANDLE donatorsThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)FetchDonators, NULL, NULL, NULL);
+	if (donatorsThread)
+		CloseHandle(donatorsThread);
 
 	if (g_interfaces.pSteamUserStatsWrapper && g_interfaces.pSteamFriendsWrapper)
 		g_interfaces.pSteamApiHelper = new SteamApiHelper(g_interfaces.pSteamUserStatsWrapper, g_interfaces.pSteamFriendsWrapper);
@@ -709,6 +714,17 @@ void WindowManager::ShowMainWindow(bool * p_open)
 		ImGui::Text("Toggle HUD with %s", Settings::settingsIni.toggleHUDbutton.c_str());
 		ImGui::Text("Toggle Custom HUD with %s", Settings::settingsIni.togglecustomHUDbutton.c_str());
 		ImGui::Separator();
+
+		if (GetDonators().size() > 0)
+		{
+			const float SPEED = 1.5f;
+			int passedTime = (int)(ImGui::GetTime() / SPEED);
+			int donatorSize = GetDonators().size()-1;
+			std::string donatorName = GetDonators()[passedTime & donatorSize];
+
+			ImGui::Text("Donators %c %s", "|/-\\"[passedTime & 3], donatorName.c_str());
+		}
+
 		ImGui::Text("");
 
 		if (ImGui::CollapsingHeader("Custom HUD"))

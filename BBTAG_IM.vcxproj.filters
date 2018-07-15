@@ -34,6 +34,9 @@
     <Filter Include="src\Game">
       <UniqueIdentifier>{3d209caf-f580-415c-afde-1c675ac882db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Web">
+      <UniqueIdentifier>{448b2155-3c81-4718-a1dd-288c741605ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="export\dinput8.def">
@@ -51,9 +54,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\logger.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\update_check.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\utils.cpp">
@@ -164,6 +164,15 @@
     <ClCompile Include="src\Hooks\hooks_detours.cpp">
       <Filter>src\Hooks</Filter>
     </ClCompile>
+    <ClCompile Include="src\Web\donators_fetch.cpp">
+      <Filter>src\Web</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Web\update_check.cpp">
+      <Filter>src\Web</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Web\url_downloader.cpp">
+      <Filter>src\Web</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -197,9 +206,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\main.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\update_check.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\utils.h">
@@ -304,5 +310,19 @@
     <ClInclude Include="src\Hooks\hooks_detours.h">
       <Filter>src\Hooks</Filter>
     </ClInclude>
+    <ClInclude Include="src\Web\donators_fetch.h">
+      <Filter>src\Web</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Web\update_check.h">
+      <Filter>src\Web</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Web\url_downloader.h">
+      <Filter>src\Web</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resource\donators.txt">
+      <Filter>resource</Filter>
+    </Text>
   </ItemGroup>
 </Project>

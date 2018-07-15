@@ -200,8 +200,10 @@
     <ClCompile Include="src\SteamApiWrapper\SteamUserStatsWrapper.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamUserWrapper.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamUtilsWrapper.cpp" />
-    <ClCompile Include="src\update_check.cpp" />
     <ClCompile Include="src\utils.cpp" />
+    <ClCompile Include="src\Web\donators_fetch.cpp" />
+    <ClCompile Include="src\Web\update_check.cpp" />
+    <ClCompile Include="src\Web\url_downloader.cpp" />
     <ClCompile Include="src\WindowManager\CustomHud.cpp" />
     <ClCompile Include="src\WindowManager\fonts.cpp" />
     <ClCompile Include="src\WindowManager\PaletteEditor.cpp" />
@@ -248,12 +250,17 @@
     <ClInclude Include="src\SteamApiWrapper\SteamUserStatsWrapper.h" />
     <ClInclude Include="src\SteamApiWrapper\SteamUserWrapper.h" />
     <ClInclude Include="src\SteamApiWrapper\SteamUtilsWrapper.h" />
-    <ClInclude Include="src\update_check.h" />
     <ClInclude Include="src\utils.h" />
+    <ClInclude Include="src\Web\donators_fetch.h" />
+    <ClInclude Include="src\Web\update_check.h" />
+    <ClInclude Include="src\Web\url_downloader.h" />
     <ClInclude Include="src\WindowManager\CustomHud.h" />
     <ClInclude Include="src\WindowManager\fonts.h" />
     <ClInclude Include="src\WindowManager\PaletteEditor.h" />
     <ClInclude Include="src\WindowManager\WindowManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resource\donators.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

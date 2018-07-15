@@ -1,6 +1,7 @@
 ??-??-2018 -- version 1.04
 ===============================
 - Added ingame palette editor
+- Added "palette_slots.ini" file for assigning custom palettes to the ingame palette slots
 - Fixed the custom HUD not being updated while the game's window is not focused
 - Fixed mistakenly calling the Steam Controller as PS4 controller all over the place
 - Added extra option for the ForcePromptButtonLayout that keeps the button prompt layout blinking
