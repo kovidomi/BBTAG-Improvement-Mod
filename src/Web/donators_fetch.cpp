@@ -14,6 +14,9 @@ std::vector<std::string>& GetDonators()
 
 std::vector<std::wstring> DownloadPaletteFileList()
 {
+	LOG(2, "DownloadPaletteFileList\n");
+	WindowManager::AddLog("[system] Getting online palette list...\n");
+
 	std::wstring wUrl = MOD_LINK_DONATORS_PALETTELIST;
 	std::string data = DownloadUrl(wUrl);
 
@@ -45,16 +48,18 @@ void DownloadPaletteFiles()
 	for (auto palUrl : links)
 	{
 		int bufSize = sizeof(IMPL_t);
-		char* implFile = new char[bufSize];
+		IMPL_t* implFile = new IMPL_t;
 
 		int res = DownloadUrlBinary(palUrl, implFile, bufSize);
 
 		if (res > 0)
 		{
-			g_interfaces.pPaletteManager->LoadImplFile(*(IMPL_t*)implFile);
+			WindowManager::AddLog("[system] Downloaded '%s'\n", implFile->paldata.palname);
+			LOG(2, "Downloaded '%s'\n", implFile->paldata.palname);
+			g_interfaces.pPaletteManager->LoadImplFile(*implFile);
 		}
 
-		delete[] implFile;
+		delete implFile;
 	}
 }
 
