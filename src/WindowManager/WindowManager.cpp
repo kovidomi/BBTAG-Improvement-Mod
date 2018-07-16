@@ -745,30 +745,30 @@ void WindowManager::ShowDonatorsWindow()
 
 void WindowManager::ShowDonatorsButton()
 {
-	if (GetDonators().size() > 0)
+	if (GetDonators().size() == 0)
+		return;
+
+	const float SPEED = 2.0f;
+	int passedTime = (int)(ImGui::GetTime() / SPEED);
+	static int prevPassedTime = 0;
+	int donatorSize = GetDonators().size() - 1;
+	static int index = 0;
+
+	if (passedTime > prevPassedTime)
 	{
-		const float SPEED = 2.0f;
-		int passedTime = (int)(ImGui::GetTime() / SPEED);
-		static int prevPassedTime = 0;
-		int donatorSize = GetDonators().size() - 1;
-		static int index = 0;
+		prevPassedTime = passedTime;
+		index++;
+		if (index > donatorSize)
+			index = 0;
+	}
 
-		if (passedTime > prevPassedTime)
-		{
-			prevPassedTime = passedTime;
-			index++;
-			if (index > donatorSize)
-				index = 0;
-		}
+	std::string donatorName = GetDonators()[index];
 
-		std::string donatorName = GetDonators()[index];
-
-		char buf[128];
-		sprintf(buf, "%s", donatorName.c_str());
-		if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
-		{
-			show_donators_window ^= 1;
-		}
+	char buf[128];
+	sprintf(buf, "%s", donatorName.c_str());
+	if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
+	{
+		show_donators_window ^= 1;
 	}
 }
 
