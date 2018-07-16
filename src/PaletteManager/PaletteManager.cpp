@@ -1,6 +1,7 @@
 #include "PaletteManager.h"
 #include "../utils.h"
 #include "../WindowManager/WindowManager.h"
+#include "../Web/donators_fetch.h"
 #include "../logger.h"
 #include <sstream>
 #include <fstream>
@@ -334,12 +335,16 @@ void PaletteManager::LoadAllPalettes()
 
 	InitPaletteSlotsVector();
 	LoadPaletteSlotsFile();
+
+	InitiateDownloadingPaletteFiles();
 }
 
 void PaletteManager::ReloadAllPalettes()
 {
 	ReloadPalettesFromFolder();
 	ReloadPaletteSlotsFile();
+
+	InitiateDownloadingPaletteFiles();
 }
 
 void PaletteManager::ReloadPalettesFromFolder()

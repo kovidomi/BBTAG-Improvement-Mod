@@ -12,7 +12,7 @@
 const int COLOR_BLACK = 0xFF000000;
 const int COLOR_WHITE = 0xFFFFFFFF;
 
-PaletteEditor::PaletteEditor()
+PaletteEditor::PaletteEditor() : customPaletteVector(g_interfaces.pPaletteManager->GetCustomPalettesVector())
 {
 	OnMatchInit();
 }
@@ -55,9 +55,6 @@ void PaletteEditor::ShowReloadAllPalettesButton()
 	if (ImGui::Button("Reload custom palettes"))
 	{
 		g_interfaces.pPaletteManager->ReloadAllPalettes();
-
-		//refresh the paletteVector variable
-		customPaletteVector = g_interfaces.pPaletteManager->GetCustomPalettesVector();
 	}
 }
 
@@ -389,9 +386,6 @@ void PaletteEditor::ReloadSavedPalette(const char* palName)
 	WindowManager::DisableLogging();
 	g_interfaces.pPaletteManager->ReloadAllPalettes();
 	WindowManager::EnableLogging();
-
-	//refresh the paletteVector variable
-	customPaletteVector = g_interfaces.pPaletteManager->GetCustomPalettesVector();
 
 	//find the newly loaded custom pal
 	selectedPalIndex = g_interfaces.pPaletteManager->FindCustomPalIndex(selectedCharIndex, palName);

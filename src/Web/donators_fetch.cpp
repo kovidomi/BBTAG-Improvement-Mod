@@ -37,6 +37,11 @@ std::vector<std::wstring> DownloadPaletteFileList()
 			links.push_back(std::wstring(line.begin(), line.end()));
 		}
 	}
+	else
+	{
+		LOG(2, "DownloadPaletteFileList failed, no data received, or 404!!!\n");
+		WindowManager::AddLog("[error] Failed to retrieve online palette list. No data, or 404\n");
+	}
 
 	return links;
 }
@@ -63,10 +68,15 @@ void DownloadPaletteFiles()
 	}
 }
 
+void InitiateDownloadingPaletteFiles()
+{
+	HANDLE paletteDownloadThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)DownloadPaletteFiles, NULL, NULL, NULL);
+	if (paletteDownloadThread)
+		CloseHandle(paletteDownloadThread);
+}
+
 void FetchDonators()
 {
-	DownloadPaletteFiles();
-
 	std::wstring wUrl = MOD_LINK_DONATORS;
 	std::string data = DownloadUrl(wUrl);
 

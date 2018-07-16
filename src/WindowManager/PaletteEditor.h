@@ -7,7 +7,7 @@
 class PaletteEditor
 {
 private:
-	std::vector<std::vector<IMPL_data_t>> customPaletteVector;
+	std::vector<std::vector<IMPL_data_t>>& customPaletteVector;
 
 	CharHandle* allSelectedCharHandles[4];
 	const char* allSelectedCharNames[4];
