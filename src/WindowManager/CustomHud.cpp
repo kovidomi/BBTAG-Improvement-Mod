@@ -54,6 +54,7 @@ void CustomHud::OnUpdate(bool show_custom_hud, bool show_main_window)
 														 //push styles
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0.0f, 0.0f));
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(4.0f, 4.0f));
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(1.0f, 1.0f));
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f)); //black
 	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.286f, 0.286f, 0.286f, 0.54f)); //grey
 
@@ -141,7 +142,7 @@ void CustomHud::OnUpdate(bool show_custom_hud, bool show_main_window)
 		ImGui::PopStyleColor();
 
 	ImGui::PopStyleColor(2);
-	ImGui::PopStyleVar(2);
+	ImGui::PopStyleVar(3);
 }
 
 void CustomHud::UpdateHP(const CharInfo &charInfo, bool right_side)
