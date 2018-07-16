@@ -40,6 +40,7 @@ private:
 	static void ShowLoadedSettingsValues();
 	static void ShowDebugWindow(bool* p_open);
 	static void ShowDonatorsWindow();
+	static void ShowDonatorsButton();
 	static void ShowMainWindow(bool* p_open);
 	static void ShowLinks();
 	static void ShowAllWindows();

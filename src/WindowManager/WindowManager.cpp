@@ -743,6 +743,35 @@ void WindowManager::ShowDonatorsWindow()
 	ImGui::GetStyle().WindowTitleAlign = origWindowTitleAlign;
 }
 
+void WindowManager::ShowDonatorsButton()
+{
+	if (GetDonators().size() > 0)
+	{
+		const float SPEED = 2.0f;
+		int passedTime = (int)(ImGui::GetTime() / SPEED);
+		static int prevPassedTime = 0;
+		int donatorSize = GetDonators().size() - 1;
+		static int index = 0;
+
+		if (passedTime > prevPassedTime)
+		{
+			prevPassedTime = passedTime;
+			index++;
+			if (index > donatorSize)
+				index = 0;
+		}
+
+		std::string donatorName = GetDonators()[index];
+
+		char buf[128];
+		sprintf(buf, "%s", donatorName.c_str());
+		if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
+		{
+			show_donators_window ^= 1;
+		}
+	}
+}
+
 void WindowManager::ShowMainWindow(bool * p_open)
 {
 	if (*p_open)
@@ -754,53 +783,14 @@ void WindowManager::ShowMainWindow(bool * p_open)
 		ImGui::Text("Toggle Custom HUD with %s", Settings::settingsIni.togglecustomHUDbutton.c_str());
 		ImGui::Separator();
 
-		if (GetDonators().size() > 0)
-		{
-			const float SPEED = 2.0f;
-			int passedTime = (int)(ImGui::GetTime() / SPEED);
-			static int prevPassedTime = 0;
-			int donatorSize = GetDonators().size()-1;
-			static int index = 0;
-
-			if (passedTime > prevPassedTime)
-			{
-				prevPassedTime = passedTime;
-				index++;
-				if (index > donatorSize)
-					index = 0;
-			}
-			
-			std::string donatorName = GetDonators()[index];
-
-			char buf[128];
-			sprintf(buf, "%s", donatorName.c_str());
-			if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
-			{
-				show_donators_window ^= 1;
-			}
-		}
+		ShowDonatorsButton();
 
 		ImGui::Text("");
 
 		if (ImGui::CollapsingHeader("Custom HUD"))
 		{
 			ImGui::Text(" "); ImGui::SameLine();
-			if (ImGui::Button("Reset custom HUD positions"))
-			{
-				ImGui::SetWindowPos("P1_meters", middlescreen);
-				ImGui::SetWindowPos("P2_meters", middlescreen);
-				ImGui::SetWindowPos("P1_hp_gauge", middlescreen);
-				ImGui::SetWindowPos("P2_hp_gauge", middlescreen);
-				ImGui::SetWindowPos("P1_unique_meters", middlescreen);
-				ImGui::SetWindowPos("P2_unique_meters", middlescreen);
-				ImGui::SetWindowPos("TIMER", middlescreen);
-			}
-			if (ImGui::IsItemHovered())
-			{
-				ImGui::BeginTooltip();
-				ImGui::Text("Used to recover elements of the custom HUD that have\nbecome unrecoverable due to going beyond the screen");
-				ImGui::EndTooltip();
-			}
+			m_customHud->ShowResetPositionsButton(middlescreen);
 		}
 
 		if (ImGui::CollapsingHeader("Custom palettes"))

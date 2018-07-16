@@ -2,7 +2,6 @@
 #include "../interfaces.h"
 #include "../Game/MeterInfo.h"
 #include "../logger.h"
-#include <imgui.h>
 
 ImGuiWindowFlags customHUDWindowFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar;
 const ImVec4 default_cross_bar_color(0.15f, 1.0f, 1.0f, 1.0f);
@@ -143,6 +142,26 @@ void CustomHud::OnUpdate(bool show_custom_hud, bool show_main_window)
 
 	ImGui::PopStyleColor(2);
 	ImGui::PopStyleVar(3);
+}
+
+void CustomHud::ShowResetPositionsButton(ImVec2 middlescreen)
+{
+	if (ImGui::Button("Reset custom HUD positions"))
+	{
+		ImGui::SetWindowPos("P1_meters", middlescreen);
+		ImGui::SetWindowPos("P2_meters", middlescreen);
+		ImGui::SetWindowPos("P1_hp_gauge", middlescreen);
+		ImGui::SetWindowPos("P2_hp_gauge", middlescreen);
+		ImGui::SetWindowPos("P1_unique_meters", middlescreen);
+		ImGui::SetWindowPos("P2_unique_meters", middlescreen);
+		ImGui::SetWindowPos("TIMER", middlescreen);
+	}
+	if (ImGui::IsItemHovered())
+	{
+		ImGui::BeginTooltip();
+		ImGui::Text("Used to recover elements of the custom HUD that have\nbecome unrecoverable due to going beyond the screen");
+		ImGui::EndTooltip();
+	}
 }
 
 void CustomHud::UpdateHP(const CharInfo &charInfo, bool right_side)

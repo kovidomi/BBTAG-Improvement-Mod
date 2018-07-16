@@ -63,7 +63,14 @@ Changelog
 
 ??-??-2018 -- version 1.04
 ===============================
-- Added option to keep blinking the button prompt layout 
+- Added ingame palette editor
+- Added "palette_slots.ini" file in the "BBTAG_IM/Palettes" folder for assigning custom palettes to the ingame palette slots
+- Fixed the custom HUD not being updated while the game's window is not focused
+- Fixed mistakenly calling the Steam Controller as PS4 controller all over the place
+- Adjusted custom HUD window sizes to take up less space on extreme low resolutions
+- Added extra option for the ForcePromptButtonLayout that keeps the button prompts blinking
+- Added donators window
+- Added button links for the mod's GitHub page, and donation
 
 21-06-2018 -- version 1.03
 ===============================
