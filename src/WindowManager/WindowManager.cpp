@@ -29,6 +29,7 @@ bool show_notification = false;
 bool show_notification_window = false;
 bool show_log_window = false;
 bool show_debug_window = false;
+bool show_donators_window = false;
 bool show_custom_hud = false;
 bool *NO_CLOSE_FLAG = NULL;
 
@@ -580,7 +581,7 @@ void WindowManager::ShowLogWindow(bool* p_open)
 void WindowManager::ShowUpdateWindow()
 {
 	//middle of screen
-	ImGui::SetNextWindowPosCenter(ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPosCenter(ImGuiCond_Once);
 	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
 	ImVec2 OK_btn_size = ImVec2(100, 30);
 
@@ -704,6 +705,44 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 	ImGui::End();
 }
 
+void WindowManager::ShowDonatorsWindow()
+{
+	ImVec2 origWindowTitleAlign = ImGui::GetStyle().WindowTitleAlign;
+	ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f); //middle
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.0f);
+
+	ImGui::SetNextWindowPosCenter(ImGuiCond_Once);
+	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
+	ImVec2 OK_btn_size = ImVec2(100, 30);
+
+	char buf[128];
+	char flipper = "|/-\\"[(int)(ImGui::GetTime() / 0.25f) & 3];
+	sprintf(buf, "%c DONATORS %c###Donators", flipper, flipper);
+	ImGui::Begin(buf, NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
+
+	for (auto donator : GetDonators())
+	{
+		sprintf(buf, "%s", donator.c_str());
+		ImVec4 invis = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
+		ImGui::TextColored(invis, buf);
+		float width = ImGui::GetItemRectSize().x;
+		ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (width / 2));
+		ImGui::Text(buf);
+	}
+	ImGui::Text("");
+
+	ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (OK_btn_size.x / 2));
+
+	if (ImGui::Button("OK", OK_btn_size))
+	{
+		show_donators_window = false;
+	}
+	ImGui::End();
+
+	ImGui::PopStyleVar();
+	ImGui::GetStyle().WindowTitleAlign = origWindowTitleAlign;
+}
+
 void WindowManager::ShowMainWindow(bool * p_open)
 {
 	if (*p_open)
@@ -733,7 +772,12 @@ void WindowManager::ShowMainWindow(bool * p_open)
 			
 			std::string donatorName = GetDonators()[index];
 
-			ImGui::Text("Donators %c %s", "|/-\\"[passedTime & 3], donatorName.c_str());
+			char buf[128];
+			sprintf(buf, "%s", donatorName.c_str());
+			if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
+			{
+				show_donators_window ^= 1;
+			}
 		}
 
 		ImGui::Text("");
@@ -856,6 +900,9 @@ void WindowManager::ShowAllWindows()
 
 	if (IsUpdateAvailable)
 		ShowUpdateWindow();
+
+	if (show_donators_window)
+		ShowDonatorsWindow();
 
 ////////////// DEBUG Windows
 #ifndef RELEASE_VER

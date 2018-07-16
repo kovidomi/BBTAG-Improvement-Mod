@@ -12,23 +12,56 @@ std::vector<std::string>& GetDonators()
 	return donators;
 }
 
-void DownloadPaletteFile()
+std::vector<std::wstring> DownloadPaletteFileList()
 {
-	int bufSize = sizeof(IMPL_t);
-	char* implFile = new char[bufSize];
-	std::wstring wUrl = L"https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/donator_palettes/Green%20coat.impl";
-	int res = DownloadUrlBinary(wUrl, implFile, bufSize);
+	std::wstring wUrl = MOD_LINK_DONATORS_PALETTELIST;
+	std::string data = DownloadUrl(wUrl);
 
-	if (res > 0)
+	std::vector<std::wstring> links;
+
+	if (strcmp(data.c_str(), "") != 0 && data.find("404: Not Found") == std::string::npos)
 	{
-		g_interfaces.pPaletteManager->LoadImplFile(*(IMPL_t*)implFile);
+		std::stringstream ss(data);
+		std::string line;
+		while (std::getline(ss, line, '\n'))
+		{
+			int pos = line.find('\r');
+			if (pos != std::string::npos)
+			{
+				line.erase(pos);
+			}
+
+			links.push_back(std::wstring(line.begin(), line.end()));
+		}
 	}
 
-	delete[] implFile;
+	return links;
+}
+
+void DownloadPaletteFiles()
+{
+	std::vector<std::wstring> links = DownloadPaletteFileList();
+
+	for (auto palUrl : links)
+	{
+		int bufSize = sizeof(IMPL_t);
+		char* implFile = new char[bufSize];
+
+		int res = DownloadUrlBinary(palUrl, implFile, bufSize);
+
+		if (res > 0)
+		{
+			g_interfaces.pPaletteManager->LoadImplFile(*(IMPL_t*)implFile);
+		}
+
+		delete[] implFile;
+	}
 }
 
 void FetchDonators()
 {
+	DownloadPaletteFiles();
+
 	std::wstring wUrl = MOD_LINK_DONATORS;
 	std::string data = DownloadUrl(wUrl);
 

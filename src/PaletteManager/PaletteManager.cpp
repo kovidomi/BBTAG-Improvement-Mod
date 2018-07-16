@@ -79,6 +79,10 @@ void PaletteManager::ApplyPaletteSlot(CharIndex charIndex, CharPaletteHandle & c
 
 	const int curPalIndex = charPalHandle.GetOrigPalIndex();
 	const char* palName = m_paletteSlots[charIndex][curPalIndex].c_str();
+
+	if (strcmp(palName, "") == 0 || strcmp(palName, "Default") == 0)
+		return;
+
 	int foundCustomPalIndex = g_interfaces.pPaletteManager->FindCustomPalIndex(charIndex, palName);
 
 	if (foundCustomPalIndex < 0)
