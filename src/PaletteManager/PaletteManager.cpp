@@ -163,6 +163,10 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 				continue;
 			}
 
+			//replace palname section with the filename, so renaming the file has effect on the actual ingame palname
+			std::string fileNameWithoutExt = fileName.substr(0, fileName.length() - strlen(".impl"));
+			memcpy(fileContents.paldata.palname, fileNameWithoutExt.c_str(), strlen(fileNameWithoutExt.c_str()));
+
 			m_customPalettes[charIndex].push_back(fileContents.paldata);
 
 			WindowManager::AddLog("[system] Loaded '%s'\n", fileName.c_str());
