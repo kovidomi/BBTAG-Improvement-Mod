@@ -11,6 +11,8 @@
 
 PaletteManager::PaletteManager()
 {
+	LOG(2, "PaletteManager::PaletteManager\n");
+
 	CreatePaletteFolders();
 	InitCustomPaletteVector();
 }
@@ -21,6 +23,8 @@ PaletteManager::~PaletteManager()
 
 void PaletteManager::CreatePaletteFolders()
 {
+	LOG(2, "CreatePaletteFolders\n");
+
 	CreateDirectory(L"BBTAG_IM\\Palettes", NULL);
 
 	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
@@ -75,6 +79,8 @@ void PaletteManager::ReloadPaletteSlotsFile()
 
 void PaletteManager::ApplyPaletteSlot(CharIndex charIndex, CharPaletteHandle & charPalHandle)
 {
+	LOG(2, "ApplyPaletteSlot\n");
+
 	if (charIndex > TOTAL_CHAR_INDEXES)
 		return;
 
@@ -130,18 +136,18 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 			LOG(2, "\tFILE: %s", fileName.c_str());
 			LOG(2, "\t\tFull path: %s\n", fullPath.c_str());
 
-			////read binary file into string
+			if (fileName.find(".impl") == std::string::npos)
+			{
+				WindowManager::AddLog("[error] Unable to open '%s' : not an .impl file\n", fileName.c_str());
+				continue;
+			}
+
 			std::ifstream file(fullPath, std::ios::binary);
 
 			if (!file.is_open())
 			{
 				LOG(2, "\tCouldn't open %s!\n", strerror(errno));
 				WindowManager::AddLog("[error] Unable to open '%s' : %s\n", fileName.c_str(), strerror(errno));
-				continue;
-			}
-			if (fileName.find(".impl") == std::string::npos)
-			{
-				WindowManager::AddLog("[error] Unable to open '%s' : not an .impl file\n", fileName.c_str());
 				continue;
 			}
 
@@ -179,6 +185,8 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 
 void PaletteManager::LoadPaletteSlotsFile()
 {
+	LOG(2, "LoadPaletteSlotsFile\n");
+
 	TCHAR pathBuf[MAX_PATH];
 	GetModuleFileName(NULL, pathBuf, MAX_PATH);
 	std::wstring::size_type pos = std::wstring(pathBuf).find_last_of(L"\\");
@@ -217,6 +225,8 @@ void PaletteManager::LoadPaletteSlotsFile()
 
 bool PaletteManager::CreatePaletteSlotsFile()
 {
+	LOG(2, "CreatePaletteSlotsFile\n");
+
 	TCHAR pathBuf[MAX_PATH];
 	GetModuleFileName(NULL, pathBuf, MAX_PATH);
 	std::wstring::size_type pos = std::wstring(pathBuf).find_last_of(L"\\");
@@ -297,6 +307,8 @@ void PaletteManager::InitPaletteSlotsVector()
 
 void PaletteManager::LoadImplFile(IMPL_t & filledPal)
 {
+	LOG(2, "LoadImplFile\n");
+
 	CharIndex charIndex = (CharIndex)filledPal.header.charindex;
 	m_customPalettes[charIndex].push_back(filledPal.paldata);
 	WindowManager::AddLog("[system] Loaded '%s'\n", filledPal.paldata.palname);
@@ -304,6 +316,8 @@ void PaletteManager::LoadImplFile(IMPL_t & filledPal)
 
 bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filledPalData)
 {
+	LOG(2, "WritePaletteToFile\n");
+
 	std::string path = std::string("BBTAG_IM\\Palettes\\") + charNames[charIndex] + "\\" + filledPalData->palname + ".impl";
 
 	IMPL_t IMPL_file;
@@ -331,6 +345,8 @@ bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filled
 
 void PaletteManager::LoadAllPalettes()
 {
+	LOG(2, "LoadAllPalettes\n");
+
 	LoadPalettesFromFolder();
 	CreatePaletteSlotsFile();
 
@@ -342,6 +358,8 @@ void PaletteManager::LoadAllPalettes()
 
 void PaletteManager::ReloadAllPalettes()
 {
+	LOG(2, "ReloadAllPalettes\n");
+
 	ReloadPalettesFromFolder();
 	ReloadPaletteSlotsFile();
 
@@ -361,6 +379,8 @@ void PaletteManager::ReloadPalettesFromFolder()
 
 int PaletteManager::FindCustomPalIndex(CharIndex charIndex, const char * palNameToFind)
 {
+	LOG(2, "FindCustomPalIndex\n");
+
 	if (charIndex > TOTAL_CHAR_INDEXES)
 		return -1;
 
