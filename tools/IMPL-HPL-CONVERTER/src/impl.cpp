@@ -85,7 +85,7 @@ bool WriteImplToFile(IMPL_t *filledImpl)
 	file.write((char*)filledImpl, sizeof(IMPL_t));
 	file.close();
 
-	printf("Written '%s'\n", path.c_str());
+	printf("\nWritten '%s'\n", path.c_str());
 
 	return true;
 }

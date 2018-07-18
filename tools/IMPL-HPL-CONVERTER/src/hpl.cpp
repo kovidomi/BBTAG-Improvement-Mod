@@ -112,11 +112,12 @@ bool WriteHplsToFile(IMPL_t& filledImplFile)
 		file.write(pSrc, IMPL_PALETTE_DATALEN);
 		file.close();
 
-		printf("Written '%s'\n", path.c_str());
+		printf("\nWritten '%s'", path.c_str());
 
 		pSrc += IMPL_PALETTE_DATALEN;
 	}
 
+	printf("\n");
 	return true;
 }
 

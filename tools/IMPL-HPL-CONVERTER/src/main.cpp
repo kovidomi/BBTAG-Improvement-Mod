@@ -6,6 +6,8 @@
 #include <vector>
 #include <atlstr.h>
 
+#define TITLE "IMPL-HPL-CONVERTER (v1.00) - by KoviDomi\n\n"
+
 void ConvertHplsToImpl()
 {
 	printf("HPL to IMPL mode selected based on input files\n");
@@ -56,7 +58,7 @@ void ConvertImplToHpls()
 
 void ExitPrompt()
 {
-	printf("Done. Press any key to exit.\n");
+	printf("\n\nDone. Press any key to exit.\n");
 	getchar();
 }
 
@@ -100,7 +102,7 @@ int CountNumberOfValidFilesInFolder(int& implFiles, int& hplFiles)
 
 int main(int argc, char* argv[])
 {
-	printf("IMPL-HPL-CONVERTER  -  by KoviDomi\n\n");
+	printf(TITLE);
 
 	int totalFiles = 0;
 	int implFiles = 0;
@@ -110,9 +112,15 @@ int main(int argc, char* argv[])
 	printf("Number of .impl files found: %d\n", implFiles);
 	printf("Number of .hpl files found: %d\n\n", hplFiles);
 
-	if (implFiles != 1)
+	if (implFiles < 1)
 	{
-		printf("ERROR, there must be only ONE .impl file present in the folder\n");
+		printf("ERROR, there must be AT LEAST ONE .impl file present in the folder\n");
+		ExitPrompt();
+		return 2;
+	}
+	else if (implFiles > 1)
+	{
+		printf("ERROR, there must be ONLY ONE .impl file present in the folder\n");
 		ExitPrompt();
 		return 1;
 	}
@@ -121,7 +129,7 @@ int main(int argc, char* argv[])
 	{
 		printf("ERROR, too many .hpl files (8 max! 1 char and 7 effects)\n");
 		ExitPrompt();
-		return 2;
+		return 3;
 	}
 
 	if (totalFiles == 1) //one file, can only be impl
