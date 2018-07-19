@@ -282,68 +282,6 @@ void __declspec(naked)ShowAllLobbies_TWO()
 	}
 }
 
-DWORD GetP1CharsPaletteIndexesJmpBackAddr = 0;
-void __declspec(naked)GetP1CharsPaletteIndexes()
-{
-	LOG_ASM(2, "GetP1CharsPaletteIndexes\n");
-
-	static int* pPalIndex;
-
-	__asm
-	{
-		mov[esi + 24D8h], eax
-
-		push eax
-		mov eax, esi
-		add eax, 24D8h
-		mov pPalIndex, eax
-	}
-
-	__asm pushad
-	if (g_interfaces.player1.GetChar1().GetPalHandle().IsNullPointerPalIndex())
-		g_interfaces.player1.GetChar1().GetPalHandle().SetPointerPalIndex(pPalIndex);
-	else if (g_interfaces.player1.GetChar2().GetPalHandle().IsNullPointerPalIndex())
-		g_interfaces.player1.GetChar2().GetPalHandle().SetPointerPalIndex(pPalIndex);
-	__asm popad
-
-	__asm
-	{
-		pop eax
-		jmp[GetP1CharsPaletteIndexesJmpBackAddr]
-	}
-}
-
-DWORD GetP2CharsPaletteIndexesJmpBackAddr = 0;
-void __declspec(naked)GetP2CharsPaletteIndexes()
-{
-	LOG_ASM(2, "GetP2CharsPaletteIndexes\n");
-
-	static int* pPalIndex;
-
-	__asm
-	{
-		mov[esi + 24D8h], eax
-
-		push eax
-		mov eax, esi
-		add eax, 24D8h
-		mov pPalIndex, eax
-	}
-
-	__asm pushad
-	if (g_interfaces.player2.GetChar1().GetPalHandle().IsNullPointerPalIndex())
-		g_interfaces.player2.GetChar1().GetPalHandle().SetPointerPalIndex(pPalIndex);
-	else if (g_interfaces.player2.GetChar2().GetPalHandle().IsNullPointerPalIndex())
-		g_interfaces.player2.GetChar2().GetPalHandle().SetPointerPalIndex(pPalIndex);
-	__asm popad
-
-	__asm
-	{
-		pop eax
-		jmp[GetP2CharsPaletteIndexesJmpBackAddr]
-	}
-}
-
 DWORD GetPalBaseAddressesJmpBackAddr = 0;
 void __declspec(naked)GetPalBaseAddresses()
 {
@@ -584,14 +522,6 @@ bool placeHooks_bbtag()
 
 	GetPlayerMetersJmpBackAddr = HookManager::SetHook("GetPlayerMetersJmpBackAddr", "\x2b\xc6\xc7\x44\xb3\x20\x00\x00\x00\x00", 
 		"xxxxxxxxxx", 10, GetPlayerMeters);
-
-	//TODO: cleanup GetP1CharsPaletteIndexes and GetP2CharsPaletteIndexes
-
-	//GetP1CharsPaletteIndexesJmpBackAddr = HookManager::SetHook("GetP1CharsPaletteIndexes", "\x89\x86\xd8\x24\x00\x00\x8b\x87\x60\x06\x00\x00",
-	//	"xxxxxxxxxxxx", 6, GetP1CharsPaletteIndexes);
-
-	//GetP2CharsPaletteIndexesJmpBackAddr = HookManager::SetHook("GetP2CharsPaletteIndexes", "\x89\x86\xd8\x24\x00\x00\x8b\x81\x60\x06\x00\x00",
-	//	"xxxxxxxxxxxx", 6, GetP2CharsPaletteIndexes);
 
 	GetPalBaseAddressesJmpBackAddr = HookManager::SetHook("GetPalBaseAddresses", "\x89\x81\x30\x08\x00\x00\x8b\xc8", 
 		"xxxxxxxx", 6, GetPalBaseAddresses);
