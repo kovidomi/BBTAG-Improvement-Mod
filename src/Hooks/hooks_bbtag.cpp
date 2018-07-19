@@ -461,6 +461,88 @@ EXIT:
 	}
 }
 
+//Had to put the switch statement into a callable function due to the compiler generating such code
+//where the switch's expression (counter) was put into [ebp-4] and ending up corrupting the stack.
+//It's safer to call a separate function instead of pushing-popping the value thats below the stack frame
+void __stdcall SetPalIndexAddr(int* pPalIndex) //stdcall to get the func clean up for itself
+{
+	static int counter = 0;
+	static CharPaletteHandle* palHandle;
+
+	switch (counter)
+	{
+	case 0:
+		palHandle = &g_interfaces.player1.GetChar1().GetPalHandle();
+		break;
+	case 1:
+		palHandle = &g_interfaces.player2.GetChar1().GetPalHandle();
+		break;
+	case 2:
+		palHandle = &g_interfaces.player1.GetChar2().GetPalHandle();
+		break;
+	case 3:
+		palHandle = &g_interfaces.player2.GetChar2().GetPalHandle();
+		break;
+	default:
+		return;
+	}
+
+	if (palHandle->IsNullPointerPalIndex())
+		palHandle->SetPointerPalIndex(pPalIndex);
+
+	counter++;
+}
+
+DWORD GetPaletteIndexAddrOnlineJmpBackAddr = 0;
+void __declspec(naked)GetPaletteIndexAddrOnline()
+{
+	LOG_ASM(2, "GetPaletteIndexAddrOnline\n");
+
+	static int* pPalIndex;
+
+	__asm
+	{
+		pushad
+		add esi, 24D8h
+		mov pPalIndex, esi
+	}
+
+	//read comment above the SetPalIndexAddr definition
+	SetPalIndexAddr(pPalIndex);
+
+	__asm
+	{
+		popad
+		mov dword ptr[esi + 24F4h], 64h
+		jmp[GetPaletteIndexAddrOnlineJmpBackAddr]
+	}
+}
+
+DWORD GetPaletteIndexAddrOfflineJmpBackAddr = 0;
+void __declspec(naked)GetPaletteIndexAddrOffline()
+{
+	LOG_ASM(2, "GetPaletteIndexAddrOffline\n");
+
+	static int* pPalIndex;
+
+	__asm
+	{
+		pushad
+		add eax, 8h
+		mov pPalIndex, eax
+	}
+
+	//read comment above the SetPalIndexAddr definition
+	SetPalIndexAddr(pPalIndex);
+
+	__asm
+	{
+		popad
+		mov     dword ptr[eax + 24h], 64h
+		jmp[GetPaletteIndexAddrOfflineJmpBackAddr]
+	}
+}
+
 //runs in additional_hooks.cpp in the hook_steamnetworking and ID3D9EXWrapper_Device.cpp in constructor, since unlike in CF in this game this method runs after steam init
 //These functions can be hooked after steam drm does its thing and d3d9device is up
 bool placeHooks_bbtag()
@@ -503,11 +585,13 @@ bool placeHooks_bbtag()
 	GetPlayerMetersJmpBackAddr = HookManager::SetHook("GetPlayerMetersJmpBackAddr", "\x2b\xc6\xc7\x44\xb3\x20\x00\x00\x00\x00", 
 		"xxxxxxxxxx", 10, GetPlayerMeters);
 
-	GetP1CharsPaletteIndexesJmpBackAddr = HookManager::SetHook("GetP1CharsPaletteIndexes", "\x89\x86\xd8\x24\x00\x00\x8b\x87\x60\x06\x00\x00",
-		"xxxxxxxxxxxx", 6, GetP1CharsPaletteIndexes);
+	//TODO: cleanup GetP1CharsPaletteIndexes and GetP2CharsPaletteIndexes
 
-	GetP2CharsPaletteIndexesJmpBackAddr = HookManager::SetHook("GetP2CharsPaletteIndexes", "\x89\x86\xd8\x24\x00\x00\x8b\x81\x60\x06\x00\x00",
-		"xxxxxxxxxxxx", 6, GetP2CharsPaletteIndexes);
+	//GetP1CharsPaletteIndexesJmpBackAddr = HookManager::SetHook("GetP1CharsPaletteIndexes", "\x89\x86\xd8\x24\x00\x00\x8b\x87\x60\x06\x00\x00",
+	//	"xxxxxxxxxxxx", 6, GetP1CharsPaletteIndexes);
+
+	//GetP2CharsPaletteIndexesJmpBackAddr = HookManager::SetHook("GetP2CharsPaletteIndexes", "\x89\x86\xd8\x24\x00\x00\x8b\x81\x60\x06\x00\x00",
+	//	"xxxxxxxxxxxx", 6, GetP2CharsPaletteIndexes);
 
 	GetPalBaseAddressesJmpBackAddr = HookManager::SetHook("GetPalBaseAddresses", "\x89\x81\x30\x08\x00\x00\x8b\xc8", 
 		"xxxxxxxx", 6, GetPalBaseAddresses);
@@ -515,6 +599,12 @@ bool placeHooks_bbtag()
 	//TODO: POSSIBLE HUD FIX AMONGST THE CALLS WHERE THE PATTERN IS FOUND
 	GetGameUpdatePauseJmpBackAddr = HookManager::SetHook("GetGameUpdatePause", "\x83\x78\x08\x00\x75\x00\xe8",
 		"xxxxx?x", 6, GetGameUpdatePause);
+
+	GetPaletteIndexAddrOnlineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOnline", "\xc7\x86\xf4\x24\x00\x00\x64\x00\x00\x00\x8b\x87\x58\x06\x00\x00",
+		"xxxxxxxxxxxxxxxx", 10, GetPaletteIndexAddrOnline);
+
+	GetPaletteIndexAddrOfflineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOffline", "\xc7\x40\x24\x64\x00\x00\x00\xe8\x00\x00\x00\x00\x46", 
+		"xxxxxxxx????x", 7, GetPaletteIndexAddrOffline);
 
 	///////////////// EXPERIMENTAL HOOKS BELOW ////////////////////////////
 

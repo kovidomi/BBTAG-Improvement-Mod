@@ -37,11 +37,11 @@ public:
 	void SetPointerPalIndex(int* pPalIdx);
 	void SetPointerBasePal(char* pPalBaseAddr);
 	bool IsNullPointerPalIndex();
+	int& GetPalIndexRef();
 
 private:
 	void SetPaletteIndex(int palIndex);
 	int GetOrigPalIndex() const;
-	int& GetPalIndexRef();
 	void ReplaceAllPalFiles(IMPL_data_t *newPaletteData);
 	void ReplaceSinglePalFile(const char* newPalData, PaletteFile palFile);
 	void OnMatchInit();

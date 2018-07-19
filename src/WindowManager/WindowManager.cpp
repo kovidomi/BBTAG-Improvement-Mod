@@ -642,23 +642,42 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 	if (ImGui::CollapsingHeader("Gameval addresses"))
 	{
 		if(!g_interfaces.player1.GetChar1().IsCharDataNullPtr())
-			ImGui::Text("P1Char1 Data 0x%p", g_interfaces.player1.GetChar1().GetData());
+			ImGui::Text("pP1Char1_Data 0x%p", g_interfaces.player1.GetChar1().GetData());
 
 		if(!g_interfaces.player1.GetChar2().IsCharDataNullPtr())
-			ImGui::Text("P1Char2 Data 0x%p", g_interfaces.player1.GetChar2().GetData());
+			ImGui::Text("pP1Char2_Data 0x%p", g_interfaces.player1.GetChar2().GetData());
 
 		if(!g_interfaces.player2.GetChar1().IsCharDataNullPtr())
-			ImGui::Text("P2Char1 Data 0x%p", g_interfaces.player2.GetChar1().GetData());
+			ImGui::Text("pP2Char1_Data 0x%p", g_interfaces.player2.GetChar1().GetData());
 
 		if(!g_interfaces.player2.GetChar2().IsCharDataNullPtr())
-			ImGui::Text("P2Char2 Data 0x%p", g_interfaces.player2.GetChar2().GetData());
+			ImGui::Text("pP2Char2_Data 0x%p", g_interfaces.player2.GetChar2().GetData());
 
 		ImGui::Separator();
-		ImGui::Text("P1Meters 0x%p", g_interfaces.player1.GetMeters());
-		ImGui::Text("P2Meters 0x%p", g_interfaces.player2.GetMeters());
+		ImGui::Text("pP1Meters 0x%p", g_interfaces.player1.GetMeters());
+		ImGui::Text("pP2Meters 0x%p", g_interfaces.player2.GetMeters());
 
 		ImGui::Separator();
-		//ImGui::Text("PalIndex_P1Char1 0x%p", &(*g_interfaces.pPaletteManager)[CharPalInfoIndex::P1Char1]->GetPalIndexRef());
+		
+		ImGui::Text("pPalIndex_P1Char1 0x%p", &(g_interfaces.player1.GetChar1().GetPalHandle().GetPalIndexRef()));
+		ImGui::Text("pPalIndex_P1Char2 0x%p", &(g_interfaces.player1.GetChar2().GetPalHandle().GetPalIndexRef()));
+		ImGui::Text("pPalIndex_P2Char1 0x%p", &(g_interfaces.player2.GetChar1().GetPalHandle().GetPalIndexRef()));
+		ImGui::Text("pPalIndex_P2Char2 0x%p", &(g_interfaces.player2.GetChar2().GetPalHandle().GetPalIndexRef()));
+
+		const int PAL_INDEX_MIN = 0;
+		const int PAL_INDEX_MAX = 15;
+		if(!g_interfaces.player1.GetChar1().GetPalHandle().IsNullPointerPalIndex())
+			ImGui::SliderInt("PalIndex_P1Char1", &g_interfaces.player1.GetChar1().GetPalHandle().GetPalIndexRef(), PAL_INDEX_MIN, PAL_INDEX_MAX);
+
+		if (!g_interfaces.player1.GetChar2().GetPalHandle().IsNullPointerPalIndex())
+			ImGui::SliderInt("PalIndex_P1Char2", &g_interfaces.player1.GetChar2().GetPalHandle().GetPalIndexRef(), PAL_INDEX_MIN, PAL_INDEX_MAX);
+
+		if (!g_interfaces.player2.GetChar1().GetPalHandle().IsNullPointerPalIndex())
+			ImGui::SliderInt("PalIndex_P2Char1", &g_interfaces.player2.GetChar1().GetPalHandle().GetPalIndexRef(), PAL_INDEX_MIN, PAL_INDEX_MAX);
+
+		if (!g_interfaces.player2.GetChar2().GetPalHandle().IsNullPointerPalIndex())
+			ImGui::SliderInt("PalIndex_P2Char2", &g_interfaces.player2.GetChar2().GetPalHandle().GetPalIndexRef(), PAL_INDEX_MIN, PAL_INDEX_MAX);
+
 		//if (g_gameVals.PalIndex_P1Char1)
 
 			//ImGui::SliderInt("PalIndex_P1Char1", &(*g_interfaces.pPaletteManager)[CharPalInfoIndex::P1Char1]->GetPalIndexRef(), 0, 15);
