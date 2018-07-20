@@ -54,7 +54,7 @@ void DownloadPaletteFiles()
 		{
 			WindowManager::AddLog("[system] Downloaded '%s'\n", implFile->paldata.palname);
 			LOG(2, "Downloaded '%s'\n", implFile->paldata.palname);
-			g_interfaces.pPaletteManager->LoadImplFile(*implFile);
+			g_interfaces.pPaletteManager->PushImplFileIntoVector(*implFile);
 		}
 
 		delete implFile;

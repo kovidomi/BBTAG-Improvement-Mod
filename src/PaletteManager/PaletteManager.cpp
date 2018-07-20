@@ -14,7 +14,10 @@ PaletteManager::PaletteManager()
 	LOG(2, "PaletteManager::PaletteManager\n");
 
 	CreatePaletteFolders();
+	CreatePaletteSlotsFile();
+
 	InitCustomPaletteVector();
+	InitPaletteSlotsVector();
 }
 
 PaletteManager::~PaletteManager()
@@ -39,6 +42,7 @@ void PaletteManager::InitCustomPaletteVector()
 {
 	LOG(2, "InitCustomPaletteVector\n");
 
+	m_customPalettes.clear();
 	m_customPalettes.resize(TOTAL_CHAR_INDEXES);
 
 	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
@@ -62,6 +66,9 @@ void PaletteManager::LoadPalettesFromFolder()
 		std::wstring wPath = std::wstring(L"BBTAG_IM\\Palettes\\") + wCharNames[i] + L"\\*";
 		LoadPalettesIntoVector((CharIndex)i, wPath);
 	}
+
+	InitDonatorPalsIndexVector();
+
 	WindowManager::AddLog("[system] Finished loading custom palettes\n");
 	WindowManager::AddLogSeparator();
 }
@@ -71,10 +78,18 @@ void PaletteManager::ReloadPaletteSlotsFile()
 	LOG(2, "ReloadPaletteSlotsFile\n");
 	WindowManager::AddLog("[system] Reloading 'palette_slots.ini' ...\n");
 
-	m_paletteSlots.clear();
-
 	InitPaletteSlotsVector();
 	LoadPaletteSlotsFile();
+}
+
+void PaletteManager::InitDonatorPalsIndexVector()
+{
+	m_donatorPalsStartIndex.clear();
+
+	for (int i = 0; i < (TOTAL_CHAR_INDEXES - 1); i++)
+	{
+		m_donatorPalsStartIndex.push_back(m_customPalettes[i].size());
+	}
 }
 
 void PaletteManager::ApplyPaletteSlot(CharIndex charIndex, CharPaletteHandle & charPalHandle)
@@ -173,9 +188,10 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 			//replace palname section with the filename, so renaming the file has effect on the actual ingame palname
 			std::string fileNameWithoutExt = fileName.substr(0, fileName.length() - strlen(".impl"));
 			memset(fileContents.paldata.palname, 0, IMPL_PALNAME_LENGTH);
-			memcpy(fileContents.paldata.palname, fileNameWithoutExt.c_str(), strlen(fileNameWithoutExt.c_str()));
+			//memcpy(fileContents.paldata.palname, fileNameWithoutExt.c_str(), strlen(fileNameWithoutExt.c_str()));
+			strncpy(fileContents.paldata.palname, fileNameWithoutExt.c_str(), IMPL_PALNAME_LENGTH - 1);
 
-			m_customPalettes[charIndex].push_back(fileContents.paldata);
+			PushImplFileIntoVector(charIndex, fileContents.paldata);
 
 			WindowManager::AddLog("[system] Loaded '%s'\n", fileName.c_str());
 		} while (FindNextFile(hFind, &data));
@@ -293,6 +309,7 @@ void PaletteManager::InitPaletteSlotsVector()
 {
 	LOG(2, "InitPaletteSlotsVector\n");
 
+	m_paletteSlots.clear();
 	m_paletteSlots.resize(TOTAL_CHAR_INDEXES);
 
 	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
@@ -305,13 +322,35 @@ void PaletteManager::InitPaletteSlotsVector()
 	}
 }
 
-void PaletteManager::LoadImplFile(IMPL_t & filledPal)
+void PaletteManager::PushImplFileIntoVector(IMPL_t & filledPal)
 {
-	LOG(2, "LoadImplFile\n");
+	LOG(2, "PushImplFileIntoVector\n");
 
 	CharIndex charIndex = (CharIndex)filledPal.header.charindex;
-	m_customPalettes[charIndex].push_back(filledPal.paldata);
-	WindowManager::AddLog("[system] Loaded '%s'\n", filledPal.paldata.palname);
+
+	//call its overloaded version to prevent duplicated code
+	PushImplFileIntoVector(charIndex, filledPal.paldata);
+}
+
+void PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & filledPalData)
+{
+	LOG(2, "PushImplFileIntoVector <overload>\n");
+
+	if (charIndex > TOTAL_CHAR_INDEXES)
+	{
+		WindowManager::AddLog("[error] Custom palette couldn't be loaded: CharIndex out of bound.\n");
+		LOG(2, "ERROR, CharIndex out of bound\n");
+		return;
+	}
+	if (FindCustomPalIndex(charIndex, filledPalData.palname) > 0)
+	{
+		WindowManager::AddLog("[error] Custom palette couldn't be loaded: name '%s' is already loaded.\n", filledPalData.palname);
+		LOG(2, "ERROR, A custom palette with name '%s' is already loaded.\n", filledPalData.palname);
+		return;
+	}
+
+	m_customPalettes[charIndex].push_back(filledPalData);
+	WindowManager::AddLog("[system] Loaded '%s'\n", filledPalData.palname);
 }
 
 bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filledPalData)
@@ -348,9 +387,6 @@ void PaletteManager::LoadAllPalettes()
 	LOG(2, "LoadAllPalettes\n");
 
 	LoadPalettesFromFolder();
-	CreatePaletteSlotsFile();
-
-	InitPaletteSlotsVector();
 	LoadPaletteSlotsFile();
 
 	InitiateDownloadingPaletteFiles();
@@ -371,21 +407,32 @@ void PaletteManager::ReloadPalettesFromFolder()
 	LOG(2, "ReloadPalettesFromFolder\n");
 	WindowManager::AddLog("[system] Reloading custom palettes...\n");
 
-	m_customPalettes.clear();
-
 	InitCustomPaletteVector();
 	LoadPalettesFromFolder();
 }
 
+int PaletteManager::GetDonatorPalsStartIndex(CharIndex charIndex)
+{
+	if (charIndex > TOTAL_CHAR_INDEXES)
+		return MAXINT32;
+
+	return m_donatorPalsStartIndex[charIndex];
+}
+
+//return values:
+// ret > 0, index found
+// ret == -1, index not found
+// ret == -2, charindex out of bound
+// ret == -3, default palette or no name given
 int PaletteManager::FindCustomPalIndex(CharIndex charIndex, const char * palNameToFind)
 {
 	LOG(2, "FindCustomPalIndex\n");
 
 	if (charIndex > TOTAL_CHAR_INDEXES)
-		return -1;
+		return -2;
 
 	if (strcmp(palNameToFind, "") == 0 || strcmp(palNameToFind, "Default") == 0)
-		return -1;
+		return -3;
 
 	for (int i = 0; i < m_customPalettes[charIndex].size(); i++)
 	{

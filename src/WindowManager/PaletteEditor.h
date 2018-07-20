@@ -45,7 +45,8 @@ private:
 	void ReloadSavedPalette(const char* palName);
 	bool ShowOverwritePopup(bool *p_open, const wchar_t* wFullPath, const char* filename);
 	void CheckSelectedPalOutOfBound();
-	void ShowPaletteSelect(CharHandle & charHandle, const char* btnText, const char* popupID);
+	void ShowPaletteSelectButton(CharHandle & charHandle, const char* btnText, const char* popupID);
+	void ShowPaletteSelectPopup(CharPaletteHandle& charPalHandle, CharIndex charIndex, const char* popupID);
 	void ShowHoveredPaletteToolTip(CharIndex charIndex, int palIndex);
 	void CopyToEditorArray(const char* pSrc);
 	void CopyPalFileToEditorArray(PaletteFile palFile, CharPaletteHandle &charPalHandle);

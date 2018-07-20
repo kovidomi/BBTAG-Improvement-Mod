@@ -11,6 +11,7 @@
 #define COLUMN_LENGTH 16
 const int COLOR_BLACK = 0xFF000000;
 const int COLOR_WHITE = 0xFFFFFFFF;
+const ImVec4 COLOR_DONATOR(1.000f, 0.794f, 0.000f, 1.000f);
 
 PaletteEditor::PaletteEditor() : customPaletteVector(g_interfaces.pPaletteManager->GetCustomPalettesVector())
 {
@@ -44,10 +45,10 @@ void PaletteEditor::ShowAllPaletteSelections()
 	if (HasNullPointer())
 		return;
 
-	ShowPaletteSelect(g_interfaces.player1.GetChar1(), "P1Ch1 palette", "select1-1");
-	ShowPaletteSelect(g_interfaces.player1.GetChar2(), "P1Ch2 palette", "select1-2");
-	ShowPaletteSelect(g_interfaces.player2.GetChar1(), "P2Ch1 palette", "select2-1");
-	ShowPaletteSelect(g_interfaces.player2.GetChar2(), "P2Ch2 palette", "select2-2");
+	ShowPaletteSelectButton(g_interfaces.player1.GetChar1(), "P1Ch1 palette", "select1-1");
+	ShowPaletteSelectButton(g_interfaces.player1.GetChar2(), "P1Ch2 palette", "select1-2");
+	ShowPaletteSelectButton(g_interfaces.player2.GetChar1(), "P2Ch1 palette", "select2-1");
+	ShowPaletteSelectButton(g_interfaces.player2.GetChar2(), "P2Ch2 palette", "select2-2");
 }
 
 void PaletteEditor::ShowReloadAllPalettesButton()
@@ -149,27 +150,10 @@ void PaletteEditor::PaletteSelection()
 	if (ImGui::Button("Select palette  "))
 		ImGui::OpenPopup("select_custom_pal");
 
-	//keep updating it, incase palette is changed on the menu
-	selectedPalIndex = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(*selectedCharPalHandle);
-
 	ImGui::SameLine();
 	ImGui::Text(customPaletteVector[selectedCharIndex][selectedPalIndex].palname);
 
-	if (ImGui::BeginPopup("select_custom_pal"))
-	{
-		for (int i = 0; i < customPaletteVector[selectedCharIndex].size(); i++)
-		{
-			if (ImGui::Selectable(customPaletteVector[selectedCharIndex][i].palname))
-			{
-				DisableHighlightModes();
-				selectedPalIndex = i;
-				g_interfaces.pPaletteManager->SwitchPalette(selectedCharIndex, *selectedCharPalHandle, i);
-				CopyPalFileToEditorArray(selectedFile, *selectedCharPalHandle);
-			}
-			ShowHoveredPaletteToolTip(selectedCharIndex, i);
-		}
-		ImGui::EndPopup();
-	}
+	ShowPaletteSelectPopup(*selectedCharPalHandle, selectedCharIndex, "select_custom_pal");
 }
 
 void PaletteEditor::FileSelection()
@@ -446,7 +430,7 @@ void PaletteEditor::CheckSelectedPalOutOfBound()
 	}
 }
 
-void PaletteEditor::ShowPaletteSelect(CharHandle & charHandle, const char * btnText, const char * popupID)
+void PaletteEditor::ShowPaletteSelectButton(CharHandle & charHandle, const char * btnText, const char * popupID)
 {
 	CharPaletteHandle& charPalHandle = charHandle.GetPalHandle();
 	int selected_pal_index = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(charPalHandle);
@@ -459,12 +443,27 @@ void PaletteEditor::ShowPaletteSelect(CharHandle & charHandle, const char * btnT
 	ImGui::SameLine();
 	ImGui::TextUnformatted(customPaletteVector[charIndex][selected_pal_index].palname);
 
+	ShowPaletteSelectPopup(charPalHandle, charIndex, popupID);
+}
+
+void PaletteEditor::ShowPaletteSelectPopup(CharPaletteHandle& charPalHandle, CharIndex charIndex, const char* popupID)
+{
+	int donatorPalsStartIndex = g_interfaces.pPaletteManager->GetDonatorPalsStartIndex(charIndex);
+	ImGui::SetNextWindowSizeConstraints(ImVec2(-1.0f, 25.0f), ImVec2(-1.0f, 200.0f));
+
 	if (ImGui::BeginPopup(popupID))
 	{
-		ImGui::Text(charNames[charIndex]);
+		ImGui::TextUnformatted(charNames[charIndex]);
 		ImGui::Separator();
 		for (int i = 0; i < customPaletteVector[charIndex].size(); i++)
 		{
+			if (i == donatorPalsStartIndex)
+			{
+				ImGui::PushStyleColor(ImGuiCol_Separator, COLOR_DONATOR);
+				ImGui::Separator();
+				ImGui::PopStyleColor();
+			}
+
 			if (ImGui::Selectable(customPaletteVector[charIndex][i].palname))
 			{
 				g_interfaces.pPaletteManager->SwitchPalette(charIndex, charPalHandle, i);
@@ -472,11 +471,11 @@ void PaletteEditor::ShowPaletteSelect(CharHandle & charHandle, const char * btnT
 				//updating palette editor's array if this is the currently selected character
 				if (&charPalHandle == selectedCharPalHandle)
 				{
+					selectedPalIndex = i;
 					CopyPalFileToEditorArray(selectedFile, charPalHandle);
 					DisableHighlightModes();
 				}
 			}
-
 			ShowHoveredPaletteToolTip(charIndex, i);
 		}
 		ImGui::EndPopup();
@@ -487,20 +486,25 @@ void PaletteEditor::ShowHoveredPaletteToolTip(CharIndex charIndex, int palIndex)
 {
 	if (ImGui::IsItemHovered() && palIndex != 0)
 	{
-		char* creatorText = customPaletteVector[charIndex][palIndex].creator;
-		char* descText = customPaletteVector[charIndex][palIndex].desc;
-		int creatorLen = strnlen(creatorText, IMPL_CREATOR_LENGTH);
-		int descLen = strnlen(descText, IMPL_DESC_LENGTH);
+		const char* creatorText = customPaletteVector[charIndex][palIndex].creator;
+		const char* descText = customPaletteVector[charIndex][palIndex].desc;
+		const int creatorLen = strnlen(creatorText, IMPL_CREATOR_LENGTH);
+		const int descLen = strnlen(descText, IMPL_DESC_LENGTH);
+		bool isDonatorPal = palIndex >= g_interfaces.pPaletteManager->GetDonatorPalsStartIndex(charIndex);
 
-		if (creatorLen || descLen)
+		if (creatorLen || descLen || isDonatorPal)
 		{
 			ImGui::BeginTooltip();
-
+			ImGui::PushTextWrapPos(300.0f);
+			
+			if (isDonatorPal)
+				ImGui::TextColored(COLOR_DONATOR, "DONATOR PALETTE");
 			if(creatorLen)
 				ImGui::Text("Creator: %s", creatorText);
 			if(descLen)
 				ImGui::Text("Description: %s", descText);
 
+			ImGui::PopTextWrapPos();
 			ImGui::EndTooltip();
 		}
 	}
