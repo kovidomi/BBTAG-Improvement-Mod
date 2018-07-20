@@ -456,6 +456,33 @@ void __declspec(naked)GetPaletteIndexAddrOnline()
 	}
 }
 
+DWORD GetPaletteIndexAddrRankedJmpBackAddr = 0;
+void __declspec(naked)GetPaletteIndexAddrRanked()
+{
+	LOG_ASM(2, "GetPaletteIndexAddrRanked\n");
+
+	static int* pPalIndex;
+
+	__asm
+	{
+		mov eax, [esi]
+		mov [ecx], eax
+
+		mov pPalIndex, ecx
+		pushad
+	}
+
+	//read comment above the SetPalIndexAddr definition
+	SetPalIndexAddr(pPalIndex);
+
+	__asm
+	{
+		popad
+		mov ecx, ebx
+		jmp[GetPaletteIndexAddrRankedJmpBackAddr]
+	}
+}
+
 DWORD GetPaletteIndexAddrOfflineJmpBackAddr = 0;
 void __declspec(naked)GetPaletteIndexAddrOffline()
 {
@@ -555,6 +582,9 @@ bool placeHooks_bbtag()
 
 	GetPaletteIndexAddrOnlineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOnline", "\xc7\x86\xf4\x24\x00\x00\x64\x00\x00\x00\x8b\x87\x58\x06\x00\x00",
 		"xxxxxxxxxxxxxxxx", 10, GetPaletteIndexAddrOnline);
+
+	GetPaletteIndexAddrRankedJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrRanked", "\x8b\x06\x89\x01\x8b\xcb\x0f\xb6\x76\xec",
+		"xxxxxxxxxx", 6, GetPaletteIndexAddrRanked);
 
 	GetPaletteIndexAddrOfflineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOffline", "\xc7\x40\x24\x64\x00\x00\x00\xe8\x00\x00\x00\x00\x46", 
 		"xxxxxxxx????x", 7, GetPaletteIndexAddrOffline);
