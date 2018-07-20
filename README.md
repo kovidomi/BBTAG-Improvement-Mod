@@ -41,7 +41,7 @@ Straightforward D3D wrapping
 - **Game/** <br>
 Player, ingame characters, meters information
 - **PaletteManager/** <br>
-Custom palette loading, aaaaaaaaaaaaaaaaaaaa
+Loading and in-game management of custom palettes
 - **SteamApiWrapper/** <br>
 Straightforward Steam API wrapping
 - **Web/** <br>

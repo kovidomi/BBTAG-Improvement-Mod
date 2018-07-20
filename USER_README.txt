@@ -24,7 +24,7 @@ Delete or rename dinput8.dll. The mod makes no permanent changes to anything.
 
 Known issues
 ==========================
-- The custom HUD is not updated while the game's window is not focused.
+- the background text on the stage "Duel Field" gets scaled incorrectly
 - The custom HUD does not show player names in online matches.
 - The regionlock is still not completely unlocked
 
@@ -111,6 +111,9 @@ Rouzel
 Dormin
 NeoStrayCat
 Everybody in the BlazBlue PC community that has given support or feedback of any kind!
+
+Source code is available at:
+https://github.com/kovidomi/BBTAG-Improvement-Mod/
 
 If you like my work then consider feeding me by donating few bucks (helps me stay alive):
 https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8EDR78DJ8PU2
