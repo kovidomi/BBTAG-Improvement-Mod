@@ -31,27 +31,29 @@ Copy the compiled binary and the settings.ini file from the bin/ folder into the
 
 ## Quick file overview
 - **TODO.txt** <br>
-list of things you can start working on
+List of things you can start working on
 - **main.h** <br>
-defines for logging
+Defines for logging
 - **interfaces.h** <br>
-access to all the wrappers and hooked game variables
+Access to all the wrappers and hooked game variables
 - **D3D9ExWrapper/** <br>
-straightforward D3D wrapping
+Straightforward D3D wrapping
 - **Game/** <br>
-player, ingame characters, meters information
+Player, ingame characters, meters information
 - **PaletteManager/** <br>
-custom palette loading related class
+Custom palette loading, aaaaaaaaaaaaaaaaaaaa
 - **SteamApiWrapper/** <br>
-straightforward Steam API wrapping
+Straightforward Steam API wrapping
+- **Web/** <br>
+HTTP request functions for update checking, palette downloading, fetching donator names
 - **WindowManager/** <br>
-implementation of the mod's windows using the ImGui library
+Implementation of the mod's windows using the ImGui library
 - **Hooks/hooks_bbtag** <br>
-implements game functions overriding
+Implements game functions overriding
 - **Hooks/hooks_detours** <br>
-implements imported functions overriding using the Detours library
+Implements imported functions overriding using the Detours library
 - **Hooks/hooks_steamApiWrapper** <br>
-implements Steam API overriding
+Implements Steam API overriding
 
 
 ## Support

@@ -3,6 +3,7 @@ BBTAG Improvement Mod (v1.04) by KoviDomi -- README
 
 What this mod provides
 ==========================
+In-game palette editor
 Options to improve the performance of the game.
 More flexibility to change the graphics options.
 
@@ -64,7 +65,7 @@ Changelog
 ??-??-2018 -- version 1.04
 ===============================
 - Added ingame palette editor
-- Added "palette_slots.ini" file in the "BBTAG_IM/Palettes" folder for assigning custom palettes to the ingame palette slots
+- Added "palette_slots.ini" file in "BBTAG_IM/Palettes" folder for assigning custom palettes to the ingame palette slots
 - Fixed the custom HUD not being updated while the game's window is not focused
 - Fixed mistakenly calling the Steam Controller as PS4 controller all over the place
 - Adjusted custom HUD window sizes to take up less space on extreme low resolutions

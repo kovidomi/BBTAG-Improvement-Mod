@@ -102,6 +102,7 @@
     <ClCompile Include="src\SteamApiWrapper\SteamUtilsWrapper.cpp" />
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\Web\donators_fetch.cpp" />
+    <ClCompile Include="src\Web\palette_download.cpp" />
     <ClCompile Include="src\Web\update_check.cpp" />
     <ClCompile Include="src\Web\url_downloader.cpp" />
     <ClCompile Include="src\WindowManager\CustomHud.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="src\SteamApiWrapper\SteamUtilsWrapper.h" />
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\Web\donators_fetch.h" />
+    <ClInclude Include="src\Web\palette_download.h" />
     <ClInclude Include="src\Web\update_check.h" />
     <ClInclude Include="src\Web\url_downloader.h" />
     <ClInclude Include="src\WindowManager\CustomHud.h" />

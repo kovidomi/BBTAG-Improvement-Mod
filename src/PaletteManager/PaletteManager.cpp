@@ -1,7 +1,7 @@
 #include "PaletteManager.h"
 #include "../utils.h"
 #include "../WindowManager/WindowManager.h"
-#include "../Web/donators_fetch.h"
+#include "../Web/palette_download.h"
 #include "../logger.h"
 #include <sstream>
 #include <fstream>

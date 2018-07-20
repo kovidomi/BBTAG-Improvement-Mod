@@ -173,6 +173,9 @@
     <ClCompile Include="src\Web\url_downloader.cpp">
       <Filter>src\Web</Filter>
     </ClCompile>
+    <ClCompile Include="src\Web\palette_download.cpp">
+      <Filter>src\Web</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -317,6 +320,9 @@
       <Filter>src\Web</Filter>
     </ClInclude>
     <ClInclude Include="src\Web\url_downloader.h">
+      <Filter>src\Web</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Web\palette_download.h">
       <Filter>src\Web</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,7 +12,8 @@ HPL to IMPL
 
 IMPL to HPL 
 ==============
-- Place the .impl file into the folder and run 'IMPL-HPL-CONVERTER.exe'
+- Place the .impl file into the folder
+- Run 'IMPL-HPL-CONVERTER.exe'
 
 Changelog
 ==========================

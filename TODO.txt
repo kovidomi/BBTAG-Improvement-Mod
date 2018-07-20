@@ -33,3 +33,5 @@ BUGS
 #9 mod grabbed incorrect window handle and sizes for one user. gotta look into it
 // DONE // #10 unable to take steam screenshots (edit: cannot reproduce this, need more confirmation)
 #11 the background text on the stage "Duel Field" gets scaled incorrectly
+// DONE // #12  Custom hud scaling, text size doesn't get scaled properly (test with 384x214 Render with 1366x768 Window on Borderless Hud scale 0.8) EDIT: not completely sure if it's fine as it is
+#13 "Quick switching" characters in tutorial mode causes the palettes to switch
