@@ -373,16 +373,6 @@ void WindowManager::OnUpdate()
 
 	m_customHud->OnUpdate(show_custom_hud, show_main_window);
 
-	//First run settings
-	ImGui::SetWindowPos(main_title.c_str(), ImVec2(12, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!
-
-	if (Settings::settingsIni.menusize == 1)
-		ImGui::SetNextWindowSizeConstraints(ImVec2(250, 190), ImVec2(1000, 1000));
-	else if (Settings::settingsIni.menusize == 3)
-		ImGui::SetNextWindowSizeConstraints(ImVec2(400, 230), ImVec2(1000, 1000));
-	else
-		ImGui::SetNextWindowSizeConstraints(ImVec2(330, 230), ImVec2(1000, 1000));
-
 	ImGuiIO& io = ImGui::GetIO();
 
 	io.MouseDrawCursor = show_main_window |show_log_window | show_notification_window | show_palette_editor | IsUpdateAvailable | show_demo_window;
@@ -678,33 +668,11 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		if (!g_interfaces.player2.GetChar2().GetPalHandle().IsNullPointerPalIndex())
 			ImGui::SliderInt("PalIndex_P2Char2", &g_interfaces.player2.GetChar2().GetPalHandle().GetPalIndexRef(), PAL_INDEX_MIN, PAL_INDEX_MAX);
 
-		//if (g_gameVals.PalIndex_P1Char1)
-
-			//ImGui::SliderInt("PalIndex_P1Char1", &(*g_interfaces.pPaletteManager)[CharPalInfoIndex::P1Char1]->GetPalIndexRef(), 0, 15);
-
-			//if (ImGui::CollapsingHeader("P1Char1 palarray"))
-			//{
-			//	ImGui::Text("%p", (*g_interfaces.pPaletteManager)[CharPalInfoIndex::P1Char1]->getPaletteArray(NULL, 0, 0));
-			//}
-
-		//ImGui::Text("PalIndex_P1Char2 0x%p", g_gameVals.PalIndex_P1Char2);
-		//if (g_gameVals.PalIndex_P1Char2)
-		//	ImGui::SliderInt("PalIndex_P1Char2", g_gameVals.PalIndex_P1Char2, 0, 15);
-
-		//ImGui::Text("PalIndex_P2Char1 0x%p", g_gameVals.PalIndex_P2Char1);
-		//if (g_gameVals.PalIndex_P2Char1)
-		//	ImGui::SliderInt("PalIndex_P2Char1", g_gameVals.PalIndex_P2Char1, 0, 15);
-
-		//ImGui::Text("PalIndex_P2Char2 0x%p", g_gameVals.PalIndex_P2Char2);
-		//if (g_gameVals.PalIndex_P2Char2)
-		//	ImGui::SliderInt("PalIndex_P2Char2", g_gameVals.PalIndex_P2Char2, 0, 15);
-
 		//ImGui::Separator();
 		//ImGui::Text("PalBaseAddrP1Char1 0x%p", g_gameVals.PalBaseAddrP1Char1);
 		//ImGui::Text("PalBaseAddrP1Char2 0x%p", g_gameVals.PalBaseAddrP1Char2);
 		//ImGui::Text("PalBaseAddrP2Char1 0x%p", g_gameVals.PalBaseAddrP2Char1);
 		//ImGui::Text("PalBaseAddrP2Char2 0x%p", g_gameVals.PalBaseAddrP2Char2);
-
 
 		ImGui::Separator();
 		ImGui::Text("pGameState: 0x%p : %d", g_gameVals.pGameState, *g_gameVals.pGameState);
@@ -795,6 +763,16 @@ void WindowManager::ShowMainWindow(bool * p_open)
 {
 	if (*p_open)
 	{
+		//First run settings
+		ImGui::SetWindowPos(main_title.c_str(), ImVec2(12, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the initial state a bit more friendly!
+
+		if (Settings::settingsIni.menusize == 1)
+			ImGui::SetNextWindowSizeConstraints(ImVec2(250, 190), ImVec2(1000, 1000));
+		else if (Settings::settingsIni.menusize == 3)
+			ImGui::SetNextWindowSizeConstraints(ImVec2(400, 230), ImVec2(1000, 1000));
+		else
+			ImGui::SetNextWindowSizeConstraints(ImVec2(330, 230), ImVec2(1000, 1000));
+
 		ImGui::Begin(main_title.c_str(), NO_CLOSE_FLAG, ImGuiWindowFlags_AlwaysAutoResize);
 
 		ImGui::Text("Toggle me with %s", Settings::settingsIni.togglebutton.c_str());
