@@ -481,6 +481,26 @@ void __declspec(naked)GetPaletteIndexAddrOffline()
 	}
 }
 
+DWORD VictoryScreenJmpBackAddr = 0;
+void __declspec(naked)VictoryScreen()
+{
+	LOG_ASM(2, "VictoryScreen\n");
+
+	__asm pushad
+	g_interfaces.pPaletteManager->OnMatchEnd(
+		g_interfaces.player1.GetChar1(),
+		g_interfaces.player1.GetChar2(),
+		g_interfaces.player2.GetChar1(),
+		g_interfaces.player2.GetChar2());
+	__asm popad
+
+	__asm
+	{
+		mov dword ptr[eax + 114h], 0Ch
+		jmp[VictoryScreenJmpBackAddr]
+	}
+}
+
 //runs in additional_hooks.cpp in the hook_steamnetworking and ID3D9EXWrapper_Device.cpp in constructor, since unlike in CF in this game this method runs after steam init
 //These functions can be hooked after steam drm does its thing and d3d9device is up
 bool placeHooks_bbtag()
@@ -510,6 +530,9 @@ bool placeHooks_bbtag()
 
 	GetGameStateAndModeEntranceScreenJmpBackAddr = HookManager::SetHook("GetGameStateAndModeEntranceScreen", "\xc7\x80\x14\x01\x00\x00\x17\x00\x00\x00\xe8", 
 		"xxxxxxxxxxx", 10, GetGameStateAndModeEntranceScreen);
+
+	VictoryScreenJmpBackAddr = HookManager::SetHook("VictoryScreen", "\xc7\x80\x14\x01\x00\x00\x0c\x00\x00\x00\xe8",
+		"xxxxxxxxxxx", 10, VictoryScreen);
 
 	GetIsHUDHiddenJmpBackAddr = HookManager::SetHook("GetIsHUDHidden", "\x83\x88\x6c\xd0\x3d\x00\x04\x8b\x06\xff\x50\x24", 
 		"xxxxxxxxxxxx", 7, GetIsHUDHidden);

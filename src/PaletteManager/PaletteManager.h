@@ -31,6 +31,7 @@ public:
 	void OnUpdate(CharPaletteHandle& P1Ch1, CharPaletteHandle& P1Ch2, CharPaletteHandle& P2Ch1, CharPaletteHandle& P2Ch2);
 	//Remember to call it ONCE upon match start
 	void OnMatchInit(CharHandle& P1Ch1, CharHandle& P1Ch2, CharHandle& P2Ch1, CharHandle& P2Ch2);
+	void OnMatchEnd(CharHandle& P1Ch1, CharHandle& P1Ch2, CharHandle& P2Ch1, CharHandle& P2Ch2);
 
 private:
 	void CreatePaletteFolders();

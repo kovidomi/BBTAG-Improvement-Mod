@@ -450,6 +450,14 @@ void PaletteManager::OnMatchInit(CharHandle& P1Ch1, CharHandle& P1Ch2, CharHandl
 	ApplyPaletteSlot((CharIndex)P2Ch2.GetData()->char_index, P2Ch2.GetPalHandle());
 }
 
+void PaletteManager::OnMatchEnd(CharHandle & P1Ch1, CharHandle & P1Ch2, CharHandle & P2Ch1, CharHandle & P2Ch2)
+{
+	P1Ch1.GetPalHandle().OnMatchEnd();
+	P1Ch2.GetPalHandle().OnMatchEnd();
+	P2Ch1.GetPalHandle().OnMatchEnd();
+	P2Ch2.GetPalHandle().OnMatchEnd();
+}
+
 std::vector<std::vector<IMPL_data_t>>& PaletteManager::GetCustomPalettesVector()
 {
 	return m_customPalettes;

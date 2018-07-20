@@ -45,6 +45,7 @@ private:
 	void ReplaceAllPalFiles(IMPL_data_t *newPaletteData);
 	void ReplaceSinglePalFile(const char* newPalData, PaletteFile palFile);
 	void OnMatchInit();
+	void OnMatchEnd();
 	void LockUpdate();
 	void UnlockUpdate();
 	int GetSelectedCustomPalIndex();

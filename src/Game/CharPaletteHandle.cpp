@@ -80,6 +80,12 @@ void CharPaletteHandle::OnMatchInit()
 		m_switchPalIndex2 = m_switchPalIndex1 + 1;
 }
 
+void CharPaletteHandle::OnMatchEnd()
+{
+	//in case of a rematch we want to start with the original palindex
+	*m_pCurPalIndex = m_origPalIndex;
+}
+
 void CharPaletteHandle::UnlockUpdate()
 {
 	m_updateLocked = false;

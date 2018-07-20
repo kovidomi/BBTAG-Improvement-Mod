@@ -884,6 +884,7 @@ void WindowManager::ShowLinks()
 	if (ImGui::Button("Nexusmods"))
 		ShellExecute(NULL, L"open", MOD_LINK_NEXUSMODS, NULL, NULL, SW_SHOWNORMAL);
 
+	ImGui::SameLine();
 	if (ImGui::Button("GitHub"))
 		ShellExecute(NULL, L"open", MOD_LINK_GITHUB, NULL, NULL, SW_SHOWNORMAL);
 
