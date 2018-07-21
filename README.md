@@ -21,7 +21,7 @@ I, KoviDomi, am not responsible for what happens while using BBTAG Improvement M
 BBTAG Improvement Mod is coded using Visual Studio 2017 (toolset v141). <br>
 To compile, you should only need to load the sln file and compile as-is. No changes should be needed to the solution or source.<br>
 Can only be compiled in the Release/Win32 config.<br>
-Copy the compiled binary and the settings.ini file from the bin/ folder into the game's root folder.
+Copy the compiled binary, settings.ini, and palettes.ini file from the bin/ folder into the game's root folder.
 
 ## Requirements:
 - Visual Studio 2017 (toolset v141) (Windows SDK 8.1)
