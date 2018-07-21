@@ -14,10 +14,7 @@ PaletteManager::PaletteManager()
 	LOG(2, "PaletteManager::PaletteManager\n");
 
 	CreatePaletteFolders();
-	CreatePaletteSlotsFile();
-
-	InitCustomPaletteVector();
-	InitPaletteSlotsVector();
+	//CreatePaletteSlotsFile();
 }
 
 PaletteManager::~PaletteManager()
@@ -71,15 +68,6 @@ void PaletteManager::LoadPalettesFromFolder()
 
 	WindowManager::AddLog("[system] Finished loading custom palettes\n");
 	WindowManager::AddLogSeparator();
-}
-
-void PaletteManager::ReloadPaletteSlotsFile()
-{
-	LOG(2, "ReloadPaletteSlotsFile\n");
-	WindowManager::AddLog("[system] Reloading 'palette_slots.ini' ...\n");
-
-	InitPaletteSlotsVector();
-	LoadPaletteSlotsFile();
 }
 
 void PaletteManager::InitDonatorPalsIndexVector()
@@ -171,13 +159,14 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 			file.read((char*)&fileContents, sizeof(IMPL_t)); //what if the file is smaller then sizeof(IMPL_t) ?
 			file.close();
 
-			//check filesig
+			//check for errors
 			if (strcmp(fileContents.header.filesig, "IMPL") != 0)
 			{
 				LOG(2, "ERROR, unrecognized file format!\n");
 				WindowManager::AddLog("[error] '%s' unrecognized file format!\n", fileName.c_str());
 				continue;
 			}
+
 			if (fileContents.header.datalen != sizeof(IMPL_data_t))
 			{
 				LOG(2, "ERROR, data size mismatch!\n");
@@ -185,43 +174,55 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 				continue;
 			}
 
+			if (charIndex != fileContents.header.charindex)
+			{
+				LOG(2, "WARNING, '%s' belongs to character %s, but is placed in folder %s\n",
+					fileName.c_str(), charNames[fileContents.header.charindex], charNames[charIndex]);
+
+				WindowManager::AddLog("[warning] '%s' belongs to character '%s', but is placed in folder '%s'\n", 
+					fileName.c_str(), charNames[fileContents.header.charindex], charNames[charIndex]);
+				//keep going
+			}
+
 			//replace palname section with the filename, so renaming the file has effect on the actual ingame palname
 			std::string fileNameWithoutExt = fileName.substr(0, fileName.length() - strlen(".impl"));
 			memset(fileContents.paldata.palname, 0, IMPL_PALNAME_LENGTH);
-			//memcpy(fileContents.paldata.palname, fileNameWithoutExt.c_str(), strlen(fileNameWithoutExt.c_str()));
 			strncpy(fileContents.paldata.palname, fileNameWithoutExt.c_str(), IMPL_PALNAME_LENGTH - 1);
 
 			PushImplFileIntoVector(charIndex, fileContents.paldata);
 
-			WindowManager::AddLog("[system] Loaded '%s'\n", fileName.c_str());
 		} while (FindNextFile(hFind, &data));
 		FindClose(hFind);
 	}
 }
 
-void PaletteManager::LoadPaletteSlotsFile()
+void PaletteManager::LoadPaletteSettingsFile()
 {
-	LOG(2, "LoadPaletteSlotsFile\n");
+	LOG(2, "LoadPaletteSettingsFile\n");
 
 	TCHAR pathBuf[MAX_PATH];
 	GetModuleFileName(NULL, pathBuf, MAX_PATH);
 	std::wstring::size_type pos = std::wstring(pathBuf).find_last_of(L"\\");
 	std::wstring wFullPath = std::wstring(pathBuf).substr(0, pos);
 
-	wFullPath += L"\\BBTAG_IM\\Palettes\\palette_slots.ini";
+	wFullPath += L"\\palettes.ini";
 
 	if (!PathFileExists(wFullPath.c_str()))
 	{
-		LOG(2, "\t'palette_slots.ini' file was not found!\n");
-		WindowManager::AddLog("[error] 'palette_slots.ini' file was not found!\n");
+		LOG(2, "\t'palettes.ini' file was not found!\n");
+		WindowManager::AddLog("[error] 'palettes.ini' file was not found!\n");
 		return;
 	}
+
+	CString strBuffer;
+	GetPrivateProfileString(L"General", L"ShowDonatorPalettes", L"1", strBuffer.GetBuffer(MAX_PATH), MAX_PATH, wFullPath.c_str());
+	strBuffer.ReleaseBuffer();
+	loadDonatorPalettes = _ttoi(strBuffer);
 
 	for (int i = 0; i < (TOTAL_CHAR_INDEXES - 1); i++)
 	{
 		for (int iSlot = 1; iSlot <= MAX_NUM_OF_PAL_INDEXES; iSlot++)
 		{
-			CString strBuffer;
 			GetPrivateProfileString(wCharNames[i], std::to_wstring(iSlot).c_str(), L"", strBuffer.GetBuffer(MAX_PATH), MAX_PATH, wFullPath.c_str());
 			strBuffer.ReleaseBuffer();
 
@@ -239,71 +240,77 @@ void PaletteManager::LoadPaletteSlotsFile()
 	}
 }
 
-bool PaletteManager::CreatePaletteSlotsFile()
-{
-	LOG(2, "CreatePaletteSlotsFile\n");
-
-	TCHAR pathBuf[MAX_PATH];
-	GetModuleFileName(NULL, pathBuf, MAX_PATH);
-	std::wstring::size_type pos = std::wstring(pathBuf).find_last_of(L"\\");
-	std::wstring wFullPath = std::wstring(pathBuf).substr(0, pos);
-
-	wFullPath += L"\\BBTAG_IM\\Palettes\\palette_slots.ini";
-
-	if (PathFileExists(wFullPath.c_str()))
-	{
-		LOG(2, "\t'palette_slots.ini' already exists\n");
-		WindowManager::AddLog("[system] 'palette_slots.ini' already exists\n");
-		return true;
-	}
-
-	std::string path = std::string("BBTAG_IM\\Palettes\\palette_slots.ini");
-
-	std::ofstream file;
-	file.open(path);
-
-	if (!file.is_open())
-	{
-		LOG(2, "\tCouldn't open %s!\n", strerror(errno));
-		WindowManager::AddLog("[error] Unable to open '%s' : %s\n", path.c_str(), strerror(errno));
-		return false;
-	}
-
-	static const char* info 
-	{
-		"######################################################################################\r\n" \
-		"# Lines starting with \"#\" are ignored.\t\t\t\t\t\t     #\r\n" \
-		"# Valid palette indexes are between 1 - 16\t\t\t\t\t     #\r\n" \
-		"# Filenames must be put between quotation marks (\"). (Extension .impl is not needed) #\r\n" \
-		"#\t\t\t\t\t\t\t\t\t\t     #\r\n" \
-		"# Example:\t\t\t\t\t\t\t\t\t     #\r\n" \
-		"# If Aegis has palette files \"Fox.impl\" and \"Panda.impl\", then a section like:\t     #\r\n" \
-		"# [Aegis]\t\t\t\t\t\t\t\t\t     #\r\n" \
-		"# 1=\"Fox\"\t\t\t\t\t\t\t\t\t     #\r\n" \
-		"# 3=\"Panda\"\t\t\t\t\t\t\t\t\t     #\r\n" \
-		"# 4=\"Panda\"\t\t\t\t\t\t\t\t\t     #\r\n" \
-		"# 6=\"Fox\"\t\t\t\t\t\t\t\t\t     #\r\n" \
-		"# 14=\"Fox\"\t\t\t\t\t\t\t\t\t     #\r\n" \
-		"# Will make the mod load the palette file \"Fox.impl\" on ingame palettes 1, 6, 14,    #\r\n" \
-		"# and load the palette file \"Panda.impl\" on ingame palettes 3, 4\t\t     #\r\n" \
-		"######################################################################################\r\n\r\n"
-	};
-	size_t infoSize = strlen(info);
-	file.write(info, infoSize);
-
-	file.close();
-
-	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
-	for (int i = 0; i < (TOTAL_CHAR_INDEXES - 1); i++)
-	{
-		WritePrivateProfileString(wOrderedCharNames[i], L"1", L"\"Default\"\r\n", wFullPath.c_str());
-	}
-
-	LOG(2, "\tCreated '%s'\n", path.c_str());
-	WindowManager::AddLog("[system] Created '%s'\n", path.c_str());
-
-	return true;
-}
+//bool PaletteManager::CreatePaletteSlotsFile()
+//{
+//	LOG(2, "CreatePaletteSlotsFile\n");
+//
+//	TCHAR pathBuf[MAX_PATH];
+//	GetModuleFileName(NULL, pathBuf, MAX_PATH);
+//	std::wstring::size_type pos = std::wstring(pathBuf).find_last_of(L"\\");
+//	std::wstring wFullPath = std::wstring(pathBuf).substr(0, pos);
+//
+//	wFullPath += L"\\BBTAG_IM\\Palettes\\palettes.ini";
+//
+//	if (PathFileExists(wFullPath.c_str()))
+//	{
+//		LOG(2, "\t'palettes.ini' already exists\n");
+//		WindowManager::AddLog("[system] 'palettes.ini' already exists\n");
+//		return true;
+//	}
+//
+//	std::string path = std::string("BBTAG_IM\\Palettes\\palettes.ini");
+//
+//	std::ofstream file;
+//	file.open(path);
+//
+//	if (!file.is_open())
+//	{
+//		LOG(2, "\tCouldn't open %s!\n", strerror(errno));
+//		WindowManager::AddLog("[error] Unable to open '%s' : %s\n", path.c_str(), strerror(errno));
+//		return false;
+//	}
+//
+//	static const char* info 
+//	{
+//		"######################################################################################\r\n" \
+//		"# In this file you can set custom palettes as default.\t\t\t\t     #\r\n" \
+//		"# Lines starting with \"#\" are ignored.\t\t\t\t\t\t     #\r\n" \
+//		"#\t\t\t\t\t\t\t\t\t\t     #\r\n" \
+//		"# Valid palette indexes are between 1 - 16.\t\t\t\t\t     #\r\n" \
+//		"# Filenames must be put between quotation marks (\"). (Extension .impl is not needed) #\r\n" \
+//		"#\t\t\t\t\t\t\t\t\t\t     #\r\n" \
+//		"# Example:\t\t\t\t\t\t\t\t\t     #\r\n" \
+//		"# If Aegis has palette files \"Fox.impl\" and \"Panda.impl\", then a section like:\t     #\r\n" \
+//		"# [Aegis]\t\t\t\t\t\t\t\t\t     #\r\n" \
+//		"# 1=\"Fox\"\t\t\t\t\t\t\t\t\t     #\r\n" \
+//		"# 3=\"Panda\"\t\t\t\t\t\t\t\t\t     #\r\n" \
+//		"# 4=\"Panda\"\t\t\t\t\t\t\t\t\t     #\r\n" \
+//		"# 6=\"Fox\"\t\t\t\t\t\t\t\t\t     #\r\n" \
+//		"# 14=\"Fox\"\t\t\t\t\t\t\t\t\t     #\r\n" \
+//		"# Will make the mod load the palette file \"Fox.impl\" on ingame palettes 1, 6, 14,    #\r\n" \
+//		"# and load the palette file \"Panda.impl\" on ingame palettes 3, 4.\t\t     #\r\n" \
+//		"#\t\t\t\t\t\t\t\t\t\t     #\r\n" \
+//		"# Names of donator palettes can be used as well.\t\t\t\t     #\r\n" \
+//		"######################################################################################\r\n\r\n"
+//	};
+//	size_t infoSize = strlen(info);
+//	file.write(info, infoSize);
+//
+//	file.close();
+//
+//	WritePrivateProfileString(L"General", L"ShowDonatorPalettes", L"1\r\n", wFullPath.c_str());
+//
+//	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
+//	for (int i = 0; i < (TOTAL_CHAR_INDEXES - 1); i++)
+//	{
+//		WritePrivateProfileString(wOrderedCharNames[i], L"1", L"\"Default\"\r\n", wFullPath.c_str());
+//	}
+//
+//	LOG(2, "\tCreated '%s'\n", path.c_str());
+//	WindowManager::AddLog("[system] Created '%s'\n", path.c_str());
+//
+//	return true;
+//}
 
 void PaletteManager::InitPaletteSlotsVector()
 {
@@ -350,7 +357,8 @@ void PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & f
 	}
 
 	m_customPalettes[charIndex].push_back(filledPalData);
-	WindowManager::AddLog("[system] Loaded '%s'\n", filledPalData.palname);
+
+	WindowManager::AddLog("[system] Loaded '%s%s'\n", filledPalData.palname, ".impl");
 }
 
 bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filledPalData)
@@ -386,29 +394,22 @@ void PaletteManager::LoadAllPalettes()
 {
 	LOG(2, "LoadAllPalettes\n");
 
+	InitCustomPaletteVector();
 	LoadPalettesFromFolder();
-	LoadPaletteSlotsFile();
 
-	InitiateDownloadingPaletteFiles();
+	InitPaletteSlotsVector();
+	LoadPaletteSettingsFile();
+
+	if(loadDonatorPalettes)
+		InitiateDownloadingPaletteFiles();
 }
 
 void PaletteManager::ReloadAllPalettes()
 {
 	LOG(2, "ReloadAllPalettes\n");
-
-	ReloadPalettesFromFolder();
-	ReloadPaletteSlotsFile();
-
-	InitiateDownloadingPaletteFiles();
-}
-
-void PaletteManager::ReloadPalettesFromFolder()
-{
-	LOG(2, "ReloadPalettesFromFolder\n");
 	WindowManager::AddLog("[system] Reloading custom palettes...\n");
 
-	InitCustomPaletteVector();
-	LoadPalettesFromFolder();
+	LoadAllPalettes();
 }
 
 int PaletteManager::GetDonatorPalsStartIndex(CharIndex charIndex)

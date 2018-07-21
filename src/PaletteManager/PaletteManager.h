@@ -11,6 +11,7 @@ private:
 	std::vector<std::vector<IMPL_data_t>> m_customPalettes;
 	std::vector<std::vector<std::string>> m_paletteSlots;
 	std::vector<int> m_donatorPalsStartIndex;
+	bool loadDonatorPalettes = false;
 
 public:
 	PaletteManager();
@@ -42,12 +43,10 @@ private:
 	void InitCustomPaletteVector();
 	void LoadPalettesIntoVector(CharIndex charIndex, std::wstring& wFolderPath);
 	void LoadPalettesFromFolder();
-	void ReloadPalettesFromFolder();
 
-	bool CreatePaletteSlotsFile();
+	//bool CreatePaletteSlotsFile();
 	void InitPaletteSlotsVector();
-	void LoadPaletteSlotsFile();
-	void ReloadPaletteSlotsFile();
+	void LoadPaletteSettingsFile();
 
 	void InitDonatorPalsIndexVector();
 

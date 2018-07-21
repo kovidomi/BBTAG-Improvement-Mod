@@ -52,7 +52,7 @@ void DownloadPaletteFiles()
 
 		if (res > 0)
 		{
-			WindowManager::AddLog("[system] Downloaded '%s'\n", implFile->paldata.palname);
+			WindowManager::AddLog("[system] Downloaded '%s%s'\n", implFile->paldata.palname, ".impl");
 			LOG(2, "Downloaded '%s'\n", implFile->paldata.palname);
 			g_interfaces.pPaletteManager->PushImplFileIntoVector(*implFile);
 		}
