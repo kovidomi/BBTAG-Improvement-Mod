@@ -42,6 +42,7 @@ private:
 	static void ShowDonatorsWindow();
 	static void ShowDonatorsButton();
 	static void ShowMainWindow(bool* p_open);
+	static void HandleMainWindowVisibility(float timeLeft);
 	static void ShowLinks();
 	static void ShowAllWindows();
 	static void WriteLogToFile();

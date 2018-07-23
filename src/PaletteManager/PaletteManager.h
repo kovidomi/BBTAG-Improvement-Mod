@@ -50,5 +50,5 @@ private:
 
 	void InitDonatorPalsIndexVector();
 
-	void ApplyPaletteSlot(CharIndex charIndex, CharPaletteHandle& charPalHandle);
+	void ApplyDefaultCustomPalette(CharIndex charIndex, CharPaletteHandle& charPalHandle);
 };

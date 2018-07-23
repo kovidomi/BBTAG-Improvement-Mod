@@ -16,7 +16,7 @@ FEATURES
 //DONE// #12 ingame palette editor
 #13 render the custom hud behind the characters
 #14 show player names on the custom HUD in online matches
-#15 sync the custom HUD's visibility with the real one
+//DONE// #15 sync the custom HUD's visibility with the real one
 
 
 

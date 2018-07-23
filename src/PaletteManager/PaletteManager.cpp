@@ -80,9 +80,9 @@ void PaletteManager::InitDonatorPalsIndexVector()
 	}
 }
 
-void PaletteManager::ApplyPaletteSlot(CharIndex charIndex, CharPaletteHandle & charPalHandle)
+void PaletteManager::ApplyDefaultCustomPalette(CharIndex charIndex, CharPaletteHandle & charPalHandle)
 {
-	LOG(2, "ApplyPaletteSlot\n");
+	LOG(2, "ApplyDefaultCustomPalette\n");
 
 	if (charIndex > TOTAL_CHAR_INDEXES)
 		return;
@@ -97,7 +97,7 @@ void PaletteManager::ApplyPaletteSlot(CharIndex charIndex, CharPaletteHandle & c
 
 	if (foundCustomPalIndex < 0)
 	{
-		WindowManager::AddLog("[error] Palette slot file '%s' not found.\n", palName);
+		WindowManager::AddLog("[error] Palette file '%s' cannot be set as default: File not found.\n", palName);
 		return;
 	}
 
@@ -351,14 +351,14 @@ void PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & f
 	}
 	if (FindCustomPalIndex(charIndex, filledPalData.palname) > 0)
 	{
-		WindowManager::AddLog("[error] Custom palette couldn't be loaded: name '%s' is already loaded.\n", filledPalData.palname);
+		WindowManager::AddLog("[error] Custom palette couldn't be loaded: a palette with name '%s' is already loaded.\n", filledPalData.palname);
 		LOG(2, "ERROR, A custom palette with name '%s' is already loaded.\n", filledPalData.palname);
 		return;
 	}
 
 	m_customPalettes[charIndex].push_back(filledPalData);
 
-	WindowManager::AddLog("[system] Loaded '%s%s'\n", filledPalData.palname, ".impl");
+	WindowManager::AddLog("[system] Loaded '%s%s' for character '%s'\n", filledPalData.palname, ".impl", charNames[charIndex]);
 }
 
 bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filledPalData)
@@ -492,10 +492,10 @@ void PaletteManager::OnMatchInit(CharHandle& P1Ch1, CharHandle& P1Ch2, CharHandl
 	P2Ch1.GetPalHandle().OnMatchInit();
 	P2Ch2.GetPalHandle().OnMatchInit();
 
-	ApplyPaletteSlot((CharIndex)P1Ch1.GetData()->char_index, P1Ch1.GetPalHandle());
-	ApplyPaletteSlot((CharIndex)P1Ch2.GetData()->char_index, P1Ch2.GetPalHandle());
-	ApplyPaletteSlot((CharIndex)P2Ch1.GetData()->char_index, P2Ch1.GetPalHandle());
-	ApplyPaletteSlot((CharIndex)P2Ch2.GetData()->char_index, P2Ch2.GetPalHandle());
+	ApplyDefaultCustomPalette((CharIndex)P1Ch1.GetData()->char_index, P1Ch1.GetPalHandle());
+	ApplyDefaultCustomPalette((CharIndex)P1Ch2.GetData()->char_index, P1Ch2.GetPalHandle());
+	ApplyDefaultCustomPalette((CharIndex)P2Ch1.GetData()->char_index, P2Ch1.GetPalHandle());
+	ApplyDefaultCustomPalette((CharIndex)P2Ch2.GetData()->char_index, P2Ch2.GetPalHandle());
 }
 
 void PaletteManager::OnMatchEnd(CharHandle & P1Ch1, CharHandle & P1Ch2, CharHandle & P2Ch1, CharHandle & P2Ch2)

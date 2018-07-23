@@ -24,7 +24,9 @@ CustomHud::CustomHud(float hud_scale_x, float hud_scale_y)
 
 void CustomHud::OnUpdate(bool show_custom_hud, bool show_main_window)
 {
-	if (!show_custom_hud)
+	bool origIsHUDHidden = UpdateVisibility();
+
+	if (origIsHUDHidden || !show_custom_hud)
 		return;
 	
 	//sanity check 1
@@ -162,6 +164,48 @@ void CustomHud::ShowResetPositionsButton(ImVec2 middlescreen)
 		ImGui::Text("Used to recover elements of the custom HUD that have\nbecome unrecoverable due to going beyond the screen");
 		ImGui::EndTooltip();
 	}
+}
+
+bool CustomHud::UpdateVisibility()
+{
+	// Keeping track of *g_gameVals.pIsHUDHidden 's original value as well
+
+	// *g_gameVals.pIsHUDHidden is a bitfield:
+	// 0x00 - (nothing is activated) hud is visible
+	// 0x01 - hud is invisible (intro)
+	// 0x02 - hud is invisible (astral)
+	// 0x04 - loading icon is shown
+
+	static bool isOrigHUDHidden = false;
+	static int prev = 0;
+
+	if (g_gameVals.pIsHUDHidden)
+	{
+		if (prev != *g_gameVals.pIsHUDHidden)
+		{
+			// Syncing the visibility of the custom hud with the original's (so it disappears during intros and astral)
+			// If either the first or second bits are on, the hud is invisible 
+			// clear the flag that we set ourselves when we are forcing the hud off
+			if (prev & 2 && !(*g_gameVals.pIsHUDHidden & 2))
+				*g_gameVals.pIsHUDHidden &= ~(1); 
+
+			if (*g_gameVals.pIsHUDHidden & 1 || *g_gameVals.pIsHUDHidden & 2)
+				isOrigHUDHidden = true;
+			else
+				isOrigHUDHidden = false;
+		}
+
+		//override the visibility of the game's original HUD
+		if (Settings::settingsIni.forcecustomhud && *g_gameVals.pIsHUDHidden == 0)
+		{
+			isOrigHUDHidden = false;
+			*g_gameVals.pIsHUDHidden = 1;
+		}
+
+		prev = *g_gameVals.pIsHUDHidden;
+	}
+
+	return isOrigHUDHidden;
 }
 
 void CustomHud::UpdateHP(const CharInfo &charInfo, bool right_side)

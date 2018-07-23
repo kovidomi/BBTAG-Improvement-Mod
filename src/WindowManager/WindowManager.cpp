@@ -337,31 +337,7 @@ void WindowManager::OnUpdate()
 		g_interfaces.player2.GetChar1().GetPalHandle(),
 		g_interfaces.player2.GetChar2().GetPalHandle());
 
-	//constantly overriding the visibility of the game's HUD if the custom hud is forced on
-	if (Settings::settingsIni.forcecustomhud)
-	{
-		if (g_gameVals.pIsHUDHidden)
-		{
-			if (*g_gameVals.pIsHUDHidden == 0)
-				*g_gameVals.pIsHUDHidden = 1;
-		}
-	}
-
-	//start making the mod's menu disappear upon start, within MAIN_WINDOW_DISAPPEAR_TIME_SECONDS
-	if (main_window_disappear_time > 0)
-	{
-		main_window_disappear_time -= ImGui::GetIO().DeltaTime;
-		
-		if(main_window_disappear_time > 0)
-			ImGui::GetStyle().Alpha = main_window_disappear_time / MAIN_WINDOW_DISAPPEAR_TIME_SECONDS;
-
-		//disappear upon reaching main_window_disappear_time = 0
-		if (main_window_disappear_time <= 0)
-		{
-			show_main_window = false;
-			ImGui::GetStyle().Alpha = DEFAULT_ALPHA;
-		}
-	}
+	HandleMainWindowVisibility(main_window_disappear_time);
 
 	//return if game window is minimized, to avoid the custom hud elements being thrown in the upper left corner due to resolution shrinking
 	if (IsIconic(g_gameProc.hWndGameWindow))
@@ -775,6 +751,15 @@ void WindowManager::ShowMainWindow(bool * p_open)
 
 		ImGui::Begin(main_title.c_str(), NO_CLOSE_FLAG, ImGuiWindowFlags_AlwaysAutoResize);
 
+		// prevent disappearing if clicked on
+		if (main_window_disappear_time > 0)
+		{
+			if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(0))
+			{
+				HandleMainWindowVisibility(0);
+			}
+		}
+
 		ImGui::Text("Toggle me with %s", Settings::settingsIni.togglebutton.c_str());
 		ImGui::Text("Toggle HUD with %s", Settings::settingsIni.toggleHUDbutton.c_str());
 		ImGui::Text("Toggle Custom HUD with %s", Settings::settingsIni.togglecustomHUDbutton.c_str());
@@ -786,6 +771,19 @@ void WindowManager::ShowMainWindow(bool * p_open)
 
 		if (ImGui::CollapsingHeader("Custom HUD"))
 		{
+			if (g_gameVals.pIsHUDHidden)
+			{
+				ImGui::Text(" "); ImGui::SameLine();
+				ImGui::Checkbox("Show HUD", (bool*)g_gameVals.pIsHUDHidden);
+				if (Settings::settingsIni.forcecustomhud)
+				{
+					ImGui::SameLine(); ImGui::TextDisabled("(ForceCustomHUD is ON)");
+				}
+			}
+
+			ImGui::Text(" "); ImGui::SameLine();
+			ImGui::Checkbox("Show Custom HUD", &show_custom_hud);
+
 			ImGui::Text(" "); ImGui::SameLine();
 			m_customHud->ShowResetPositionsButton(middlescreen);
 		}
@@ -846,6 +844,31 @@ void WindowManager::ShowMainWindow(bool * p_open)
 		ShowLinks();
 
 		ImGui::End();
+	}
+}
+
+void WindowManager::HandleMainWindowVisibility(float timeLeft)
+{
+	main_window_disappear_time = timeLeft;
+
+	//start making the mod's menu disappear upon start, within MAIN_WINDOW_DISAPPEAR_TIME_SECONDS
+	if (main_window_disappear_time > 0)
+	{	
+		main_window_disappear_time -= ImGui::GetIO().DeltaTime;
+		
+		if(main_window_disappear_time > 0)
+			ImGui::GetStyle().Alpha = main_window_disappear_time / MAIN_WINDOW_DISAPPEAR_TIME_SECONDS;
+
+		//disappear upon reaching main_window_disappear_time < 0
+		if (main_window_disappear_time <= 0)
+		{
+			show_main_window = false;
+			ImGui::GetStyle().Alpha = DEFAULT_ALPHA;
+		}
+	}
+	else
+	{
+		ImGui::GetStyle().Alpha = DEFAULT_ALPHA;
 	}
 }
 
@@ -923,7 +946,6 @@ void WindowManager::HandleButtons()
 	if (ImGui::IsKeyPressed(toggle_key))
 	{
 		show_main_window ^= 1;
-		ImGui::GetStyle().Alpha = DEFAULT_ALPHA;
-		main_window_disappear_time = 0;
+		HandleMainWindowVisibility(0);
 	}
 }

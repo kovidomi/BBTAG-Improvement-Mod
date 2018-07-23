@@ -12,6 +12,7 @@ public:
 	void OnUpdate(bool show_custom_hud, bool show_main_window);
 	void ShowResetPositionsButton(ImVec2 middlescreen);
 private:
+	bool UpdateVisibility();
 	void UpdateHP(const CharInfo &charInfo, bool right_side = false);
 	void UpdateTimer(int *timer);
 	void UpdateMeters(int cur_skill_val, int cur_cross_val, int cur_blaze_val,
