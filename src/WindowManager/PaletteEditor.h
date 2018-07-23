@@ -51,4 +51,5 @@ private:
 	void CopyToEditorArray(const char* pSrc);
 	void CopyPalFileToEditorArray(PaletteFile palFile, CharPaletteHandle &charPalHandle);
 	void UpdateHighlightArray(int selectedBoxIndex);
+	void CopyPalTextsToTextBoxes(CharPaletteHandle& charPalHandle);
 };

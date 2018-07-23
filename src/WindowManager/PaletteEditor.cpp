@@ -13,6 +13,10 @@ const int COLOR_BLACK = 0xFF000000;
 const int COLOR_WHITE = 0xFFFFFFFF;
 const ImVec4 COLOR_DONATOR(1.000f, 0.794f, 0.000f, 1.000f);
 
+static char palNameBuf[IMPL_PALNAME_LENGTH] = "";
+static char palDescBuf[IMPL_DESC_LENGTH] = "";
+static char palCreatorBuf[IMPL_CREATOR_LENGTH] = "";
+
 PaletteEditor::PaletteEditor() : customPaletteVector(g_interfaces.pPaletteManager->GetCustomPalettesVector())
 {
 	OnMatchInit();
@@ -71,7 +75,8 @@ void PaletteEditor::OnMatchInit()
 	selectedCharIndex = (CharIndex)allSelectedCharHandles[0]->GetData()->char_index;
 	selectedCharName = allSelectedCharNames[0];
 	selectedCharPalHandle = &allSelectedCharHandles[0]->GetPalHandle();
-	selectedPalIndex = 0;
+	selectedPalIndex = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(*selectedCharPalHandle);
+	CopyPalTextsToTextBoxes(*selectedCharPalHandle);
 	selectedFile = PaletteFile_Character;
 
 	color_edit_flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoAlpha;
@@ -135,9 +140,8 @@ void PaletteEditor::CharacterSelection()
 				selectedCharPalHandle = &allSelectedCharHandles[i]->GetPalHandle();
 				selectedPalIndex = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(*selectedCharPalHandle);
 				CopyPalFileToEditorArray(selectedFile, *selectedCharPalHandle);
-
-				ImGui::PopID();
 			}
+			ImGui::PopID();
 		}
 		ImGui::EndPopup();
 	}
@@ -270,9 +274,6 @@ void PaletteEditor::DisableHighlightModes()
 
 void PaletteEditor::SavePaletteToFile()
 {
-	static char palNameBuf[IMPL_PALNAME_LENGTH] = "";
-	static char palDescBuf[IMPL_DESC_LENGTH] = "";
-	static char palCreatorBuf[IMPL_CREATOR_LENGTH] = "";
 	static char message[200] = "";
 
 	ImGui::Text("");
@@ -312,6 +313,12 @@ void PaletteEditor::SavePaletteToFile()
 		{
 			memcpy(message, "Error, no filename given", 25);
 			WindowManager::AddLog("[error] Could not save custom palette, no filename was given\n");
+			return;
+		}
+		else if (strncmp(palNameBuf, "Default", IMPL_PALNAME_LENGTH) == 0)
+		{
+			memcpy(message, "Error, 'Default' is not a valid filename", 41);
+			WindowManager::AddLog("[error] Could not save custom palette, 'Default' is not a valid filename\n");
 			return;
 		}
 
@@ -474,6 +481,8 @@ void PaletteEditor::ShowPaletteSelectPopup(CharPaletteHandle& charPalHandle, Cha
 					selectedPalIndex = i;
 					CopyPalFileToEditorArray(selectedFile, charPalHandle);
 					DisableHighlightModes();
+
+					CopyPalTextsToTextBoxes(charPalHandle);
 				}
 			}
 			ShowHoveredPaletteToolTip(charIndex, i);
@@ -534,4 +543,12 @@ void PaletteEditor::UpdateHighlightArray(int selectedBoxIndex)
 	((int*)highlightArray)[selected_highlight_box] = COLOR_WHITE;
 
 	g_interfaces.pPaletteManager->ReplacePaletteFile(highlightArray, selectedFile, *selectedCharPalHandle);
+}
+
+void PaletteEditor::CopyPalTextsToTextBoxes(CharPaletteHandle & charPalHandle)
+{
+	IMPL_data_t palData = g_interfaces.pPaletteManager->GetCurrentPalData(charPalHandle);
+	strncpy(palNameBuf, palData.palname, IMPL_PALNAME_LENGTH);
+	strncpy(palDescBuf, palData.desc, IMPL_DESC_LENGTH);
+	strncpy(palCreatorBuf, palData.creator, IMPL_CREATOR_LENGTH);
 }

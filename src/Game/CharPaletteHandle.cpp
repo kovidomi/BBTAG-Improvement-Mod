@@ -49,6 +49,14 @@ int & CharPaletteHandle::GetPalIndexRef()
 
 void CharPaletteHandle::ReplaceAllPalFiles(IMPL_data_t *newPaletteData)
 {
+	if(strncmp(newPaletteData->palname, "Default", IMPL_PALNAME_LENGTH) == 0)
+		strncpy(m_CurrentPalData.palname, "", IMPL_PALNAME_LENGTH);
+	else
+		strncpy(m_CurrentPalData.palname, newPaletteData->palname, IMPL_PALNAME_LENGTH);
+
+	strncpy(m_CurrentPalData.creator, newPaletteData->creator, IMPL_CREATOR_LENGTH);
+	strncpy(m_CurrentPalData.desc, newPaletteData->desc, IMPL_DESC_LENGTH);
+
 	ReplaceAllPalFiles(newPaletteData, m_switchPalIndex1);
 	ReplaceAllPalFiles(newPaletteData, m_switchPalIndex2);
 
