@@ -84,7 +84,7 @@ https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/K
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/Chad.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/Jotaro_Kujo.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/Jotaro_Kujo_Part_4.impl
-https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/P3_Jotaro_Manga_Thing.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/HFTF_Jotaro.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/Rokuten Maoh.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/Sakata Kintoki.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/Sexy_Kanji.impl
