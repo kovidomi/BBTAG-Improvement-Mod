@@ -4,65 +4,32 @@
 #include "../logger.h"
 #include <vector>
 #include <sstream>
-#include <zip.h>
 
-void Uncompress(void *data, size_t size)
+#define ZLIB_WINAPI   // actually actually needed (for linkage)
+
+#include "zlib.h"     // declare the external fns -- uses zconf.h, too
+#pragma comment(lib, "zlibstat.lib")
+
+int UncompressData(const BYTE* abSrc, int nLenSrc, BYTE* abDst, int nLenDst)
 {
-	zip_source_t *src;
-	zip_t *za;
-	zip_error_t error;
+	z_stream zInfo = { 0 };
+	zInfo.total_in = zInfo.avail_in = nLenSrc;
+	zInfo.total_out = zInfo.avail_out = nLenDst;
+	zInfo.next_in = (BYTE*)abSrc;
+	zInfo.next_out = abDst;
 
-	zip_error_init(&error);
-	/* create source from buffer */
-	if ((src = zip_source_buffer_create(data, size, 1, &error)) == NULL)
+	int nErr, nRet = -1;
+	nErr = inflateInit(&zInfo);               // zlib function
+	if (nErr == Z_OK) 
 	{
-		fprintf(stderr, "can't create source: %s\n", zip_error_strerror(&error));
-		free(data);
-		zip_error_fini(&error);
-		return;
+		nErr = inflate(&zInfo, Z_FINISH);     // zlib function
+		if (nErr == Z_STREAM_END) 
+		{
+			nRet = zInfo.total_out;
+		}
 	}
-
-	/* open zip archive from source */
-	if ((za = zip_open_from_source(src, 0, &error)) == NULL)
-	{
-		fprintf(stderr, "can't open zip from source: %s\n", zip_error_strerror(&error));
-		zip_source_free(src);
-		zip_error_fini(&error);
-		return;
-	}
-	zip_error_fini(&error);
-
-	/* we'll want to read the data back after zip_close */
-	//zip_source_keep(src);
-
-	///* modify archive */
-	//modify_archive(za);
-
-	/* close archive */
-	if (zip_close(za) < 0)
-	{
-		fprintf(stderr, "can't close zip archive %s\n", zip_strerror(za));
-		return;
-	}
-
-	//struct zip_stat st;
-	//zip_stat_init(&st);
-	//zip_stat(z, name, 0, &st);
-
-	////Alloc memory for its uncompressed contents
-	//char *contents = new char[st.size];
-
-	////Read the compressed file
-	//zip_file *f = zip_fopen(z, name, 0);
-	//zip_fread(f, contents, st.size);
-	//zip_fclose(f);
-
-	////And close the archive
-	//zip_close(z);
-
-	////Do something with the contents
-	////delete allocated memory
-	//delete[] contents;
+	inflateEnd(&zInfo);   // zlib function
+	return(nRet); // -1 or len of output
 }
 
 std::vector<std::wstring> DownloadPaletteFileList()
@@ -102,24 +69,29 @@ std::vector<std::wstring> DownloadPaletteFileList()
 
 void DownloadPaletteFiles()
 {
-	std::vector<std::wstring> links = DownloadPaletteFileList();
-
-	for (auto palUrl : links)
-	{
+	//std::vector<std::wstring> links = DownloadPaletteFileList();
+	std::wstring palUrl(L"https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/pal_test.zip");
+	/*for (auto palUrl : links)
+	{*/
 		int bufSize = sizeof(IMPL_t);
-		IMPL_t* implFile = new IMPL_t;
-
-		int res = DownloadUrlBinary(palUrl, implFile, bufSize);
+		//IMPL_t* implFile = new IMPL_t;
+		char* ptr = new char[1000000];
+		char* dest = new char[5000000];
+		//int res = DownloadUrlBinary(palUrl, implFile, bufSize);
+		int res = DownloadUrlBinary(palUrl, ptr, 1000000);
 
 		if (res > 0)
 		{
-			WindowManager::AddLog("[system] Downloaded '%s%s'\n", implFile->paldata.palname, ".impl");
-			LOG(2, "Downloaded '%s'\n", implFile->paldata.palname);
-			g_interfaces.pPaletteManager->PushImplFileIntoVector(*implFile);
+			res = UncompressData((BYTE*)ptr, res, (BYTE*)dest, 5000000);
+			//WindowManager::AddLog("[system] Downloaded '%s%s'\n", implFile->paldata.palname, ".impl");
+			//LOG(2, "Downloaded '%s'\n", implFile->paldata.palname);
+			//g_interfaces.pPaletteManager->PushImplFileIntoVector(*implFile);
 		}
 
-		delete implFile;
-	}
+		delete[] ptr;
+		delete[] dest;
+		//delete implFile;
+	//}
 }
 
 void InitiateDownloadingPaletteFiles()

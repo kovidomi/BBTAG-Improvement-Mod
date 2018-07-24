@@ -32,8 +32,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)\depends\directx_sdk\Include;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\imgui;$(SolutionDir)\depends\steamworks_sdk_142\sdk\public\steam;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\depends\directx_sdk\Lib\x86;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\steamworks_sdk_142\sdk\redistributable_bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\depends\zlib;$(SolutionDir)\depends\directx_sdk\Include;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\imgui;$(SolutionDir)\depends\steamworks_sdk_142\sdk\public\steam;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\depends\zlib\lib;$(SolutionDir)\depends\directx_sdk\Lib\x86;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\steamworks_sdk_142\sdk\redistributable_bin;$(LibraryPath)</LibraryPath>
     <OutDir>bin\$(Configuration)\</OutDir>
     <IntDir>build\$(Configuration)\</IntDir>
     <TargetName>dinput8</TargetName>
@@ -169,6 +169,6 @@
   </ImportGroup>
   <Target Name="AfterBuild">
     <Copy SourceFiles="$(ProjectDir)resource\settings.ini" DestinationFolder="$(ProjectDir)$(OutDir)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
-	<Copy SourceFiles="$(ProjectDir)resource\palettes.ini" DestinationFolder="$(ProjectDir)$(OutDir)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(ProjectDir)resource\palettes.ini" DestinationFolder="$(ProjectDir)$(OutDir)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" />
   </Target>
 </Project>
