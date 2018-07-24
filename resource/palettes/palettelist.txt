@@ -13,7 +13,6 @@ https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/N
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Rachel/Euryale.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Rachel/Hiyori.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Rachel/VelvetRoom Rachel.impl
-https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Rachel/VelvetRoom_Rachel.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Tager/Lu Bu.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Tager/VelvetRoom Tager.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Tager/Yammy.impl
