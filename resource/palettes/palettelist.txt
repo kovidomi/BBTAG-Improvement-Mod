@@ -1,0 +1,5 @@
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Aegis/(Aegis) P4AU Color 11.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Aegis/Kato Danzou.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Aegis/Nemu.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Aegis/Palladion.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Aegis/VelvetRoom Aegis.impl
