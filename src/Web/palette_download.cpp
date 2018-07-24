@@ -10,7 +10,8 @@ std::vector<std::wstring> DownloadPaletteFileList()
 	LOG(2, "DownloadPaletteFileList\n");
 	WindowManager::AddLog("[system] Getting online palette list...\n");
 
-	std::wstring wUrl = MOD_LINK_DONATORS_PALETTELIST;
+	//std::wstring wUrl = MOD_LINK_DONATORS_PALETTELIST;
+	std::wstring wUrl = MOD_LINK_NORMAL_PALETTELIST;
 	std::string data = DownloadUrl(wUrl);
 
 	std::vector<std::wstring> links;

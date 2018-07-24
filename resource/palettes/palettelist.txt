@@ -1,5 +1,386 @@
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ragna/JonathanRagna.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ragna/Merlin.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ragna/VelvetRoom Ragna.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ragna/Ywach.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Jin/Kojiro.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Jin/Okita_.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Jin/Sexy_Jin.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Jin/Toshiro.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Jin/VelvetRoom Jin.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Noel/Nobu.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Noel/Riruka.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Noel/VelvetRoom Noel.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Rachel/Euryale.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Rachel/Hiyori.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Rachel/VelvetRoom Rachel.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Rachel/VelvetRoom_Rachel.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Tager/Lu Bu.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Tager/VelvetRoom Tager.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Tager/Yammy.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hakumen/Full Hollow Ichigo.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hakumen/Hogyoku Aizen.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hakumen/Lancelot.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hakumen/VelvetRoom Hakumen.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Nu/Byakuya.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Nu/Gilgamesh.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Nu/Nu-13_Lambda-11.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Nu/VelvetRoom Nu.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hazama/Adachi.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hazama/Dantes.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hazama/Gin.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hazama/HazamaTerumiGreenCoat.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hazama/Hazama_Jackson.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hazama/VelvetRoom Hazama.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Makoto/Martha.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Makoto/VelvetRoom Makoto.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Makoto/Yoruichi.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Platinum/Ilya.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Platinum/VelvetRoom Platinum.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Platinum/Yachiru.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Platinum/Zone-Tan_Plat.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Azrael/AkihikoAzrael.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Azrael/Beowulf.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Azrael/Kanji.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Azrael/Kenpachi.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Azrael/VelvetRoom Azrael.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Es/Arturia.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Es/Es_BBCF_Color_11.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Es/Halibel.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Es/HaruEStia.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Es/Saber_Alter.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Es/StellaEs.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Es/VelvetRoom Es.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Es/Zone-Tan_Es.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Jubei/and_his_Black_and_White_Cat.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Jubei/Fou.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Jubei/Kon.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Jubei/VelvetRoom Jubei.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yu/(Yu) P4AU Color 11.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yu/Byakuya.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yu/Ichigo.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yu/Izanagi-No-Okami.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yu/Magatsu_Izanagi.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yu/Shirou Kotomine.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yu/VelvetRoom Yu.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yu/White Ichigo.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yosuke/(Yosuke) P4AU Color 11.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yosuke/Fuuma Kotaro.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yosuke/Keigo.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yosuke/Susano-o.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yosuke/VelvetRoom Yosuke.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Chie/(Chie) P4AU Color 11.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Chie/Chie_but_without_shorts.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Chie/Mashiro.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Chie/Suzuka Gongen.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Chie/Tamamo No Mae.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Chie/Tatsuki.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Chie/VelvetRoom Chie.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yukiko/(Yukiko) P4AU Color 11.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yukiko/Amaterasu.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yukiko/Kiyohime.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yukiko/Orihime.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yukiko/VelvetRoom Yukiko.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yukiko/Yukiko_LEG.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/(Kanji) P4AU Color 11.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/Chad.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/Jotaro_Kujo.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/Jotaro_Kujo_Part_4.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/P3_Jotaro_Manga_Thing.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/Rokuten Maoh.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/Sakata Kintoki.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/Sexy_Kanji.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Kanji/VelvetRoom Kanji.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Naoto/(Naoto) P4AU Color 11.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Naoto/Adachi_Naoto.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Naoto/Billy the Kid.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Naoto/Postman_Pat.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Naoto/Torchwick.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Naoto/Tuxedo.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Naoto/VelvetRoom Naoto.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Naoto/Yamato-Takeru.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Naoto/Yukio.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Aegis/(Aegis) P4AU Color 11.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Aegis/Kato Danzou.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Aegis/Nemu.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Aegis/Palladion.impl
 https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Aegis/VelvetRoom Aegis.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Dark_Orbitter.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/haru_glory.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Juliet_Averse.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Kazoku_Tony.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/naotoxhyde.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_02Twinkle White.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_03Darkness Tempest.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_05Nightmare.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_06RedPearl.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_09Moonlight.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_11Blau Blitz.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_12Sunlight Red.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_13Vortex Galaxy.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_14Cremisi Grotta.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_15Holiness Star.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_17Juillet Averse.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_18Soul Lover.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_19Caldo Trrente.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_20Viridis Regulus.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_21Shinku.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_23Ocean Arctique.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_24Citrus Flesh.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_25Guilty Thorn.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_26Schon Gift.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_27Nutty Pastel.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_28Clear Gale.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_29Santana.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_30Dark Master.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_31Equatorial Wave.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_32Inferno Blaze.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_33Annular Eclipse.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_34Seeds of Heaven.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Pal_35Clamorous Colors.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/PFHyde.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Sigurd.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/Ulquiorra.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Hyde/VelvetRoom Hyde.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Mysterious Heroine X.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_02Solitude Spica.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_04Sylvania Keeper.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_06Pure Black.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_09Autumnal Leaves.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_10Destruction Red.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_11Brosche Saphir.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_12Drought Ground.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_13Acero Granizo.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_14Isora Albero.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_15Wind of Oasis.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_16Perfume Lemon.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_18Pupil Gloomy.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_19Arche wave.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_20Ritual Sacrifice.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_21Spring Breeze.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_23Nacht Kirschblute.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_24Bush Camouflage.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_25Misty Crystal.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_26Exotic Coral.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_27Spunky Mint.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_28Burial Agency.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_29Water Imp.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_30Nagger Brawny.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_31Equatorial Wave.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_32Inferno Blaze.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_33Annular Eclipse.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_34Seeds of Heaven.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Pal_35Clamorous Colors.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/PFLinne.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Ryogi_Shiki.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/Soi Fon.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Linne/VelvetRoom Linne.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Barragan.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Heracles.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_02Crow Ash.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_03Steel Tiger.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_05Magnetite Crystal.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_08Tungsten Yellow.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_09Poison Bandit.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_10Hihiirokane.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_11Fegefeuer.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_12Arctic Cold.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_13Dschungel Wind.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_14Hatred Flame.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_15Eis mann.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_16Bestie Erde.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_19Gray Fox.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_20Apostle of Chaos.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_22Crimson Orge.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_23Brawny Orc.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_24Scorched Earth.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_25Thor's Hammer.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_26Red Hot Steel.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_27Vert Nil.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_28Ashputtel.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_29Drema Warden.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_30Gold Lowe.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_31Equatorial Wave.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_32Inferno Blaze.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_33Annular Eclipse.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_34Seeds of Heaven.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/Pal_35Clamorous Colors.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Waldstein/VelvetRoom Waldstein.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Mayuri.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_02Black Punishment.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_05Dead and Violet.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_06Bloody Lost.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_07Wild Fang.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_09Fade Noise.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_11Strange Strawberry.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_12Plena Noche.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_13Emerald Island.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_14Ortensia.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_16Flash Magic.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_17Claro de Luna.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_18Brave Satan.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_20Demon Angel.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_21Crimson Surfer.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_22Fake Hero.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_23Liquid Metal.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_24Noble Blood.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_25Vegetarian.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_26Mr.Monochrome.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_27Surfusion Eau.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_28Prunella Honey.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_29Western Feast.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_30Dead and Black.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_31Equatorial Wave.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_32Inferno Blaze.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_33Annular Eclipse.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_34Seeds of Heaven.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Pal_35Clamorous Colors.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Ronald_McCarmine.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Szayelaporro.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/VelvetRoom Carmine.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Carmine/Vlad III.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Asagami.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/ErinaOrie.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Espada Orihime.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Hex_Maniac_Orie.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Nightmare_Orie.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Orie_Crimson_Knight.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_02Night Shade.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_06Undine Rain.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_07Athena Light.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_08Evil Knight.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_09Scamper Emerald.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_10Efreet Flare.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_12Fallen Angels.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_13Dios de la Muerte.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_14Calm Pink.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_16Crimson Rouge.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_17Mistiltein.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_18Green Magnolia.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_19Lluvia Medium.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_20Moon Water.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_21Alice Blue.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_23Campanula Purple.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_24Cavalier Du Lac.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_25Dry Blood.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_26Walder Abendrot.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_27Shade Gardian.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_28Honorable Scar.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_29Lumiere Solaire.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_30Memorial Black.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_31Equatorial Wave.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_32Inferno Blaze.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_33Annular Eclipse.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_34Seeds of Heaven.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/Pal_35Clamorous Colors.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/PFOrie.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/POLNERAFF_HFTF.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Orie/VelvetRoom Orie.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Cu_Chulainn.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Evil.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Fresco_Verde_.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Gordzamma.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Grimmjow.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Karna.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_02The Baron of Night.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_06Vampire and Alcohol.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_09Season of Harvest.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_10Legend Vermilion.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_11Scharlachrot.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_12Fresco Verde.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_13Shadow Vice.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_14Emperor of Walnut.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_15Mischievous Firefly.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_16Turquoise Blue.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_17Atonement Blood.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_19Hard Sleet.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_20Frost Skeleton.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_21Gusty Edge.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_22Noble Impulse.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_23Amore Formaggio.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_24Jade Tempest.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_25Deadvlei.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_26False Dawn.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_27Lunar Corona.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_28Falconry Hawking.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_29Righteous Daddy.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_30Imitate Intrigant.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_31Equatorial Wave.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_32Inferno Blaze.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_33Annular Eclipse.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_34Seeds of Heaven.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/Pal_35Clamorous Colors.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Gordeau/VelvetRoom Gordeau.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Alice.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_02Lion Falls.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_05Aureolin.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_06Classic White.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_10Crimson Lake.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_11Lila Colina.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_12Azul Agua.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_13Regalo Tierra.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_14Freddo Aria.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_15Grass Fairy.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_16Donner Geist.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_18Knospe Gardenie.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_19Rain Stream.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_20Flor Ciruela.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_21Cassata Al Forno.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_22Moonshine Blue.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_23Vento Aureo.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_24Angelic Gospel.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_25Cyber Fairy.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_26Blitzschlag.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_27Mystic Doll.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_28Antique Luxury.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_29Modern Golem.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_30Fairy Tale.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_31Equatorial Wave.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_32Inferno Blaze.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_33Annular Eclipse.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_34Seeds of Heaven.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Pal_35Clamorous Colors.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/PFVatista.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Ururu.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/VelvetRoom Vatista.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Vatista/Zofi_Vatista.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/Dark Rukia.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/Erika_Ruby_Palette.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/Light_Blue.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/Medusa Lily.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/Neo.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/PFRuby.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/Ruby-icy.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/Ruby_CF_Es.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/Ruby_Default_Color_Parody.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/Ruby_May.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/VelvetRoom Ruby.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/Winter.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Ruby/ZofiRuby.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Weiss/Anastasia.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Weiss/PFWeiss.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Weiss/Rukia.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Weiss/VelvetRoom Weiss.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Weiss/Weiss_Default_Color_Parody.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Weiss/Weiss_Jin_Kisaragi.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Weiss/Weiss_Mitsuru_Kirijo.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Blake/BlakeHazama.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Blake/Blake_Default_Color_Parody.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Blake/Blake_Hibiki_Kohaku.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Blake/Blake_Phonon.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Blake/Musashi.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Blake/PFBlake.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Blake/Seth.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Blake/Sode No Shirayuki.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Blake/VelvetRoom Blake.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yang/katsuragi_yang.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yang/naotoxyang.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yang/Nero.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yang/Nightingale.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yang/PFYang.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yang/Rangiku.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yang/Tifa_Lockhart.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yang/VelvetRoom Yang.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yang/YangAzrael.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yang/Yang_Bullet.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yang/Yang_Default_Color_Parody.impl
+https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/Yang/Yang_Mika.impl
