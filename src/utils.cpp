@@ -1,6 +1,7 @@
 #include "utils.h"
 #include <cstdio>
 #include <Psapi.h>
+#include <fstream>
 
 void WriteToProtectedMemory(uintptr_t addressToWrite, char* valueToWrite, int byteNum)
 {
@@ -191,4 +192,50 @@ DWORD QuickChecksum(DWORD *pData, int size)
 	}
 
 	return sum;
+}
+
+bool utils_WriteFile(const char* path, void* inBuffer, unsigned long bufferSize, bool binaryFile, bool append)
+{
+	std::ofstream file;
+
+	int openMode = 2;
+
+	if (binaryFile)
+		openMode = std::fstream::binary;
+	if (append)
+		openMode |= std::fstream::ate;
+
+	file.open(path, openMode);
+
+	if (!file.is_open())
+	{
+		return false;
+	}
+
+	file.write((char*)inBuffer, bufferSize);
+	file.close();
+
+	return true;
+}
+
+bool utils_ReadFile(const char* path, void* outBuffer, unsigned long bufferSize, bool binaryFile)
+{
+	std::ifstream file;
+
+	int openMode = 1;
+
+	if (binaryFile)
+		openMode = std::fstream::binary;
+
+	file.open(path, openMode);
+
+	if (!file.is_open())
+	{
+		return false;
+	}
+
+	file.read((char*)outBuffer, bufferSize);
+	file.close();
+
+	return true;
 }

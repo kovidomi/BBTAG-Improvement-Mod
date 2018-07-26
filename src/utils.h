@@ -17,3 +17,5 @@ DWORD* GetInterfaceFuncPtr(DWORD* pDeviceInterface, const char *fmt, ...);
 bool Hook(void* toHook, void* ourFunc, int len);
 std::string FormatText(const char* message, ...);
 DWORD QuickChecksum(DWORD *pData, int size);
+bool utils_WriteFile(const char* path, void* inBuffer, unsigned long bufferSize, bool binaryFile = false, bool append = false);
+bool utils_ReadFile(const char* path, void* outBuffer, unsigned long bufferSize, bool binaryFile = false);

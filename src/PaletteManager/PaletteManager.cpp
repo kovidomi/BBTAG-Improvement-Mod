@@ -4,7 +4,6 @@
 #include "../Web/palette_download.h"
 #include "../logger.h"
 #include <sstream>
-#include <fstream>
 #include <atlstr.h>
 
 #define MAX_NUM_OF_PAL_INDEXES 16
@@ -145,19 +144,13 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 				continue;
 			}
 
-			std::ifstream file(fullPath, std::ios::binary);
-
-			if (!file.is_open())
+			IMPL_t fileContents;
+			if(!utils_ReadFile(fullPath.c_str(), &fileContents, sizeof(IMPL_t), true))
 			{
 				LOG(2, "\tCouldn't open %s!\n", strerror(errno));
 				WindowManager::AddLog("[error] Unable to open '%s' : %s\n", fileName.c_str(), strerror(errno));
 				continue;
 			}
-
-			IMPL_t fileContents;
-		
-			file.read((char*)&fileContents, sizeof(IMPL_t)); //what if the file is smaller then sizeof(IMPL_t) ?
-			file.close();
 
 			//check for errors
 			if (strcmp(fileContents.header.filesig, "IMPL") != 0)
@@ -374,18 +367,12 @@ bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filled
 	IMPL_file.header.charindex = charIndex;
 	IMPL_file.paldata = *filledPalData;
 
-	std::ofstream file;
-	file.open(path, std::fstream::binary);
-
-	if (!file.is_open())
+	if (!utils_WriteFile(path.c_str(), &IMPL_file, sizeof(IMPL_t), true));
 	{
 		LOG(2, "\tCouldn't open %s!\n", strerror(errno));
 		WindowManager::AddLog("[error] Unable to open '%s' : %s\n", path.c_str(), strerror(errno));
 		return false;
 	}
-
-	file.write((char*)&IMPL_file, sizeof(IMPL_t));
-	file.close();
 
 	return true;
 }

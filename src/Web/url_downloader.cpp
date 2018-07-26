@@ -41,7 +41,7 @@ std::string DownloadUrl(std::wstring& wUrl)
 	return receivedData;
 }
 
-unsigned long DownloadUrlBinary(std::wstring& wUrl, void* buffer, unsigned long bufSize)
+unsigned long DownloadUrlBinary(std::wstring& wUrl, void** outBuffer)
 {
 	std::string url(wUrl.begin(), wUrl.end());
 
@@ -68,8 +68,18 @@ unsigned long DownloadUrlBinary(std::wstring& wUrl, void* buffer, unsigned long 
 	bool result = false;
 	do
 	{
-		result = InternetReadFile(OpenAddress, buffer, bufSize, &numberOfBytesRead);
+		char buffer[2000];
+		result = InternetReadFile(OpenAddress, buffer, sizeof(buffer), &numberOfBytesRead);
+
+		//re-allocate memory
+		char *tempData = new char[returnedBytesRead + numberOfBytesRead];
+		memcpy(tempData, *outBuffer, returnedBytesRead);
+		memcpy(tempData + returnedBytesRead, buffer, numberOfBytesRead);
+		SAFE_DELETE_ARRAY(*outBuffer);
+		*outBuffer = tempData;
+
 		returnedBytesRead += numberOfBytesRead;
+
 	} while (result && numberOfBytesRead);
 
 	InternetCloseHandle(OpenAddress);

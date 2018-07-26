@@ -4,41 +4,44 @@
 #include "../logger.h"
 #include <vector>
 #include <sstream>
+#include <DecompressClass.h>
 
-#define ZLIB_WINAPI   // actually actually needed (for linkage)
+#pragma comment(lib, "DecompressLibrary.lib")
 
-#include "zlib.h"     // declare the external fns -- uses zconf.h, too
-#pragma comment(lib, "zlibstat.lib")
-
-int UncompressData(const BYTE* abSrc, int nLenSrc, BYTE* abDst, int nLenDst)
+void GetFilesFromArchive()
 {
-	z_stream zInfo = { 0 };
-	zInfo.total_in = zInfo.avail_in = nLenSrc;
-	zInfo.total_out = zInfo.avail_out = nLenDst;
-	zInfo.next_in = (BYTE*)abSrc;
-	zInfo.next_out = abDst;
-
-	int nErr, nRet = -1;
-	nErr = inflateInit(&zInfo);               // zlib function
-	if (nErr == Z_OK) 
+	CDecompressClass decompressObj;
+	
+	if (!decompressObj.OpenArchive(L"BBTAG_IM/Download/palettes.tar.gz"))
 	{
-		nErr = inflate(&zInfo, Z_FINISH);     // zlib function
-		if (nErr == Z_STREAM_END) 
+		char* pStr = CT2A((LPCTSTR)decompressObj.GetErrorText());
+		WindowManager::AddLog("[error] 'BBTAG_IM/Download/palettes.tar.gz'could not be opened: %s\n", pStr);
+		LOG(2, "ERROR, 'BBTAG_IM/Download/palettes.tar.gz'could not be opened: %s\n", pStr);
+		return;
+	}
+
+	// if we opened ok, read each file from the archive
+	for (int i = 0; i < decompressObj.GetCompressedFilesCount(); i++)
+	{
+		char* pszFileBuffer;
+		int nFileLength;
+		CString szFileName;
+		BOOL fIsFile;
+
+		decompressObj.GetArchiveFile(i, &pszFileBuffer, nFileLength, fIsFile, szFileName);
+
+		if (fIsFile)
 		{
-			nRet = zInfo.total_out;
+			g_interfaces.pPaletteManager->PushImplFileIntoVector( *((IMPL_t*)pszFileBuffer) );
 		}
 	}
-	inflateEnd(&zInfo);   // zlib function
-	return(nRet); // -1 or len of output
 }
 
-std::vector<std::wstring> DownloadPaletteFileList()
+std::vector<std::wstring> DownloadPaletteFileList(std::wstring wUrl)
 {
 	LOG(2, "DownloadPaletteFileList\n");
 	WindowManager::AddLog("[system] Getting online palette list...\n");
 	
-	//std::wstring wUrl = MOD_LINK_DONATORS_PALETTELIST;
-	std::wstring wUrl = MOD_LINK_NORMAL_PALETTELIST;
 	std::string data = DownloadUrl(wUrl);
 
 	std::vector<std::wstring> links;
@@ -69,29 +72,20 @@ std::vector<std::wstring> DownloadPaletteFileList()
 
 void DownloadPaletteFiles()
 {
-	//std::vector<std::wstring> links = DownloadPaletteFileList();
-	std::wstring palUrl(L"https://github.com/kovidomi/BBTAG-Improvement-Mod/raw/master/resource/palettes/pal_test.zip");
-	/*for (auto palUrl : links)
-	{*/
-		int bufSize = sizeof(IMPL_t);
-		//IMPL_t* implFile = new IMPL_t;
-		char* ptr = new char[1000000];
-		char* dest = new char[5000000];
-		//int res = DownloadUrlBinary(palUrl, implFile, bufSize);
-		int res = DownloadUrlBinary(palUrl, ptr, 1000000);
+	std::wstring wUrl(MOD_LINK_PALETTES_ARCHIVE);
 
-		if (res > 0)
-		{
-			res = UncompressData((BYTE*)ptr, res, (BYTE*)dest, 5000000);
-			//WindowManager::AddLog("[system] Downloaded '%s%s'\n", implFile->paldata.palname, ".impl");
-			//LOG(2, "Downloaded '%s'\n", implFile->paldata.palname);
-			//g_interfaces.pPaletteManager->PushImplFileIntoVector(*implFile);
-		}
+	char* downlBuf = 0;
 
-		delete[] ptr;
-		delete[] dest;
-		//delete implFile;
-	//}
+	WindowManager::AddLog("[system] Downloading 'palettes.tar.gz'...\n");
+	int res = DownloadUrlBinary(wUrl, (void**)&downlBuf);
+	WindowManager::AddLog("[system] Downloaded 'palettes.tar.gz'\n");
+
+	if (res > 0 && downlBuf)
+		utils_WriteFile("BBTAG_IM/Download/palettes.tar.gz", downlBuf, res, true);
+
+	GetFilesFromArchive();
+
+	SAFE_DELETE_ARRAY(downlBuf);
 }
 
 void InitiateDownloadingPaletteFiles()
