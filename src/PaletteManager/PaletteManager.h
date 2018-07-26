@@ -10,8 +10,8 @@ class PaletteManager
 private:
 	std::vector<std::vector<IMPL_data_t>> m_customPalettes;
 	std::vector<std::vector<std::string>> m_paletteSlots;
-	std::vector<int> m_donatorPalsStartIndex;
-	bool loadDonatorPalettes = false;
+	std::vector<int> m_onlinePalsStartIndex;
+	bool loadOnlinePalettes = false;
 
 public:
 	PaletteManager();
@@ -25,7 +25,7 @@ public:
 	void LoadAllPalettes();
 	void ReloadAllPalettes();
 
-	int GetDonatorPalsStartIndex(CharIndex charIndex);
+	int GetOnlinePalsStartIndex(CharIndex charIndex);
 	int FindCustomPalIndex(CharIndex charIndex, const char* palNameToFind);
 	bool SwitchPalette(CharIndex charIndex, CharPaletteHandle& palHandle, int newCustomPalIndex);
 	void ReplacePaletteFile(const char* newPalData, PaletteFile palFile, CharPaletteHandle& palHandle);
@@ -48,7 +48,7 @@ private:
 	void InitPaletteSlotsVector();
 	void LoadPaletteSettingsFile();
 
-	void InitDonatorPalsIndexVector();
+	void InitOnlinePalsIndexVector();
 
 	void ApplyDefaultCustomPalette(CharIndex charIndex, CharPaletteHandle& charPalHandle);
 };

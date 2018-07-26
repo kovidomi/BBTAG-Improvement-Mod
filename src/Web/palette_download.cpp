@@ -32,6 +32,13 @@ void GetFilesFromArchive()
 
 		if (fIsFile)
 		{
+			if (strncmp(((IMPL_t*)pszFileBuffer)->header.filesig, "IMPL", 5) != 0)
+			{
+				char* pStr = CT2A((LPCTSTR)szFileName);
+				WindowManager::AddLog("[error] 'palettes.tar.gz'contains non .impl file: '%s'\n", pStr);
+				LOG(2, "ERROR, 'palettes.tar.gz'contains non .impl file: '%s'\n", pStr);
+				continue;
+			}
 			g_interfaces.pPaletteManager->PushImplFileIntoVector( *((IMPL_t*)pszFileBuffer) );
 		}
 	}
@@ -76,13 +83,19 @@ void DownloadPaletteFiles()
 
 	char* downlBuf = 0;
 
-	WindowManager::AddLog("[system] Downloading 'palettes.tar.gz'...\n");
+	WindowManager::AddLog("[system] Downloading latest 'palettes.tar.gz'...\n");
 	int res = DownloadUrlBinary(wUrl, (void**)&downlBuf);
-	WindowManager::AddLog("[system] Downloaded 'palettes.tar.gz'\n");
-
+	
 	if (res > 0 && downlBuf)
-		utils_WriteFile("BBTAG_IM/Download/palettes.tar.gz", downlBuf, res, true);
+	{
+		WindowManager::AddLog("[system] Finished downloading 'palettes.tar.gz'\n");
 
+		if (!utils_WriteFile("BBTAG_IM/Download/palettes.tar.gz", downlBuf, res, true))
+		{
+			WindowManager::AddLog("[error] 'BBTAG_IM/Download/palettes.tar.gz'could not be written\n");
+			LOG(2, "ERROR, 'BBTAG_IM/Download/palettes.tar.gz'could not be written\n");
+		}
+	}
 	GetFilesFromArchive();
 
 	SAFE_DELETE_ARRAY(downlBuf);

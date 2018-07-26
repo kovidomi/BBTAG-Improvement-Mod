@@ -12,6 +12,7 @@
 const int COLOR_BLACK = 0xFF000000;
 const int COLOR_WHITE = 0xFFFFFFFF;
 const ImVec4 COLOR_DONATOR(1.000f, 0.794f, 0.000f, 1.000f);
+const ImVec4 COLOR_ONLINE(0.260f, 0.590f, 0.980f, 1.000f);
 
 static char palNameBuf[IMPL_PALNAME_LENGTH] = "";
 static char palDescBuf[IMPL_DESC_LENGTH] = "";
@@ -455,8 +456,8 @@ void PaletteEditor::ShowPaletteSelectButton(CharHandle & charHandle, const char 
 
 void PaletteEditor::ShowPaletteSelectPopup(CharPaletteHandle& charPalHandle, CharIndex charIndex, const char* popupID)
 {
-	int donatorPalsStartIndex = g_interfaces.pPaletteManager->GetDonatorPalsStartIndex(charIndex);
-	ImGui::SetNextWindowSizeConstraints(ImVec2(-1.0f, 25.0f), ImVec2(-1.0f, 200.0f));
+	int onlinePalsStartIndex = g_interfaces.pPaletteManager->GetOnlinePalsStartIndex(charIndex);
+	ImGui::SetNextWindowSizeConstraints(ImVec2(-1.0f, 25.0f), ImVec2(-1.0f, 250.0f));
 
 	if (ImGui::BeginPopup(popupID))
 	{
@@ -464,9 +465,9 @@ void PaletteEditor::ShowPaletteSelectPopup(CharPaletteHandle& charPalHandle, Cha
 		ImGui::Separator();
 		for (int i = 0; i < customPaletteVector[charIndex].size(); i++)
 		{
-			if (i == donatorPalsStartIndex)
+			if (i == onlinePalsStartIndex)
 			{
-				ImGui::PushStyleColor(ImGuiCol_Separator, COLOR_DONATOR);
+				ImGui::PushStyleColor(ImGuiCol_Separator, COLOR_ONLINE);
 				ImGui::Separator();
 				ImGui::PopStyleColor();
 			}
@@ -499,15 +500,15 @@ void PaletteEditor::ShowHoveredPaletteToolTip(CharIndex charIndex, int palIndex)
 		const char* descText = customPaletteVector[charIndex][palIndex].desc;
 		const int creatorLen = strnlen(creatorText, IMPL_CREATOR_LENGTH);
 		const int descLen = strnlen(descText, IMPL_DESC_LENGTH);
-		bool isDonatorPal = palIndex >= g_interfaces.pPaletteManager->GetDonatorPalsStartIndex(charIndex);
+		bool isOnlinePal = palIndex >= g_interfaces.pPaletteManager->GetOnlinePalsStartIndex(charIndex);
 
-		if (creatorLen || descLen || isDonatorPal)
+		if (creatorLen || descLen || isOnlinePal)
 		{
 			ImGui::BeginTooltip();
 			ImGui::PushTextWrapPos(300.0f);
 			
-			if (isDonatorPal)
-				ImGui::TextColored(COLOR_DONATOR, "DONATOR PALETTE");
+			if (isOnlinePal)
+				ImGui::TextColored(COLOR_ONLINE, "ONLINE PALETTE");
 			if(creatorLen)
 				ImGui::Text("Creator: %s", creatorText);
 			if(descLen)

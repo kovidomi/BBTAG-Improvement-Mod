@@ -24,6 +24,7 @@ void PaletteManager::CreatePaletteFolders()
 {
 	LOG(2, "CreatePaletteFolders\n");
 
+	CreateDirectory(L"BBTAG_IM\\Download", NULL);
 	CreateDirectory(L"BBTAG_IM\\Palettes", NULL);
 
 	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
@@ -63,19 +64,19 @@ void PaletteManager::LoadPalettesFromFolder()
 		LoadPalettesIntoVector((CharIndex)i, wPath);
 	}
 
-	InitDonatorPalsIndexVector();
+	InitOnlinePalsIndexVector();
 
 	WindowManager::AddLog("[system] Finished loading custom palettes\n");
 	WindowManager::AddLogSeparator();
 }
 
-void PaletteManager::InitDonatorPalsIndexVector()
+void PaletteManager::InitOnlinePalsIndexVector()
 {
-	m_donatorPalsStartIndex.clear();
+	m_onlinePalsStartIndex.clear();
 
 	for (int i = 0; i < (TOTAL_CHAR_INDEXES - 1); i++)
 	{
-		m_donatorPalsStartIndex.push_back(m_customPalettes[i].size());
+		m_onlinePalsStartIndex.push_back(m_customPalettes[i].size());
 	}
 }
 
@@ -208,9 +209,9 @@ void PaletteManager::LoadPaletteSettingsFile()
 	}
 
 	CString strBuffer;
-	GetPrivateProfileString(L"General", L"ShowDonatorPalettes", L"1", strBuffer.GetBuffer(MAX_PATH), MAX_PATH, wFullPath.c_str());
+	GetPrivateProfileString(L"General", L"OnlinePalettes", L"1", strBuffer.GetBuffer(MAX_PATH), MAX_PATH, wFullPath.c_str());
 	strBuffer.ReleaseBuffer();
-	loadDonatorPalettes = _ttoi(strBuffer);
+	loadOnlinePalettes = _ttoi(strBuffer);
 
 	for (int i = 0; i < (TOTAL_CHAR_INDEXES - 1); i++)
 	{
@@ -387,7 +388,7 @@ void PaletteManager::LoadAllPalettes()
 	InitPaletteSlotsVector();
 	LoadPaletteSettingsFile();
 
-	if(loadDonatorPalettes)
+	if(loadOnlinePalettes)
 		InitiateDownloadingPaletteFiles();
 }
 
@@ -399,12 +400,12 @@ void PaletteManager::ReloadAllPalettes()
 	LoadAllPalettes();
 }
 
-int PaletteManager::GetDonatorPalsStartIndex(CharIndex charIndex)
+int PaletteManager::GetOnlinePalsStartIndex(CharIndex charIndex)
 {
 	if (charIndex > TOTAL_CHAR_INDEXES)
 		return MAXINT32;
 
-	return m_donatorPalsStartIndex[charIndex];
+	return m_onlinePalsStartIndex[charIndex];
 }
 
 //return values:
