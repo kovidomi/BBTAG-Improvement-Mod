@@ -178,11 +178,7 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 				//keep going
 			}
 
-			//replace palname section with the filename, so renaming the file has effect on the actual ingame palname
-			std::string fileNameWithoutExt = fileName.substr(0, fileName.length() - strlen(".impl"));
-			memset(fileContents.paldata.palname, 0, IMPL_PALNAME_LENGTH);
-			strncpy(fileContents.paldata.palname, fileNameWithoutExt.c_str(), IMPL_PALNAME_LENGTH - 1);
-
+			OverwriteIMPLDataPalName(fileName, fileContents.paldata);
 			PushImplFileIntoVector(charIndex, fileContents.paldata);
 
 		} while (FindNextFile(hFind, &data));
@@ -406,6 +402,19 @@ int PaletteManager::GetOnlinePalsStartIndex(CharIndex charIndex)
 		return MAXINT32;
 
 	return m_onlinePalsStartIndex[charIndex];
+}
+
+void PaletteManager::OverwriteIMPLDataPalName(std::string fileName, IMPL_data_t & palData)
+{
+	//overwrite palname in data section with the filename, so renaming the file has effect on the actual ingame palname
+
+	int pos = fileName.find('/');
+	if(pos != std::string::npos)
+		fileName = fileName.substr(pos + 1);
+
+	std::string fileNameWithoutExt = fileName.substr(0, fileName.length() - strlen(".impl"));
+	memset(palData.palname, 0, IMPL_PALNAME_LENGTH);
+	strncpy(palData.palname, fileNameWithoutExt.c_str(), IMPL_PALNAME_LENGTH - 1);
 }
 
 //return values:

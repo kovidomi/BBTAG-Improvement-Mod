@@ -32,13 +32,16 @@ void GetFilesFromArchive()
 
 		if (fIsFile)
 		{
+			std::string fileName = CT2A((LPCTSTR)szFileName);
+
 			if (strncmp(((IMPL_t*)pszFileBuffer)->header.filesig, "IMPL", 5) != 0)
 			{
-				char* pStr = CT2A((LPCTSTR)szFileName);
-				WindowManager::AddLog("[error] 'palettes.tar.gz'contains non .impl file: '%s'\n", pStr);
-				LOG(2, "ERROR, 'palettes.tar.gz'contains non .impl file: '%s'\n", pStr);
+				WindowManager::AddLog("[error] 'palettes.tar.gz'contains non .impl file: '%s'\n", fileName.c_str());
+				LOG(2, "ERROR, 'palettes.tar.gz'contains non .impl file: '%s'\n", fileName.c_str());
 				continue;
 			}
+
+			PaletteManager::OverwriteIMPLDataPalName(fileName, ((IMPL_t*)pszFileBuffer)->paldata);
 			g_interfaces.pPaletteManager->PushImplFileIntoVector( *((IMPL_t*)pszFileBuffer) );
 		}
 	}

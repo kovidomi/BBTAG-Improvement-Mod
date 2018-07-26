@@ -26,6 +26,7 @@ public:
 	void ReloadAllPalettes();
 
 	int GetOnlinePalsStartIndex(CharIndex charIndex);
+	static void OverwriteIMPLDataPalName(std::string fileName, IMPL_data_t& palData);
 	int FindCustomPalIndex(CharIndex charIndex, const char* palNameToFind);
 	bool SwitchPalette(CharIndex charIndex, CharPaletteHandle& palHandle, int newCustomPalIndex);
 	void ReplacePaletteFile(const char* newPalData, PaletteFile palFile, CharPaletteHandle& palHandle);
