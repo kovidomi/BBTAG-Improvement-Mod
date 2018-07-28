@@ -11,15 +11,16 @@ private:
 	std::vector<std::vector<IMPL_data_t>> m_customPalettes;
 	std::vector<std::vector<std::string>> m_paletteSlots;
 	std::vector<int> m_onlinePalsStartIndex;
-	bool loadOnlinePalettes = false;
+	bool m_loadOnlinePalettes = false;
+	bool m_PaletteArchiveDownloaded = false;
 
 public:
 	PaletteManager();
 	~PaletteManager();
 	std::vector<std::vector<IMPL_data_t>> &GetCustomPalettesVector();
 
-	void PushImplFileIntoVector(IMPL_t &filledPal);
-	void PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t &filledPalData);
+	bool PushImplFileIntoVector(IMPL_t &filledPal);
+	bool PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t &filledPalData);
 	bool WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filledPalData);
 
 	void LoadAllPalettes();
@@ -28,6 +29,7 @@ public:
 	int GetOnlinePalsStartIndex(CharIndex charIndex);
 	static void OverwriteIMPLDataPalName(std::string fileName, IMPL_data_t& palData);
 	int FindCustomPalIndex(CharIndex charIndex, const char* palNameToFind);
+	bool& PaletteArchiveDownloaded();
 	bool SwitchPalette(CharIndex charIndex, CharPaletteHandle& palHandle, int newCustomPalIndex);
 	void ReplacePaletteFile(const char* newPalData, PaletteFile palFile, CharPaletteHandle& palHandle);
 	char* GetPalFileAddr(PaletteFile palFile, CharPaletteHandle& palHandle);

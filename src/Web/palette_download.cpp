@@ -8,9 +8,13 @@
 
 #pragma comment(lib, "DecompressLibrary.lib")
 
-void GetFilesFromArchive()
+void GetPalettesFromArchive()
 {
+	WindowManager::AddLog("[system] Extracting 'palettes.tar.gz'...\n");
+
 	CDecompressClass decompressObj;
+	int successCount = 0;
+	int failCount = 0;
 	
 	if (!decompressObj.OpenArchive(L"BBTAG_IM/Download/palettes.tar.gz"))
 	{
@@ -19,6 +23,8 @@ void GetFilesFromArchive()
 		LOG(2, "ERROR, 'BBTAG_IM/Download/palettes.tar.gz'could not be opened: %s\n", pStr);
 		return;
 	}
+
+	WindowManager::DisableLogging();
 
 	// if we opened ok, read each file from the archive
 	for (int i = 0; i < decompressObj.GetCompressedFilesCount(); i++)
@@ -36,15 +42,23 @@ void GetFilesFromArchive()
 
 			if (strncmp(((IMPL_t*)pszFileBuffer)->header.filesig, "IMPL", 5) != 0)
 			{
-				WindowManager::AddLog("[error] 'palettes.tar.gz'contains non .impl file: '%s'\n", fileName.c_str());
-				LOG(2, "ERROR, 'palettes.tar.gz'contains non .impl file: '%s'\n", fileName.c_str());
+				WindowManager::EnableLogging();
+				WindowManager::AddLog("[error] 'palettes.tar.gz' contains non .impl file: '%s'\n", fileName.c_str());
+				WindowManager::DisableLogging();
+				LOG(2, "ERROR, 'palettes.tar.gz' contains non .impl file: '%s'\n", fileName.c_str());
 				continue;
 			}
 
 			PaletteManager::OverwriteIMPLDataPalName(fileName, ((IMPL_t*)pszFileBuffer)->paldata);
-			g_interfaces.pPaletteManager->PushImplFileIntoVector( *((IMPL_t*)pszFileBuffer) );
+			if (g_interfaces.pPaletteManager->PushImplFileIntoVector(*((IMPL_t*)pszFileBuffer)))
+				successCount++; 
+			else
+				failCount++;
 		}
 	}
+	WindowManager::EnableLogging();
+	WindowManager::AddLog("[system] Total of %d palettes had been successfully extracted from 'palettes.tar.gz' (%d succeeded, %d failed)\n", 
+		successCount + failCount, successCount, failCount);
 }
 
 std::vector<std::wstring> DownloadPaletteFileList(std::wstring wUrl)
@@ -80,33 +94,40 @@ std::vector<std::wstring> DownloadPaletteFileList(std::wstring wUrl)
 	return links;
 }
 
-void DownloadPaletteFiles()
+void DownloadPaletteArchive()
 {
-	std::wstring wUrl(MOD_LINK_PALETTES_ARCHIVE);
-
-	char* downlBuf = 0;
-
-	WindowManager::AddLog("[system] Downloading latest 'palettes.tar.gz'...\n");
-	int res = DownloadUrlBinary(wUrl, (void**)&downlBuf);
-	
-	if (res > 0 && downlBuf)
+	if (!g_interfaces.pPaletteManager->PaletteArchiveDownloaded())
 	{
-		WindowManager::AddLog("[system] Finished downloading 'palettes.tar.gz'\n");
+		std::wstring wUrl(MOD_LINK_PALETTES_ARCHIVE);
 
-		if (!utils_WriteFile("BBTAG_IM/Download/palettes.tar.gz", downlBuf, res, true))
+		char* downlBuf = 0;
+
+		WindowManager::AddLog("[system] Downloading latest 'palettes.tar.gz'...\n");
+		int res = DownloadUrlBinary(wUrl, (void**)&downlBuf);
+
+		if (res > 0 && downlBuf)
 		{
-			WindowManager::AddLog("[error] 'BBTAG_IM/Download/palettes.tar.gz'could not be written\n");
-			LOG(2, "ERROR, 'BBTAG_IM/Download/palettes.tar.gz'could not be written\n");
-		}
-	}
-	GetFilesFromArchive();
+			WindowManager::AddLog("[system] Finished downloading 'palettes.tar.gz'\n");
 
-	SAFE_DELETE_ARRAY(downlBuf);
+			if (utils_WriteFile("BBTAG_IM/Download/palettes.tar.gz", downlBuf, res, true))
+			{
+				g_interfaces.pPaletteManager->PaletteArchiveDownloaded() = true;
+			}
+			else
+			{
+				WindowManager::AddLog("[error] 'BBTAG_IM/Download/palettes.tar.gz'could not be written\n");
+				LOG(2, "ERROR, 'BBTAG_IM/Download/palettes.tar.gz'could not be written\n");
+			}
+		}
+		SAFE_DELETE_ARRAY(downlBuf);
+	}
+
+	GetPalettesFromArchive();
 }
 
-void InitiateDownloadingPaletteFiles()
+void InitiateDownloadingPaletteArchive()
 {
-	HANDLE paletteDownloadThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)DownloadPaletteFiles, NULL, NULL, NULL);
+	HANDLE paletteDownloadThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)DownloadPaletteArchive, NULL, NULL, NULL);
 	if (paletteDownloadThread)
 		CloseHandle(paletteDownloadThread);
 }

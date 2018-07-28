@@ -212,7 +212,7 @@ void PaletteManager::LoadPaletteSettingsFile()
 	CString strBuffer;
 	GetPrivateProfileString(L"General", L"OnlinePalettes", L"1", strBuffer.GetBuffer(MAX_PATH), MAX_PATH, wFullPath.c_str());
 	strBuffer.ReleaseBuffer();
-	loadOnlinePalettes = _ttoi(strBuffer);
+	m_loadOnlinePalettes = _ttoi(strBuffer);
 
 	for (int i = 0; i < (TOTAL_CHAR_INDEXES - 1); i++)
 	{
@@ -324,17 +324,20 @@ void PaletteManager::InitPaletteSlotsVector()
 	}
 }
 
-void PaletteManager::PushImplFileIntoVector(IMPL_t & filledPal)
+bool PaletteManager::PushImplFileIntoVector(IMPL_t & filledPal)
 {
+	// This version of the PushImplFileIntoVector method is for when we dont know which character
+	// the palette belongs to so we get it from the impl header.
+
 	LOG(2, "PushImplFileIntoVector\n");
 
 	CharIndex charIndex = (CharIndex)filledPal.header.charindex;
 
 	//call its overloaded version to prevent duplicated code
-	PushImplFileIntoVector(charIndex, filledPal.paldata);
+	return PushImplFileIntoVector(charIndex, filledPal.paldata);
 }
 
-void PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & filledPalData)
+bool PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & filledPalData)
 {
 	LOG(2, "PushImplFileIntoVector <overload>\n");
 
@@ -342,18 +345,19 @@ void PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & f
 	{
 		WindowManager::AddLog("[error] Custom palette couldn't be loaded: CharIndex out of bound.\n");
 		LOG(2, "ERROR, CharIndex out of bound\n");
-		return;
+		return false;
 	}
 	if (FindCustomPalIndex(charIndex, filledPalData.palname) > 0)
 	{
 		WindowManager::AddLog("[error] Custom palette couldn't be loaded: a palette with name '%s' is already loaded.\n", filledPalData.palname);
 		LOG(2, "ERROR, A custom palette with name '%s' is already loaded.\n", filledPalData.palname);
-		return;
+		return false;
 	}
 
 	m_customPalettes[charIndex].push_back(filledPalData);
 
 	WindowManager::AddLog("[system] Loaded '%s%s' for character '%s'\n", filledPalData.palname, ".impl", charNames[charIndex]);
+	return true;
 }
 
 bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filledPalData)
@@ -389,8 +393,8 @@ void PaletteManager::LoadAllPalettes()
 	InitPaletteSlotsVector();
 	LoadPaletteSettingsFile();
 
-	if(loadOnlinePalettes)
-		InitiateDownloadingPaletteFiles();
+	if(m_loadOnlinePalettes)
+		InitiateDownloadingPaletteArchive();
 }
 
 void PaletteManager::ReloadAllPalettes()
@@ -446,6 +450,11 @@ int PaletteManager::FindCustomPalIndex(CharIndex charIndex, const char * palName
 	}
 
 	return -1;
+}
+
+bool & PaletteManager::PaletteArchiveDownloaded()
+{
+	return m_PaletteArchiveDownloaded;
 }
 
 bool PaletteManager::SwitchPalette(CharIndex charIndex, CharPaletteHandle& palHandle, int newCustomPalIndex)
