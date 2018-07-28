@@ -1,4 +1,9 @@
-DONATOR(Top Donator: NicoGamer)
+DONATOR(NicoGamer)
 DONATOR(Iredium)
 DONATOR(Muccah)
 DONATOR(Neptune)
+
+DONATIONTIER(NicoGamer, 0)
+DONATIONTIER(Iredium, 2)
+DONATIONTIER(Muccah, 2)
+DONATIONTIER(Neptune, 3)
