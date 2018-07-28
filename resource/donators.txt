@@ -1,9 +1,10 @@
-DONATOR(NicoGamer)
-DONATOR(Iredium)
-DONATOR(Muccah)
-DONATOR(Neptune)
+// TIERS:
+// 0: Platinum
+// 1: Gold
+// 2: Silver
+// 3: Bronze
 
-DONATIONTIER(NicoGamer, 0)
-DONATIONTIER(Iredium, 2)
-DONATIONTIER(Muccah, 2)
-DONATIONTIER(Neptune, 3)
+DONATOR(NicoGamer, 0)
+DONATOR(Iredium, 2)
+DONATOR(Muccah, 2)
+DONATOR(Neptune, 3)
