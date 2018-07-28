@@ -24,9 +24,18 @@ CustomHud::CustomHud(float hud_scale_x, float hud_scale_y)
 
 void CustomHud::OnUpdate(bool show_custom_hud, bool show_main_window)
 {
-	bool origIsHUDHidden = UpdateVisibility();
+	// custom hud visibility syncing with the original, not finished yet
+	//bool origIsHUDHidden = UpdateVisibility();
+	//if (origIsHUDHidden || !show_custom_hud)
+	//	return;
 
-	if (origIsHUDHidden || !show_custom_hud)
+	// forcecustomHUD 
+	if (Settings::settingsIni.forcecustomhud && *g_gameVals.pIsHUDHidden == 0)
+	{
+		*g_gameVals.pIsHUDHidden = 1;
+	}
+
+	if (!show_custom_hud)
 		return;
 	
 	//sanity check 1
@@ -187,7 +196,7 @@ bool CustomHud::UpdateVisibility()
 			// If either the first or second bits are on, the hud is invisible 
 			// clear the flag that we set ourselves when we are forcing the hud off
 			if (prev & 2 && !(*g_gameVals.pIsHUDHidden & 2))
-				*g_gameVals.pIsHUDHidden &= ~(1); 
+				*g_gameVals.pIsHUDHidden &= ~(1);
 
 			if (*g_gameVals.pIsHUDHidden & 1 || *g_gameVals.pIsHUDHidden & 2)
 				isOrigHUDHidden = true;
