@@ -69,7 +69,6 @@ Changelog
 - Added extra option for the ForcePromptButtonLayout that keeps the button prompts blinking
 - Added donators window
 - Added button links for the mod's GitHub page, and donation
-- Custom HUD is not visible during intros and astrals anymore
 - Adjusted custom HUD window sizes to take up less space on extreme low resolutions
 - The mod's main window won't disappear if you click on it within 10 seconds after the title screen
 - Fixed the custom HUD not being updated while the game's window is not focused

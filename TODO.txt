@@ -16,8 +16,11 @@ FEATURES
 //DONE// #12 ingame palette editor
 #13 render the custom hud behind the characters
 #14 show player names on the custom HUD in online matches
-//DONE// #15 sync the custom HUD's visibility with the real one
-
+#15 sync the custom HUD's visibility with the real one
+#16 gradient effects for effects file in palette editor
+#17 download onlinepalettes archive only if there had been a change
+//DONE// #18 random palette button / assign random palette in the palette.ini
+#19 drag and drop color boxes in palette editor
 
 
 BUGS
