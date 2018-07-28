@@ -93,7 +93,12 @@ void PaletteManager::ApplyDefaultCustomPalette(CharIndex charIndex, CharPaletteH
 	if (strcmp(palName, "") == 0 || strcmp(palName, "Default") == 0)
 		return;
 
-	int foundCustomPalIndex = g_interfaces.pPaletteManager->FindCustomPalIndex(charIndex, palName);
+	int foundCustomPalIndex = 0;
+
+	if (strcmp(palName, "Random") == 0)
+		foundCustomPalIndex = rand() % m_customPalettes[charIndex].size();
+	else
+		foundCustomPalIndex = g_interfaces.pPaletteManager->FindCustomPalIndex(charIndex, palName);
 
 	if (foundCustomPalIndex < 0)
 	{
@@ -364,7 +369,7 @@ bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filled
 	IMPL_file.header.charindex = charIndex;
 	IMPL_file.paldata = *filledPalData;
 
-	if (!utils_WriteFile(path.c_str(), &IMPL_file, sizeof(IMPL_t), true));
+	if (!utils_WriteFile(path.c_str(), &IMPL_file, sizeof(IMPL_t), true))
 	{
 		LOG(2, "\tCouldn't open %s!\n", strerror(errno));
 		WindowManager::AddLog("[error] Unable to open '%s' : %s\n", path.c_str(), strerror(errno));

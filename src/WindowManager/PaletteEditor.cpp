@@ -316,10 +316,10 @@ void PaletteEditor::SavePaletteToFile()
 			WindowManager::AddLog("[error] Could not save custom palette, no filename was given\n");
 			return;
 		}
-		else if (strncmp(palNameBuf, "Default", IMPL_PALNAME_LENGTH) == 0)
+		else if (strncmp(palNameBuf, "Default", IMPL_PALNAME_LENGTH) == 0 || strncmp(palNameBuf, "Random", IMPL_PALNAME_LENGTH) == 0)
 		{
-			memcpy(message, "Error, 'Default' is not a valid filename", 41);
-			WindowManager::AddLog("[error] Could not save custom palette, 'Default' is not a valid filename\n");
+			memcpy(message, "Error, not a valid filename", 28);
+			WindowManager::AddLog("[error] Could not save custom palette: not a valid filename\n");
 			return;
 		}
 
@@ -440,11 +440,13 @@ void PaletteEditor::CheckSelectedPalOutOfBound()
 
 void PaletteEditor::ShowPaletteSelectButton(CharHandle & charHandle, const char * btnText, const char * popupID)
 {
+	ShowPaletteRandomizerButton(popupID, charHandle);
+	ImGui::SameLine();
+
 	CharPaletteHandle& charPalHandle = charHandle.GetPalHandle();
 	int selected_pal_index = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(charPalHandle);
 	CharIndex charIndex = (CharIndex)charHandle.GetData()->char_index;
 
-	ImGui::Text(" "); ImGui::SameLine();
 	if (ImGui::Button(btnText))
 		ImGui::OpenPopup(popupID);
 
@@ -457,7 +459,7 @@ void PaletteEditor::ShowPaletteSelectButton(CharHandle & charHandle, const char 
 void PaletteEditor::ShowPaletteSelectPopup(CharPaletteHandle& charPalHandle, CharIndex charIndex, const char* popupID)
 {
 	int onlinePalsStartIndex = g_interfaces.pPaletteManager->GetOnlinePalsStartIndex(charIndex);
-	ImGui::SetNextWindowSizeConstraints(ImVec2(-1.0f, 25.0f), ImVec2(-1.0f, 250.0f));
+	ImGui::SetNextWindowSizeConstraints(ImVec2(-1.0f, 25.0f), ImVec2(-1.0f, 300.0f));
 
 	if (ImGui::BeginPopup(popupID))
 	{
@@ -517,6 +519,33 @@ void PaletteEditor::ShowHoveredPaletteToolTip(CharIndex charIndex, int palIndex)
 			ImGui::PopTextWrapPos();
 			ImGui::EndTooltip();
 		}
+	}
+}
+
+void PaletteEditor::ShowPaletteRandomizerButton(const char * btnID, CharHandle& charHandle)
+{
+	int charIndex = charHandle.GetData()->char_index;
+	char buf[12];
+	sprintf(buf, "?##%s", btnID);
+	
+	ImGui::Text(" "); ImGui::SameLine();
+	if (ImGui::Button(buf) && customPaletteVector[charIndex].size() > 1)
+	{
+		CharPaletteHandle& charPalHandle = charHandle.GetPalHandle();
+		int curPalIndex = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(charPalHandle);
+		int newPalIndex = curPalIndex;
+
+		while (curPalIndex == newPalIndex)
+		{
+			newPalIndex = rand() % customPaletteVector[charIndex].size();
+		}
+		g_interfaces.pPaletteManager->SwitchPalette((CharIndex)charIndex, charPalHandle, newPalIndex);
+	}
+	if (ImGui::IsItemHovered())
+	{
+		ImGui::BeginTooltip();
+		ImGui::Text("Random selection");
+		ImGui::EndTooltip();
 	}
 }
 

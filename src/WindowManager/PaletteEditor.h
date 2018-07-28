@@ -48,6 +48,7 @@ private:
 	void ShowPaletteSelectButton(CharHandle & charHandle, const char* btnText, const char* popupID);
 	void ShowPaletteSelectPopup(CharPaletteHandle& charPalHandle, CharIndex charIndex, const char* popupID);
 	void ShowHoveredPaletteToolTip(CharIndex charIndex, int palIndex);
+	void ShowPaletteRandomizerButton(const char * btnID, CharHandle& charHandle);
 	void CopyToEditorArray(const char* pSrc);
 	void CopyPalFileToEditorArray(PaletteFile palFile, CharPaletteHandle &charPalHandle);
 	void UpdateHighlightArray(int selectedBoxIndex);

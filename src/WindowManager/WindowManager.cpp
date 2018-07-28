@@ -276,6 +276,8 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	ImGui::EndFrame();
 	///////
 
+	srand(time(NULL));
+
 	WindowManager::AddLog("[system] Finished initialization\n");
 	WindowManager::AddLogSeparator();
 
