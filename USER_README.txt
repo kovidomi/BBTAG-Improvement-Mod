@@ -25,8 +25,8 @@ Delete or rename dinput8.dll. The mod makes no permanent changes to anything.
 Known issues
 ==========================
 - the background text on the stage "Duel Field" gets scaled incorrectly
-- The custom HUD does not show player names in online matches.
 - The regionlock is still not completely unlocked
+- "Quick switching" characters in tutorial mode causes palettes to switch
 
 Troubleshooting
 ==========================
@@ -57,18 +57,27 @@ Recommend picking Aegis, Rachel, Yukiko, and Makoto in the tutorial mode for adj
 5. Some of the custom HUD elements have gone beyond the screen and became unrecoverable:
 Press the "Reset custom HUD positions" button on the BBTAG_IM mod's main window to bring all the elements back onto the middle of the screen.
 
+6. Where are the custom palette files saved to / Where to place the downloaded custom palettes files
+"..\Steam\SteamApps\common\BBTAG\BBTAG_IM\Palettes\"
+
+7. How do I convert the custom palettes between ".impl" and ".hpl" formats?
+Use the "IMPL-HPL-CONVERTER" tool, can be found here: https://drive.google.com/open?id=1lPc_rovgWLwDgAa6ITSlFrCClJUJZCM5
+
+8. How do I set a custom palette as default so I dont have to change it each time on the menu?
+See "palettes.ini" file in the root folder of the game ("..\Steam\SteamApps\common\BBTAG\")
+
 Keep in mind that the mod may partially, or completely stop working whenever a new official patch of the game is released. (Though unlikely)
 
 Changelog
 ==========================
 
-??-??-2018 -- version 1.04
+28-07-2018 -- version 1.04
 ===============================
 - Added ingame palette editor
 - Added "palettes.ini" file for assigning custom palettes to the ingame palette slots
-- Added extra option for the ForcePromptButtonLayout that keeps the button prompts blinking
+- Added additional option for ForcePromptButtonLayout to keep the button prompts blinking
 - Added donators window
-- Added button links for the mod's GitHub page, and donation
+- Added button links for the mod's GitHub, and donation pages
 - Adjusted custom HUD window sizes to take up less space on extreme low resolutions
 - The mod's main window won't disappear if you click on it within 10 seconds after the title screen
 - Fixed the custom HUD not being updated while the game's window is not focused
