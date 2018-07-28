@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
 
-std::vector<std::string>& GetDonators();
+const std::vector<std::string>& GetDonatorNames();
+const std::vector<int>& GetDonatorTiers();
 void FetchDonators();

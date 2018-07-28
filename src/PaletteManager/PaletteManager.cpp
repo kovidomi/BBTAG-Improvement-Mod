@@ -54,8 +54,7 @@ void PaletteManager::InitCustomPaletteVector()
 void PaletteManager::LoadPalettesFromFolder()
 {
 	LOG(2, "LoadPaletteFiles\n");
-	WindowManager::AddLogSeparator();
-	WindowManager::AddLog("[system] Loading custom palettes...\n");
+	WindowManager::AddLog("[system] Loading local custom palettes...\n");
 
 	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
 	for (int i = 0; i < (TOTAL_CHAR_INDEXES - 1); i++)
@@ -66,8 +65,7 @@ void PaletteManager::LoadPalettesFromFolder()
 
 	InitOnlinePalsIndexVector();
 
-	WindowManager::AddLog("[system] Finished loading custom palettes\n");
-	WindowManager::AddLogSeparator();
+	WindowManager::AddLog("[system] Finished loading local custom palettes\n");
 }
 
 void PaletteManager::InitOnlinePalsIndexVector()
@@ -400,6 +398,7 @@ void PaletteManager::LoadAllPalettes()
 void PaletteManager::ReloadAllPalettes()
 {
 	LOG(2, "ReloadAllPalettes\n");
+	WindowManager::AddLogSeparator();
 	WindowManager::AddLog("[system] Reloading custom palettes...\n");
 
 	LoadAllPalettes();

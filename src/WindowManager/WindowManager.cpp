@@ -675,24 +675,68 @@ void WindowManager::ShowDonatorsWindow()
 	ImVec2 origWindowTitleAlign = ImGui::GetStyle().WindowTitleAlign;
 	ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f); //middle
 	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.0f);
+	
+	const ImVec4 COLOR_PLATINUM(0.328f, 1.000f, 0.901f, 1.000f);
+	const ImVec4 COLOR_GOLD(1.000f, 0.794f, 0.000f, 1.000f);
+	const ImVec4 COLOR_SILVER(0.848f, 0.848f, 0.848f, 1.000f);
+	const ImVec4 COLOR_BRONZE(0.824f, 0.497f, 0.170f, 1.000f);
+	const ImVec4 COLOR_DEFAULT(1.000f, 1.000f, 1.000f, 1.000f);
 
-	ImGui::SetNextWindowPosCenter(ImGuiCond_Once);
 	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
 	ImVec2 OK_btn_size = ImVec2(100, 30);
 
 	char buf[128];
 	char flipper = "|/-\\"[(int)(ImGui::GetTime() / 0.25f) & 3];
-	sprintf(buf, "%c DONATORS %c###Donators", flipper, flipper);
+	sprintf(buf, "%c SUPPORTERS %c###Donators", flipper, flipper);
 	ImGui::Begin(buf, NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
 
-	for (auto donator : GetDonators())
+	const auto donators = GetDonatorNames();
+	const auto tiers = GetDonatorTiers();
+	ImVec4 donatorColor = COLOR_BRONZE;
+	for (int i = 0; i < donators.size(); i++)
 	{
-		sprintf(buf, "%s", donator.c_str());
+		if (i == 0)
+		{
+			sprintf(buf, "%s", "TOP DONATOR");
+			ImVec4 invis = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
+			ImGui::TextColored(invis, buf);
+			float width = ImGui::GetItemRectSize().x;
+			ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (width / 2));
+			ImGui::TextColored(COLOR_PLATINUM, buf);
+			float height = ImGui::GetItemRectSize().y;
+			ImGui::SetCursorPosY(ImGui::GetCursorPosY() - height - (ImGui::GetStyle().ItemSpacing.y * 2));
+		}
+
+		sprintf(buf, "%s", donators[i].c_str());
 		ImVec4 invis = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
 		ImGui::TextColored(invis, buf);
 		float width = ImGui::GetItemRectSize().x;
 		ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (width / 2));
-		ImGui::Text(buf);
+
+		int tier = 99;
+		if (i < tiers.size())
+			tier = tiers[i];
+
+		switch (tier)
+		{
+		case 0:
+			donatorColor = COLOR_PLATINUM;
+			break;
+		case 1:
+			donatorColor = COLOR_GOLD;
+			break;
+		case 2:
+			donatorColor = COLOR_SILVER;
+			break;
+		case 3:
+			donatorColor = COLOR_BRONZE;
+			break;
+		default:
+			donatorColor = COLOR_DEFAULT;
+			break;
+		}
+
+		ImGui::TextColored(donatorColor, buf);
 	}
 	ImGui::Text("");
 
@@ -702,6 +746,15 @@ void WindowManager::ShowDonatorsWindow()
 	{
 		show_donators_window = false;
 	}
+
+	//set window to the middle of the screen, on the first call the windowsize is always minimum
+	ImVec2 wndSize = ImGui::GetWindowSize();
+	if (wndSize.y > 51)
+	{
+		ImGuiIO io = ImGui::GetIO();
+		ImGui::SetWindowPos(ImVec2((io.DisplaySize.x * 0.5f) - (wndSize.x / 2), (io.DisplaySize.y * 0.5f) - (wndSize.y / 2)), ImGuiCond_Once);
+	}
+
 	ImGui::End();
 
 	ImGui::PopStyleVar();
@@ -710,13 +763,13 @@ void WindowManager::ShowDonatorsWindow()
 
 void WindowManager::ShowDonatorsButton()
 {
-	if (GetDonators().size() == 0)
+	if (GetDonatorNames().size() == 0)
 		return;
 
 	const float SPEED = 2.0f;
 	int passedTime = (int)(ImGui::GetTime() / SPEED);
 	static int prevPassedTime = 0;
-	int donatorSize = GetDonators().size() - 1;
+	int donatorSize = GetDonatorNames().size() - 1;
 	static int index = 0;
 
 	if (passedTime > prevPassedTime)
@@ -727,7 +780,12 @@ void WindowManager::ShowDonatorsButton()
 			index = 0;
 	}
 
-	std::string donatorName = GetDonators()[index];
+	std::string donatorName = "";
+
+	if (index == 0)
+		donatorName += "Top Donator: ";
+
+	donatorName += GetDonatorNames()[index];
 
 	char buf[128];
 	sprintf(buf, "%s", donatorName.c_str());

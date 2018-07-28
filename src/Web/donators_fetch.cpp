@@ -4,11 +4,17 @@
 #include "../logger.h"
 #include <sstream>
 
-std::vector<std::string> donators;
+std::vector<std::string> donatorNames;
+std::vector<int> donatorTiers;
 
-std::vector<std::string>& GetDonators()
+const std::vector<std::string>& GetDonatorNames()
 {
-	return donators;
+	return donatorNames;
+}
+
+const std::vector<int>& GetDonatorTiers()
+{
+	return donatorTiers;
 }
 
 void FetchDonators()
@@ -16,31 +22,42 @@ void FetchDonators()
 	std::wstring wUrl = MOD_LINK_DONATORS;
 	std::string data = DownloadUrl(wUrl);
 
-	if (strcmp(data.c_str(), "") != 0 && data.find("404: Not Found") == std::string::npos)
+	//lame way of looking for proper response
+	if (data.find("DONATOR(") != std::string::npos)
 	{
 		std::stringstream ss(data);
 		std::string line;
 		while (std::getline(ss, line, '\n')) 
 		{
-			int pos = line.find('\r');
-			if (pos != std::string::npos)
+			if (line.find("DONATOR(") != std::string::npos)
 			{
-				line.erase(pos);
+				int pos = line.find('\r');
+				if (pos != std::string::npos)
+				{
+					line.erase(pos);
+				}
+
+				line.erase(0, strlen("DONATOR("));
+				line.erase(line.length() - 1);
+
+				pos = line.find(',');
+				if (pos != std::string::npos)
+				{
+					donatorNames.push_back(line.substr(0, pos));
+					std::string lastChar(&line.back());
+					donatorTiers.push_back(atoi(lastChar.c_str()));
+				}
 			}
-
-			line.erase(0, strlen("DONATOR("));
-			line.erase(line.length() - 1);
-
-			donators.push_back(line);
 		}
 		return;
 	}
 	WindowManager::AddLog("[error] Donators fetch failed. No data downloaded.\n");
 	LOG(2, "Donators fetch failed. No data downloaded.\n");
 
-	//X-MACRO, loading donators from file
-#define DONATOR(_name) \
-	donators.push_back(#_name);
+	//X-MACRO, loading donators and tiers from file
+#define DONATOR(_name, _tier) { \
+	donatorNames.push_back(#_name); \
+	donatorTiers.push_back(_tier); }
 #include "../../resource/donators.txt"
 #undef DONATOR
 }
