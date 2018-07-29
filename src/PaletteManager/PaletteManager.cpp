@@ -82,7 +82,7 @@ void PaletteManager::ApplyDefaultCustomPalette(CharIndex charIndex, CharPaletteH
 {
 	LOG(2, "ApplyDefaultCustomPalette\n");
 
-	if (charIndex > TOTAL_CHAR_INDEXES)
+	if (charIndex > TOTAL_CHAR_INDEXES - 1)
 		return;
 
 	const int curPalIndex = charPalHandle.GetOrigPalIndex();

@@ -1,3 +1,7 @@
+29-07-2018 -- version 1.05
+===============================
+- Fixed crash when fighting against the final boss in Story Mode
+
 28-07-2018 -- version 1.04
 ===============================
 - Added ingame palette editor

@@ -1,4 +1,4 @@
-BBTAG Improvement Mod (v1.04) by KoviDomi -- README
+BBTAG Improvement Mod (v1.05) by KoviDomi -- README
 ==========================
 
 What this mod provides
@@ -24,7 +24,7 @@ Delete or rename dinput8.dll. The mod makes no permanent changes to anything.
 
 Known issues
 ==========================
-- the background text on the stage "Duel Field" gets scaled incorrectly
+- The background text on the stage "Duel Field" gets scaled incorrectly
 - The regionlock is still not completely unlocked
 - "Quick switching" characters in tutorial mode causes palettes to switch
 
@@ -57,7 +57,7 @@ Recommend picking Aegis, Rachel, Yukiko, and Makoto in the tutorial mode for adj
 5. Some of the custom HUD elements have gone beyond the screen and became unrecoverable:
 Press the "Reset custom HUD positions" button on the BBTAG_IM mod's main window to bring all the elements back onto the middle of the screen.
 
-6. Where are the custom palette files saved to / Where to place the downloaded custom palettes files
+6. Where are the custom palette files saved to / Where to place the downloaded custom palettes files?
 "..\Steam\SteamApps\common\BBTAG\BBTAG_IM\Palettes\"
 
 7. How do I convert the custom palettes between ".impl" and ".hpl" formats?
@@ -70,6 +70,10 @@ Keep in mind that the mod may partially, or completely stop working whenever a n
 
 Changelog
 ==========================
+
+29-07-2018 -- version 1.05
+===============================
+- Fixed crash when fighting against the final boss in Story Mode
 
 28-07-2018 -- version 1.04
 ===============================

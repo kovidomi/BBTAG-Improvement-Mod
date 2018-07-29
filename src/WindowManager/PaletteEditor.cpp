@@ -440,12 +440,15 @@ void PaletteEditor::CheckSelectedPalOutOfBound()
 
 void PaletteEditor::ShowPaletteSelectButton(CharHandle & charHandle, const char * btnText, const char * popupID)
 {
-	ShowPaletteRandomizerButton(popupID, charHandle);
-	ImGui::SameLine();
-
 	CharPaletteHandle& charPalHandle = charHandle.GetPalHandle();
 	int selected_pal_index = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(charPalHandle);
 	CharIndex charIndex = (CharIndex)charHandle.GetData()->char_index;
+
+	if (charIndex >= TOTAL_CHAR_INDEXES - 1)
+		return;
+
+	ShowPaletteRandomizerButton(popupID, charHandle);
+	ImGui::SameLine();
 
 	if (ImGui::Button(btnText))
 		ImGui::OpenPopup(popupID);
