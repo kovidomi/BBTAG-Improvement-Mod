@@ -53,6 +53,8 @@ void PaletteManager::InitCustomPaletteVector()
 
 void PaletteManager::LoadPalettesFromFolder()
 {
+	InitCustomPaletteVector();
+
 	LOG(2, "LoadPaletteFiles\n");
 	WindowManager::AddLog("[system] Loading local custom palettes...\n");
 
@@ -191,6 +193,8 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 
 void PaletteManager::LoadPaletteSettingsFile()
 {
+	InitPaletteSlotsVector();
+
 	LOG(2, "LoadPaletteSettingsFile\n");
 
 	TCHAR pathBuf[MAX_PATH];
@@ -385,10 +389,7 @@ void PaletteManager::LoadAllPalettes()
 {
 	LOG(2, "LoadAllPalettes\n");
 
-	InitCustomPaletteVector();
 	LoadPalettesFromFolder();
-
-	InitPaletteSlotsVector();
 	LoadPaletteSettingsFile();
 
 	if(m_loadOnlinePalettes)
@@ -497,6 +498,8 @@ void PaletteManager::OnUpdate(CharPaletteHandle & P1Ch1, CharPaletteHandle & P1C
 
 void PaletteManager::OnMatchInit(CharHandle& P1Ch1, CharHandle& P1Ch2, CharHandle& P2Ch1, CharHandle& P2Ch2)
 {
+	LoadPaletteSettingsFile();
+
 	P1Ch1.GetPalHandle().OnMatchInit();
 	P1Ch2.GetPalHandle().OnMatchInit();
 	P2Ch1.GetPalHandle().OnMatchInit();

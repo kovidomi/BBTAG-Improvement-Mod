@@ -1,3 +1,7 @@
+??-??-2018 -- version 1.06
+===============================
+- Changes made to "palettes.ini" does not require restarting the game anymore
+
 29-07-2018 -- version 1.05
 ===============================
 - Fixed crash when fighting against the final boss in Story Mode
