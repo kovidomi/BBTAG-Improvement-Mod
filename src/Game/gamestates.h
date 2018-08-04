@@ -20,5 +20,5 @@ enum GameState_
 enum GameMode_
 {
 	GameMode_Versus = 5,
-	GameMode_Tutorial = 6,
+	GameMode_Training = 6,
 };

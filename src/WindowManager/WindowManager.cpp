@@ -866,11 +866,11 @@ void WindowManager::ShowMainWindow(bool * p_open)
 			ImGui::Text(" "); ImGui::SameLine();
 			bool pressed = ImGui::Button("Palette editor");
 
-			if (*g_gameVals.pGameMode != GameMode_Tutorial)
+			if (*g_gameVals.pGameMode != GameMode_Training)
 			{
-				ImGui::SameLine(); ImGui::TextDisabled("Not in tutorial mode!");
+				ImGui::SameLine(); ImGui::TextDisabled("Not in training mode!");
 			}
-			else if (*g_gameVals.pGameMode == GameMode_Tutorial && pressed)
+			else if (*g_gameVals.pGameMode == GameMode_Training && pressed)
 			{
 				show_palette_editor ^= 1;
 			}
