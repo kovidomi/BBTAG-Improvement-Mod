@@ -345,7 +345,7 @@ void __declspec(naked)GetGameUpdatePause()
 		je ORIG_CODE
 
 		mov ecx, g_gameVals.pGameMode
-		cmp [ecx], GameMode_Tutorial
+		cmp [ecx], GameMode_Training
 		jne ORIG_CODE
 
 		cmp g_gameVals.isPaletteModePaused, 0

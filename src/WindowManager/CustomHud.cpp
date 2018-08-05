@@ -11,6 +11,7 @@ const ImVec4 cross_bar_color_blaze_active(0.0f, 0.4f, 1.0f, 1.0f);
 ImVec4 skill_bar_color(1.0f, 0.34f, 0.0f, 1.0f);
 ImVec4 cross_bar_color(0.15f, 1.0f, 1.0f, 1.0f);
 const ImVec4 blaze_val_color(1.0f, 0.4f, 1.0f, 1.0f);
+const ImVec4 astral_available_color(1.000f, 0.944f, 0.054f, 1.000f);
 const ImVec4 invis_color(0.0f, 0.0f, 0.0f, 0.0f);
 
 //bool *NO_CLOSE_FLAG = NULL;
@@ -112,10 +113,12 @@ void CustomHud::OnUpdate(bool show_custom_hud, bool show_main_window)
 
 	//render bottom part of the hud
 	{
+		bool p1_is_astral_avail = IsAstralAvailable(p1Meters.cur_skill, p2Ch1Info.cur_hp, p2Ch2Info.cur_hp);
 		UpdateMeters(p1Meters.cur_skill, p1Meters.cur_cross,
 			p1Meters.cur_blaze, p1Meters.is_blaze_available,
 			p1Meters.is_blaze_active, false);
 
+		bool p2_is_astral_avail = IsAstralAvailable(p2Meters.cur_skill, p1Ch1Info.cur_hp, p1Ch2Info.cur_hp);
 		UpdateMeters(p2Meters.cur_skill, p2Meters.cur_cross,
 			p2Meters.cur_blaze, p2Meters.is_blaze_available,
 			p2Meters.is_blaze_active, true);
@@ -306,7 +309,8 @@ void CustomHud::UpdateTimer(int *timer)
 	ImGui::End();
 }
 
-void CustomHud::UpdateMeters(int cur_skill_val, int cur_cross_val, int cur_blaze_val, bool is_blaze_available, bool is_blaze_active, bool right_side)
+void CustomHud::UpdateMeters(int cur_skill_val, int cur_cross_val, int cur_blaze_val, bool is_blaze_available, 
+	bool is_astral_available, bool is_blaze_active, bool right_side)
 {
 	ImVec2 skill_bar_size(200.0f * hud_scale_x, 35.0f * hud_scale_y);
 	ImVec2 cross_bar_size(400.0f * hud_scale_x, 40.0f * hud_scale_y);
@@ -499,4 +503,12 @@ void CustomHud::UpdateCharSpecificMeters(const CharInfo & charInfo, bool right_s
 	}
 
 	ImGui::End();
+}
+
+bool CustomHud::IsAstralAvailable(const int curSkill, const int otherCharHP1, const int otherCharHP2)
+{
+	if (curSkill >= SKILL_GAUGE_MAX_VALUE_BLAZE_ACTIVE && (otherCharHP1 <= 0 || otherCharHP2 <= 0))
+		return true;
+
+	return false;
 }

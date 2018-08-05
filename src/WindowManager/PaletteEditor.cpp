@@ -25,7 +25,7 @@ PaletteEditor::PaletteEditor() : customPaletteVector(g_interfaces.pPaletteManage
 
 void PaletteEditor::ShowPaletteEditorWindow(bool* p_open)
 {
-	if (*g_gameVals.pGameMode != GameMode_Tutorial)
+	if (*g_gameVals.pGameMode != GameMode_Training)
 		return;
 
 	if (HasNullPointer())
