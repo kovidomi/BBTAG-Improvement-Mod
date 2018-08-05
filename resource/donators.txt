@@ -5,6 +5,7 @@
 // 3: Bronze
 
 DONATOR(NicoGamer, 0)
+DONATOR(Oshu Supreme, 2)
 DONATOR(Bastihan, 2)
 DONATOR(Iredium, 2)
 DONATOR(Muccah, 2)
