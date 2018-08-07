@@ -11,7 +11,7 @@ const ImVec4 cross_bar_color_blaze_active(0.0f, 0.4f, 1.0f, 1.0f);
 ImVec4 skill_bar_color(1.0f, 0.34f, 0.0f, 1.0f);
 ImVec4 cross_bar_color(0.15f, 1.0f, 1.0f, 1.0f);
 const ImVec4 blaze_val_color(1.0f, 0.4f, 1.0f, 1.0f);
-const ImVec4 astral_available_color(1.000f, 0.944f, 0.054f, 1.000f);
+const ImVec4 astral_available_color(1.000f, 0.949f, 0.000f, 1.000f);
 const ImVec4 invis_color(0.0f, 0.0f, 0.0f, 0.0f);
 
 //bool *NO_CLOSE_FLAG = NULL;
@@ -80,6 +80,7 @@ void CustomHud::OnUpdate(bool show_custom_hud, bool show_main_window)
 	if (p1Meters.is_blaze_active || p2Meters.is_blaze_active)
 	{
 		ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.0f, 1.0f, 1.0f, 1.0f)); //cyan
+		ImGui::PushStyleColor(ImGuiCol_BorderShadow, ImVec4(0.0f, 1.0f, 1.0f, 1.0f)); //cyan
 	}
 
 	ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[1]);
@@ -116,12 +117,12 @@ void CustomHud::OnUpdate(bool show_custom_hud, bool show_main_window)
 		bool p1_is_astral_avail = IsAstralAvailable(p1Meters.cur_skill, p2Ch1Info.cur_hp, p2Ch2Info.cur_hp);
 		UpdateMeters(p1Meters.cur_skill, p1Meters.cur_cross,
 			p1Meters.cur_blaze, p1Meters.is_blaze_available,
-			p1Meters.is_blaze_active, false);
+			p1_is_astral_avail, p1Meters.is_blaze_active, false);
 
 		bool p2_is_astral_avail = IsAstralAvailable(p2Meters.cur_skill, p1Ch1Info.cur_hp, p1Ch2Info.cur_hp);
 		UpdateMeters(p2Meters.cur_skill, p2Meters.cur_cross,
-			p2Meters.cur_blaze, p2Meters.is_blaze_available,
-			p2Meters.is_blaze_active, true);
+			p2Meters.cur_blaze, p2Meters.is_blaze_available, 
+			p2_is_astral_avail, p2Meters.is_blaze_active, true);
 
 		//render unique meters
 		{
@@ -152,7 +153,7 @@ void CustomHud::OnUpdate(bool show_custom_hud, bool show_main_window)
 	ImGui::PopFont();
 
 	if (p1Meters.is_blaze_active || p2Meters.is_blaze_active)
-		ImGui::PopStyleColor();
+		ImGui::PopStyleColor(2);
 
 	ImGui::PopStyleColor(2);
 	ImGui::PopStyleVar(3);
@@ -328,9 +329,13 @@ void CustomHud::UpdateMeters(int cur_skill_val, int cur_cross_val, int cur_blaze
 	else
 		sprintf(wndtitle, "P1_meters");
 
-	ImGui::Begin(wndtitle, NULL, customHUDWindowFlags);
-
 	//set colors
+	if (is_astral_available)
+	{
+		ImGui::PushStyleColor(ImGuiCol_Border, astral_available_color);
+		ImGui::PushStyleColor(ImGuiCol_BorderShadow, astral_available_color);
+	}
+
 	if (is_blaze_active)
 	{
 		cross_bar_color = cross_bar_color_blaze_active;
@@ -346,6 +351,8 @@ void CustomHud::UpdateMeters(int cur_skill_val, int cur_cross_val, int cur_blaze
 
 		cross_bar_color.y = cross_blaze_prog;
 	}
+
+	ImGui::Begin(wndtitle, NULL, customHUDWindowFlags);
 
 	if (right_side)
 	{
@@ -407,6 +414,8 @@ void CustomHud::UpdateMeters(int cur_skill_val, int cur_cross_val, int cur_blaze
 	//return the bar colors back to their default colors after done
 	cross_bar_color = default_cross_bar_color;
 	skill_bar_color = default_skill_bar_color;
+	if (is_astral_available)
+		ImGui::PopStyleColor(2);
 
 	ImGui::End();
 }
@@ -442,6 +451,7 @@ void CustomHud::UpdateCharSpecificMeters(const CharInfo & charInfo, bool right_s
 	switch (charInfo.char_index)
 	{
 	case CharIndex_Yukiko:
+	case CharIndex_Akihiko:
 		sprintf(meter_num, "%d", charInfo.unique_meter_cur_val);
 		break;
 	case CharIndex_Naoto:

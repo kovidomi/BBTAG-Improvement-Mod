@@ -14,7 +14,7 @@ const char* meterCharNames[TOTAL_CHAR_INDEXES]
 	"Pl", // 9,
 	"Izayoi",	// 10,
 	"Azrael",	// 11,
-	"Nine",		// 12,
+	"Ni",		// 12,
 	"Es",		// 13,
 	"Mai",		// 14,
 	"Jubei",	// 15,
@@ -25,9 +25,9 @@ const char* meterCharNames[TOTAL_CHAR_INDEXES]
 	"Kanji",	// 20,
 	"Na",	// 21,
 	"Mitsuru",	// 22,
-	"Akihiko",	// 23,
+	"Ak",	// 23,
 	"Ae",	// 24,
-	"Labrys",	// 25,
+	"La",	// 25,
 	"Hyde",		// 26,
 	"Linne",	// 27,
 	"Waldstein",// 28,
@@ -57,6 +57,14 @@ ImVec4 meter_color_rachel_recover(0.662f, 0.000f, 0.000f, 1.000f);
 ImVec4 meter_color_yukiko(0.706f, 0.0f, 0.0f, 1.0f);
 ImVec4 meter_color_makoto(0.282f, 0.260f, 1.000f, 1.000f);
 ImVec4 meter_color_makoto_full(0.828f, 0.025f, 1.000f, 1.000f);
+ImVec4 meter_color_labrys_lvl1(0.647f, 0.647f, 0.647f, 1.000f);
+ImVec4 meter_color_labrys_lvl2(0.000f, 0.048f, 0.824f, 1.000f);
+ImVec4 meter_color_labrys_lvl3(0.262f, 0.892f, 0.000f, 1.000f);
+ImVec4 meter_color_labrys_lvl4(0.980f, 0.952f, 0.000f, 1.000f);
+ImVec4 meter_color_labrys_lvl5(0.980f, 0.000f, 0.000f, 1.000f);
+ImVec4 meter_color_nine_below_half(0.603f, 0.600f, 0.600f, 1.000f);
+ImVec4 meter_color_nine_above_half(1.000f, 0.941f, 0.000f, 1.000f);
+ImVec4 meter_color_nine_full(1.000f, 0.000f, 0.971f, 1.000f);
 ImVec4 meter_color_default(1.0f, 1.0f, 1.0f, 1.0f);
 
 ImVec4 get_char_unique_meter_color(const CharInfo& charData)
@@ -102,6 +110,29 @@ ImVec4 get_char_unique_meter_color(const CharInfo& charData)
 			ret = meter_color_makoto_full;
 		else
 			ret = meter_color_makoto;
+		break;
+	case CharIndex_Akihiko:
+		ret = meter_color_default;
+		break;
+	case CharIndex_Nine:
+		if (charData.unique_meter_cur_val < 5000)
+			ret = meter_color_nine_below_half;
+		else if (charData.unique_meter_cur_val >= 5000 && charData.unique_meter_cur_val < 10000)
+			ret = meter_color_nine_above_half;
+		else // charData.unique_meter_cur_val >= 10000
+			ret = meter_color_nine_full;
+		break;
+	case CharIndex_Labrys:
+		if (charData.unique_meter_cur_val < 5000)
+			ret = meter_color_labrys_lvl1;
+		else if (charData.unique_meter_cur_val >= 5000 && charData.unique_meter_cur_val < 10000)
+			ret = meter_color_labrys_lvl2;
+		else if (charData.unique_meter_cur_val >= 10000 && charData.unique_meter_cur_val < 15000)
+			ret = meter_color_labrys_lvl3;
+		else if (charData.unique_meter_cur_val >= 15000 && charData.unique_meter_cur_val < 20000)
+			ret = meter_color_labrys_lvl4;
+		else // charData.unique_meter_cur_val > 20000
+			ret = meter_color_labrys_lvl5;
 		break;
 	default:
 		ret = meter_color_default;
@@ -171,8 +202,9 @@ bool show_char_unique_meter_num(const CharInfo& charData)
 	if (charData.char_index == CharIndex_Naoto && charData.naoto_is_enemy_marked)
 		return true;
 
-	//only show if chie has charge lvl higher than 0
-	if (charData.char_index == CharIndex_Chie && charData.unique_meter_cur_val > 0)
+	//only show if chie or akihiko has charge lvl higher than 0
+	if ((charData.char_index == CharIndex_Chie || charData.char_index == CharIndex_Akihiko) && 
+		charData.unique_meter_cur_val > 0)
 	{
 		return true;
 	}
@@ -190,6 +222,8 @@ bool show_char_unique_meter_bar(const CharInfo& charData)
 	case CharIndex_Aegis:
 	case CharIndex_Rachel:
 	case CharIndex_Yukiko:
+	case CharIndex_Nine:
+	case CharIndex_Labrys:
 		ret = true;
 	}
 
@@ -216,6 +250,9 @@ bool char_has_unique_meter(CharIndex index)
 	case CharIndex_Platinum:
 	case CharIndex_Naoto:
 	case CharIndex_Makoto:
+	case CharIndex_Akihiko:
+	case CharIndex_Nine:
+	case CharIndex_Labrys:
 		return true;
 	default:
 		return false;

@@ -626,7 +626,27 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		ImGui::Text("pP2Meters 0x%p", g_interfaces.player2.GetMeters());
 
 		ImGui::Separator();
-		
+		if (!g_interfaces.player1.GetChar1().IsCharDataNullPtr())
+			ImGui::Text("P1Char1 meter: %d / %d", 
+				g_interfaces.player1.GetChar1().GetData()->unique_meter_cur_val,
+				g_interfaces.player1.GetChar1().GetData()->unique_meter_max_val);
+
+		if (!g_interfaces.player1.GetChar2().IsCharDataNullPtr())
+			ImGui::Text("P1Char2 meter: %d / %d", 
+				g_interfaces.player1.GetChar2().GetData()->unique_meter_cur_val,
+				g_interfaces.player1.GetChar2().GetData()->unique_meter_max_val);
+
+		if (!g_interfaces.player2.GetChar1().IsCharDataNullPtr())
+			ImGui::Text("P2Char1 meter: %d / %d", 
+				g_interfaces.player2.GetChar1().GetData()->unique_meter_cur_val,
+				g_interfaces.player2.GetChar1().GetData()->unique_meter_max_val);
+
+		if (!g_interfaces.player2.GetChar2().IsCharDataNullPtr())
+			ImGui::Text("P2Char2 meter: %d / %d", 
+				g_interfaces.player2.GetChar2().GetData()->unique_meter_cur_val,
+				g_interfaces.player2.GetChar2().GetData()->unique_meter_max_val);
+
+		ImGui::Separator();
 		ImGui::Text("pPalIndex_P1Char1 0x%p", &(g_interfaces.player1.GetChar1().GetPalHandle().GetPalIndexRef()));
 		ImGui::Text("pPalIndex_P1Char2 0x%p", &(g_interfaces.player1.GetChar2().GetPalHandle().GetPalIndexRef()));
 		ImGui::Text("pPalIndex_P2Char1 0x%p", &(g_interfaces.player2.GetChar1().GetPalHandle().GetPalIndexRef()));

@@ -1,5 +1,7 @@
-??-??-2018 -- version 1.06
+07-08-2018 -- version 1.06
 ===============================
+- Added character specific meters to the custom HUD for Akihiko, Labrys, and Nine
+- Custom HUD now shows astral availability with golden borders around the gauge window
 - The game does not need to be restarted after making changes to the "palettes.ini" file
 - Fixed palette editor button's text from "not in tutorial mode" to "not in training mode"
 

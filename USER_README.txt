@@ -1,4 +1,4 @@
-BBTAG Improvement Mod (v1.05) by KoviDomi -- README
+BBTAG Improvement Mod (v1.06) by KoviDomi -- README
 ==========================
 
 What this mod provides
@@ -26,7 +26,7 @@ Known issues
 ==========================
 - The background text on the stage "Duel Field" gets scaled incorrectly
 - The regionlock is still not completely unlocked
-- "Quick switching" characters in tutorial mode causes palettes to switch
+- "Quick switching" characters in training mode causes palettes to switch
 
 Troubleshooting
 ==========================
@@ -52,7 +52,7 @@ Reboot your system.
 4. The custom HUD is all over the place, not positioned properly:
 The elements of the custom HUD needs to be positioned MANUALLY by the user with the mouse cursor (press F1 by default). The positions are saved upon exiting.
 The elements are movable only when the BBTAG_IM mod's main window and the ingame cursor is visible (press F1 by default).
-Recommend picking Aegis, Rachel, Yukiko, and Makoto in the tutorial mode for adjusting the custom HUD elements.
+Recommend picking Aegis, Rachel, Yukiko, and Makoto in the training mode for adjusting the custom HUD elements.
 
 5. Some of the custom HUD elements have gone beyond the screen and became unrecoverable:
 Press the "Reset custom HUD positions" button on the BBTAG_IM mod's main window to bring all the elements back onto the middle of the screen.
@@ -70,6 +70,13 @@ Keep in mind that the mod may partially, or completely stop working whenever a n
 
 Changelog
 ==========================
+
+07-08-2018 -- version 1.06
+===============================
+- Added character specific meters to the custom HUD for Akihiko, Labrys, and Nine
+- Custom HUD now shows astral availability with golden borders around the gauge window
+- The game does not need to be restarted after making changes to the "palettes.ini" file
+- Fixed palette editor button's text from "not in tutorial mode" to "not in training mode"
 
 29-07-2018 -- version 1.05
 ===============================

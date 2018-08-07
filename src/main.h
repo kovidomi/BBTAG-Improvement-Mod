@@ -1,10 +1,10 @@
 #pragma once
 
-//#define RELEASE_VER //comment out to activate logging
+#define RELEASE_VER //comment out to activate logging
 #define DEBUG_LOG_LEVEL	5 //0 = highest, 7 = lowest priority
 
-#define MOD_VERSION_NUM	"v1.05"
-#define MOD_VERSION_NUM_INTERNAL 105
+#define MOD_VERSION_NUM	"v1.06"
+#define MOD_VERSION_NUM_INTERNAL 106
 #define MOD_WINDOW_TITLE "BBTAG Improvement Mod"
 
 //Links
