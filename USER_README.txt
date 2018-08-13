@@ -136,5 +136,8 @@ Everybody in the BlazBlue PC community that has given support or feedback of any
 Source code is available at:
 https://github.com/kovidomi/BBTAG-Improvement-Mod/
 
+Discord server of the mod:
+https://discord.gg/j2mCX9s
+
 If you like my work then consider feeding me by donating few bucks (helps me stay alive):
 https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8EDR78DJ8PU2

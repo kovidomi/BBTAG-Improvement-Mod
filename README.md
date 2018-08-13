@@ -3,7 +3,7 @@ Additional features and tweaks for BlazBlue Cross Tag Battle
 
 The goal is to extend the game with community-created content, provide additional graphical options, and improve performance for players with computer specs below the minimal system requirements.
 
-Join the [BB Improvement Mod Discord Server](http://discord.gg/29kExTj) to discuss about the development and the game itself!
+Join the [BB Improvement Mod Discord Server](https://discord.gg/j2mCX9s) to discuss about the development and the game itself!
 
 ## Legal
 ```
