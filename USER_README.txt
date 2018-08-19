@@ -1,4 +1,4 @@
-BBTAG Improvement Mod (v1.06) by KoviDomi -- README
+BBTAG Improvement Mod (v1.07) by KoviDomi -- README
 ==========================
 
 What this mod provides
@@ -71,6 +71,12 @@ Keep in mind that the mod may partially, or completely stop working whenever a n
 Changelog
 ==========================
 
+??-??-2018 -- version 1.07
+===============================
+- Added gradient generator to the palette editor
+- Added indexing mode to the palette editor
+- "Drag and drop" of the color boxes now works on the palette editor
+
 07-08-2018 -- version 1.06
 ===============================
 - Added character specific meters to the custom HUD for Akihiko, Labrys, and Nine
@@ -131,6 +137,7 @@ Neptune
 Rouzel
 Dormin
 NeoStrayCat
+Labryz
 Everybody in the BlazBlue PC community that has given support or feedback of any kind!
 
 Source code is available at:
