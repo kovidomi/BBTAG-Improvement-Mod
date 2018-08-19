@@ -24,6 +24,7 @@ private:
 	int color_edit_flags;
 	bool highlight_mode;
 	bool show_alpha;
+	bool show_indexes;
 
 public:
 	PaletteEditor();
@@ -53,4 +54,6 @@ private:
 	void CopyPalFileToEditorArray(PaletteFile palFile, CharPaletteHandle &charPalHandle);
 	void UpdateHighlightArray(int selectedBoxIndex);
 	void CopyPalTextsToTextBoxes(CharPaletteHandle& charPalHandle);
+	void ShowGradientPopup();
+	void GenerateGradient(int idx1, int idx2, int color1, int color2);
 };

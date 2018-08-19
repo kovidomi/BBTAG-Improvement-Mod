@@ -190,6 +190,7 @@ void PaletteEditor::EditingModesSelection()
 {
 	LOG(7, "PaletteEditor EditingModesSelection\n");
 
+	ImGui::Separator();
 	if (ImGui::Checkbox("Show transparency values", &show_alpha))
 	{
 		if (show_alpha)
@@ -199,8 +200,9 @@ void PaletteEditor::EditingModesSelection()
 	}
 
 	ImGui::SameLine();
+	int nextLineColumnPosX = ImGui::GetCursorPosX();
 	ImGui::Checkbox("Freeze frame", &g_gameVals.isPaletteModePaused);
-
+	
 	if (ImGui::Checkbox("Highlight mode", &highlight_mode))
 	{
 		if (highlight_mode)
@@ -217,6 +219,16 @@ void PaletteEditor::EditingModesSelection()
 			DisableHighlightModes();
 		}
 	}
+
+	ImGui::SameLine();
+	ImGui::SetCursorPosX(nextLineColumnPosX);
+	ImGui::Checkbox("Show indexes", &show_indexes);
+
+	if (ImGui::Button("Gradient generator"))
+		ImGui::OpenPopup("gradient");
+	ShowGradientPopup();
+
+	ImGui::Separator();
 }
 
 void PaletteEditor::ShowPaletteBoxes()
@@ -224,8 +236,12 @@ void PaletteEditor::ShowPaletteBoxes()
 	LOG(7, "PaletteEditor ShowPaletteBoxes\n");
 
 	ImGui::Text("");
-	ImGui::Separator();
 	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 2));
+
+	if (show_indexes)
+	{
+		ImGui::TextUnformatted("001 "); ImGui::SameLine();
+	}
 
 	for (int i = 0, col = 1; i < NUMBER_OF_COLOR_BOXES; i++)
 	{
@@ -261,6 +277,11 @@ void PaletteEditor::ShowPaletteBoxes()
 		{
 			//start a new row
 			col = 1;
+			if (show_indexes && i < NUMBER_OF_COLOR_BOXES - 1)
+			{
+				ImGui::Text("%.3d ", i + 2);
+				ImGui::SameLine();
+			}
 		}
 		ImGui::PopID();
 	}
@@ -584,4 +605,91 @@ void PaletteEditor::CopyPalTextsToTextBoxes(CharPaletteHandle & charPalHandle)
 	strncpy(palNameBuf, palData.palname, IMPL_PALNAME_LENGTH);
 	strncpy(palDescBuf, palData.desc, IMPL_DESC_LENGTH);
 	strncpy(palCreatorBuf, palData.creator, IMPL_CREATOR_LENGTH);
+}
+
+void PaletteEditor::ShowGradientPopup()
+{
+	if (ImGui::BeginPopup("gradient"))
+	{
+		ImGui::TextUnformatted("Gradient generator");
+
+		static int idx1 = 1;
+		static int idx2 = 2;
+		int minVal_idx2 = idx1 + 1;
+
+		if (idx2 <= idx1)
+			idx2 = minVal_idx2;
+
+		ImGui::SliderInt("Start index", &idx1, 1, NUMBER_OF_COLOR_BOXES - 1);
+		ImGui::SliderInt("End index", &idx2, minVal_idx2, NUMBER_OF_COLOR_BOXES);
+
+		static int color1 = 0xFFFFFFFF;
+		static int color2 = 0xFFFFFFFF;
+		int alpha_flag = color_edit_flags & ImGuiColorEditFlags_NoAlpha;
+
+		ImGui::ColorEdit4On32Bit("Start color", (unsigned char*)&color1, alpha_flag);
+		ImGui::ColorEdit4On32Bit("End color", (unsigned char*)&color2, alpha_flag);
+
+		if (ImGui::Button("Swap colors"))
+		{
+			int temp = color2;
+			color2 = color1;
+			color1 = temp;
+		}
+
+		if (ImGui::Button("Generate gradient"))
+		{
+			DisableHighlightModes();
+			GenerateGradient(idx1, idx2, color1, color2);
+		}
+
+		ImGui::EndPopup();
+	}
+}
+
+void PaletteEditor::GenerateGradient(int idx1, int idx2, int color1, int color2)
+{
+	idx1 -= 1;
+	idx2 -= 1;
+
+	int steps = idx2 - idx1;
+	if (steps < 1)
+		return;
+
+	float frac = 1.0 / (float)(idx2 - idx1);
+
+	//WindowManager::AddLog("color1: 0x%p, color2: 0x%p\n", color1, color2);
+
+	unsigned char a1 = (color1 & 0xFF000000) >> 24;
+	unsigned char a2 = (color2 & 0xFF000000) >> 24;
+	unsigned char r1 = (color1 & 0xFF0000) >> 16;
+	unsigned char r2 = (color2 & 0xFF0000) >> 16;
+	unsigned char g1 = (color1 & 0xFF00) >> 8;
+	unsigned char g2 = (color2 & 0xFF00) >> 8;
+	unsigned char b1 = color1 & 0xFF;
+	unsigned char b2 = color2 & 0xFF;
+
+	//WindowManager::AddLog("a1: 0x%p, a2: 0x%p, r1: 0x%p, r2: 0x%p, g1: 0x%p, g2: 0x%p, b1: 0x%p, b2: 0x%p\n", 
+	//	a1, a2, r1, r2, g1, g2, b1, b2);
+	//WindowManager::AddLogSeparator();
+
+	((int*)paletteEditorArray)[idx1] = color1;
+
+	for (int i = 1; i <= steps; i++)
+	{
+		int a = ((int)((a2 - a1) * i * frac + a1) & 0xFF) << 24;
+		int r = ((int)((r2 - r1) * i * frac + r1) & 0xFF) << 16;
+		int g = ((int)((g2 - g1) * i * frac + g1) & 0xFF) << 8;
+		int b = (int)((b2 - b1) * i * frac + b1) & 0xFF;
+		int color = r | g | b;
+
+		//WindowManager::AddLog("(color = r | g | b) 0x%p = 0x%p | 0x%p | 0x%p\n", color, r, g, b);
+		//WindowManager::AddLog("BEFORE: 0x%p, AFTER: 0x%p\n",
+		//	((int*)paletteEditorArray)[idx1 + i], 
+		//	color ^ (((int*)paletteEditorArray)[idx1 + i] & a));
+
+		((int*)paletteEditorArray)[idx1 + i] = color ^ ((int*)paletteEditorArray)[idx1 + i] & a;
+	}
+
+	g_interfaces.pPaletteManager->ReplacePaletteFile(paletteEditorArray, selectedFile, *selectedCharPalHandle);
 }
