@@ -473,9 +473,30 @@ void PaletteManager::ReplacePaletteFile(const char * newPalData, PaletteFile pal
 	palHandle.ReplaceSinglePalFile(newPalData, palFile);
 }
 
-char * PaletteManager::GetPalFileAddr(PaletteFile palFile, CharPaletteHandle& palHandle)
+const char * PaletteManager::GetPalFileAddr(PaletteFile palFile, CharPaletteHandle& palHandle)
 {
-	return palHandle.GetOrigPalFileAddr(palFile);
+	return palHandle.GetCurPalFileAddr(palFile);
+}
+
+const char * PaletteManager::GetCustomPalFile(CharIndex charIndex, int palIndex, PaletteFile palFile, CharPaletteHandle& palHandle)
+{
+	if (charIndex > TOTAL_CHAR_INDEXES)
+		charIndex = CharIndex_Ragna;
+
+	if (palIndex > m_customPalettes[charIndex].size())
+		palIndex = 0;
+
+	const char* ptr = 0;
+
+	if (palIndex == 0)
+		ptr = palHandle.GetOrigPalFileAddr(palFile);
+	else
+	{
+		ptr = m_customPalettes[charIndex][palIndex].file0;
+		ptr += palFile * IMPL_PALETTE_DATALEN;
+	}
+
+	return ptr;
 }
 
 int PaletteManager::GetCurrentCustomPalIndex(CharPaletteHandle& palHandle)

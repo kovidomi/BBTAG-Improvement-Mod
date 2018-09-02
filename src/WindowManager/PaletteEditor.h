@@ -48,7 +48,8 @@ private:
 	void CheckSelectedPalOutOfBound();
 	void ShowPaletteSelectButton(CharHandle & charHandle, const char* btnText, const char* popupID);
 	void ShowPaletteSelectPopup(CharPaletteHandle& charPalHandle, CharIndex charIndex, const char* popupID);
-	void ShowHoveredPaletteToolTip(CharIndex charIndex, int palIndex);
+	void ShowHoveredPaletteToolTip(CharPaletteHandle& charPalHandle, CharIndex charIndex, int palIndex);
+	void HandleHoveredPaletteSelection(CharPaletteHandle* charPalHandle, CharIndex charIndex, int palIndex, const char* popupID, bool pressed);
 	void ShowPaletteRandomizerButton(const char * btnID, CharHandle& charHandle);
 	void CopyToEditorArray(const char* pSrc);
 	void CopyPalFileToEditorArray(PaletteFile palFile, CharPaletteHandle &charPalHandle);

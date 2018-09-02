@@ -8,7 +8,7 @@
 #include <imgui.h>
 
 #define NUMBER_OF_COLOR_BOXES (IMPL_PALETTE_DATALEN / sizeof(int)) //256
-#define COLUMN_LENGTH 16
+#define COLUMNS 16
 const int COLOR_BLACK = 0xFF000000;
 const int COLOR_WHITE = 0xFFFFFFFF;
 const ImVec4 COLOR_DONATOR(1.000f, 0.794f, 0.000f, 1.000f);
@@ -267,7 +267,7 @@ void PaletteEditor::ShowPaletteBoxes()
 			}
 		}
 
-		if (col < COLUMN_LENGTH)
+		if (col < COLUMNS)
 		{
 			//continue the row
 			ImGui::SameLine();
@@ -482,6 +482,8 @@ void PaletteEditor::ShowPaletteSelectButton(CharHandle & charHandle, const char 
 
 void PaletteEditor::ShowPaletteSelectPopup(CharPaletteHandle& charPalHandle, CharIndex charIndex, const char* popupID)
 {
+	static int hoveredPalIndex = 0;
+	bool pressed = false;
 	int onlinePalsStartIndex = g_interfaces.pPaletteManager->GetOnlinePalsStartIndex(charIndex);
 	ImGui::SetNextWindowSizeConstraints(ImVec2(-1.0f, 25.0f), ImVec2(-1.0f, 300.0f));
 
@@ -500,6 +502,7 @@ void PaletteEditor::ShowPaletteSelectPopup(CharPaletteHandle& charPalHandle, Cha
 
 			if (ImGui::Selectable(customPaletteVector[charIndex][i].palname))
 			{
+				pressed = true;
 				g_interfaces.pPaletteManager->SwitchPalette(charIndex, charPalHandle, i);
 
 				//updating palette editor's array if this is the currently selected character
@@ -512,37 +515,74 @@ void PaletteEditor::ShowPaletteSelectPopup(CharPaletteHandle& charPalHandle, Cha
 					CopyPalTextsToTextBoxes(charPalHandle);
 				}
 			}
-			ShowHoveredPaletteToolTip(charIndex, i);
+			if (ImGui::IsItemHovered())
+				hoveredPalIndex = i;
+			ShowHoveredPaletteToolTip(charPalHandle, charIndex, i);
 		}
 		ImGui::EndPopup();
 	}
+	HandleHoveredPaletteSelection(&charPalHandle, charIndex, hoveredPalIndex, popupID, pressed);
 }
 
-void PaletteEditor::ShowHoveredPaletteToolTip(CharIndex charIndex, int palIndex)
+void PaletteEditor::ShowHoveredPaletteToolTip(CharPaletteHandle& charPalHandle, CharIndex charIndex, int palIndex)
 {
-	if (ImGui::IsItemHovered() && palIndex != 0)
+	if (!ImGui::IsItemHovered())
+		return;
+
+	const char* creatorText = customPaletteVector[charIndex][palIndex].creator;
+	const char* descText = customPaletteVector[charIndex][palIndex].desc;
+	const int creatorLen = strnlen(creatorText, IMPL_CREATOR_LENGTH);
+	const int descLen = strnlen(descText, IMPL_DESC_LENGTH);
+	bool isOnlinePal = palIndex >= g_interfaces.pPaletteManager->GetOnlinePalsStartIndex(charIndex);
+
+	if (creatorLen || descLen || isOnlinePal)
 	{
-		const char* creatorText = customPaletteVector[charIndex][palIndex].creator;
-		const char* descText = customPaletteVector[charIndex][palIndex].desc;
-		const int creatorLen = strnlen(creatorText, IMPL_CREATOR_LENGTH);
-		const int descLen = strnlen(descText, IMPL_DESC_LENGTH);
-		bool isOnlinePal = palIndex >= g_interfaces.pPaletteManager->GetOnlinePalsStartIndex(charIndex);
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(300.0f);
 
-		if (creatorLen || descLen || isOnlinePal)
-		{
-			ImGui::BeginTooltip();
-			ImGui::PushTextWrapPos(300.0f);
-			
-			if (isOnlinePal)
-				ImGui::TextColored(COLOR_ONLINE, "ONLINE PALETTE");
-			if(creatorLen)
-				ImGui::Text("Creator: %s", creatorText);
-			if(descLen)
-				ImGui::Text("Description: %s", descText);
+		if (isOnlinePal)
+			ImGui::TextColored(COLOR_ONLINE, "ONLINE PALETTE");
+		if (creatorLen)
+			ImGui::Text("Creator: %s", creatorText);
+		if (descLen)
+			ImGui::Text("Description: %s", descText);
 
-			ImGui::PopTextWrapPos();
-			ImGui::EndTooltip();
-		}
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
+}
+
+void PaletteEditor::HandleHoveredPaletteSelection(CharPaletteHandle* charPalHandle, CharIndex charIndex, int palIndex, const char* popupID, bool pressed)
+{
+	static CharPaletteHandle* prevCharHndl = 0;
+	static int prevPalIndex = 0;
+	static int origPalIndex = 0;
+	static bool paletteSwitched = false;
+	static char popupIDbkp[32];
+	const char* palFileAddr = 0;
+
+	if (pressed)
+	{
+		paletteSwitched = false;
+	}
+	else if (!ImGui::IsPopupOpen(popupID) && strcmp(popupIDbkp, popupID) == 0 
+		&& paletteSwitched && prevCharHndl == charPalHandle && !pressed)
+	{
+		palFileAddr = g_interfaces.pPaletteManager->GetCustomPalFile(charIndex, origPalIndex, PaletteFile_Character, *charPalHandle);
+		g_interfaces.pPaletteManager->ReplacePaletteFile(palFileAddr, PaletteFile_Character, *charPalHandle);
+		paletteSwitched = false;
+	}
+	else if (ImGui::IsPopupOpen(popupID) && prevPalIndex != palIndex)
+	{
+		if (!paletteSwitched)
+			origPalIndex = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(*charPalHandle);
+
+		palFileAddr = g_interfaces.pPaletteManager->GetCustomPalFile(charIndex, palIndex, PaletteFile_Character, *charPalHandle);
+		g_interfaces.pPaletteManager->ReplacePaletteFile(palFileAddr, PaletteFile_Character, *charPalHandle);
+		prevPalIndex = palIndex;
+		prevCharHndl = charPalHandle;
+		paletteSwitched = true;
+		strcpy(popupIDbkp, popupID);
 	}
 }
 

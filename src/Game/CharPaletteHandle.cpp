@@ -109,9 +109,16 @@ void CharPaletteHandle::SetSelectedCustomPalIndex(int index)
 	m_selectedCustomPalIndex = index;
 }
 
-char * CharPaletteHandle::GetOrigPalFileAddr(PaletteFile palFile)
+const char * CharPaletteHandle::GetCurPalFileAddr(PaletteFile palFile)
 {
 	return GetPalFileAddr(m_pPalBaseAddr, m_switchPalIndex1, (int)palFile);
+}
+
+const char * CharPaletteHandle::GetOrigPalFileAddr(PaletteFile palFile)
+{
+	const char* ret = m_origPalBackup.file0;
+	ret += palFile * IMPL_PALETTE_DATALEN;
+	return ret;
 }
 
 const IMPL_data_t & CharPaletteHandle::GetCurrentPalData()

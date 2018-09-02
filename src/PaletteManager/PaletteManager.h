@@ -32,7 +32,8 @@ public:
 	bool& PaletteArchiveDownloaded();
 	bool SwitchPalette(CharIndex charIndex, CharPaletteHandle& palHandle, int newCustomPalIndex);
 	void ReplacePaletteFile(const char* newPalData, PaletteFile palFile, CharPaletteHandle& palHandle);
-	char* GetPalFileAddr(PaletteFile palFile, CharPaletteHandle& palHandle);
+	const char* GetPalFileAddr(PaletteFile palFile, CharPaletteHandle& palHandle);
+	const char* GetCustomPalFile(CharIndex charIndex, int palIndex, PaletteFile palFile, CharPaletteHandle& palHandle);
 	int GetCurrentCustomPalIndex(CharPaletteHandle& palHandle);
 	const IMPL_data_t &GetCurrentPalData(CharPaletteHandle& palHandle);
 	//Call it ONCE per frame 

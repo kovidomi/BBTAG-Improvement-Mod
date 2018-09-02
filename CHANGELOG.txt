@@ -3,6 +3,7 @@
 - Added gradient generator to the palette editor
 - Added indexing mode to the palette editor
 - "Drag and drop" of the color boxes now works on the palette editor
+- Palettes are now previewed if hovered over their selections
 
 07-08-2018 -- version 1.06
 ===============================

@@ -50,7 +50,8 @@ private:
 	void UnlockUpdate();
 	int GetSelectedCustomPalIndex();
 	void SetSelectedCustomPalIndex(int index);
-	char* GetOrigPalFileAddr(PaletteFile palFile);
+	const char* GetCurPalFileAddr(PaletteFile palFile);
+	const char* GetOrigPalFileAddr(PaletteFile palFile);
 	const IMPL_data_t& GetCurrentPalData();
 	char* GetPalFileAddr(const char* base, int palIdx, int fileIdx);
 	void ReplacePalArrayInMemory(char* Dst, const void* Src);
