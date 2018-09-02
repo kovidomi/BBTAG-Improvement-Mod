@@ -12,6 +12,7 @@
 #include <shellapi.h>
 #include <sstream>
 #include <time.h>
+#include "../Discord/DiscordManager.h"
 
 #define MAX_LOG_MSG_LEN 1024
 #define MAIN_WINDOW_DISAPPEAR_TIME_SECONDS 15.0f
@@ -686,6 +687,13 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		ImGui::TextColored(color, "ABCD 0123");
 		ImGui::ColoredProgressBar(1.0f, ImVec2(-1.0f, 0.0f), color, NULL, NULL, NULL);
 		ImGui::ColorEdit4("ColEdit", col);
+	}
+	if (ImGui::CollapsingHeader("Discord API tester"))
+	{
+		if (ImGui::Button("Init"))
+			DiscordManager::InitDiscord();
+		if (ImGui::Button("Update presence"))
+			DiscordManager::UpdatePresence();
 	}
 	ImGui::End();
 }

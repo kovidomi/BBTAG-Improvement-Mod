@@ -6,6 +6,7 @@
 #include "logger.h"
 #include "Settings.h"
 #include "PaletteManager/PaletteManager.h"
+#include "Discord/DiscordManager.h"
 
 void CreateCustomDirectories()
 {
@@ -38,6 +39,9 @@ void BBTAG_IM_Start()
 void BBTAG_IM_Shutdown()
 {
 	WindowManager::Shutdown();
+
+	//Causes the game hanging
+	//DiscordManager::ShutdownDiscord();
 
 	CleanupInterfaces();
 
