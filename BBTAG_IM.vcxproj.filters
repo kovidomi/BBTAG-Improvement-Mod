@@ -179,7 +179,7 @@
     <ClCompile Include="src\Web\palette_download.cpp">
       <Filter>src\Web</Filter>
     </ClCompile>
-    <ClCompile Include="src\Discord\DiscordManager.cpp">
+    <ClCompile Include="src\Discord\Discord.cpp">
       <Filter>src\Discord</Filter>
     </ClCompile>
   </ItemGroup>
@@ -331,7 +331,7 @@
     <ClInclude Include="src\Web\palette_download.h">
       <Filter>src\Web</Filter>
     </ClInclude>
-    <ClInclude Include="src\Discord\DiscordManager.h">
+    <ClInclude Include="src\Discord\Discord.h">
       <Filter>src\Discord</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,7 +6,7 @@
 #include "logger.h"
 #include "Settings.h"
 #include "PaletteManager/PaletteManager.h"
-#include "Discord/DiscordManager.h"
+#include "Discord/Discord.h"
 
 void CreateCustomDirectories()
 {
@@ -31,6 +31,7 @@ void BBTAG_IM_Start()
 
 		CreateCustomDirectories();
 		g_interfaces.pPaletteManager = new PaletteManager();
+		g_interfaces.pDiscord = new Discord("485863441610047488", "702890");
 
 		SetUnhandledExceptionFilter(UnhandledExFilter);
 	}
@@ -39,9 +40,6 @@ void BBTAG_IM_Start()
 void BBTAG_IM_Shutdown()
 {
 	WindowManager::Shutdown();
-
-	//Causes the game hanging
-	//DiscordManager::ShutdownDiscord();
 
 	CleanupInterfaces();
 

@@ -72,7 +72,7 @@
     <ClCompile Include="depends\imgui\imgui_draw.cpp" />
     <ClCompile Include="depends\imgui\imgui_impl_dx9.cpp" />
     <ClCompile Include="src\D3D9EXWrapper\D3D9Utils.cpp" />
-    <ClCompile Include="src\Discord\DiscordManager.cpp" />
+    <ClCompile Include="src\Discord\Discord.cpp" />
     <ClCompile Include="src\Game\characters.cpp" />
     <ClCompile Include="src\Game\CharHandle.cpp" />
     <ClCompile Include="src\Game\CharPaletteHandle.cpp" />
@@ -128,7 +128,7 @@
     <ClInclude Include="src\D3D9EXWrapper\ID3D9EXWrapper_Device.h" />
     <ClInclude Include="src\D3D9EXWrapper\ID3D9Wrapper_Sprite.h" />
     <ClInclude Include="src\D3D9EXWrapper\ID3DXWrapper_Effect.h" />
-    <ClInclude Include="src\Discord\DiscordManager.h" />
+    <ClInclude Include="src\Discord\Discord.h" />
     <ClInclude Include="src\Game\characters.h" />
     <ClInclude Include="src\Game\CharHandle.h" />
     <ClInclude Include="src\Game\CharInfo.h" />
