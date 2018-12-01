@@ -5,6 +5,7 @@
 // 3: Bronze
 
 DONATOR(NicoGamer, 0)
+DONATOR(0yashiro-sama, 1)
 DONATOR(Bastihan, 2)
 DONATOR(Dominic, 2)
 DONATOR(Iredium, 2)
