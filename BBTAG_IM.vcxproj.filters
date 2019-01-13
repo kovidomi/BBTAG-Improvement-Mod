@@ -37,9 +37,6 @@
     <Filter Include="src\Web">
       <UniqueIdentifier>{448b2155-3c81-4718-a1dd-288c741605ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Discord">
-      <UniqueIdentifier>{0ea1de83-b8a3-41f0-8ce6-20394e8e1da5}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="export\dinput8.def">
@@ -178,9 +175,6 @@
     </ClCompile>
     <ClCompile Include="src\Web\palette_download.cpp">
       <Filter>src\Web</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Discord\Discord.cpp">
-      <Filter>src\Discord</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -330,9 +324,6 @@
     </ClInclude>
     <ClInclude Include="src\Web\palette_download.h">
       <Filter>src\Web</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Discord\Discord.h">
-      <Filter>src\Discord</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

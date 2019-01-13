@@ -12,7 +12,6 @@
 #include <shellapi.h>
 #include <sstream>
 #include <time.h>
-#include "../Discord/Discord.h"
 
 #define MAX_LOG_MSG_LEN 1024
 #define MAIN_WINDOW_DISAPPEAR_TIME_SECONDS 15.0f
@@ -688,73 +687,6 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		ImGui::TextColored(color, "ABCD 0123");
 		ImGui::ColoredProgressBar(1.0f, ImVec2(-1.0f, 0.0f), color, NULL, NULL, NULL);
 		ImGui::ColorEdit4("ColEdit", col);
-	}
-
-	if (ImGui::CollapsingHeader("Discord API tester"))
-	{
-		if (ImGui::TreeNode("Details"))
-		{
-			static char* menus[] {"Training", "In Lobby", "Versus", "Story"};
-			static char* selectedMenu = "";
-
-			if (ImGui::Button("Menus"))
-				ImGui::OpenPopup("menu_sel");
-			ImGui::SameLine();
-			ImGui::TextUnformatted(selectedMenu);
-
-			if(ImGui::BeginPopup("menu_sel"))
-			{
-				for (char* menu : menus)
-					if (ImGui::Selectable(menu))
-						selectedMenu = menu;
-
-				ImGui::EndPopup();
-			}
-
-			if (ImGui::Button("Set Details"))
-				g_interfaces.pDiscord->UpdatePresenceDetails("%s", selectedMenu);
-
-			ImGui::TreePop();
-		}
-
-		if (ImGui::TreeNode("Large Image"))
-		{
-			if (ImGui::Button("Set Large Image"))
-				g_interfaces.pDiscord->UpdatePresenceLargeImage("puffy");
-
-			ImGui::TreePop();
-		}
-
-		if (ImGui::TreeNode("Small Image"))
-		{
-			if (ImGui::Button("Set Small Image"))
-				g_interfaces.pDiscord->UpdatePresenceSmallImage("puffy");
-
-			ImGui::TreePop();
-		}
-
-		if (ImGui::TreeNode("Start Time"))
-		{
-			if (ImGui::Button("Set Start Time"))
-				g_interfaces.pDiscord->UpdatePresenceSetStartTime();
-			if (ImGui::Button("Clear Start Time"))
-				g_interfaces.pDiscord->UpdatePresenceClearStartTime();
-
-			ImGui::TreePop();
-		}
-		
-		if (ImGui::TreeNode("End Time"))
-		{
-			static int secs = 0;
-			ImGui::SliderInt("Seconds", &secs, 0, 1000);
-
-			if (ImGui::Button("Set End Time"))
-				g_interfaces.pDiscord->UpdatePresenceSetEndTime(secs);
-			if (ImGui::Button("Clear End Time"))
-				g_interfaces.pDiscord->UpdatePresenceClearEndTime();
-
-			ImGui::TreePop();
-		}
 	}
 
 	ImGui::End();

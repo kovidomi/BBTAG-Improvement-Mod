@@ -18,5 +18,4 @@ void CleanupInterfaces()
 	SAFE_DELETE(g_interfaces.pSteamApiHelper);
 
 	SAFE_DELETE(g_interfaces.pPaletteManager);
-	SAFE_DELETE(g_interfaces.pDiscord);
 }

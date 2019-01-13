@@ -6,7 +6,6 @@
 #include "logger.h"
 #include "Settings.h"
 #include "PaletteManager/PaletteManager.h"
-#include "Discord/Discord.h"
 
 void CreateCustomDirectories()
 {
@@ -31,7 +30,6 @@ void BBTAG_IM_Start()
 
 		CreateCustomDirectories();
 		g_interfaces.pPaletteManager = new PaletteManager();
-		g_interfaces.pDiscord = new Discord("485863441610047488", "702890");
 
 		SetUnhandledExceptionFilter(UnhandledExFilter);
 	}

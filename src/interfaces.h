@@ -7,7 +7,6 @@
 #include "SteamApiWrapper\SteamUtilsWrapper.h"
 #include "SteamApiWrapper/SteamApiHelper.h"
 #include "D3D9EXWrapper\ID3D9ExWrapper_Device.h"
-#include "Discord\Discord.h"
 #include "Game\Player.h"
 #include "PaletteManager\PaletteManager.h"
 #include <steam_api.h>
@@ -23,8 +22,6 @@ struct interfaces_t
 	IDirect3DDevice9Ex* pD3D9ExWrapper;
 	SteamApiHelper* pSteamApiHelper;
 	PaletteManager* pPaletteManager;
-
-	Discord* pDiscord;
 	
 	Player player1;
 	Player player2;
