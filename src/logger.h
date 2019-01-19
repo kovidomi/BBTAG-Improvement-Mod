@@ -1,9 +1,11 @@
 #pragma once
-#include "main.h"
 #include "D3D9EXWrapper\d3d9.h"
 #include "Settings.h"
 
-#ifndef RELEASE_VER
+#define DEBUG_LOG_LEVEL	5 //0 = highest, 7 = lowest priority
+#define ENABLE_LOGGING 0
+
+#if (_DEBUG == 1) || (ENABLE_LOGGING == 1)
 #define LOG(_level, _str, ...) { \
 if (DEBUG_LOG_LEVEL >= _level) { logger(_str, __VA_ARGS__); }}
 //Use this to log in naked asm functions
