@@ -14,7 +14,7 @@ JMPBACKADDR HookManager::SetHook(const char *label, const char *pattern, const c
 		return hooks[index].jmpBackAddr;
 	}
 
-	hooks.push_back(functionhook_t());
+	hooks.push_back( functionhook_t {} );
 	index = hooks.size() - 1;
 	hooks[index].label = label;
 	hooks[index].pattern = pattern;

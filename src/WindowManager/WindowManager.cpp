@@ -6,6 +6,7 @@
 #include "../Web/donators_fetch.h"
 #include "../SteamApiWrapper/SteamApiHelper.h"
 #include "../logger.h"
+#include "../info.h"
 #include "../Game/gamestates.h"
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
@@ -161,7 +162,7 @@ void WindowManager::SetMainWindowTitle(const char *text)
 		main_title = MOD_WINDOW_TITLE;
 		main_title += " ";
 		main_title += MOD_VERSION_NUM;
-#ifndef RELEASE_VER
+#ifdef _DEBUG
 		main_title += " (DEBUG)";
 #endif
 	}
@@ -903,7 +904,7 @@ void WindowManager::ShowMainWindow(bool * p_open)
 			ShowLoadedSettingsValues();
 		}
 
-#ifndef RELEASE_VER
+#ifdef _DEBUG
 		if (ImGui::Button("Demo"))
 			show_demo_window ^= 1;
 		if (ImGui::Button("DEBUG"))
@@ -998,7 +999,7 @@ void WindowManager::ShowAllWindows()
 		ShowDonatorsWindow();
 
 ////////////// DEBUG Windows
-#ifndef RELEASE_VER
+#ifdef _DEBUG
 	if (show_demo_window)
 	{
 		ImGui::SetNextWindowPos(ImVec2(550, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!

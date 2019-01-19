@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -21,6 +25,13 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -29,11 +40,22 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)\depends\discord_api\include;$(SolutionDir)\depends\DecompressLibrary\include;$(SolutionDir)\depends\directx_sdk\Include;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\imgui;$(SolutionDir)\depends\steamworks_sdk_142\sdk\public\steam;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\depends\discord_api\lib;$(SolutionDir)\depends\DecompressLibrary\lib;$(SolutionDir)\depends\directx_sdk\Lib\x86;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\steamworks_sdk_142\sdk\redistributable_bin;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\depends\discord_api\lib;$(SolutionDir)\depends\DecompressLibrary\lib\Release;$(SolutionDir)\depends\directx_sdk\Lib\x86;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\steamworks_sdk_142\sdk\redistributable_bin;$(LibraryPath)</LibraryPath>
+    <OutDir>bin\$(Configuration)\</OutDir>
+    <IntDir>build\$(Configuration)\</IntDir>
+    <TargetName>dinput8</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)\depends\discord_api\include;$(SolutionDir)\depends\DecompressLibrary\include;$(SolutionDir)\depends\directx_sdk\Include;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\imgui;$(SolutionDir)\depends\steamworks_sdk_142\sdk\public\steam;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\depends\discord_api\lib;$(SolutionDir)\depends\DecompressLibrary\lib\Debug;$(SolutionDir)\depends\directx_sdk\Lib\x86;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\steamworks_sdk_142\sdk\redistributable_bin;$(LibraryPath)</LibraryPath>
     <OutDir>bin\$(Configuration)\</OutDir>
     <IntDir>build\$(Configuration)\</IntDir>
     <TargetName>dinput8</TargetName>
@@ -59,6 +81,36 @@
       <ModuleDefinitionFile>export/dinput8.def</ModuleDefinitionFile>
       <AdditionalDependencies>comsuppw.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BBTAG_IM_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
+      <OptimizeReferences>
+      </OptimizeReferences>
+      <ModuleDefinitionFile>export/dinput8.def</ModuleDefinitionFile>
+      <AdditionalDependencies>comsuppw.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -138,9 +190,9 @@
     <ClInclude Include="src\Hooks\hooks_bbtag.h" />
     <ClInclude Include="src\Hooks\hooks_detours.h" />
     <ClInclude Include="src\Hooks\hooks_steamApiWrapper.h" />
+    <ClInclude Include="src\info.h" />
     <ClInclude Include="src\interfaces.h" />
     <ClInclude Include="src\logger.h" />
-    <ClInclude Include="src\main.h" />
     <ClInclude Include="src\PaletteManager\impl_format.h" />
     <ClInclude Include="src\PaletteManager\PaletteManager.h" />
     <ClInclude Include="src\Settings.h" />

@@ -20,7 +20,6 @@ I, KoviDomi, am not responsible for what happens while using BBTAG Improvement M
 ## Compiling and usage
 BBTAG Improvement Mod is coded using Visual Studio 2017 (toolset v141). <br>
 To compile, you should only need to load the sln file and compile as-is. No changes should be needed to the solution or source.<br>
-Can only be compiled in the Release/Win32 config.<br>
 Copy the compiled binary, settings.ini, and palettes.ini file from the bin/ folder into the game's root folder.
 
 ## Requirements:
@@ -32,8 +31,10 @@ Copy the compiled binary, settings.ini, and palettes.ini file from the bin/ fold
 ## Quick file overview
 - **TODO.txt** <br>
 List of things you can start working on
-- **main.h** <br>
-Defines for logging
+- **info.h** <br>
+Defines for version numbering and outside links
+- **logging.h** <br>
+Self explanatory
 - **interfaces.h** <br>
 Access to all the wrappers and hooked game variables
 - **D3D9ExWrapper/** <br>

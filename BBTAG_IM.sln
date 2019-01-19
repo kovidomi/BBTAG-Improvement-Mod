@@ -9,11 +9,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMPL-HPL-CONVERTER", "tools
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CD295F9-FB73-47B9-A937-E44865E7C386}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2CD295F9-FB73-47B9-A937-E44865E7C386}.Debug|Win32.Build.0 = Debug|Win32
 		{2CD295F9-FB73-47B9-A937-E44865E7C386}.Release|Win32.ActiveCfg = Release|Win32
 		{2CD295F9-FB73-47B9-A937-E44865E7C386}.Release|Win32.Build.0 = Release|Win32
+		{38A40672-0CA8-484E-8BBC-D62DB74D01ED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{38A40672-0CA8-484E-8BBC-D62DB74D01ED}.Debug|Win32.Build.0 = Debug|Win32
+		{38A40672-0CA8-484E-8BBC-D62DB74D01ED}.Debug|Win32.Deploy.0 = Debug|Win32
 		{38A40672-0CA8-484E-8BBC-D62DB74D01ED}.Release|Win32.ActiveCfg = Release|Win32
 		{38A40672-0CA8-484E-8BBC-D62DB74D01ED}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
