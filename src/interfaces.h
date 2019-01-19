@@ -36,6 +36,9 @@ struct gameVals_t
 	int* pGameMode;
 
 	bool isPaletteModePaused;
+
+	D3DXMATRIX* viewMatrix;
+	D3DXMATRIX viewProjMatrix;
 };
 
 struct gameProc_t

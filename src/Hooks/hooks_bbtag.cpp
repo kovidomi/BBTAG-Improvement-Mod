@@ -528,6 +528,50 @@ void __declspec(naked)VictoryScreen()
 	}
 }
 
+DWORD GetViewMatrixJmpBackAddr = 0;
+void __declspec(naked)GetViewMatrix()
+{
+	static D3DXMATRIX* pViewMatrix;
+
+	LOG_ASM(7, "GetViewMatrix\n");
+
+	__asm pushad
+	__asm add esi, 4Ch
+	__asm mov pViewMatrix, esi
+	g_gameVals.viewMatrix = pViewMatrix;
+	LOG_ASM(7, "GetViewMatrix: 0x%x\n", pViewMatrix);
+	__asm popad
+
+	__asm
+	{
+		push    eax
+		lea     eax, [esi + 4Ch]
+		push    eax
+		jmp[GetViewMatrixJmpBackAddr]
+	}
+}
+
+DWORD GetViewProjMatrixJmpBackAddr = 0;
+void __declspec(naked)GetViewProjMatrix()
+{
+	static D3DXMATRIX* pViewProjMatrix;
+
+	LOG_ASM(7, "GetViewProjMatrix\n");
+
+	__asm pushad
+	__asm mov pViewProjMatrix, eax
+	g_gameVals.viewProjMatrix = *pViewProjMatrix;
+	__asm popad
+
+	__asm
+	{
+		lea     eax, [ebp - 88h]
+		push    eax
+		lea     eax, [ebp - 30h]
+		jmp[GetViewProjMatrixJmpBackAddr]
+	}
+}
+
 //runs in additional_hooks.cpp in the hook_steamnetworking and ID3D9EXWrapper_Device.cpp in constructor, since unlike in CF in this game this method runs after steam init
 //These functions can be hooked after steam drm does its thing and d3d9device is up
 bool placeHooks_bbtag()
@@ -588,6 +632,11 @@ bool placeHooks_bbtag()
 
 	GetPaletteIndexAddrOfflineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOffline", "\xc7\x40\x24\x64\x00\x00\x00\xe8\x00\x00\x00\x00\x46", 
 		"xxxxxxxx????x", 7, GetPaletteIndexAddrOffline);
+
+	//GetViewMatrixJmpBackAddr = HookManager::SetHook("GetViewMatrix", "\x50\x8d\x46\x4c\x50", "xxxxx", 5, GetViewMatrix);
+
+	GetViewProjMatrixJmpBackAddr = HookManager::SetHook("GetViewProjMatrix", "\x8d\x85\x78\xff\xff\xff\x50\x8d\x45\xd0",
+		"xxxxxxxxxx", 10, GetViewProjMatrix);
 
 	///////////////// EXPERIMENTAL HOOKS BELOW ////////////////////////////
 
