@@ -29,8 +29,6 @@ Copy the compiled binary, settings.ini, and palettes.ini file from the bin/ fold
 - Steamworks SDK (v1.42)
 
 ## Quick file overview
-- **TODO.txt** <br>
-List of things you can start working on
 - **info.h** <br>
 Defines for version numbering and outside links
 - **logging.h** <br>
