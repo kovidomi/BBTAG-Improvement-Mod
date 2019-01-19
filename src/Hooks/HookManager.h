@@ -13,7 +13,7 @@ struct functionhook_t
 	DWORD startAddress; //address is 0 if signature scanning was unsuccessful
 	DWORD jmpBackAddr;
 	void *newFunc;
-	std::string originalBytes;
+	char originalBytes[50];
 	bool activated; //is the hook in effect
 };
 
