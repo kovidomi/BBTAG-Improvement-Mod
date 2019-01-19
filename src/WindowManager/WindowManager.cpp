@@ -690,6 +690,108 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		ImGui::ColorEdit4("ColEdit", col);
 	}
 
+	if (ImGui::CollapsingHeader("P1 World2Screen"))
+	{
+		static D3DXVECTOR2 result(0, 0);
+
+		if (ImGui::Button("Run"))
+		{
+			//D3DXMATRIX &view = *g_gameVals.viewMatrix;
+			//D3DXMATRIX viewInverse;
+			//D3DXVECTOR2 normalized;
+
+			//LOG(2, "view:\n");
+			//for (int i = 0; i < 16; i = i + 4)
+			//{
+			//	for (int j = 0; j < 4; j++)
+			//	{
+			//		LOG(2, "%.2f - ", view[i + j]);
+			//	}
+			//	LOG(2, "\n");
+			//}
+
+			//D3DXVECTOR2 point (
+			//	g_interfaces.player1.GetChar1().GetData()->position_x, 
+			//	g_interfaces.player1.GetChar1().GetData()->position_y
+			//);
+
+			//D3DVIEWPORT9 viewport;
+			//g_interfaces.pD3D9ExWrapper->GetViewport(&viewport);
+
+			//normalized.x = -1.f + 2.f * (point.x - viewport.X) / viewport.Width;
+			//normalized.y = 1.f - 2.f * (point.y - viewport.Y) / viewport.Height;
+
+			//LOG(2, "viewport: X: %d - Y: %d - width: %d - height: %d\n", viewport.X, viewport.Y, viewport.Width, viewport.Height);
+			//LOG(2, "normalized: x: %.2f - y: %.2f\n", normalized.x, normalized.y);
+
+			//D3DXMatrixInverse(&viewInverse, NULL, &view);
+			//result.x = viewInverse[0] * normalized.x + viewInverse[4] * normalized.y + viewInverse[12];
+			//result.y = viewInverse[1] * normalized.x + viewInverse[5] * normalized.y + viewInverse[13];
+			//LOG(2, "result: x: %.2f - y: %.2f\n", result.x, result.y);
+
+
+
+			/////////////////////////////////////////////////////
+			D3DXMATRIX &view = g_gameVals.viewProjMatrix;
+			D3DXVECTOR2 normalized;
+
+			D3DXVECTOR3 point(
+				g_interfaces.player1.GetChar1().GetData()->position_x,
+				g_interfaces.player1.GetChar1().GetData()->position_y,
+				*(&g_interfaces.player1.GetChar1().GetData()->position_y + 1)
+			);
+
+			LOG(2, "point: x: %.2f - y: %.2f - z: %.2f\n", point.x, point.y, point.z);
+
+			LOG(2, "view:\n");
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					LOG(2, "%.2f - ", view[(i * 4) + j]);
+				}
+				LOG(2, "\n");
+			}
+
+			D3DVIEWPORT9 viewport;
+			g_interfaces.pD3D9ExWrapper->GetViewport(&viewport);
+
+			result[0] = view[0] * point[0] + view[1] * point[1] + view[2] * point[2] + view[3];
+			result[1] = view[4] * point[0] + view[5] * point[1] + view[6] * point[2] + view[7];
+
+			auto flTemp = view[12] * point[0] + view[13] * point[1] + view[14] * point[2] + view[15];
+
+			LOG(2, "1 result: x: %.2f - y: %.2f - z: %.2f\n", result.x, result.y, flTemp);
+
+			if (flTemp > 0.01f)
+			{
+				auto invFlTemp = 1.f / flTemp;
+				result[0] *= invFlTemp;
+				result[1] *= invFlTemp;
+
+				LOG(2, "2 result: x: %.2f - y: %.2f - z: %.2f\n", result.x, result.y, invFlTemp);
+
+				static int iResolution[2] = { 0 };
+				if (!iResolution[0] || !iResolution[1])
+				{
+					iResolution[0] = viewport.Width;
+					iResolution[1] = viewport.Height;
+				}
+
+				auto x = (float)iResolution[0] / 2.f;
+				auto y = (float)iResolution[1] / 2.f;
+
+				x += 0.5f * result[0] * (float)iResolution[0] + 0.5f;
+				y -= 0.5f * result[1] * (float)iResolution[1] + 0.5f;
+
+				result[0] = x;
+				result[1] = y;
+			}
+		}
+
+		ImGui::Text("Result: x: %.2f - y: %.2f", result.x, result.y);
+	}
+
 	ImGui::End();
 }
 
