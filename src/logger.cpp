@@ -31,7 +31,7 @@ char* getFullDate()
 	return buffer;
 }
 
-#ifndef RELEASE_VER
+#ifdef ENABLE_LOGGING
 
 FILE* g_oFile;
 

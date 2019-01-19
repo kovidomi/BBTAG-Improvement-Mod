@@ -30,7 +30,7 @@ void SteamApiHelper::OnUpdateNumberOfCurrentPlayers(NumberOfCurrentPlayers_t *pC
 		return;
 	}
 	//printf("Number of players currently playing: %d\n", pCallback->m_cPlayers);
-#ifndef RELEASE_VER
+#ifdef ENABLE_LOGGING
 	WindowManager::AddLog("[debug] Updated the current number of ingame players: %d\n", pCallback->m_cPlayers);
 #endif
 	current_players = pCallback->m_cPlayers;
