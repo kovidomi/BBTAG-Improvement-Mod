@@ -6,6 +6,7 @@
 #include "../Web/donators_fetch.h"
 #include "../SteamApiWrapper/SteamApiHelper.h"
 #include "../logger.h"
+#include "../info.h"
 #include "../Game/gamestates.h"
 #include <imgui.h>
 #include <imgui_impl_dx9.h>

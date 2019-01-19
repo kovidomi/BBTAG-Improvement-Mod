@@ -208,9 +208,6 @@
     <ClInclude Include="src\logger.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\main.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\utils.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -325,6 +322,7 @@
     <ClInclude Include="src\Web\palette_download.h">
       <Filter>src\Web</Filter>
     </ClInclude>
+    <ClInclude Include="src\info.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">

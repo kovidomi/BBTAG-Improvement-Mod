@@ -190,9 +190,9 @@
     <ClInclude Include="src\Hooks\hooks_bbtag.h" />
     <ClInclude Include="src\Hooks\hooks_detours.h" />
     <ClInclude Include="src\Hooks\hooks_steamApiWrapper.h" />
+    <ClInclude Include="src\info.h" />
     <ClInclude Include="src\interfaces.h" />
     <ClInclude Include="src\logger.h" />
-    <ClInclude Include="src\main.h" />
     <ClInclude Include="src\PaletteManager\impl_format.h" />
     <ClInclude Include="src\PaletteManager\PaletteManager.h" />
     <ClInclude Include="src\Settings.h" />

@@ -2,6 +2,7 @@
 #include "url_downloader.h"
 #include "../WindowManager/WindowManager.h"
 #include "../logger.h"
+#include "../info.h"
 #include <sstream>
 
 std::vector<std::string> donatorNames;
