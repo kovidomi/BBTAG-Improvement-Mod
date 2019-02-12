@@ -8,6 +8,8 @@
 
 #pragma comment(lib, "steam_api.lib")
 
+int drawCount = 1;
+
 Direct3DDevice9ExWrapper::Direct3DDevice9ExWrapper(IDirect3DDevice9Ex **ppReturnedDeviceInterface, D3DPRESENT_PARAMETERS *pPresentParam, IDirect3D9Ex *pIDirect3D9Ex)
 {
 	LOG(1, "cDirect3DDevice9ExWrapper with modified PresentationParameters\n");
@@ -209,14 +211,46 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::CreateCubeTexture(UINT EdgeLength, UI
 
 HRESULT APIENTRY Direct3DDevice9ExWrapper::CreateVertexBuffer(UINT Length, DWORD Usage, DWORD FVF, D3DPOOL Pool, IDirect3DVertexBuffer9** ppVertexBuffer, HANDLE* pSharedHandle)
 {
-	LOG(7, "CreateVertexBuffer\n");
+	LOG(2, "CreateVertexBuffer\n");
 	return m_Direct3DDevice9Ex->CreateVertexBuffer(Length, Usage, FVF, Pool, ppVertexBuffer, pSharedHandle);
 }
 
 HRESULT APIENTRY Direct3DDevice9ExWrapper::CreateIndexBuffer(UINT Length, DWORD Usage, D3DFORMAT Format, D3DPOOL Pool, IDirect3DIndexBuffer9** ppIndexBuffer, HANDLE* pSharedHandle)
 {
-	LOG(7, "CreateIndexBuffer\n");
-	return m_Direct3DDevice9Ex->CreateIndexBuffer(Length, Usage, Format, Pool, ppIndexBuffer, pSharedHandle);
+	// Usage:
+	// D3DUSAGE_AUTOGENMIPMAP 0x400
+	// D3DUSAGE_DEPTHSTENCIL 0x2
+	// D3DUSAGE_DMAP 0x4000
+	// D3DUSAGE_DONOTCLIP 0x20
+	// D3DUSAGE_DYNAMIC 0x200
+	// D3DUSAGE_NONSECURE 0x800000
+	// D3DUSAGE_NPATCHES 0x100
+	// D3DUSAGE_POINTS 0x40
+	// D3DUSAGE_RENDERTARGET 0x1
+	// D3DUSAGE_RTPATCHES 0x80
+	// D3DUSAGE_SOFTWAREPROCESSING 0x10
+	// D3DUSAGE_TEXTAPI 0x10000000
+	// D3DUSAGE_WRITEONLY 0x8
+	// D3DUSAGE_RESTRICTED_CONTENT 0x800
+	// D3DUSAGE_RESTRICT_SHARED_RESOURCE 0x2000
+	// D3DUSAGE_RESTRICT_SHARED_RESOURCE_DRIVER 0x1000
+
+
+	// Format:
+	// D3DFMT_INDEX16 = 101
+	// D3DFMT_INDEX32 = 102
+
+	// Pool
+	// D3DPOOL_DEFAULT = 0,
+	// D3DPOOL_MANAGED = 1,
+	// D3DPOOL_SYSTEMMEM = 2,
+	// D3DPOOL_SCRATCH = 3,
+	// D3DPOOL_FORCE_DWORD = 0x7fffffff
+
+	LOG(2, "CreateIndexBuffer Length: %ld, Usage: 0x%x, Format: %d, Pool: %d, ppIndexBuffer: 0x%x, ", Length, Usage, Format, Pool, ppIndexBuffer);
+	HRESULT result = m_Direct3DDevice9Ex->CreateIndexBuffer(Length, Usage, Format, Pool, ppIndexBuffer, pSharedHandle);
+	LOG(2, "*ppIndexBuffer: 0x%x\n", *ppIndexBuffer);
+	return result;
 }
 
 HRESULT APIENTRY Direct3DDevice9ExWrapper::CreateRenderTarget(UINT Width, UINT Height, D3DFORMAT Format, D3DMULTISAMPLE_TYPE MultiSample, DWORD MultisampleQuality, BOOL Lockable, IDirect3DSurface9** ppSurface, HANDLE* pSharedHandle)
@@ -352,6 +386,7 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::EndScene()
 	LOG(7, "EndScene\n");
 
 	WindowManager::OnRender();
+	drawCount = 1;
 
 	return m_Direct3DDevice9Ex->EndScene();
 }
@@ -615,7 +650,9 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::DrawPrimitive(D3DPRIMITIVETYPE Primit
 
 HRESULT APIENTRY Direct3DDevice9ExWrapper::DrawIndexedPrimitive(D3DPRIMITIVETYPE PrimitiveType, INT BaseVertexIndex, UINT MinVertexIndex, UINT NumVertices, UINT startIndex, UINT primCount)
 {
-	LOG(7, "DrawIndexedPrimitive\n");
+	LOG(2, "%d DrawIndexedPrimitive Type: %d, BaseVertexIndex: %d, MinVertexIndex: %ld, NumVertices: %ld, startIndex: %ld, primCount: %ld\n",
+		drawCount++, PrimitiveType, BaseVertexIndex, MinVertexIndex, NumVertices, startIndex, primCount);
+
 	return m_Direct3DDevice9Ex->DrawIndexedPrimitive(PrimitiveType, BaseVertexIndex, MinVertexIndex, NumVertices, startIndex, primCount);
 }
 
@@ -755,7 +792,7 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::GetStreamSourceFreq(UINT StreamNumber
 
 HRESULT APIENTRY Direct3DDevice9ExWrapper::SetIndices(IDirect3DIndexBuffer9* pIndexData)
 {
-	LOG(7, "SetIndices\n");
+	LOG(2, "SetIndices pIndexData: 0x%x\n", pIndexData);
 	return m_Direct3DDevice9Ex->SetIndices(pIndexData);
 }
 
