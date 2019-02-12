@@ -346,7 +346,8 @@ void WindowManager::OnUpdate()
 
 	HandleMainWindowVisibility(main_window_disappear_time);
 
-	//return if game window is minimized, to avoid the custom hud elements being thrown in the upper left corner due to resolution shrinking
+	// return if game window is minimized, to avoid the custom hud elements
+	// being thrown in the upper left corner due to resolution shrinking
 	if (IsIconic(g_gameProc.hWndGameWindow))
 		return;
 
@@ -358,7 +359,8 @@ void WindowManager::OnUpdate()
 
 	ImGuiIO& io = ImGui::GetIO();
 
-	io.MouseDrawCursor = show_main_window |show_log_window | show_notification_window | show_palette_editor | IsUpdateAvailable | show_demo_window;
+	io.MouseDrawCursor = show_main_window |show_log_window | show_notification_window
+		| show_palette_editor | IsUpdateAvailable | show_demo_window;
 
 	if (Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)
 	{
@@ -366,8 +368,6 @@ void WindowManager::OnUpdate()
 	}
 
 	ShowAllWindows();
-
-	//ImGui::EndFrame();
 
 	LOG(7, "END OF WindowManager::HandleImGui\n");
 }
@@ -404,14 +404,12 @@ void WindowManager::HandleNotification()
 
 void WindowManager::ShowNotificationWindow()
 {
-	//middle of screen
 	ImGui::SetNextWindowPosCenter(ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
 	ImVec2 OK_btn_size = ImVec2(100, 30);
 
 	ImGui::Begin("Notification", NO_CLOSE_FLAG, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
 	ImGui::Text(notificationText.c_str());
-	//ImGui::CalcTextSize(notificationText.c_str()); ImGui::SetCursorPosX(ImGui::CalcTextSize(notificationText.c_str()).x);
 
 	std::ostringstream stringBuf;
 	stringBuf << "OK (" << round(ceil(notificationTimer)) << ")";
@@ -437,16 +435,14 @@ void WindowManager::AddLog(const char* message, ...)
 	}
 
 	//Get current time into a string
-	//////
 	time_t current_time;
 	struct tm * time_info;
-	char timeString[9];  // space for "HH:MM:SS\0"
+	char timeString[9];  // extra space for nullbyte: "HH:MM:SS\0"
 
 	time(&current_time);
 	time_info = localtime(&current_time);
 
 	strftime(timeString, sizeof(timeString), "%H:%M:%S", time_info);
-	/////
 
 	if (strlen(message) > MAX_LOG_MSG_LEN)
 	{
@@ -553,7 +549,6 @@ void WindowManager::ShowLogWindow(bool* p_open)
 
 void WindowManager::ShowUpdateWindow()
 {
-	//middle of screen
 	ImGui::SetNextWindowPosCenter(ImGuiCond_Once);
 	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
 	ImVec2 OK_btn_size = ImVec2(100, 30);
@@ -699,15 +694,15 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 
 void WindowManager::ShowDonatorsWindow()
 {
-	ImVec2 origWindowTitleAlign = ImGui::GetStyle().WindowTitleAlign;
-	ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f); //middle
-	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.0f);
-	
 	const ImVec4 COLOR_PLATINUM(0.328f, 1.000f, 0.901f, 1.000f);
 	const ImVec4 COLOR_GOLD(1.000f, 0.794f, 0.000f, 1.000f);
 	const ImVec4 COLOR_SILVER(0.848f, 0.848f, 0.848f, 1.000f);
 	const ImVec4 COLOR_BRONZE(0.824f, 0.497f, 0.170f, 1.000f);
 	const ImVec4 COLOR_DEFAULT(1.000f, 1.000f, 1.000f, 1.000f);
+
+	ImVec2 origWindowTitleAlign = ImGui::GetStyle().WindowTitleAlign;
+	ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f); //middle
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.0f);
 
 	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
 	ImVec2 OK_btn_size = ImVec2(100, 30);
