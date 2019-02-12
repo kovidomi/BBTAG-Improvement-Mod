@@ -6,8 +6,15 @@
 
 std::vector<functionhook_t> HookManager::hooks;
 
-JMPBACKADDR HookManager::SetHook(const char *label, const char *pattern, const char *mask, const int len, void *newFunc, bool activate)
+JMPBACKADDR HookManager::SetHook(const char *label, const char *pattern, const char *mask,
+	const int len, void *newFunc, bool activate)
 {
+	if (len > MAX_LENGTH)
+	{
+		LOG(2, "Overwritten bytes more than %d (%d)! \n", MAX_LENGTH, len);
+		return 0;
+	}
+
 	//check if there is already a hook registered with same label
 	int index = GetHookStructIndex(label);
 	if (index != -1)
@@ -114,8 +121,6 @@ bool HookManager::IsHookActivated(const char *label)
 	return hooks[index].activated;
 }
 
-//0 failed
-//1 success
 bool HookManager::ActivateHook(const char *label)
 {
 	int index = GetHookStructIndex(label);
@@ -139,8 +144,6 @@ bool HookManager::ActivateHook(const char *label)
 	return true;
 }
 
-//0 failed
-//1 success
 bool HookManager::DeactivateHook(const char *label)
 {
 	LOG(2, "Deactivating %s hook.\n", label);
@@ -328,7 +331,8 @@ bool HookManager::PlaceHook(void* toHook, void* ourFunc, int len)
 	return true;
 }
 
-int HookManager::OverWriteBytes(void* startAddress, void* endAddress, const char *pattern, const char *mask, const char *newBytes)
+int HookManager::OverWriteBytes(void* startAddress, void* endAddress, const char *pattern,
+	const char *mask, const char *newBytes)
 {
 	int overwritten_count = 0;
 
