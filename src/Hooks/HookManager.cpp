@@ -286,8 +286,6 @@ int HookManager::GetHookStructIndex(const char* label)
 	return -1;
 }
 
-//0 failed
-//1 success
 bool HookManager::RestoreOriginalBytes(int index)
 {
 	DWORD curProtection;
@@ -308,7 +306,7 @@ bool HookManager::RestoreOriginalBytes(int index)
 
 bool HookManager::PlaceHook(void* toHook, void* ourFunc, int len)
 {
-	if (len < 5)
+	if (len < 5 || len > MAX_LENGTH)
 	{
 		return false;
 	}
@@ -334,7 +332,7 @@ bool HookManager::PlaceHook(void* toHook, void* ourFunc, int len)
 int HookManager::OverWriteBytes(void* startAddress, void* endAddress, const char *pattern,
 	const char *mask, const char *newBytes)
 {
-	int overwritten_count = 0;
+	int overwrittenCount = 0;
 
 	DWORD base = (DWORD)startAddress;
 	DWORD size = (DWORD)endAddress - (DWORD)startAddress;
@@ -359,21 +357,21 @@ int HookManager::OverWriteBytes(void* startAddress, void* endAddress, const char
 
 			DWORD curProtection;
 			if (!VirtualProtect(toOverwrite, patternLength, PAGE_EXECUTE_READWRITE, &curProtection))
-				return overwritten_count;
+				return overwrittenCount;
 
 			for (int k = 0; k < patternLength; k++)
 			{
 				*((BYTE*)(toOverwrite + k)) = newBytes[k];
 			}
 
-			overwritten_count++;
+			overwrittenCount++;
 
 			DWORD temp;
 			if (!VirtualProtect(toOverwrite, patternLength, curProtection, &temp))
-				return overwritten_count;
+				return overwrittenCount;
 		}
 	}
-	return overwritten_count;
+	return overwrittenCount;
 }
 
 DWORD HookManager::FindPattern(const char *pattern, const char *mask)
