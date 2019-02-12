@@ -1,10 +1,9 @@
 #pragma once
+#include <vector>
 
-#define TOTAL_CHAR_INDEXES 41
-
-extern const char* charNames[TOTAL_CHAR_INDEXES];
-extern const wchar_t* wCharNames[TOTAL_CHAR_INDEXES];
-extern const wchar_t* wOrderedCharNames[TOTAL_CHAR_INDEXES];
+extern const int charNamesCount;
+extern const std::vector<std::string> charNames;
+extern const std::vector<std::wstring> wCharNames;
 
 enum CharIndex
 {

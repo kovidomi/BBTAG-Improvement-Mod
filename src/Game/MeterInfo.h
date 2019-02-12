@@ -14,7 +14,7 @@
 #define BLAZE_GAUGE_GAIN_STAR3	67000
 #define BLAZE_GAUGE_MAX_VALUE	100000
 
-extern const char* meterCharNames[TOTAL_CHAR_INDEXES];
+extern const std::vector<std::string> meterCharNames;
 
 int		blaze_to_single_digit(int blaze_value);
 //helps to fill up the skill gauge several times, like the original HUD does

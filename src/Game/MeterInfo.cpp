@@ -1,6 +1,6 @@
 #include "MeterInfo.h"
 
-const char* meterCharNames[TOTAL_CHAR_INDEXES]
+const std::vector<std::string> meterCharNames
 {
 	"Ragna",	// 0,
 	"Jin",		// 1,

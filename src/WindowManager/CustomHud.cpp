@@ -275,8 +275,8 @@ void CustomHud::UpdateHP(const CharInfo &charInfo, bool right_side)
 
 	///////////////////////////
 	const char* charname;
-	if (charInfo.char_index < TOTAL_CHAR_INDEXES)
-		charname = charNames[charInfo.char_index];
+	if (charInfo.char_index < charNamesCount)
+		charname = charNames[charInfo.char_index].c_str();
 	else
 		charname = "<UNKNOWN>";
 
