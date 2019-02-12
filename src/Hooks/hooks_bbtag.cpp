@@ -532,12 +532,25 @@ DWORD GetViewMatrixJmpBackAddr = 0;
 void __declspec(naked)GetViewMatrix()
 {
 	static D3DXMATRIX* pViewMatrix;
+	static D3DXVECTOR3* pVec;
 
 	LOG_ASM(7, "GetViewMatrix\n");
 
 	__asm pushad
-	__asm add esi, 4Ch
-	__asm mov pViewMatrix, esi
+	__asm lea eax, [esi + 10h]
+	__asm mov pVec, eax
+	g_gameVals.lookAtVector.pUp = pVec;
+
+	__asm lea eax, [esi + 1Ch]
+	__asm mov pVec, eax
+	g_gameVals.lookAtVector.pAt = pVec;
+
+	__asm lea eax, [esi + 4]
+	__asm mov pVec, eax
+	g_gameVals.lookAtVector.pEye = pVec;
+
+	__asm lea eax, [esi + 4Ch]
+	__asm mov pViewMatrix, eax
 	g_gameVals.viewMatrix = pViewMatrix;
 	LOG_ASM(7, "GetViewMatrix: 0x%x\n", pViewMatrix);
 	__asm popad
@@ -633,7 +646,12 @@ bool placeHooks_bbtag()
 	GetPaletteIndexAddrOfflineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOffline", "\xc7\x40\x24\x64\x00\x00\x00\xe8\x00\x00\x00\x00\x46", 
 		"xxxxxxxx????x", 7, GetPaletteIndexAddrOffline);
 
-	//GetViewMatrixJmpBackAddr = HookManager::SetHook("GetViewMatrix", "\x50\x8d\x46\x4c\x50", "xxxxx", 5, GetViewMatrix);
+
+
+
+
+
+	GetViewMatrixJmpBackAddr = HookManager::SetHook("GetViewMatrix", "\x50\x8d\x46\x4c\x50", "xxxxx", 5, GetViewMatrix);
 
 	GetViewProjMatrixJmpBackAddr = HookManager::SetHook("GetViewProjMatrix", "\x8d\x85\x78\xff\xff\xff\x50\x8d\x45\xd0",
 		"xxxxxxxxxx", 10, GetViewProjMatrix);
