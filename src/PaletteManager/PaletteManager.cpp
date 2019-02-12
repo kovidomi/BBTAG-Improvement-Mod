@@ -331,20 +331,13 @@ void PaletteManager::InitPaletteSlotsVector()
 
 bool PaletteManager::PushImplFileIntoVector(IMPL_t & filledPal)
 {
-	// This version of the PushImplFileIntoVector method is for when we dont know which character
-	// the palette belongs to so we get it from the impl header.
-
-	LOG(2, "PushImplFileIntoVector\n");
-
-	CharIndex charIndex = (CharIndex)filledPal.header.charindex;
-
-	//call its overloaded version to prevent duplicated code
-	return PushImplFileIntoVector(charIndex, filledPal.paldata);
+	LOG(7, "PushImplFileIntoVector\n");
+	return PushImplFileIntoVector((CharIndex)filledPal.header.charindex, filledPal.paldata);
 }
 
 bool PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & filledPalData)
 {
-	LOG(2, "PushImplFileIntoVector <overload>\n");
+	LOG(7, "PushImplFileIntoVector <overload>\n");
 
 	if (charIndex > TOTAL_CHAR_INDEXES)
 	{
@@ -371,7 +364,7 @@ bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filled
 
 	std::string path = std::string("BBTAG_IM\\Palettes\\") + charNames[charIndex] + "\\" + filledPalData->palname + ".impl";
 
-	IMPL_t IMPL_file;
+	IMPL_t IMPL_file {};
 
 	IMPL_file.header.headerlen = sizeof(IMPL_header_t);
 	IMPL_file.header.datalen = sizeof(IMPL_data_t);
