@@ -1,6 +1,6 @@
 #pragma once
-#include <Windows.h>
 #include <vector>
+#include <Windows.h>
 
 typedef DWORD JMPBACKADDR;
 

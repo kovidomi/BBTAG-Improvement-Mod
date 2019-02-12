@@ -1,7 +1,8 @@
 #pragma once
 #include "d3d9.h"
-#include <Windows.h>
+
 #include <vector>
+#include <Windows.h>
 
 class D3D9Utils
 {

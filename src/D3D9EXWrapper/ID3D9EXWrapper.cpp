@@ -1,6 +1,8 @@
 #include "ID3D9EXWrapper.h"
+
 #include "ID3D9EXWrapper_Device.h"
-#include "logger.h"
+
+#include "Core/logger.h"
 
 Direct3D9ExWrapper::Direct3D9ExWrapper(IDirect3D9Ex **ppIDirect3D9Ex)
 {

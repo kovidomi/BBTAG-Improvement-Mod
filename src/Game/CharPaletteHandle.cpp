@@ -1,5 +1,6 @@
 #include "CharPaletteHandle.h"
-#include "logger.h"
+
+#include "Core/logger.h"
 
 char* palFileNames[TOTAL_PALETTE_FILES] = { "Character", "Effect01", "Effect02", "Effect03", "Effect04", "Effect05", "Effect06", "Effect07" };
 

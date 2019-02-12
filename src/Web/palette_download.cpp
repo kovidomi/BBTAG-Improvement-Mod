@@ -1,11 +1,15 @@
 #include "palette_download.h"
+
 #include "url_downloader.h"
+
+#include <DecompressClass.h>
+#include "Core/logger.h"
+#include "Core/info.h"
+#include "Core/interfaces.h"
 #include "WindowManager/WindowManager.h"
-#include "logger.h"
-#include "info.h"
+
 #include <vector>
 #include <sstream>
-#include <DecompressClass.h>
 
 #pragma comment(lib, "DecompressLibrary.lib")
 

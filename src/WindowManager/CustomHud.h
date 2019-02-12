@@ -1,5 +1,6 @@
 #pragma once
 #include "Game/CharInfo.h"
+
 #include <imgui.h>
 
 class CustomHud

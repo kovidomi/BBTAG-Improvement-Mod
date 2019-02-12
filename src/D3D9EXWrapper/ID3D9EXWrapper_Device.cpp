@@ -1,9 +1,12 @@
 #include "ID3D9EXWrapper_Device.h"
+
 #include "D3D9Utils.h"
+
+#include "Core/interfaces.h"
+#include "Core/logger.h"
 #include "WindowManager/WindowManager.h"
 #include "Hooks/hooks_bbtag.h"
-#include "interfaces.h"
-#include "logger.h"
+
 #include <steam_api.h>
 
 #pragma comment(lib, "steam_api.lib")

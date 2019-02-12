@@ -9,7 +9,6 @@
 #include "SteamApiWrapper/SteamUserWrapper.h"
 #include "SteamApiWrapper/SteamUtilsWrapper.h"
 #include "SteamApiWrapper/SteamApiHelper.h"
-
 #include <steam_api.h>
 
 struct interfaces_t

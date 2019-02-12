@@ -1,7 +1,8 @@
 #include "CustomHud.h"
-#include "interfaces.h"
+
+#include "Core/interfaces.h"
+#include "Core/logger.h"
 #include "Game/MeterInfo.h"
-#include "logger.h"
 
 ImGuiWindowFlags customHUDWindowFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar;
 const ImVec4 default_cross_bar_color(0.15f, 1.0f, 1.0f, 1.0f);

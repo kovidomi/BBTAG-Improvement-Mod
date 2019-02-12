@@ -1,7 +1,7 @@
 #include "logger.h"
 
-#include <time.h>
 #include <fstream>
+#include <time.h>
 
 bool checkHookSuccess(PBYTE addr, const char* funcName)
 {

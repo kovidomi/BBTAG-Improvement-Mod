@@ -2,8 +2,9 @@
 
 #include "interfaces.h"
 #include "logger.h"
-#include <ctime>
+
 #include <atlstr.h>
+#include <ctime>
 
 settingsIni_t Settings::settingsIni = {};
 savedSettings_t Settings::savedSettings = {};

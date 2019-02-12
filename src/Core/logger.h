@@ -1,6 +1,7 @@
 #pragma once
-#include "D3D9EXWrapper/d3d9.h"
 #include "Settings.h"
+
+#include "D3D9EXWrapper/d3d9.h"
 
 #define DEBUG_LOG_LEVEL	5 //0 = highest, 7 = lowest priority
 #define FORCE_LOGGING 0

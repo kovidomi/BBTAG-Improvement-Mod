@@ -1,13 +1,17 @@
 #include "WindowManager.h"
+
 #include "fonts.h"
-#include "Settings.h"
-#include "utils.h"
+
+#include "Core/info.h"
+#include "Core/interfaces.h"
+#include "Core/logger.h"
+#include "Core/Settings.h"
+#include "Core/utils.h"
+#include "Game/gamestates.h"
+#include "SteamApiWrapper/SteamApiHelper.h"
 #include "Web/update_check.h"
 #include "Web/donators_fetch.h"
-#include "SteamApiWrapper/SteamApiHelper.h"
-#include "logger.h"
-#include "info.h"
-#include "Game/gamestates.h"
+
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
 #include <shellapi.h>
@@ -529,7 +533,7 @@ void WindowManager::WriteLogToFile()
 		printText += ": %.2f\n"; \
 	if(strcmp(#_type, "std::string") != 0) \
 		fprintf(file, printText.c_str(), Settings::settingsIni.##_var);
-#include "../settings.def"
+#include "Core/settings.def"
 #undef SETTING
 
 	fprintf(file, "\n");
@@ -599,7 +603,7 @@ void WindowManager::ShowLoadedSettingsValues()
 	else if(strcmp(#_type, "float") == 0) \
 		printText = "= %.2f"; \
 	ImGui::Text(printText.c_str(), Settings::settingsIni.##_var); ImGui::Separator(); }
-#include "../settings.def"
+#include "Core/settings.def"
 #undef SETTING
 
 }

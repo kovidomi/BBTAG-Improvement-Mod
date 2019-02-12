@@ -1,8 +1,10 @@
 #pragma once
 #include "CharInfo.h"
 #include "characters.h"
-#include <stdint.h>
+
 #include <imgui.h>
+
+#include <stdint.h>
 
 #define SKILL_GAUGE_DIVIDER		5000
 #define SKILL_GAUGE_MAX_VALUE	25000
@@ -50,29 +52,3 @@ public:
 	char unused_8[4]; //0x008C
 	char pad_0090[56]; //0x0090
 }; //Size: 0x00C8
-
-   //in practice this is how the memory looks like:
-   //class PlayerMeters
-   //{
-   //public:
-   //	uint32_t P1_cur_skill; //0x0000
-   //	uint32_t P2_cur_skill; //0x0004
-   //	uint32_t P1_cur_cross; //0x0008
-   //	uint32_t P2_cur_cross; //0x000C
-   //	char pad_0010[16]; //0x0010
-   //	uint32_t P1_cur_blaze; //0x0020
-   //	uint32_t P2_cur_blaze; //0x0024
-   //	uint32_t P1_is_blaze_available; //0x0028
-   //	uint32_t P2_is_blaze_available; //0x002C
-   //	uint32_t P1_is_blaze_active; //0x0030
-   //	uint32_t P2_is_blaze_active; //0x0034
-   //	uint32_t P1_last_active_blaze_lvl; //0x0038
-   //	uint32_t P2_last_active_blaze_lvl; //0x003C
-   //	char pad_0040[32]; //0x0040
-   //	uint32_t P1_doing_partner_atk; //0x0060
-   //	uint32_t P2_doing_partner_atk; //0x0064
-   //	char pad_0068[32]; //0x0068
-   //	uint32_t P1_is_blaze_available_2; //0x0088
-   //	uint32_t P2_is_blaze_available_2; //0x008C
-   //	char pad_0090[56]; //0x0090
-   //}; //Size: 0x00C8

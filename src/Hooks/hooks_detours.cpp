@@ -1,12 +1,15 @@
 #include "hooks_detours.h"
+
 #include "HookManager.h"
+
+#include "Core/interfaces.h"
+#include "Core/logger.h"
 #include "D3D9EXWrapper/ID3D9Wrapper_Sprite.h"
 #include "D3D9EXWrapper/ID3DXWrapper_Effect.h"
 #include "D3D9EXWrapper/ID3D9EXWrapper.h"
 #include "SteamApiWrapper/SteamMatchmakingWrapper.h"
 #include "SteamApiWrapper/SteamNetworkingWrapper.h"
-#include "interfaces.h"
-#include "logger.h"
+
 #include <detours.h>
 #include <steam_api.h>
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "D3D9EXWrapper/d3d9.h"
+
 #include <string>
 
 #define DISPLAYMODE_WINDOWED 1
