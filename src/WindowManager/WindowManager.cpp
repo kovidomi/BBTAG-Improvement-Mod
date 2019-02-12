@@ -13,6 +13,7 @@
 #include <shellapi.h>
 #include <sstream>
 #include <time.h>
+#include "HitboxOverlay.h"
 
 #define MAX_LOG_MSG_LEN 1024
 #define MAIN_WINDOW_DISAPPEAR_TIME_SECONDS 15.0f
@@ -690,103 +691,126 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		ImGui::ColorEdit4("ColEdit", col);
 	}
 
+	if (ImGui::CollapsingHeader("World positions"))
+	{
+		static D3DXVECTOR2 P1Pos(0, 0);
+		static D3DXVECTOR2 P2Pos(0, 0);
+
+		if (ImGui::Button("Player 1"))
+		{
+			P1Pos = D3DXVECTOR2(
+				g_interfaces.player1.GetChar1().GetData()->position_x / 1000.0f + 2048.0,
+				g_interfaces.player1.GetChar1().GetData()->position_y / 1000.0f - 3072.0
+			);
+		}
+		ImGui::SameLine();
+		ImGui::Text("x: %.2f - y: %.2f", P1Pos.x, P1Pos.y);
+
+		if (ImGui::Button("Player 2"))
+		{
+			P2Pos = D3DXVECTOR2(
+				g_interfaces.player2.GetChar1().GetData()->position_x / 1000.0f + 2048.0,
+				g_interfaces.player2.GetChar1().GetData()->position_y / 1000.0f - 3072.0
+			);
+		}
+		ImGui::SameLine();
+		ImGui::Text("x: %.2f - y: %.2f", P2Pos.x, P2Pos.y);
+	}
+
 	if (ImGui::CollapsingHeader("P1 World2Screen"))
 	{
 		static D3DXVECTOR2 result(0, 0);
+		static float z = 0.0f;
 
-		if (ImGui::Button("Run"))
+		ImGui::SliderFloat("Z", &z, -500.0f, 500.0f);
+
+		if (ImGui::Button("Run with matrix"))
 		{
-			//D3DXMATRIX &view = *g_gameVals.viewMatrix;
-			//D3DXMATRIX viewInverse;
-			//D3DXVECTOR2 normalized;
-
-			//LOG(2, "view:\n");
-			//for (int i = 0; i < 16; i = i + 4)
-			//{
-			//	for (int j = 0; j < 4; j++)
-			//	{
-			//		LOG(2, "%.2f - ", view[i + j]);
-			//	}
-			//	LOG(2, "\n");
-			//}
-
-			//D3DXVECTOR2 point (
-			//	g_interfaces.player1.GetChar1().GetData()->position_x, 
-			//	g_interfaces.player1.GetChar1().GetData()->position_y
-			//);
-
-			//D3DVIEWPORT9 viewport;
-			//g_interfaces.pD3D9ExWrapper->GetViewport(&viewport);
-
-			//normalized.x = -1.f + 2.f * (point.x - viewport.X) / viewport.Width;
-			//normalized.y = 1.f - 2.f * (point.y - viewport.Y) / viewport.Height;
-
-			//LOG(2, "viewport: X: %d - Y: %d - width: %d - height: %d\n", viewport.X, viewport.Y, viewport.Width, viewport.Height);
-			//LOG(2, "normalized: x: %.2f - y: %.2f\n", normalized.x, normalized.y);
-
-			//D3DXMatrixInverse(&viewInverse, NULL, &view);
-			//result.x = viewInverse[0] * normalized.x + viewInverse[4] * normalized.y + viewInverse[12];
-			//result.y = viewInverse[1] * normalized.x + viewInverse[5] * normalized.y + viewInverse[13];
-			//LOG(2, "result: x: %.2f - y: %.2f\n", result.x, result.y);
-
-
-
-			/////////////////////////////////////////////////////
-			D3DXMATRIX &view = g_gameVals.viewProjMatrix;
-			D3DXVECTOR2 normalized;
-
-			D3DXVECTOR3 point(
-				g_interfaces.player1.GetChar1().GetData()->position_x,
-				g_interfaces.player1.GetChar1().GetData()->position_y,
-				*(&g_interfaces.player1.GetChar1().GetData()->position_y + 1)
-			);
-
-			LOG(2, "point: x: %.2f - y: %.2f - z: %.2f\n", point.x, point.y, point.z);
-
-			LOG(2, "view:\n");
-			for (int i = 0; i < 4; i++)
-			{
-				for (int j = 0; j < 4; j++)
-				{
-					LOG(2, "%.2f - ", view[(i * 4) + j]);
-				}
-				LOG(2, "\n");
-			}
+			D3DXVECTOR3 dst = { 
+				g_interfaces.player1.GetChar1().GetData()->position_x / 1000.0f + 2048.0f,
+				g_interfaces.player1.GetChar1().GetData()->position_y / 1000.0f + 3072.0f,
+				z
+			};
+			D3DXVECTOR2 screen;
 
 			D3DVIEWPORT9 viewport;
 			g_interfaces.pD3D9ExWrapper->GetViewport(&viewport);
 
-			result[0] = view[0] * point[0] + view[1] * point[1] + view[2] * point[2] + view[3];
-			result[1] = view[4] * point[0] + view[5] * point[1] + view[6] * point[2] + view[7];
+			WorldToScreen(dst, screen, g_gameVals.viewProjMatrix, viewport.Width, viewport.Height);
 
-			auto flTemp = view[12] * point[0] + view[13] * point[1] + view[14] * point[2] + view[15];
+			result.x = screen.x;
+			result.y = screen.y;
+		}
 
-			LOG(2, "1 result: x: %.2f - y: %.2f - z: %.2f\n", result.x, result.y, flTemp);
+		if (ImGui::Button("Run with FOV"))
+		{
+			D3DXVECTOR3 src{ 0.f, 0.f, 0.f };
+			D3DXVECTOR3 dst = {
+				g_interfaces.player1.GetChar1().GetData()->position_x / 1000.0f + 2048.0f,
+				g_interfaces.player1.GetChar1().GetData()->position_y / 1000.0f + 3072.0f,
+				z
+			};
+			D3DXVECTOR3 screen;
+			float fovx = 1.0f;
+			float fovy = 0.79f;
 
-			if (flTemp > 0.01f)
+			D3DVIEWPORT9 viewport;
+			g_interfaces.pD3D9ExWrapper->GetViewport(&viewport);
+
+			WorldToScreen(src, dst, screen, fovx, fovy,
+			viewport.Width, viewport.Height, *g_gameVals.lookAtVector.pEye, *g_gameVals.lookAtVector.pUp, *g_gameVals.lookAtVector.pAt);
+
+			result.x = screen.x;
+			result.y = screen.y;
+		}
+
+		if (ImGui::Button("Run2"))
+		{
+			D3DXMATRIX &view = *g_gameVals.viewMatrix;
+			D3DXMATRIX viewInverse;
+			D3DXVECTOR2 normalized;
+
+			LOG(2, "view:\n");
+			for (int i = 0; i < 16; i = i + 4)
 			{
-				auto invFlTemp = 1.f / flTemp;
-				result[0] *= invFlTemp;
-				result[1] *= invFlTemp;
-
-				LOG(2, "2 result: x: %.2f - y: %.2f - z: %.2f\n", result.x, result.y, invFlTemp);
-
-				static int iResolution[2] = { 0 };
-				if (!iResolution[0] || !iResolution[1])
+				for (int j = 0; j < 4; j++)
 				{
-					iResolution[0] = viewport.Width;
-					iResolution[1] = viewport.Height;
+					LOG(2, "%.2f - ", view[i + j]);
 				}
-
-				auto x = (float)iResolution[0] / 2.f;
-				auto y = (float)iResolution[1] / 2.f;
-
-				x += 0.5f * result[0] * (float)iResolution[0] + 0.5f;
-				y -= 0.5f * result[1] * (float)iResolution[1] + 0.5f;
-
-				result[0] = x;
-				result[1] = y;
+				LOG(2, "\n");
 			}
+
+			D3DXVECTOR2 point(
+				g_interfaces.player1.GetChar1().GetData()->position_x / 1000.0f + 2048.0,
+				g_interfaces.player1.GetChar1().GetData()->position_y / 1000.0f + 3072.0
+			);
+
+			LOG(2, "point: x: %.2f - y: %.2f\n", point.x, point.y);
+
+			D3DVIEWPORT9 viewport;
+			g_interfaces.pD3D9ExWrapper->GetViewport(&viewport);
+
+			normalized.x = -1.f + 2.f * (point.x - viewport.X) / viewport.Width;
+			normalized.y = 1.f - 2.f * (point.y - viewport.Y) / viewport.Height;
+
+			LOG(2, "viewport: X: %d - Y: %d - width: %d - height: %d\n", viewport.X, viewport.Y, viewport.Width, viewport.Height);
+			LOG(2, "normalized: x: %.2f - y: %.2f\n", normalized.x, normalized.y);
+
+			D3DXMatrixInverse(&viewInverse, NULL, &view);
+
+			LOG(2, "viewInverse:\n");
+			for (int i = 0; i < 16; i = i + 4)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					LOG(2, "%.2f - ", viewInverse[i + j]);
+				}
+				LOG(2, "\n");
+			}
+
+			result.x = viewInverse[0] * normalized.x + viewInverse[4] * normalized.y + viewInverse[12];
+			result.y = viewInverse[1] * normalized.x + viewInverse[5] * normalized.y + viewInverse[13];
+			LOG(2, "result: x: %.2f - y: %.2f\n\n", result.x, result.y);
 		}
 
 		ImGui::Text("Result: x: %.2f - y: %.2f", result.x, result.y);
