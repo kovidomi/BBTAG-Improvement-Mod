@@ -469,7 +469,7 @@ void PaletteEditor::ShowPaletteSelectButton(CharHandle & charHandle, const char 
 	int selected_pal_index = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(charPalHandle);
 	CharIndex charIndex = (CharIndex)charHandle.GetData()->char_index;
 
-	if (charIndex >= charNamesCount - 1)
+	if (charIndex >= CHAR_NAMES_COUNT - 1)
 		return;
 
 	ShowPaletteRandomizerButton(popupID, charHandle);

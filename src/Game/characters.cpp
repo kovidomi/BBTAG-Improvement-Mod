@@ -1,6 +1,6 @@
 #include "characters.h"
 
-const int charNamesCount = charNames.size();
+const int CHAR_NAMES_COUNT = charNames.size();
 
 const std::vector<std::string> charNames
 {

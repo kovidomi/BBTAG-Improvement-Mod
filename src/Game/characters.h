@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-extern const int charNamesCount;
+extern const int CHAR_NAMES_COUNT;
 extern const std::vector<std::string> charNames;
 extern const std::vector<std::wstring> wCharNames;
 
