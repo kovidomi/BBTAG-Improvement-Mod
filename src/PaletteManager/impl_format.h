@@ -7,11 +7,11 @@
 
 struct IMPL_header_t
 {
-	char filesig[8] = "IMPL";
+	const char filesig[8] = "IMPL";
 	int headerlen;
 	int datalen;
 	short charindex;
-	short RESERVED; //padding
+	short RESERVED = 0; //padding
 };
 
 struct IMPL_data_t
