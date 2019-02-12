@@ -78,7 +78,6 @@ void __declspec(naked)GetSteamMatchmaking()
 		/////
 		pushad
 		add esi, 10h
-		//mov steamMatchmakingPtrAddr, esi
 		mov g_tempVals.ppSteamMatchmaking, esi
 		popad
 		/////
@@ -98,7 +97,6 @@ void __declspec(naked)GetSteamNetworking()
 		/////
 		pushad
 		add esi, 20h
-		//mov steamNetworkingPtrAddr, esi
 		mov g_tempVals.ppSteamNetworking, esi
 		popad
 		/////
