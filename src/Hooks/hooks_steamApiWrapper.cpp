@@ -1,6 +1,6 @@
 #include "hooks_steamApiWrapper.h"
-#include "../interfaces.h"
-#include "../logger.h"
+#include "interfaces.h"
+#include "logger.h"
 
 bool placeHooks_steamApiWrapper()
 {

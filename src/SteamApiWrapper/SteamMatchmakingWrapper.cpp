@@ -1,7 +1,7 @@
 #include "SteamMatchmakingWrapper.h"
-#include "../utils.h"
-#include "../interfaces.h"
-#include "../logger.h"
+#include "utils.h"
+#include "interfaces.h"
+#include "logger.h"
 
 SteamMatchmakingWrapper::SteamMatchmakingWrapper(ISteamMatchmaking** pSteamMatchmaking)
 {

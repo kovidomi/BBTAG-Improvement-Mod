@@ -1,14 +1,15 @@
 #pragma once
-#include "SteamApiWrapper\SteamFriendsWrapper.h"
-#include "SteamApiWrapper\SteamMatchmakingWrapper.h"
-#include "SteamApiWrapper\SteamNetworkingWrapper.h"
-#include "SteamApiWrapper\SteamUserStatsWrapper.h"
-#include "SteamApiWrapper\SteamUserWrapper.h"
-#include "SteamApiWrapper\SteamUtilsWrapper.h"
+#include "D3D9EXWrapper/ID3D9ExWrapper_Device.h"
+#include "Game/Player.h"
+#include "PaletteManager/PaletteManager.h"
+#include "SteamApiWrapper/SteamFriendsWrapper.h"
+#include "SteamApiWrapper/SteamMatchmakingWrapper.h"
+#include "SteamApiWrapper/SteamNetworkingWrapper.h"
+#include "SteamApiWrapper/SteamUserStatsWrapper.h"
+#include "SteamApiWrapper/SteamUserWrapper.h"
+#include "SteamApiWrapper/SteamUtilsWrapper.h"
 #include "SteamApiWrapper/SteamApiHelper.h"
-#include "D3D9EXWrapper\ID3D9ExWrapper_Device.h"
-#include "Game\Player.h"
-#include "PaletteManager\PaletteManager.h"
+
 #include <steam_api.h>
 
 struct interfaces_t

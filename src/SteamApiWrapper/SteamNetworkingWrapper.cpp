@@ -1,7 +1,7 @@
 #include "SteamNetworkingWrapper.h"
-#include "../utils.h"
-#include "../interfaces.h"
-#include "../logger.h"
+#include "utils.h"
+#include "interfaces.h"
+#include "logger.h"
 
 SteamNetworkingWrapper::SteamNetworkingWrapper(ISteamNetworking** pSteamNetworking)
 {

@@ -1,8 +1,8 @@
 #include "PaletteManager.h"
-#include "../utils.h"
-#include "../WindowManager/WindowManager.h"
-#include "../Web/palette_download.h"
-#include "../logger.h"
+#include "utils.h"
+#include "WindowManager/WindowManager.h"
+#include "Web/palette_download.h"
+#include "logger.h"
 #include <sstream>
 #include <atlstr.h>
 

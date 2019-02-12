@@ -1,6 +1,6 @@
 #pragma once
-#include "../PaletteManager/impl_format.h"
-#include "../utils.h"
+#include "PaletteManager/impl_format.h"
+#include "utils.h"
 
 #define MAX_PAL_INDEX 15
 #define TOTAL_PALETTE_FILES 8

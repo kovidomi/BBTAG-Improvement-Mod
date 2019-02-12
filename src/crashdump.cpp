@@ -1,11 +1,13 @@
 #include "crashdump.h"
+
 #include "interfaces.h"
+
 #include <dbghelp.h>
+#include <memory>
 #include <shlobj.h>
 #include <tchar.h>
 #include <time.h>
 #include <TlHelp32.h>
-#include <memory>
 
 LONG WINAPI UnhandledExFilter(PEXCEPTION_POINTERS ExPtr)
 {

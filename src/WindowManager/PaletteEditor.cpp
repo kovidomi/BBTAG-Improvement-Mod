@@ -1,9 +1,9 @@
 #include "PaletteEditor.h"
 #include "WindowManager.h"
-#include "../interfaces.h"
-#include "../logger.h"
-#include "../Game/gamestates.h"
-#include "../PaletteManager/impl_format.h"
+#include "interfaces.h"
+#include "logger.h"
+#include "Game/gamestates.h"
+#include "PaletteManager/impl_format.h"
 #include <Shlwapi.h>
 #include <imgui.h>
 

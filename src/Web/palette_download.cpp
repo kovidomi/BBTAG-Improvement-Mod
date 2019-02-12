@@ -1,8 +1,8 @@
 #include "palette_download.h"
 #include "url_downloader.h"
-#include "../WindowManager/WindowManager.h"
-#include "../logger.h"
-#include "../info.h"
+#include "WindowManager/WindowManager.h"
+#include "logger.h"
+#include "info.h"
 #include <vector>
 #include <sstream>
 #include <DecompressClass.h>

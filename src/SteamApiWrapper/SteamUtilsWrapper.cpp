@@ -1,6 +1,6 @@
 #include "SteamUtilsWrapper.h"
-#include "../utils.h"
-#include "../logger.h"
+#include "utils.h"
+#include "logger.h"
 
 SteamUtilsWrapper::SteamUtilsWrapper(ISteamUtils** pSteamUtils)
 {

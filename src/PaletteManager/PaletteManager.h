@@ -1,8 +1,8 @@
 #pragma once
 #include "impl_format.h"
-#include "../Game/CharPaletteHandle.h"
-#include "../Game/CharHandle.h"
-#include "../Game/characters.h"
+#include "Game/CharPaletteHandle.h"
+#include "Game/CharHandle.h"
+#include "Game/characters.h"
 #include <vector>
 
 class PaletteManager

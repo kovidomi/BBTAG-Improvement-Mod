@@ -1,7 +1,7 @@
 #pragma once
-#include "../Game/CharPaletteHandle.h"
-#include "../Game/CharHandle.h"
-#include "../Game/characters.h"
+#include "Game/CharPaletteHandle.h"
+#include "Game/CharHandle.h"
+#include "Game/characters.h"
 #include <vector>
 
 class PaletteEditor

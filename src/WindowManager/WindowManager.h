@@ -1,5 +1,5 @@
 #pragma once
-#include "../interfaces.h"
+#include "interfaces.h"
 #include "CustomHud.h"
 #include "PaletteEditor.h"
 

@@ -1,5 +1,5 @@
 #include "url_downloader.h"
-#include "../WindowManager/WindowManager.h"
+#include "WindowManager/WindowManager.h"
 #include <wininet.h>
 
 #pragma comment(lib,"wininet.lib")
