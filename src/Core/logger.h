@@ -32,5 +32,5 @@ void closeLogger();
 //free it after usage!!
 char* getFullDate();
 void logSettingsIni();
-bool checkHookSuccess(PBYTE addr, const char* funcName);
+bool hookSucceeded(PBYTE addr, const char* funcName);
 void logD3DPParams(D3DPRESENT_PARAMETERS* pPresentationParameters, bool isOriginalSettings = true);

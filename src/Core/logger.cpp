@@ -3,7 +3,7 @@
 #include <fstream>
 #include <time.h>
 
-bool checkHookSuccess(PBYTE addr, const char* funcName)
+bool hookSucceeded(PBYTE addr, const char* funcName)
 {
 	if (!addr)
 	{
