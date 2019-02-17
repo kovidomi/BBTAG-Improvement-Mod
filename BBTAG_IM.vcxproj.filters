@@ -45,20 +45,11 @@
     <None Include="resource\settings.ini">
       <Filter>resource</Filter>
     </None>
-    <None Include="src\settings.def">
+    <None Include="src\Core\settings.def">
       <Filter>src</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\crashdump.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\logger.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\SteamApiWrapper\SteamFriendsWrapper.cpp">
       <Filter>src\SteamApiWrapper</Filter>
     </ClCompile>
@@ -76,9 +67,6 @@
     </ClCompile>
     <ClCompile Include="src\SteamApiWrapper\SteamUtilsWrapper.cpp">
       <Filter>src\SteamApiWrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="src\bbtag_im.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\D3D9EXWrapper\D3DXMath.cpp">
       <Filter>src\D3D9EXWrapper</Filter>
@@ -106,9 +94,6 @@
     </ClCompile>
     <ClCompile Include="src\D3D9EXWrapper\D3D9Utils.cpp">
       <Filter>src\D3D9EXWrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Hooks\HookManager.cpp">
       <Filter>src\Hooks</Filter>
@@ -152,14 +137,8 @@
     <ClCompile Include="src\Game\Player.cpp">
       <Filter>src\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\Settings.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\SteamApiWrapper\SteamApiHelper.cpp">
       <Filter>src\SteamApiWrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="src\interfaces.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Hooks\hooks_detours.cpp">
       <Filter>src\Hooks</Filter>
@@ -175,6 +154,27 @@
     </ClCompile>
     <ClCompile Include="src\Web\palette_download.cpp">
       <Filter>src\Web</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\bbtag_im.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\crashdump.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\interfaces.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\logger.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Settings.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\utils.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,18 +198,6 @@
     </ClInclude>
     <ClInclude Include="depends\imgui\stb_truetype.h">
       <Filter>depends\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\bbtag_im.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\crashdump.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\logger.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\WindowManager\CustomHud.h">
       <Filter>src\WindowManager</Filter>
@@ -298,14 +286,8 @@
     <ClInclude Include="src\Game\gamestates.h">
       <Filter>src\Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Settings.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\SteamApiWrapper\SteamApiHelper.h">
       <Filter>src\SteamApiWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="src\interfaces.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Hooks\hooks_detours.h">
       <Filter>src\Hooks</Filter>
@@ -322,7 +304,25 @@
     <ClInclude Include="src\Web\palette_download.h">
       <Filter>src\Web</Filter>
     </ClInclude>
-    <ClInclude Include="src\info.h" />
+    <ClInclude Include="src\Core\utils.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\bbtag_im.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\crashdump.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\info.h" />
+    <ClInclude Include="src\Core\interfaces.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\logger.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Settings.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">

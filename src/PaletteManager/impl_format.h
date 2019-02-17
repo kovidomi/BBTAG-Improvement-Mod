@@ -2,16 +2,15 @@
 #define IMPL_PALNAME_LENGTH 32
 #define IMPL_DESC_LENGTH 64
 #define IMPL_CREATOR_LENGTH 32
-//same size as .hpl datalen
-#define IMPL_PALETTE_DATALEN 1024
+#define IMPL_PALETTE_DATALEN 1024 // .hpl datalen
 
 struct IMPL_header_t
 {
-	char filesig[8] = "IMPL";
+	const char filesig[8] = "IMPL";
 	int headerlen;
 	int datalen;
 	short charindex;
-	short RESERVED; //padding
+	short RESERVED = 0; //padding
 };
 
 struct IMPL_data_t

@@ -1,6 +1,7 @@
 #pragma once
-#include "D3D9EXWrapper\d3d9.h"
 #include "Settings.h"
+
+#include "D3D9EXWrapper/d3d9.h"
 
 #define DEBUG_LOG_LEVEL	5 //0 = highest, 7 = lowest priority
 #define FORCE_LOGGING 0
@@ -31,5 +32,5 @@ void closeLogger();
 //free it after usage!!
 char* getFullDate();
 void logSettingsIni();
-bool checkHookSuccess(PBYTE addr, const char* funcName);
+bool hookSucceeded(PBYTE addr, const char* funcName);
 void logD3DPParams(D3DPRESENT_PARAMETERS* pPresentationParameters, bool isOriginalSettings = true);

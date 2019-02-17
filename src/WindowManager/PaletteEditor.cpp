@@ -1,9 +1,13 @@
 #include "PaletteEditor.h"
+
 #include "WindowManager.h"
-#include "../interfaces.h"
-#include "../logger.h"
-#include "../Game/gamestates.h"
-#include "../PaletteManager/impl_format.h"
+
+#include "Core/interfaces.h"
+#include "Core/logger.h"
+
+#include "Game/gamestates.h"
+#include "PaletteManager/impl_format.h"
+
 #include <Shlwapi.h>
 #include <imgui.h>
 
@@ -109,10 +113,10 @@ void PaletteEditor::InitializeSelectedCharacters()
 	allSelectedCharHandles[2] = &g_interfaces.player2.GetChar1();
 	allSelectedCharHandles[3] = &g_interfaces.player2.GetChar2();
 
-	allSelectedCharNames[0] = charNames[allSelectedCharHandles[0]->GetData()->char_index];
-	allSelectedCharNames[1] = charNames[allSelectedCharHandles[1]->GetData()->char_index];
-	allSelectedCharNames[2] = charNames[allSelectedCharHandles[2]->GetData()->char_index];
-	allSelectedCharNames[3] = charNames[allSelectedCharHandles[3]->GetData()->char_index];
+	allSelectedCharNames[0] = charNames[allSelectedCharHandles[0]->GetData()->char_index].c_str();
+	allSelectedCharNames[1] = charNames[allSelectedCharHandles[1]->GetData()->char_index].c_str();
+	allSelectedCharNames[2] = charNames[allSelectedCharHandles[2]->GetData()->char_index].c_str();
+	allSelectedCharNames[3] = charNames[allSelectedCharHandles[3]->GetData()->char_index].c_str();
 }
 
 void PaletteEditor::CharacterSelection()
@@ -465,7 +469,7 @@ void PaletteEditor::ShowPaletteSelectButton(CharHandle & charHandle, const char 
 	int selected_pal_index = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(charPalHandle);
 	CharIndex charIndex = (CharIndex)charHandle.GetData()->char_index;
 
-	if (charIndex >= TOTAL_CHAR_INDEXES - 1)
+	if (charIndex >= CHAR_NAMES_COUNT - 1)
 		return;
 
 	ShowPaletteRandomizerButton(popupID, charHandle);
@@ -489,7 +493,7 @@ void PaletteEditor::ShowPaletteSelectPopup(CharPaletteHandle& charPalHandle, Cha
 
 	if (ImGui::BeginPopup(popupID))
 	{
-		ImGui::TextUnformatted(charNames[charIndex]);
+		ImGui::TextUnformatted(charNames[charIndex].c_str());
 		ImGui::Separator();
 		for (int i = 0; i < customPaletteVector[charIndex].size(); i++)
 		{

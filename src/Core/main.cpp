@@ -1,5 +1,7 @@
 #include "bbtag_im.h"
+
 #include "logger.h"
+
 #include <Windows.h>
 
 typedef HRESULT(WINAPI *DirectInput8Create_t)(HINSTANCE inst_handle, DWORD version, const IID& r_iid, LPVOID* out_wrapper, LPUNKNOWN p_unk);

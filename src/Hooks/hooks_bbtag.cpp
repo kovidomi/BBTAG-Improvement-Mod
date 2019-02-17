@@ -1,12 +1,14 @@
 #include "hooks_bbtag.h"
+
 #include "HookManager.h"
 #include "hooks_steamApiWrapper.h"
-#include "../SteamApiWrapper/SteamMatchmakingWrapper.h"
-#include "../SteamApiWrapper/SteamNetworkingWrapper.h"
-#include "../WindowManager/WindowManager.h"
-#include "../Game/gamestates.h"
-#include "../interfaces.h"
-#include "../logger.h"
+
+#include "Core/interfaces.h"
+#include "Core/logger.h"
+#include "Game/gamestates.h"
+#include "SteamApiWrapper/SteamMatchmakingWrapper.h"
+#include "SteamApiWrapper/SteamNetworkingWrapper.h"
+#include "WindowManager/WindowManager.h"
 
 DWORD WindowMsgHandlerJmpBackAddr = 0;
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);

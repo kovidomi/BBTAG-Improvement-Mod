@@ -1,11 +1,13 @@
 #include "bbtag_im.h"
-#include "Hooks/hooks_detours.h"
-#include "WindowManager/WindowManager.h"
-#include "interfaces.h"
+
 #include "crashdump.h"
+#include "interfaces.h"
 #include "logger.h"
 #include "Settings.h"
+
+#include "Hooks/hooks_detours.h"
 #include "PaletteManager/PaletteManager.h"
+#include "WindowManager/WindowManager.h"
 
 void CreateCustomDirectories()
 {

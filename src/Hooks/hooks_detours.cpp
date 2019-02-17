@@ -1,12 +1,15 @@
 #include "hooks_detours.h"
+
 #include "HookManager.h"
-#include "../D3D9EXWrapper/ID3D9Wrapper_Sprite.h"
-#include "../D3D9EXWrapper/ID3DXWrapper_Effect.h"
-#include "../D3D9EXWrapper/ID3D9EXWrapper.h"
-#include "../SteamApiWrapper/SteamMatchmakingWrapper.h"
-#include "../SteamApiWrapper/SteamNetworkingWrapper.h"
-#include "../interfaces.h"
-#include "../logger.h"
+
+#include "Core/interfaces.h"
+#include "Core/logger.h"
+#include "D3D9EXWrapper/ID3D9Wrapper_Sprite.h"
+#include "D3D9EXWrapper/ID3DXWrapper_Effect.h"
+#include "D3D9EXWrapper/ID3D9EXWrapper.h"
+#include "SteamApiWrapper/SteamMatchmakingWrapper.h"
+#include "SteamApiWrapper/SteamNetworkingWrapper.h"
+
 #include <detours.h>
 #include <steam_api.h>
 
@@ -44,7 +47,8 @@ HRESULT APIENTRY hook_D3DXCreateEffect(LPDIRECT3DDEVICE9 pDevice, LPCVOID pSrcDa
 	LPD3DXBUFFER* ppCompilationErrors)
 {
 	LOG(7, "D3DXCreateEffect\n");
-	HRESULT hR = orig_D3DXCreateEffect(pDevice, pSrcData, SrcDataLen, pDefines, pInclude, Flags, pPool, ppEffect, ppCompilationErrors);
+	HRESULT hR = orig_D3DXCreateEffect(pDevice, pSrcData, SrcDataLen, pDefines, pInclude,
+		Flags, pPool, ppEffect, ppCompilationErrors);
 	if (SUCCEEDED(hR))
 	{
 		ID3DXEffectWrapper *ret = new ID3DXEffectWrapper(&ppEffect);
@@ -75,7 +79,6 @@ void __declspec(naked)GetSteamMatchmaking()
 		/////
 		pushad
 		add esi, 10h
-		//mov steamMatchmakingPtrAddr, esi
 		mov g_tempVals.ppSteamMatchmaking, esi
 		popad
 		/////
@@ -95,7 +98,6 @@ void __declspec(naked)GetSteamNetworking()
 		/////
 		pushad
 		add esi, 20h
-		//mov steamNetworkingPtrAddr, esi
 		mov g_tempVals.ppSteamNetworking, esi
 		popad
 		/////
@@ -187,13 +189,23 @@ bool WINAPI hook_SteamAPI_Init()
 	LOG(1, "SteamAPI_Init\n");
 	bool ret = orig_SteamAPI_Init();
 
-	//hooking SteamMatchmaking and SteamNetworking
-	SteamMatchmakingFuncJmpBackAddr = HookManager::SetHook("SteamMatchmaking", "\xff\x50\x28\x89\x46\x10\x85\xc0", "xxxxxxxx", 6, GetSteamMatchmaking);
-	SteamNetworkingFuncJmpBackAddr = HookManager::SetHook("SteamNetworking", "\xff\x50\x40\x89\x46\x20\x85\xc0", "xxxxxxxx", 6, GetSteamNetworking);
-	SteamUserFuncJmpBackAddr = HookManager::SetHook("SteamUser", "\xff\x50\x14\x89\x46\x04", "xxxxxx", 6, GetSteamUser);
-	SteamFriendsFuncJmpBackAddr = HookManager::SetHook("SteamFriends", "\xff\x50\x20\x89\x46\x08", "xxxxxx", 6, GetSteamFriends);
-	SteamUtilsFuncJmpBackAddr = HookManager::SetHook("SteamUtils", "\xff\x50\x24\x89\x46\x0c", "xxxxxx", 6, GetSteamUtils);
-	SteamUserStatsFuncJmpBackAddr = HookManager::SetHook("SteamUserStats", "\xff\x50\x34\x89\x46\x14", "xxxxxx", 6, GetSteamUserStats);
+	SteamMatchmakingFuncJmpBackAddr = HookManager::SetHook("SteamMatchmaking",
+		"\xff\x50\x28\x89\x46\x10\x85\xc0", "xxxxxxxx", 6, GetSteamMatchmaking);
+
+	SteamNetworkingFuncJmpBackAddr = HookManager::SetHook("SteamNetworking",
+		"\xff\x50\x40\x89\x46\x20\x85\xc0", "xxxxxxxx", 6, GetSteamNetworking);
+
+	SteamUserFuncJmpBackAddr = HookManager::SetHook("SteamUser",
+		"\xff\x50\x14\x89\x46\x04", "xxxxxx", 6, GetSteamUser);
+
+	SteamFriendsFuncJmpBackAddr = HookManager::SetHook("SteamFriends",
+		"\xff\x50\x20\x89\x46\x08", "xxxxxx", 6, GetSteamFriends);
+
+	SteamUtilsFuncJmpBackAddr = HookManager::SetHook("SteamUtils",
+		"\xff\x50\x24\x89\x46\x0c", "xxxxxx", 6, GetSteamUtils);
+
+	SteamUserStatsFuncJmpBackAddr = HookManager::SetHook("SteamUserStats",
+		"\xff\x50\x34\x89\x46\x14", "xxxxxx", 6, GetSteamUserStats);
 
 	return ret;
 }
@@ -208,7 +220,9 @@ HWND WINAPI hook_CreateWindowExW(DWORD dwExStyle, LPCWSTR lpClassName, LPCWSTR l
 		nWidth = Settings::settingsIni.windowwidth;
 		nHeight = Settings::settingsIni.windowheight;
 	}
-	HWND hWnd = orig_CreateWindowExW(dwExStyle, lpClassName, lpWindowName, dwStyle, X, Y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam);
+	HWND hWnd = orig_CreateWindowExW(dwExStyle, lpClassName, lpWindowName, dwStyle, X, Y,
+		nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam);
+
 	LOG(2, "HWND: 0x%p\n", hWnd);
 	if (SUCCEEDED(hWnd))
 	{
@@ -293,17 +307,17 @@ bool placeHooks_detours()
 	PBYTE pSetWindowPos = (PBYTE)GetProcAddress(hM_user32, "SetWindowPos");
 	PBYTE pGetFocus = (PBYTE)GetProcAddress(hM_user32, "GetFocus");
 
-	if (!checkHookSuccess((PBYTE)pDirect3DCreate9Ex, "Direct3DCreate9Ex"))
+	if (!hookSucceeded((PBYTE)pDirect3DCreate9Ex, "Direct3DCreate9Ex"))
 		return false;
-	if (!checkHookSuccess((PBYTE)pD3DXCreateEffect, "D3DXCreateEffect"))
+	if (!hookSucceeded((PBYTE)pD3DXCreateEffect, "D3DXCreateEffect"))
 		return false;
-	if (!checkHookSuccess((PBYTE)pD3DXCreateSprite, "D3DXCreateSprite"))
+	if (!hookSucceeded((PBYTE)pD3DXCreateSprite, "D3DXCreateSprite"))
 		return false;
-	if (!checkHookSuccess((PBYTE)pSteamAPI_Init, "SteamAPI_Init"))
+	if (!hookSucceeded((PBYTE)pSteamAPI_Init, "SteamAPI_Init"))
 		return false;
-	if (!checkHookSuccess((PBYTE)pCreateWindowExW, "CreateWindowExW"))
+	if (!hookSucceeded((PBYTE)pCreateWindowExW, "CreateWindowExW"))
 		return false;
-	if (!checkHookSuccess((PBYTE)pSetWindowPos, "pSetWindowPos"))
+	if (!hookSucceeded((PBYTE)pSetWindowPos, "pSetWindowPos"))
 		return false;
 	
 	orig_Direct3DCreate9Ex = (Direct3DCreate9Ex_t)DetourFunction(pDirect3DCreate9Ex, (LPBYTE)hook_Direct3DCreate9Ex);

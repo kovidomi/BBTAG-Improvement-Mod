@@ -46,7 +46,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)\depends\discord_api\include;$(SolutionDir)\depends\DecompressLibrary\include;$(SolutionDir)\depends\directx_sdk\Include;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\imgui;$(SolutionDir)\depends\steamworks_sdk_142\sdk\public\steam;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\depends\discord_api\include;$(SolutionDir)\src;$(SolutionDir)\depends\DecompressLibrary\include;$(SolutionDir)\depends\directx_sdk\Include;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\imgui;$(SolutionDir)\depends\steamworks_sdk_142\sdk\public\steam;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\depends\discord_api\lib;$(SolutionDir)\depends\DecompressLibrary\lib\Release;$(SolutionDir)\depends\directx_sdk\Lib\x86;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\steamworks_sdk_142\sdk\redistributable_bin;$(LibraryPath)</LibraryPath>
     <OutDir>bin\$(Configuration)\</OutDir>
     <IntDir>build\$(Configuration)\</IntDir>
@@ -54,7 +54,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\depends\discord_api\include;$(SolutionDir)\depends\DecompressLibrary\include;$(SolutionDir)\depends\directx_sdk\Include;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\imgui;$(SolutionDir)\depends\steamworks_sdk_142\sdk\public\steam;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\depends\discord_api\include;$(SolutionDir)\src;$(SolutionDir)\depends\DecompressLibrary\include;$(SolutionDir)\depends\directx_sdk\Include;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\imgui;$(SolutionDir)\depends\steamworks_sdk_142\sdk\public\steam;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\depends\discord_api\lib;$(SolutionDir)\depends\DecompressLibrary\lib\Debug;$(SolutionDir)\depends\directx_sdk\Lib\x86;$(SolutionDir)\depends\detour;$(SolutionDir)\depends\steamworks_sdk_142\sdk\redistributable_bin;$(LibraryPath)</LibraryPath>
     <OutDir>bin\$(Configuration)\</OutDir>
     <IntDir>build\$(Configuration)\</IntDir>
@@ -116,7 +116,7 @@
   <ItemGroup>
     <None Include="export\dinput8.def" />
     <None Include="resource\settings.ini" />
-    <None Include="src\settings.def" />
+    <None Include="src\Core\settings.def" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="depends\imgui\imgui.cpp" />
@@ -133,18 +133,18 @@
     <ClCompile Include="src\Hooks\hooks_bbtag.cpp" />
     <ClCompile Include="src\Hooks\hooks_detours.cpp" />
     <ClCompile Include="src\Hooks\hooks_steamApiWrapper.cpp" />
-    <ClCompile Include="src\bbtag_im.cpp" />
-    <ClCompile Include="src\crashdump.cpp" />
+    <ClCompile Include="src\Core\bbtag_im.cpp" />
+    <ClCompile Include="src\Core\crashdump.cpp" />
     <ClCompile Include="src\D3D9EXWrapper\D3DXMath.cpp" />
     <ClCompile Include="src\D3D9EXWrapper\ID3D9EXWrapper.cpp" />
     <ClCompile Include="src\D3D9EXWrapper\ID3D9EXWrapper_Device.cpp" />
     <ClCompile Include="src\D3D9EXWrapper\ID3D9Wrapper_Sprite.cpp" />
     <ClCompile Include="src\D3D9EXWrapper\ID3DXWrapper_Effect.cpp" />
-    <ClCompile Include="src\interfaces.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\logger.cpp" />
+    <ClCompile Include="src\Core\interfaces.cpp" />
+    <ClCompile Include="src\Core\main.cpp" />
+    <ClCompile Include="src\Core\logger.cpp" />
     <ClCompile Include="src\PaletteManager\PaletteManager.cpp" />
-    <ClCompile Include="src\Settings.cpp" />
+    <ClCompile Include="src\Core\Settings.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamApiHelper.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamFriendsWrapper.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamMatchmakingWrapper.cpp" />
@@ -152,7 +152,7 @@
     <ClCompile Include="src\SteamApiWrapper\SteamUserStatsWrapper.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamUserWrapper.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamUtilsWrapper.cpp" />
-    <ClCompile Include="src\utils.cpp" />
+    <ClCompile Include="src\Core\utils.cpp" />
     <ClCompile Include="src\Web\donators_fetch.cpp" />
     <ClCompile Include="src\Web\palette_download.cpp" />
     <ClCompile Include="src\Web\update_check.cpp" />
@@ -170,8 +170,8 @@
     <ClInclude Include="depends\imgui\stb_rect_pack.h" />
     <ClInclude Include="depends\imgui\stb_textedit.h" />
     <ClInclude Include="depends\imgui\stb_truetype.h" />
-    <ClInclude Include="src\bbtag_im.h" />
-    <ClInclude Include="src\crashdump.h" />
+    <ClInclude Include="src\Core\bbtag_im.h" />
+    <ClInclude Include="src\Core\crashdump.h" />
     <ClInclude Include="src\D3D9EXWrapper\d3d9.h" />
     <ClInclude Include="src\D3D9EXWrapper\D3D9Utils.h" />
     <ClInclude Include="src\D3D9EXWrapper\D3DXMath.h" />
@@ -190,12 +190,12 @@
     <ClInclude Include="src\Hooks\hooks_bbtag.h" />
     <ClInclude Include="src\Hooks\hooks_detours.h" />
     <ClInclude Include="src\Hooks\hooks_steamApiWrapper.h" />
-    <ClInclude Include="src\info.h" />
-    <ClInclude Include="src\interfaces.h" />
-    <ClInclude Include="src\logger.h" />
+    <ClInclude Include="src\Core\info.h" />
+    <ClInclude Include="src\Core\interfaces.h" />
+    <ClInclude Include="src\Core\logger.h" />
     <ClInclude Include="src\PaletteManager\impl_format.h" />
     <ClInclude Include="src\PaletteManager\PaletteManager.h" />
-    <ClInclude Include="src\Settings.h" />
+    <ClInclude Include="src\Core\Settings.h" />
     <ClInclude Include="src\SteamApiWrapper\SteamApiHelper.h" />
     <ClInclude Include="src\SteamApiWrapper\SteamFriendsWrapper.h" />
     <ClInclude Include="src\SteamApiWrapper\SteamMatchmakingWrapper.h" />
@@ -203,7 +203,7 @@
     <ClInclude Include="src\SteamApiWrapper\SteamUserStatsWrapper.h" />
     <ClInclude Include="src\SteamApiWrapper\SteamUserWrapper.h" />
     <ClInclude Include="src\SteamApiWrapper\SteamUtilsWrapper.h" />
-    <ClInclude Include="src\utils.h" />
+    <ClInclude Include="src\Core\utils.h" />
     <ClInclude Include="src\Web\donators_fetch.h" />
     <ClInclude Include="src\Web\palette_download.h" />
     <ClInclude Include="src\Web\update_check.h" />
