@@ -1,6 +1,6 @@
 #include "PaletteEditor.h"
 
-#include "WindowManager.h"
+#include "OverlayManager.h"
 
 #include "Core/interfaces.h"
 #include "Core/logger.h"

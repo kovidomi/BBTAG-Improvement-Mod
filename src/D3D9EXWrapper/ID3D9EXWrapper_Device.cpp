@@ -4,8 +4,8 @@
 
 #include "Core/interfaces.h"
 #include "Core/logger.h"
-#include "WindowManager/WindowManager.h"
 #include "Hooks/hooks_bbtag.h"
+#include "Overlay/OverlayManager.h"
 
 #include <steam_api.h>
 

@@ -1,6 +1,6 @@
 #include "url_downloader.h"
 
-#include "WindowManager/WindowManager.h"
+#include "Overlay/OverlayManager.h"
 
 #include <wininet.h>
 

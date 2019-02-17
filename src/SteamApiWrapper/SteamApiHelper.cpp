@@ -1,7 +1,7 @@
 #include "SteamApiHelper.h"
 
 #include "Core/logger.h"
-#include "WindowManager/WindowManager.h"
+#include "Overlay/OverlayManager.h"
 
 //note: commented out functions are not working
 

@@ -6,7 +6,7 @@
 #include "Core/logger.h"
 #include "Core/info.h"
 #include "Core/interfaces.h"
-#include "WindowManager/WindowManager.h"
+#include "Overlay/OverlayManager.h"
 
 #include <vector>
 #include <sstream>

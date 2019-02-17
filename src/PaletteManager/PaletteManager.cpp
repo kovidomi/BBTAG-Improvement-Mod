@@ -3,7 +3,7 @@
 #include "Core/interfaces.h"
 #include "Core/logger.h"
 #include "Core/utils.h"
-#include "WindowManager/WindowManager.h"
+#include "Overlay/OverlayManager.h"
 #include "Web/palette_download.h"
 
 #include <sstream>

@@ -6,8 +6,8 @@
 #include "Settings.h"
 
 #include "Hooks/hooks_detours.h"
+#include "Overlay/OverlayManager.h"
 #include "PaletteManager/PaletteManager.h"
-#include "WindowManager/WindowManager.h"
 
 void CreateCustomDirectories()
 {
