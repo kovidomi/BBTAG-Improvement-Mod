@@ -15,7 +15,7 @@
 
 void GetPalettesFromArchive()
 {
-	WindowManager::AddLog("[system] Extracting 'palettes.tar.gz'...\n");
+	OverlayManager::AddLog("[system] Extracting 'palettes.tar.gz'...\n");
 
 	CDecompressClass decompressObj;
 	int successCount = 0;
@@ -24,12 +24,12 @@ void GetPalettesFromArchive()
 	if (!decompressObj.OpenArchive(L"BBTAG_IM/Download/palettes.tar.gz"))
 	{
 		char* pStr = CT2A((LPCTSTR)decompressObj.GetErrorText());
-		WindowManager::AddLog("[error] 'BBTAG_IM/Download/palettes.tar.gz'could not be opened: %s\n", pStr);
+		OverlayManager::AddLog("[error] 'BBTAG_IM/Download/palettes.tar.gz'could not be opened: %s\n", pStr);
 		LOG(2, "ERROR, 'BBTAG_IM/Download/palettes.tar.gz'could not be opened: %s\n", pStr);
 		return;
 	}
 
-	WindowManager::DisableLogging();
+	OverlayManager::DisableLogging();
 
 	// if we opened ok, read each file from the archive
 	for (int i = 0; i < decompressObj.GetCompressedFilesCount(); i++)
@@ -47,9 +47,9 @@ void GetPalettesFromArchive()
 
 			if (strncmp(((IMPL_t*)pszFileBuffer)->header.filesig, "IMPL", 5) != 0)
 			{
-				WindowManager::EnableLogging();
-				WindowManager::AddLog("[error] 'palettes.tar.gz' contains non .impl file: '%s'\n", fileName.c_str());
-				WindowManager::DisableLogging();
+				OverlayManager::EnableLogging();
+				OverlayManager::AddLog("[error] 'palettes.tar.gz' contains non .impl file: '%s'\n", fileName.c_str());
+				OverlayManager::DisableLogging();
 				LOG(2, "ERROR, 'palettes.tar.gz' contains non .impl file: '%s'\n", fileName.c_str());
 				continue;
 			}
@@ -61,15 +61,15 @@ void GetPalettesFromArchive()
 				failCount++;
 		}
 	}
-	WindowManager::EnableLogging();
-	WindowManager::AddLog("[system] Total of %d palettes had been successfully extracted from 'palettes.tar.gz' (%d succeeded, %d failed)\n", 
+	OverlayManager::EnableLogging();
+	OverlayManager::AddLog("[system] Total of %d palettes had been successfully extracted from 'palettes.tar.gz' (%d succeeded, %d failed)\n", 
 		successCount + failCount, successCount, failCount);
 }
 
 std::vector<std::wstring> DownloadPaletteFileList(std::wstring wUrl)
 {
 	LOG(2, "DownloadPaletteFileList\n");
-	WindowManager::AddLog("[system] Getting online palette list...\n");
+	OverlayManager::AddLog("[system] Getting online palette list...\n");
 	
 	std::string data = DownloadUrl(wUrl);
 
@@ -93,7 +93,7 @@ std::vector<std::wstring> DownloadPaletteFileList(std::wstring wUrl)
 	else
 	{
 		LOG(2, "DownloadPaletteFileList failed, no data received, or 404!!!\n");
-		WindowManager::AddLog("[error] Failed to retrieve online palette list. No data, or 404\n");
+		OverlayManager::AddLog("[error] Failed to retrieve online palette list. No data, or 404\n");
 	}
 
 	return links;
@@ -107,12 +107,12 @@ void DownloadPaletteArchive()
 
 		char* downlBuf = 0;
 
-		WindowManager::AddLog("[system] Downloading latest 'palettes.tar.gz'...\n");
+		OverlayManager::AddLog("[system] Downloading latest 'palettes.tar.gz'...\n");
 		int res = DownloadUrlBinary(wUrl, (void**)&downlBuf);
 
 		if (res > 0 && downlBuf)
 		{
-			WindowManager::AddLog("[system] Finished downloading 'palettes.tar.gz'\n");
+			OverlayManager::AddLog("[system] Finished downloading 'palettes.tar.gz'\n");
 
 			if (utils_WriteFile("BBTAG_IM/Download/palettes.tar.gz", downlBuf, res, true))
 			{
@@ -120,7 +120,7 @@ void DownloadPaletteArchive()
 			}
 			else
 			{
-				WindowManager::AddLog("[error] 'BBTAG_IM/Download/palettes.tar.gz'could not be written\n");
+				OverlayManager::AddLog("[error] 'BBTAG_IM/Download/palettes.tar.gz'could not be written\n");
 				LOG(2, "ERROR, 'BBTAG_IM/Download/palettes.tar.gz'could not be written\n");
 			}
 		}

@@ -59,7 +59,7 @@ void PaletteManager::LoadPalettesFromFolder()
 	InitCustomPaletteVector();
 
 	LOG(2, "LoadPaletteFiles\n");
-	WindowManager::AddLog("[system] Loading local custom palettes...\n");
+	OverlayManager::AddLog("[system] Loading local custom palettes...\n");
 
 	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
 	for (int i = 0; i < (CHAR_NAMES_COUNT - 1); i++)
@@ -70,7 +70,7 @@ void PaletteManager::LoadPalettesFromFolder()
 
 	InitOnlinePalsIndexVector();
 
-	WindowManager::AddLog("[system] Finished loading local custom palettes\n");
+	OverlayManager::AddLog("[system] Finished loading local custom palettes\n");
 }
 
 void PaletteManager::InitOnlinePalsIndexVector()
@@ -105,7 +105,7 @@ void PaletteManager::ApplyDefaultCustomPalette(CharIndex charIndex, CharPaletteH
 
 	if (foundCustomPalIndex < 0)
 	{
-		WindowManager::AddLog("[error] Palette file '%s' cannot be set as default: File not found.\n", palName);
+		OverlayManager::AddLog("[error] Palette file '%s' cannot be set as default: File not found.\n", palName);
 		return;
 	}
 
@@ -149,7 +149,7 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 
 			if (fileName.find(".impl") == std::string::npos)
 			{
-				WindowManager::AddLog("[error] Unable to open '%s' : not an .impl file\n", fileName.c_str());
+				OverlayManager::AddLog("[error] Unable to open '%s' : not an .impl file\n", fileName.c_str());
 				continue;
 			}
 
@@ -157,7 +157,7 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 			if(!utils_ReadFile(fullPath.c_str(), &fileContents, sizeof(IMPL_t), true))
 			{
 				LOG(2, "\tCouldn't open %s!\n", strerror(errno));
-				WindowManager::AddLog("[error] Unable to open '%s' : %s\n", fileName.c_str(), strerror(errno));
+				OverlayManager::AddLog("[error] Unable to open '%s' : %s\n", fileName.c_str(), strerror(errno));
 				continue;
 			}
 
@@ -165,14 +165,14 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 			if (strcmp(fileContents.header.filesig, "IMPL") != 0)
 			{
 				LOG(2, "ERROR, unrecognized file format!\n");
-				WindowManager::AddLog("[error] '%s' unrecognized file format!\n", fileName.c_str());
+				OverlayManager::AddLog("[error] '%s' unrecognized file format!\n", fileName.c_str());
 				continue;
 			}
 
 			if (fileContents.header.datalen != sizeof(IMPL_data_t))
 			{
 				LOG(2, "ERROR, data size mismatch!\n");
-				WindowManager::AddLog("[error] '%s' data size mismatch!\n", fileName.c_str());
+				OverlayManager::AddLog("[error] '%s' data size mismatch!\n", fileName.c_str());
 				continue;
 			}
 
@@ -181,7 +181,7 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 				LOG(2, "WARNING, '%s' belongs to character %s, but is placed in folder %s\n",
 					fileName.c_str(), charNames[fileContents.header.charindex], charNames[charIndex]);
 
-				WindowManager::AddLog("[warning] '%s' belongs to character '%s', but is placed in folder '%s'\n", 
+				OverlayManager::AddLog("[warning] '%s' belongs to character '%s', but is placed in folder '%s'\n", 
 					fileName.c_str(), charNames[fileContents.header.charindex], charNames[charIndex]);
 				//keep going
 			}
@@ -210,7 +210,7 @@ void PaletteManager::LoadPaletteSettingsFile()
 	if (!PathFileExists(wFullPath.c_str()))
 	{
 		LOG(2, "\t'palettes.ini' file was not found!\n");
-		WindowManager::AddLog("[error] 'palettes.ini' file was not found!\n");
+		OverlayManager::AddLog("[error] 'palettes.ini' file was not found!\n");
 		return;
 	}
 
@@ -255,7 +255,7 @@ void PaletteManager::LoadPaletteSettingsFile()
 //	if (PathFileExists(wFullPath.c_str()))
 //	{
 //		LOG(2, "\t'palettes.ini' already exists\n");
-//		WindowManager::AddLog("[system] 'palettes.ini' already exists\n");
+//		OverlayManager::AddLog("[system] 'palettes.ini' already exists\n");
 //		return true;
 //	}
 //
@@ -267,7 +267,7 @@ void PaletteManager::LoadPaletteSettingsFile()
 //	if (!file.is_open())
 //	{
 //		LOG(2, "\tCouldn't open %s!\n", strerror(errno));
-//		WindowManager::AddLog("[error] Unable to open '%s' : %s\n", path.c_str(), strerror(errno));
+//		OverlayManager::AddLog("[error] Unable to open '%s' : %s\n", path.c_str(), strerror(errno));
 //		return false;
 //	}
 //
@@ -308,7 +308,7 @@ void PaletteManager::LoadPaletteSettingsFile()
 //	}
 //
 //	LOG(2, "\tCreated '%s'\n", path.c_str());
-//	WindowManager::AddLog("[system] Created '%s'\n", path.c_str());
+//	OverlayManager::AddLog("[system] Created '%s'\n", path.c_str());
 //
 //	return true;
 //}
@@ -342,20 +342,20 @@ bool PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & f
 
 	if (charIndex > CHAR_NAMES_COUNT)
 	{
-		WindowManager::AddLog("[error] Custom palette couldn't be loaded: CharIndex out of bound.\n");
+		OverlayManager::AddLog("[error] Custom palette couldn't be loaded: CharIndex out of bound.\n");
 		LOG(2, "ERROR, CharIndex out of bound\n");
 		return false;
 	}
 	if (FindCustomPalIndex(charIndex, filledPalData.palname) > 0)
 	{
-		WindowManager::AddLog("[error] Custom palette couldn't be loaded: a palette with name '%s' is already loaded.\n", filledPalData.palname);
+		OverlayManager::AddLog("[error] Custom palette couldn't be loaded: a palette with name '%s' is already loaded.\n", filledPalData.palname);
 		LOG(2, "ERROR, A custom palette with name '%s' is already loaded.\n", filledPalData.palname);
 		return false;
 	}
 
 	m_customPalettes[charIndex].push_back(filledPalData);
 
-	WindowManager::AddLog("[system] Loaded '%s%s' for character '%s'\n", filledPalData.palname, ".impl", charNames[charIndex]);
+	OverlayManager::AddLog("[system] Loaded '%s%s' for character '%s'\n", filledPalData.palname, ".impl", charNames[charIndex]);
 	return true;
 }
 
@@ -375,7 +375,7 @@ bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filled
 	if (!utils_WriteFile(path.c_str(), &IMPL_file, sizeof(IMPL_t), true))
 	{
 		LOG(2, "\tCouldn't open %s!\n", strerror(errno));
-		WindowManager::AddLog("[error] Unable to open '%s' : %s\n", path.c_str(), strerror(errno));
+		OverlayManager::AddLog("[error] Unable to open '%s' : %s\n", path.c_str(), strerror(errno));
 		return false;
 	}
 
@@ -396,8 +396,8 @@ void PaletteManager::LoadAllPalettes()
 void PaletteManager::ReloadAllPalettes()
 {
 	LOG(2, "ReloadAllPalettes\n");
-	WindowManager::AddLogSeparator();
-	WindowManager::AddLog("[system] Reloading custom palettes...\n");
+	OverlayManager::AddLogSeparator();
+	OverlayManager::AddLog("[system] Reloading custom palettes...\n");
 
 	LoadAllPalettes();
 }

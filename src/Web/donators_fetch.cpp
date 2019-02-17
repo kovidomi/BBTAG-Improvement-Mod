@@ -55,7 +55,7 @@ void FetchDonators()
 		}
 		return;
 	}
-	WindowManager::AddLog("[error] Donators fetch failed. No data downloaded.\n");
+	OverlayManager::AddLog("[error] Donators fetch failed. No data downloaded.\n");
 	LOG(2, "Donators fetch failed. No data downloaded.\n");
 
 	//X-MACRO, loading donators and tiers from file

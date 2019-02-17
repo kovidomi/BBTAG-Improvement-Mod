@@ -7,7 +7,7 @@
 //forward declaration
 struct ImGuiLog;
 
-class WindowManager
+class OverlayManager
 {
 private:
 	static CustomHud* m_customHud;

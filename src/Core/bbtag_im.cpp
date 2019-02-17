@@ -39,7 +39,7 @@ void BBTAG_IM_Start()
 
 void BBTAG_IM_Shutdown()
 {
-	WindowManager::Shutdown();
+	OverlayManager::Shutdown();
 
 	CleanupInterfaces();
 

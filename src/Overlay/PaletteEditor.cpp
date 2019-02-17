@@ -338,13 +338,13 @@ void PaletteEditor::SavePaletteToFile()
 		if (strncmp(palNameBuf, "", IMPL_PALNAME_LENGTH) == 0)
 		{
 			memcpy(message, "Error, no filename given", 25);
-			WindowManager::AddLog("[error] Could not save custom palette, no filename was given\n");
+			OverlayManager::AddLog("[error] Could not save custom palette, no filename was given\n");
 			return;
 		}
 		else if (strncmp(palNameBuf, "Default", IMPL_PALNAME_LENGTH) == 0 || strncmp(palNameBuf, "Random", IMPL_PALNAME_LENGTH) == 0)
 		{
 			memcpy(message, "Error, not a valid filename", 28);
-			WindowManager::AddLog("[error] Could not save custom palette: not a valid filename\n");
+			OverlayManager::AddLog("[error] Could not save custom palette: not a valid filename\n");
 			return;
 		}
 
@@ -382,14 +382,14 @@ void PaletteEditor::SavePaletteToFile()
 			if (g_interfaces.pPaletteManager->WritePaletteToFile(selectedCharIndex, &curPalData))
 			{
 				std::string fullPath(wFullPath.begin(), wFullPath.end());
-				WindowManager::AddLog("[system] Custom palette '%s' successfully saved to:\n'%s'\n", filenameTemp.c_str(), fullPath.c_str());
+				OverlayManager::AddLog("[system] Custom palette '%s' successfully saved to:\n'%s'\n", filenameTemp.c_str(), fullPath.c_str());
 				messageText += "' saved successfully";
 
 				ReloadSavedPalette(palNameBuf);
 			}
 			else
 			{
-				WindowManager::AddLog("[error] Custom palette '%s' failed to be saved.\n", filenameTemp.c_str());
+				OverlayManager::AddLog("[error] Custom palette '%s' failed to be saved.\n", filenameTemp.c_str());
 				messageText += "' save failed";
 			}
 
@@ -400,16 +400,16 @@ void PaletteEditor::SavePaletteToFile()
 
 void PaletteEditor::ReloadSavedPalette(const char* palName)
 {
-	WindowManager::DisableLogging();
+	OverlayManager::DisableLogging();
 	g_interfaces.pPaletteManager->ReloadAllPalettes();
-	WindowManager::EnableLogging();
+	OverlayManager::EnableLogging();
 
 	//find the newly loaded custom pal
 	selectedPalIndex = g_interfaces.pPaletteManager->FindCustomPalIndex(selectedCharIndex, palName);
 
 	if (selectedPalIndex < 0)
 	{
-		WindowManager::AddLog("[error] Saved custom palette couldn't be reloaded. Not found.\n");
+		OverlayManager::AddLog("[error] Saved custom palette couldn't be reloaded. Not found.\n");
 		selectedPalIndex = 0;
 	}
 
@@ -702,7 +702,7 @@ void PaletteEditor::GenerateGradient(int idx1, int idx2, int color1, int color2)
 
 	float frac = 1.0 / (float)(idx2 - idx1);
 
-	//WindowManager::AddLog("color1: 0x%p, color2: 0x%p\n", color1, color2);
+	//OverlayManager::AddLog("color1: 0x%p, color2: 0x%p\n", color1, color2);
 
 	unsigned char a1 = (color1 & 0xFF000000) >> 24;
 	unsigned char a2 = (color2 & 0xFF000000) >> 24;
@@ -713,9 +713,9 @@ void PaletteEditor::GenerateGradient(int idx1, int idx2, int color1, int color2)
 	unsigned char b1 = color1 & 0xFF;
 	unsigned char b2 = color2 & 0xFF;
 
-	//WindowManager::AddLog("a1: 0x%p, a2: 0x%p, r1: 0x%p, r2: 0x%p, g1: 0x%p, g2: 0x%p, b1: 0x%p, b2: 0x%p\n", 
+	//OverlayManager::AddLog("a1: 0x%p, a2: 0x%p, r1: 0x%p, r2: 0x%p, g1: 0x%p, g2: 0x%p, b1: 0x%p, b2: 0x%p\n", 
 	//	a1, a2, r1, r2, g1, g2, b1, b2);
-	//WindowManager::AddLogSeparator();
+	//OverlayManager::AddLogSeparator();
 
 	((int*)paletteEditorArray)[idx1] = color1;
 
@@ -727,8 +727,8 @@ void PaletteEditor::GenerateGradient(int idx1, int idx2, int color1, int color2)
 		int b = (int)((b2 - b1) * i * frac + b1) & 0xFF;
 		int color = r | g | b;
 
-		//WindowManager::AddLog("(color = r | g | b) 0x%p = 0x%p | 0x%p | 0x%p\n", color, r, g, b);
-		//WindowManager::AddLog("BEFORE: 0x%p, AFTER: 0x%p\n",
+		//OverlayManager::AddLog("(color = r | g | b) 0x%p = 0x%p | 0x%p | 0x%p\n", color, r, g, b);
+		//OverlayManager::AddLog("BEFORE: 0x%p, AFTER: 0x%p\n",
 		//	((int*)paletteEditorArray)[idx1 + i], 
 		//	color ^ (((int*)paletteEditorArray)[idx1 + i] & a));
 

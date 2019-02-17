@@ -22,11 +22,11 @@
 #define MAIN_WINDOW_DISAPPEAR_TIME_SECONDS 15.0f
 #define DEFAULT_ALPHA 0.87f
 
-bool WindowManager::IsUpdateAvailable = false;
-bool WindowManager::DoLogging = true;
-bool WindowManager::Initialized = false;
-CustomHud* WindowManager::m_customHud = 0;
-PaletteEditor* WindowManager::m_paletteEditor = 0;
+bool OverlayManager::IsUpdateAvailable = false;
+bool OverlayManager::DoLogging = true;
+bool OverlayManager::Initialized = false;
+CustomHud* OverlayManager::m_customHud = 0;
+PaletteEditor* OverlayManager::m_paletteEditor = 0;
 
 bool show_main_window = true;
 bool show_demo_window = false;
@@ -96,7 +96,7 @@ struct ImGuiLog
 		if (copy)
 		{
 			ImGui::LogToClipboard();
-			WindowManager::AddLog("[system] Log has been copied to clipboard\n");
+			OverlayManager::AddLog("[system] Log has been copied to clipboard\n");
 		}
 
 		if (Filter.IsActive())
@@ -141,9 +141,9 @@ struct ImGuiLog
 	}
 };
 
-ImGuiLog WindowManager::Log;
+ImGuiLog OverlayManager::Log;
 
-void WindowManager::OnMatchInit()
+void OverlayManager::OnMatchInit()
 {
 	if (!Initialized || !m_paletteEditor)
 		return;
@@ -157,7 +157,7 @@ void WindowManager::OnMatchInit()
 	m_paletteEditor->OnMatchInit();
 }
 
-void WindowManager::SetMainWindowTitle(const char *text)
+void OverlayManager::SetMainWindowTitle(const char *text)
 {
 	if (text)
 		main_title = text;
@@ -173,12 +173,12 @@ void WindowManager::SetMainWindowTitle(const char *text)
 	main_title += "###MainTitle"; //set unique identifier
 }
 
-bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
+bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 {
 	if (Initialized)
 		return true;
 
-	LOG(2, "WindowManager::Init\n");
+	LOG(2, "OverlayManager::Init\n");
 
 	if (!hwnd)
 	{
@@ -219,17 +219,17 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 		ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(DroidSans_compressed_data, DroidSans_compressed_size, 20);
 
 	Initialized = true;
-	WindowManager::AddLog("[system] Initialization starting...\n");
+	OverlayManager::AddLog("[system] Initialization starting...\n");
 
 
 	toggle_key = Settings::getButtonValue(Settings::settingsIni.togglebutton);
-	WindowManager::AddLog("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
+	OverlayManager::AddLog("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
 
 	toggleHUD_key = Settings::getButtonValue(Settings::settingsIni.toggleHUDbutton);
-	WindowManager::AddLog("[system] HUD toggling key set to '%s'\n", Settings::settingsIni.toggleHUDbutton.c_str());
+	OverlayManager::AddLog("[system] HUD toggling key set to '%s'\n", Settings::settingsIni.toggleHUDbutton.c_str());
 
 	toggleCustomHUD_key = Settings::getButtonValue(Settings::settingsIni.togglecustomHUDbutton);
-	WindowManager::AddLog("[system] CustomHUD toggling key set to '%s'\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
+	OverlayManager::AddLog("[system] CustomHUD toggling key set to '%s'\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
 
 	show_custom_hud = Settings::settingsIni.forcecustomhud;
 
@@ -283,19 +283,19 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 
 	srand(time(NULL));
 
-	WindowManager::AddLog("[system] Finished initialization\n");
-	WindowManager::AddLogSeparator();
+	OverlayManager::AddLog("[system] Finished initialization\n");
+	OverlayManager::AddLogSeparator();
 
 	LOG(2, "Init end\n");
 	return ret;
 }
 
-void WindowManager::Shutdown()
+void OverlayManager::Shutdown()
 {
 	if (!Initialized)
 		return;
 
-	LOG(2, "WindowManager::Shutdown\n");
+	LOG(2, "OverlayManager::Shutdown\n");
 	WriteLogToFile();
 
 	SAFE_DELETE(m_customHud);
@@ -304,39 +304,39 @@ void WindowManager::Shutdown()
 	ImGui_ImplDX9_Shutdown();
 }
 
-void WindowManager::InvalidateDeviceObjects()
+void OverlayManager::InvalidateDeviceObjects()
 {
 	if (!Initialized)
 		return;
 
-	LOG(2, "WindowManager::InvalidateDeviceObjects\n");
+	LOG(2, "OverlayManager::InvalidateDeviceObjects\n");
 	ImGui_ImplDX9_InvalidateDeviceObjects();
 }
 
-void WindowManager::CreateDeviceObjects()
+void OverlayManager::CreateDeviceObjects()
 {
 	if (!Initialized)
 		return;
 
-	LOG(2, "WindowManager::CreateDeviceObjects\n");
+	LOG(2, "OverlayManager::CreateDeviceObjects\n");
 	ImGui_ImplDX9_CreateDeviceObjects();
 }
 
-void WindowManager::OnRender()
+void OverlayManager::OnRender()
 {
 	if (!Initialized)
 		return;
 
-	LOG(7, "WindowManager::OnRender\n");
+	LOG(7, "OverlayManager::OnRender\n");
 	ImGui::Render();
 }
 
-void WindowManager::OnUpdate()
+void OverlayManager::OnUpdate()
 {
 	if (!Initialized)
 		return;
 
-	LOG(7, "WindowManager::HandleImGui\n");
+	LOG(7, "OverlayManager::HandleImGui\n");
 
 	g_interfaces.pPaletteManager->OnUpdate(
 		g_interfaces.player1.GetChar1().GetPalHandle(),
@@ -369,10 +369,10 @@ void WindowManager::OnUpdate()
 
 	ShowAllWindows();
 
-	LOG(7, "END OF WindowManager::HandleImGui\n");
+	LOG(7, "END OF OverlayManager::HandleImGui\n");
 }
 
-void WindowManager::SetNotification(const char *text, float timeToShowInSec, bool showNotificationWindow)
+void OverlayManager::SetNotification(const char *text, float timeToShowInSec, bool showNotificationWindow)
 {
 	if (!Initialized)
 		return;
@@ -383,7 +383,7 @@ void WindowManager::SetNotification(const char *text, float timeToShowInSec, boo
 	show_notification_window = showNotificationWindow & Settings::settingsIni.notificationpopups;
 }
 
-void WindowManager::HandleNotification()
+void OverlayManager::HandleNotification()
 {
 	std::ostringstream stringBuf;
 	stringBuf << notificationText << " (" << round(ceil(notificationTimer)) << ")";
@@ -402,7 +402,7 @@ void WindowManager::HandleNotification()
 	notificationTimer -= ImGui::GetIO().DeltaTime;
 }
 
-void WindowManager::ShowNotificationWindow()
+void OverlayManager::ShowNotificationWindow()
 {
 	ImGui::SetNextWindowPosCenter(ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
@@ -427,7 +427,7 @@ void WindowManager::ShowNotificationWindow()
 }
 
 // start with type a of message: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
-void WindowManager::AddLog(const char* message, ...)
+void OverlayManager::AddLog(const char* message, ...)
 {
 	if (!Initialized || !message || !DoLogging) 
 	{ 
@@ -447,7 +447,7 @@ void WindowManager::AddLog(const char* message, ...)
 	if (strlen(message) > MAX_LOG_MSG_LEN)
 	{
 		LOG(2, "AddLog error: message too long!\nmessage: %s", message);
-		WindowManager::Log._AddLog("%s [error] Log message too long.", timeString);
+		OverlayManager::Log._AddLog("%s [error] Log message too long.", timeString);
 		return;
 	}
 
@@ -462,28 +462,28 @@ void WindowManager::AddLog(const char* message, ...)
 	fullMessage += " ";
 	fullMessage += buf;
 
-	WindowManager::Log._AddLog(fullMessage.c_str());
+	OverlayManager::Log._AddLog(fullMessage.c_str());
 }
 
-void WindowManager::AddLogSeparator()
+void OverlayManager::AddLogSeparator()
 {
 	if (!DoLogging)
 		return;
 
-	WindowManager::Log._AddLog("------------------------------------------------------------------\n");
+	OverlayManager::Log._AddLog("------------------------------------------------------------------\n");
 }
 
-void WindowManager::DisableLogging()
+void OverlayManager::DisableLogging()
 {
 	DoLogging = false;
 }
 
-void WindowManager::EnableLogging()
+void OverlayManager::EnableLogging()
 {
 	DoLogging = true;
 }
 
-void WindowManager::WriteLogToFile()
+void OverlayManager::WriteLogToFile()
 {
 	if (!Initialized)
 		return;
@@ -492,7 +492,7 @@ void WindowManager::WriteLogToFile()
 
 	if (!file)
 	{
-		LOG(2, "WindowManager::WriteLogToFile file opening failed!!\n");
+		LOG(2, "OverlayManager::WriteLogToFile file opening failed!!\n");
 		return;
 	}
 
@@ -536,18 +536,18 @@ void WindowManager::WriteLogToFile()
 
 	//d3dparams here
 
-	WindowManager::Log._ToFile(file);
+	OverlayManager::Log._ToFile(file);
 	fprintf(file, "\n#####################################\n\n\n");
 
 	fclose(file);
 }
 
-void WindowManager::ShowLogWindow(bool* p_open)
+void OverlayManager::ShowLogWindow(bool* p_open)
 {
-	WindowManager::Log._Draw("Log", p_open);
+	OverlayManager::Log._Draw("Log", p_open);
 }
 
-void WindowManager::ShowUpdateWindow()
+void OverlayManager::ShowUpdateWindow()
 {
 	ImGui::SetNextWindowPosCenter(ImGuiCond_Once);
 	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
@@ -565,7 +565,7 @@ void WindowManager::ShowUpdateWindow()
 	ImGui::End();
 }
 
-void WindowManager::ShowLoadedSettingsValues()
+void OverlayManager::ShowLoadedSettingsValues()
 {
 	//not using ImGui columns here because they are bugged if the window has always_autoresize flag. The window 
 	//starts extending to infinity, if the left edge of the window touches any edges of the screen
@@ -603,7 +603,7 @@ void WindowManager::ShowLoadedSettingsValues()
 
 }
 
-void WindowManager::ShowDebugWindow(bool * p_open)
+void OverlayManager::ShowDebugWindow(bool * p_open)
 {
 	ImGui::Begin("DEBUG", p_open);
 
@@ -692,7 +692,7 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 	ImGui::End();
 }
 
-void WindowManager::ShowDonatorsWindow()
+void OverlayManager::ShowDonatorsWindow()
 {
 	const ImVec4 COLOR_PLATINUM(0.328f, 1.000f, 0.901f, 1.000f);
 	const ImVec4 COLOR_GOLD(1.000f, 0.794f, 0.000f, 1.000f);
@@ -783,7 +783,7 @@ void WindowManager::ShowDonatorsWindow()
 	ImGui::GetStyle().WindowTitleAlign = origWindowTitleAlign;
 }
 
-void WindowManager::ShowDonatorsButton()
+void OverlayManager::ShowDonatorsButton()
 {
 	if (GetDonatorNames().size() == 0)
 		return;
@@ -817,7 +817,7 @@ void WindowManager::ShowDonatorsButton()
 	}
 }
 
-void WindowManager::ShowMainWindow(bool * p_open)
+void OverlayManager::ShowMainWindow(bool * p_open)
 {
 	if (*p_open)
 	{
@@ -929,7 +929,7 @@ void WindowManager::ShowMainWindow(bool * p_open)
 	}
 }
 
-void WindowManager::HandleMainWindowVisibility(float timeLeft)
+void OverlayManager::HandleMainWindowVisibility(float timeLeft)
 {
 	main_window_disappear_time = timeLeft;
 
@@ -954,7 +954,7 @@ void WindowManager::HandleMainWindowVisibility(float timeLeft)
 	}
 }
 
-void WindowManager::ShowLinks()
+void OverlayManager::ShowLinks()
 {
 	if (ImGui::Button("Discord"))
 		ShellExecute(NULL, L"open", MOD_LINK_DISCORD, NULL, NULL, SW_SHOWNORMAL);
@@ -976,7 +976,7 @@ void WindowManager::ShowLinks()
 		ShellExecute(NULL, L"open", MOD_LINK_DONATE, NULL, NULL, SW_SHOWNORMAL);
 }
 
-void WindowManager::ShowAllWindows()
+void OverlayManager::ShowAllWindows()
 {
 	ShowMainWindow(&show_main_window);
 
@@ -1013,7 +1013,7 @@ void WindowManager::ShowAllWindows()
 	ImGui::PopStyleVar();
 }
 
-void WindowManager::HandleButtons()
+void OverlayManager::HandleButtons()
 {
 	if (ImGui::IsKeyPressed(toggleHUD_key) && g_gameVals.pIsHUDHidden)
 	{

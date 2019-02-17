@@ -173,7 +173,7 @@
     <ClCompile Include="src\Overlay\PaletteEditor.cpp">
       <Filter>src\WindowManager</Filter>
     </ClCompile>
-    <ClCompile Include="src\Overlay\WindowManager.cpp">
+    <ClCompile Include="src\Overlay\OverlayManager.cpp">
       <Filter>src\WindowManager</Filter>
     </ClCompile>
   </ItemGroup>
@@ -320,7 +320,7 @@
     <ClInclude Include="src\Overlay\PaletteEditor.h">
       <Filter>src\WindowManager</Filter>
     </ClInclude>
-    <ClInclude Include="src\Overlay\WindowManager.h">
+    <ClInclude Include="src\Overlay\OverlayManager.h">
       <Filter>src\WindowManager</Filter>
     </ClInclude>
   </ItemGroup>

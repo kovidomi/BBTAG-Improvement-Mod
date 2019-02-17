@@ -26,13 +26,13 @@ void SteamApiHelper::OnUpdateNumberOfCurrentPlayers(NumberOfCurrentPlayers_t *pC
 {
 	if (bIOFailure || !pCallback->m_bSuccess)
 	{
-		WindowManager::AddLog("[error] Failed to update the current number of ingame players\n");
+		OverlayManager::AddLog("[error] Failed to update the current number of ingame players\n");
 		current_players = -1;
 		return;
 	}
 	//printf("Number of players currently playing: %d\n", pCallback->m_cPlayers);
 #ifdef ENABLE_LOGGING
-	WindowManager::AddLog("[debug] Updated the current number of ingame players: %d\n", pCallback->m_cPlayers);
+	OverlayManager::AddLog("[debug] Updated the current number of ingame players: %d\n", pCallback->m_cPlayers);
 #endif
 	current_players = pCallback->m_cPlayers;
 }
