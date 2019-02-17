@@ -157,10 +157,10 @@
     <ClCompile Include="src\Web\palette_download.cpp" />
     <ClCompile Include="src\Web\update_check.cpp" />
     <ClCompile Include="src\Web\url_downloader.cpp" />
-    <ClCompile Include="src\WindowManager\CustomHud.cpp" />
-    <ClCompile Include="src\WindowManager\fonts.cpp" />
-    <ClCompile Include="src\WindowManager\PaletteEditor.cpp" />
-    <ClCompile Include="src\WindowManager\WindowManager.cpp" />
+    <ClCompile Include="src\Overlay\CustomHud.cpp" />
+    <ClCompile Include="src\Overlay\fonts.cpp" />
+    <ClCompile Include="src\Overlay\PaletteEditor.cpp" />
+    <ClCompile Include="src\Overlay\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h" />
@@ -208,10 +208,10 @@
     <ClInclude Include="src\Web\palette_download.h" />
     <ClInclude Include="src\Web\update_check.h" />
     <ClInclude Include="src\Web\url_downloader.h" />
-    <ClInclude Include="src\WindowManager\CustomHud.h" />
-    <ClInclude Include="src\WindowManager\fonts.h" />
-    <ClInclude Include="src\WindowManager\PaletteEditor.h" />
-    <ClInclude Include="src\WindowManager\WindowManager.h" />
+    <ClInclude Include="src\Overlay\CustomHud.h" />
+    <ClInclude Include="src\Overlay\fonts.h" />
+    <ClInclude Include="src\Overlay\PaletteEditor.h" />
+    <ClInclude Include="src\Overlay\WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt" />

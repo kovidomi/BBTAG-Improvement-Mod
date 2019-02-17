@@ -83,15 +83,6 @@
     <ClCompile Include="src\D3D9EXWrapper\ID3DXWrapper_Effect.cpp">
       <Filter>src\D3D9EXWrapper</Filter>
     </ClCompile>
-    <ClCompile Include="src\WindowManager\fonts.cpp">
-      <Filter>src\WindowManager</Filter>
-    </ClCompile>
-    <ClCompile Include="src\WindowManager\WindowManager.cpp">
-      <Filter>src\WindowManager</Filter>
-    </ClCompile>
-    <ClCompile Include="src\WindowManager\CustomHud.cpp">
-      <Filter>src\WindowManager</Filter>
-    </ClCompile>
     <ClCompile Include="src\D3D9EXWrapper\D3D9Utils.cpp">
       <Filter>src\D3D9EXWrapper</Filter>
     </ClCompile>
@@ -115,9 +106,6 @@
     </ClCompile>
     <ClCompile Include="depends\imgui\imgui_impl_dx9.cpp">
       <Filter>depends\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\WindowManager\PaletteEditor.cpp">
-      <Filter>src\WindowManager</Filter>
     </ClCompile>
     <ClCompile Include="src\PaletteManager\PaletteManager.cpp">
       <Filter>src\PaletteManager</Filter>
@@ -176,6 +164,18 @@
     <ClCompile Include="src\Core\utils.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Overlay\CustomHud.cpp">
+      <Filter>src\WindowManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Overlay\fonts.cpp">
+      <Filter>src\WindowManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Overlay\PaletteEditor.cpp">
+      <Filter>src\WindowManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Overlay\WindowManager.cpp">
+      <Filter>src\WindowManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -198,18 +198,6 @@
     </ClInclude>
     <ClInclude Include="depends\imgui\stb_truetype.h">
       <Filter>depends\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\WindowManager\CustomHud.h">
-      <Filter>src\WindowManager</Filter>
-    </ClInclude>
-    <ClInclude Include="src\WindowManager\fonts.h">
-      <Filter>src\WindowManager</Filter>
-    </ClInclude>
-    <ClInclude Include="src\WindowManager\PaletteEditor.h">
-      <Filter>src\WindowManager</Filter>
-    </ClInclude>
-    <ClInclude Include="src\WindowManager\WindowManager.h">
-      <Filter>src\WindowManager</Filter>
     </ClInclude>
     <ClInclude Include="src\SteamApiWrapper\SteamFriendsWrapper.h">
       <Filter>src\SteamApiWrapper</Filter>
@@ -322,6 +310,18 @@
     </ClInclude>
     <ClInclude Include="src\Core\Settings.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Overlay\CustomHud.h">
+      <Filter>src\WindowManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Overlay\fonts.h">
+      <Filter>src\WindowManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Overlay\PaletteEditor.h">
+      <Filter>src\WindowManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Overlay\WindowManager.h">
+      <Filter>src\WindowManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
