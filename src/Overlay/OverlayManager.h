@@ -29,7 +29,7 @@ public:
 	// start message with one of these: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 	void AddLog(const char* message, ...);
 	void AddLogSeparator();
-	void EnableLogging();
+	void SetLogging(bool value);
 	void SetNotification(const char *text, float timeToShowInSec = 5.0, bool showNotificationWindow = false);
 private:
 	OverlayManager();

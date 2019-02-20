@@ -400,9 +400,9 @@ void PaletteEditor::SavePaletteToFile()
 
 void PaletteEditor::ReloadSavedPalette(const char* palName)
 {
-	OverlayManager::getInstance().DisableLogging();
+	OverlayManager::getInstance().SetLogging(false);
 	g_interfaces.pPaletteManager->ReloadAllPalettes();
-	OverlayManager::getInstance().EnableLogging();
+	OverlayManager::getInstance().SetLogging(true);
 
 	//find the newly loaded custom pal
 	selectedPalIndex = g_interfaces.pPaletteManager->FindCustomPalIndex(selectedCharIndex, palName);

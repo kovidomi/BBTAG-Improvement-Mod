@@ -485,9 +485,9 @@ void OverlayManager::AddLogSeparator()
 	m_log._AddLog("------------------------------------------------------------------\n");
 }
 
-void OverlayManager::EnableLogging()
+void OverlayManager::SetLogging(bool value)
 {
-	m_loggingEnabled = true;
+	m_loggingEnabled = value;
 }
 
 void OverlayManager::WriteLogToFile()

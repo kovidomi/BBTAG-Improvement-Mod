@@ -29,7 +29,7 @@ void GetPalettesFromArchive()
 		return;
 	}
 
-	OverlayManager::getInstance().DisableLogging();
+	OverlayManager::getInstance().SetLogging(false);
 
 	// if we opened ok, read each file from the archive
 	for (int i = 0; i < decompressObj.GetCompressedFilesCount(); i++)
@@ -47,9 +47,9 @@ void GetPalettesFromArchive()
 
 			if (strncmp(((IMPL_t*)pszFileBuffer)->header.filesig, "IMPL", 5) != 0)
 			{
-				OverlayManager::getInstance().EnableLogging();
+				OverlayManager::getInstance().SetLogging(true);
 				OverlayManager::getInstance().AddLog("[error] 'palettes.tar.gz' contains non .impl file: '%s'\n", fileName.c_str());
-				OverlayManager::getInstance().DisableLogging();
+				OverlayManager::getInstance().SetLogging(false);
 				LOG(2, "ERROR, 'palettes.tar.gz' contains non .impl file: '%s'\n", fileName.c_str());
 				continue;
 			}
@@ -61,7 +61,7 @@ void GetPalettesFromArchive()
 				failCount++;
 		}
 	}
-	OverlayManager::getInstance().EnableLogging();
+	OverlayManager::getInstance().SetLogging(true);
 	OverlayManager::getInstance().AddLog("[system] Total of %d palettes had been successfully extracted from 'palettes.tar.gz' (%d succeeded, %d failed)\n", 
 		successCount + failCount, successCount, failCount);
 }
