@@ -173,6 +173,16 @@ void OverlayManager::SetMainWindowTitle(const char *text)
 	main_title += "###MainTitle"; //set unique identifier
 }
 
+OverlayManager & OverlayManager::getInstance()
+{
+	if (m_instance == nullptr)
+	{
+		m_instance = new OverlayManager();
+	}
+
+	return *m_instance;
+}
+
 bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 {
 	if (Initialized)
@@ -300,6 +310,7 @@ void OverlayManager::Shutdown()
 
 	SAFE_DELETE(m_customHud);
 	SAFE_DELETE(m_paletteEditor);
+	delete m_instance;
 
 	ImGui_ImplDX9_Shutdown();
 }
