@@ -485,11 +485,6 @@ void OverlayManager::AddLogSeparator()
 	m_log._AddLog("------------------------------------------------------------------\n");
 }
 
-void OverlayManager::DisableLogging()
-{
-	m_loggingEnabled = false;
-}
-
 void OverlayManager::EnableLogging()
 {
 	m_loggingEnabled = true;

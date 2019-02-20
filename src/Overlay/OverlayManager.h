@@ -29,7 +29,6 @@ public:
 	// start message with one of these: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 	void AddLog(const char* message, ...);
 	void AddLogSeparator();
-	void DisableLogging();
 	void EnableLogging();
 	void SetNotification(const char *text, float timeToShowInSec = 5.0, bool showNotificationWindow = false);
 private:
