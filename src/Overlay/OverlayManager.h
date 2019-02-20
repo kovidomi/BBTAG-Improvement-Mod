@@ -13,7 +13,7 @@ class OverlayManager
 	PaletteEditor* m_paletteEditor = nullptr;
 	static ImGuiLog m_log;
 	static bool Initialized;
-	bool DoLogging = true;
+	bool m_loggingEnabled = true;
 public:
 	bool IsUpdateAvailable = false;
 

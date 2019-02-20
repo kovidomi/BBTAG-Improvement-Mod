@@ -441,7 +441,7 @@ void OverlayManager::ShowNotificationWindow()
 // start with type a of message: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 void OverlayManager::AddLog(const char* message, ...)
 {
-	if (!Initialized || !message || !DoLogging) 
+	if (!Initialized || !message || !m_loggingEnabled)
 	{ 
 		return; 
 	}
@@ -479,7 +479,7 @@ void OverlayManager::AddLog(const char* message, ...)
 
 void OverlayManager::AddLogSeparator()
 {
-	if (!DoLogging)
+	if (!m_loggingEnabled)
 		return;
 
 	m_log._AddLog("------------------------------------------------------------------\n");
@@ -487,12 +487,12 @@ void OverlayManager::AddLogSeparator()
 
 void OverlayManager::DisableLogging()
 {
-	DoLogging = false;
+	m_loggingEnabled = false;
 }
 
 void OverlayManager::EnableLogging()
 {
-	DoLogging = true;
+	m_loggingEnabled = true;
 }
 
 void OverlayManager::WriteLogToFile()
