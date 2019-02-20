@@ -459,7 +459,7 @@ void OverlayManager::AddLog(const char* message, ...)
 	if (strlen(message) > MAX_LOG_MSG_LEN)
 	{
 		LOG(2, "AddLog error: message too long!\nmessage: %s", message);
-		OverlayManager::Log._AddLog("%s [error] Log message too long.", timeString);
+		Log._AddLog("%s [error] Log message too long.", timeString);
 		return;
 	}
 
@@ -474,7 +474,7 @@ void OverlayManager::AddLog(const char* message, ...)
 	fullMessage += " ";
 	fullMessage += buf;
 
-	OverlayManager::Log._AddLog(fullMessage.c_str());
+	Log._AddLog(fullMessage.c_str());
 }
 
 void OverlayManager::AddLogSeparator()
@@ -482,7 +482,7 @@ void OverlayManager::AddLogSeparator()
 	if (!DoLogging)
 		return;
 
-	OverlayManager::Log._AddLog("------------------------------------------------------------------\n");
+	Log._AddLog("------------------------------------------------------------------\n");
 }
 
 void OverlayManager::DisableLogging()
@@ -548,7 +548,7 @@ void OverlayManager::WriteLogToFile()
 
 	//d3dparams here
 
-	OverlayManager::Log._ToFile(file);
+	Log._ToFile(file);
 	fprintf(file, "\n#####################################\n\n\n");
 
 	fclose(file);
@@ -556,7 +556,7 @@ void OverlayManager::WriteLogToFile()
 
 void OverlayManager::ShowLogWindow(bool* p_open)
 {
-	OverlayManager::Log._Draw("Log", p_open);
+	Log._Draw("Log", p_open);
 }
 
 void OverlayManager::ShowUpdateWindow()
