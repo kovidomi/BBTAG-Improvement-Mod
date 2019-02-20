@@ -11,7 +11,7 @@ class OverlayManager
 	static OverlayManager* m_instance;
 	CustomHud* m_customHud = nullptr;
 	PaletteEditor* m_paletteEditor = nullptr;
-	static ImGuiLog Log;
+	static ImGuiLog m_log;
 	static bool Initialized;
 	bool DoLogging = true;
 public:
