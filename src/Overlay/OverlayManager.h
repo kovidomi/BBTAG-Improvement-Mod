@@ -8,7 +8,7 @@ struct ImGuiLog;
 
 class OverlayManager
 {
-	OverlayManager* m_instance = nullptr;
+	static OverlayManager* m_instance;
 	CustomHud* m_customHud = nullptr;
 	PaletteEditor* m_paletteEditor = nullptr;
 	static ImGuiLog Log;
@@ -17,7 +17,7 @@ class OverlayManager
 public:
 	bool IsUpdateAvailable = false;
 
-	OverlayManager& getInstance();
+	static OverlayManager& getInstance();
 
 	bool Init(void *hwnd, IDirect3DDevice9 *device);
 	void OnUpdate();
