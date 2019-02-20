@@ -4,7 +4,6 @@
 
 #include <d3d9.h>
 
-//forward declaration
 struct ImGuiLog;
 
 class OverlayManager
