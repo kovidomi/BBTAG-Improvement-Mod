@@ -12,7 +12,7 @@ class OverlayManager
 	CustomHud* m_customHud = nullptr;
 	PaletteEditor* m_paletteEditor = nullptr;
 	static ImGuiLog Log;
-	bool Initialized = false;
+	static bool Initialized;
 	bool DoLogging = true;
 public:
 	bool IsUpdateAvailable = false;
