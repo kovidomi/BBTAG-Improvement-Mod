@@ -9,13 +9,13 @@ struct ImGuiLog;
 class OverlayManager
 {
 	OverlayManager* m_instance = nullptr;
-	CustomHud* m_customHud;
-	PaletteEditor* m_paletteEditor;
+	CustomHud* m_customHud = nullptr;
+	PaletteEditor* m_paletteEditor = nullptr;
 	static ImGuiLog Log;
-	bool Initialized;
-	bool DoLogging;
+	bool Initialized = false;
+	bool DoLogging = true;
 public:
-	bool IsUpdateAvailable;
+	bool IsUpdateAvailable = false;
 
 	OverlayManager& getInstance();
 

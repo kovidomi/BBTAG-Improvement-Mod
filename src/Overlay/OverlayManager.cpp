@@ -22,12 +22,6 @@
 #define MAIN_WINDOW_DISAPPEAR_TIME_SECONDS 15.0f
 #define DEFAULT_ALPHA 0.87f
 
-bool OverlayManager::IsUpdateAvailable = false;
-bool OverlayManager::DoLogging = true;
-bool OverlayManager::Initialized = false;
-CustomHud* OverlayManager::m_customHud = 0;
-PaletteEditor* OverlayManager::m_paletteEditor = 0;
-
 bool show_main_window = true;
 bool show_demo_window = false;
 bool show_notification = false;
