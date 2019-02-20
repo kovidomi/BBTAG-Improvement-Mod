@@ -145,11 +145,11 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::Reset(D3DPRESENT_PARAMETERS* pPresent
 	Settings::applySettingsIni(pPresentationParameters);
 	logD3DPParams(pPresentationParameters, false);
 
-	OverlayManager::InvalidateDeviceObjects();
+	OverlayManager::getInstance().InvalidateDeviceObjects();
 
 	HRESULT ret = m_Direct3DDevice9Ex->Reset(pPresentationParameters);
 
-	OverlayManager::CreateDeviceObjects();
+	OverlayManager::getInstance().CreateDeviceObjects();
 
 	return ret;
 }
@@ -345,7 +345,7 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::BeginScene()
 {
 	LOG(7, "BeginScene\n");
 
-	OverlayManager::OnUpdate();
+	OverlayManager::getInstance().OnUpdate();
 
 	return m_Direct3DDevice9Ex->BeginScene();
 }
@@ -354,7 +354,7 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::EndScene()
 {
 	LOG(7, "EndScene\n");
 
-	OverlayManager::OnRender();
+	OverlayManager::getInstance().OnRender();
 
 	return m_Direct3DDevice9Ex->EndScene();
 }
@@ -966,11 +966,11 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::ResetEx(D3DPRESENT_PARAMETERS* pPrese
 	Settings::applySettingsIni(pPresentationParameters);
 	logD3DPParams(pPresentationParameters, false);
 	
-	OverlayManager::InvalidateDeviceObjects();
+	OverlayManager::getInstance().InvalidateDeviceObjects();
 
 	HRESULT ret = m_Direct3DDevice9Ex->ResetEx(pPresentationParameters, pFullscreenDisplayMode);
 
-	OverlayManager::CreateDeviceObjects();
+	OverlayManager::getInstance().CreateDeviceObjects();
 
 	return ret;
 }

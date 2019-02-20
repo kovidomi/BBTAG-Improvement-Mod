@@ -25,7 +25,7 @@ void CheckUpdate()
 
 	if (strcmp(data.c_str(), "") == 0)
 	{
-		OverlayManager::AddLog("[error] Update check failed. No data downloaded.\n");
+		OverlayManager::getInstance().AddLog("[error] Update check failed. No data downloaded.\n");
 		LOG(2, "Update check failed.No data downloaded.\n");
 		return;
 	}
@@ -40,7 +40,7 @@ void CheckUpdate()
 
 	if (m[1].str() == "")
 	{
-		OverlayManager::AddLog("[error] Update check failed. Regex no match.\n");
+		OverlayManager::getInstance().AddLog("[error] Update check failed. Regex no match.\n");
 		return;
 	}
 
@@ -48,11 +48,11 @@ void CheckUpdate()
 	{
 		newVersionNum = m[1].str();
 		LOG(2, "New version found: %s\n", newVersionNum.c_str());
-		OverlayManager::AddLog("[system] Update available: BBTAG Improvement Mod %s has been released!\n", newVersionNum.c_str());
-		OverlayManager::IsUpdateAvailable = true;
+		OverlayManager::getInstance().AddLog("[system] Update available: BBTAG Improvement Mod %s has been released!\n", newVersionNum.c_str());
+		OverlayManager::getInstance().IsUpdateAvailable = true;
 	}
 	else
 	{
-		OverlayManager::AddLog("[system] BBTAG Improvement Mod is up-to-date\n");
+		OverlayManager::getInstance().AddLog("[system] BBTAG Improvement Mod is up-to-date\n");
 	}
 }

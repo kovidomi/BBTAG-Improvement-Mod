@@ -22,6 +22,9 @@
 #define MAIN_WINDOW_DISAPPEAR_TIME_SECONDS 15.0f
 #define DEFAULT_ALPHA 0.87f
 
+OverlayManager* OverlayManager::m_instance = nullptr;
+bool OverlayManager::Initialized = false;
+
 bool show_main_window = true;
 bool show_demo_window = false;
 bool show_notification = false;
@@ -90,7 +93,7 @@ struct ImGuiLog
 		if (copy)
 		{
 			ImGui::LogToClipboard();
-			OverlayManager::AddLog("[system] Log has been copied to clipboard\n");
+			OverlayManager::getInstance().AddLog("[system] Log has been copied to clipboard\n");
 		}
 
 		if (Filter.IsActive())
@@ -223,17 +226,17 @@ bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 		ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(DroidSans_compressed_data, DroidSans_compressed_size, 20);
 
 	Initialized = true;
-	OverlayManager::AddLog("[system] Initialization starting...\n");
+	OverlayManager::getInstance().AddLog("[system] Initialization starting...\n");
 
 
 	toggle_key = Settings::getButtonValue(Settings::settingsIni.togglebutton);
-	OverlayManager::AddLog("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
+	OverlayManager::getInstance().AddLog("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
 
 	toggleHUD_key = Settings::getButtonValue(Settings::settingsIni.toggleHUDbutton);
-	OverlayManager::AddLog("[system] HUD toggling key set to '%s'\n", Settings::settingsIni.toggleHUDbutton.c_str());
+	OverlayManager::getInstance().AddLog("[system] HUD toggling key set to '%s'\n", Settings::settingsIni.toggleHUDbutton.c_str());
 
 	toggleCustomHUD_key = Settings::getButtonValue(Settings::settingsIni.togglecustomHUDbutton);
-	OverlayManager::AddLog("[system] CustomHUD toggling key set to '%s'\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
+	OverlayManager::getInstance().AddLog("[system] CustomHUD toggling key set to '%s'\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
 
 	show_custom_hud = Settings::settingsIni.forcecustomhud;
 
@@ -287,8 +290,8 @@ bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 
 	srand(time(NULL));
 
-	OverlayManager::AddLog("[system] Finished initialization\n");
-	OverlayManager::AddLogSeparator();
+	OverlayManager::getInstance().AddLog("[system] Finished initialization\n");
+	OverlayManager::getInstance().AddLogSeparator();
 
 	LOG(2, "Init end\n");
 	return ret;
@@ -386,6 +389,10 @@ void OverlayManager::SetNotification(const char *text, float timeToShowInSec, bo
 	notificationTimer = timeToShowInSec;
 	show_notification = true;
 	show_notification_window = showNotificationWindow & Settings::settingsIni.notificationpopups;
+}
+
+OverlayManager::OverlayManager()
+{
 }
 
 void OverlayManager::HandleNotification()

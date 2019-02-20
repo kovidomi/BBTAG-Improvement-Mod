@@ -14,7 +14,7 @@ std::string DownloadUrl(std::wstring& wUrl)
 
 	if (!connect)
 	{
-		OverlayManager::AddLog("[error] DownloadUrl failed. Connection Failed or Syntax error with URL\n'%s'\n", url.c_str());
+		OverlayManager::getInstance().AddLog("[error] DownloadUrl failed. Connection Failed or Syntax error with URL\n'%s'\n", url.c_str());
 		return "";
 	}
 
@@ -23,7 +23,7 @@ std::string DownloadUrl(std::wstring& wUrl)
 	if (!OpenAddress)
 	{
 		DWORD ErrorNum = GetLastError();
-		OverlayManager::AddLog("[error] DownloadUrl failed. Failed to open URL\n'%s'\ncode: %d\n", url.c_str(), ErrorNum);
+		OverlayManager::getInstance().AddLog("[error] DownloadUrl failed. Failed to open URL\n'%s'\ncode: %d\n", url.c_str(), ErrorNum);
 		InternetCloseHandle(connect);
 		return "";
 	}
@@ -51,7 +51,10 @@ unsigned long DownloadUrlBinary(std::wstring& wUrl, void** outBuffer)
 
 	if (!connect)
 	{
-		OverlayManager::AddLog("[error] DownloadUrlBinary failed. Connection Failed or Syntax error with URL\n'%s'\n", url.c_str());
+		OverlayManager::getInstance().AddLog(
+			"[error] DownloadUrlBinary failed. Connection Failed or Syntax error with URL\n'%s'\n",
+			url.c_str()
+		);
 		return 0;
 	}
 
@@ -60,7 +63,10 @@ unsigned long DownloadUrlBinary(std::wstring& wUrl, void** outBuffer)
 	if (!OpenAddress)
 	{
 		DWORD ErrorNum = GetLastError();
-		OverlayManager::AddLog("[error] DownloadUrlBinary failed. Failed to open URL\n'%s'\ncode: %d\n", url.c_str(), ErrorNum);
+		OverlayManager::getInstance().AddLog(
+			"[error] DownloadUrlBinary failed. Failed to open URL\n'%s'\ncode: %d\n",
+			url.c_str(), ErrorNum
+		);
 		InternetCloseHandle(connect);
 		return 0;
 	}
