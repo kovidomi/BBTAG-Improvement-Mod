@@ -226,17 +226,17 @@ bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 		ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(DroidSans_compressed_data, DroidSans_compressed_size, 20);
 
 	Initialized = true;
-	OverlayManager::getInstance().AddLog("[system] Initialization starting...\n");
+	AddLog("[system] Initialization starting...\n");
 
 
 	toggle_key = Settings::getButtonValue(Settings::settingsIni.togglebutton);
-	OverlayManager::getInstance().AddLog("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
+	AddLog("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
 
 	toggleHUD_key = Settings::getButtonValue(Settings::settingsIni.toggleHUDbutton);
-	OverlayManager::getInstance().AddLog("[system] HUD toggling key set to '%s'\n", Settings::settingsIni.toggleHUDbutton.c_str());
+	AddLog("[system] HUD toggling key set to '%s'\n", Settings::settingsIni.toggleHUDbutton.c_str());
 
 	toggleCustomHUD_key = Settings::getButtonValue(Settings::settingsIni.togglecustomHUDbutton);
-	OverlayManager::getInstance().AddLog("[system] CustomHUD toggling key set to '%s'\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
+	AddLog("[system] CustomHUD toggling key set to '%s'\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
 
 	show_custom_hud = Settings::settingsIni.forcecustomhud;
 
@@ -290,8 +290,8 @@ bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 
 	srand(time(NULL));
 
-	OverlayManager::getInstance().AddLog("[system] Finished initialization\n");
-	OverlayManager::getInstance().AddLogSeparator();
+	AddLog("[system] Finished initialization\n");
+	AddLogSeparator();
 
 	LOG(2, "Init end\n");
 	return ret;
