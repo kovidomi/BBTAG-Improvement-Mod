@@ -7,7 +7,7 @@ class DonatorsWindow : Window
 {
 	DonatorsWindow();
 	char CalculateAnimatedTitleChar() const;
-	const char* ConstructWindowTitle(char* outBuffer) const;
+	void ConstructWindowTitle(char* outBuffer) const;
 	ImVec4 GetDonatorTierColor(int tierLevel) const;
 	void PrintDonators() const;
 	void DrawOkButton() const;

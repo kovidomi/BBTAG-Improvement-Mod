@@ -28,12 +28,10 @@ char DonatorsWindow::CalculateAnimatedTitleChar() const
 	return animationFrames[currentAnimationFrame];
 }
 
-const char* DonatorsWindow::ConstructWindowTitle(char* outBuffer) const
+void DonatorsWindow::ConstructWindowTitle(char* outBuffer) const
 {
 	const char animatedCharacter = CalculateAnimatedTitleChar();
 	sprintf(outBuffer, "%c SUPPORTERS %c###Donators", animatedCharacter, animatedCharacter);
-
-	return outBuffer;
 }
 
 void DonatorsWindow::PositionWindowToMiddleScreen() const
