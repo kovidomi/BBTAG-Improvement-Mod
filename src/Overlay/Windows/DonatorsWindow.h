@@ -6,8 +6,11 @@
 class DonatorsWindow : Window
 {
 	DonatorsWindow();
-	void SetWindowPosMiddleScreen() const;
+	char CalculateAnimatedTitleChar() const;
+	const char* ConstructWindowTitle(char* outBuffer) const;
 	ImVec4 GetDonatorTierColor(int tierLevel) const;
+	void PrintDonators() const;
+	void PositionWindowToMiddleScreen() const;
 public:
 	void Show() override;
 	~DonatorsWindow() override;
