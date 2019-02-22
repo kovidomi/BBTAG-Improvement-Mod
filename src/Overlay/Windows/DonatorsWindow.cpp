@@ -102,6 +102,18 @@ void DonatorsWindow::PrintDonators() const
 	ADD_EMPTY_LINE;
 }
 
+void DonatorsWindow::DrawOkButton() const
+{
+	const ImVec2 okBtnSize(100, 30);
+	const float buttonPosMiddleWindowX = ImGui::GetWindowSize().x / 2 - (okBtnSize.x / 2);
+	ImGui::SetCursorPosX(buttonPosMiddleWindowX);
+
+	if (ImGui::Button("OK", okBtnSize))
+	{
+		show_donators_window = false;
+	}
+}
+
 void DonatorsWindow::Show()
 {
 	const ImVec2 origWindowTitleAlign = ImGui::GetStyle().WindowTitleAlign;
@@ -113,19 +125,11 @@ void DonatorsWindow::Show()
 
 	char titleBuffer[128];
 	ConstructWindowTitle(titleBuffer);
+
 	ImGui::Begin(titleBuffer, NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
 
 	PrintDonators();
-
-	const ImVec2 okBtnSize(100, 30);
-	const float buttonPosMiddleWindowX = ImGui::GetWindowSize().x / 2 - (okBtnSize.x / 2);
-	ImGui::SetCursorPosX(buttonPosMiddleWindowX);
-
-	if (ImGui::Button("OK", okBtnSize))
-	{
-		show_donators_window = false;
-	}
-
+	DrawOkButton();
 	PositionWindowToMiddleScreen();
 
 	ImGui::End();
