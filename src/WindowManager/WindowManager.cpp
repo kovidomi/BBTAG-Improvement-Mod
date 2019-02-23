@@ -691,126 +691,47 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		ImGui::ColorEdit4("ColEdit", col);
 	}
 
-	if (ImGui::CollapsingHeader("World positions"))
-	{
-		static D3DXVECTOR2 P1Pos(0, 0);
-		static D3DXVECTOR2 P2Pos(0, 0);
-
-		if (ImGui::Button("Player 1"))
-		{
-			P1Pos = D3DXVECTOR2(
-				g_interfaces.player1.GetChar1().GetData()->position_x / 1000.0f + 2048.0,
-				g_interfaces.player1.GetChar1().GetData()->position_y / 1000.0f - 3072.0
-			);
-		}
-		ImGui::SameLine();
-		ImGui::Text("x: %.2f - y: %.2f", P1Pos.x, P1Pos.y);
-
-		if (ImGui::Button("Player 2"))
-		{
-			P2Pos = D3DXVECTOR2(
-				g_interfaces.player2.GetChar1().GetData()->position_x / 1000.0f + 2048.0,
-				g_interfaces.player2.GetChar1().GetData()->position_y / 1000.0f - 3072.0
-			);
-		}
-		ImGui::SameLine();
-		ImGui::Text("x: %.2f - y: %.2f", P2Pos.x, P2Pos.y);
-	}
-
 	if (ImGui::CollapsingHeader("P1 World2Screen"))
 	{
-		static D3DXVECTOR2 result(0, 0);
+		static D3DXVECTOR3 result(0, 0, 0);
+		static float x = 0.0f;
+		static float y = 0.0f;
 		static float z = 0.0f;
+		static float m = 3.70f;
 
-		ImGui::SliderFloat("Z", &z, -500.0f, 500.0f);
+		ImGui::SliderFloat("X", &x, -5000.0f, 5000.0f);
+		ImGui::SliderFloat("Y", &y, -5000.0f, 5000.0f);
+		ImGui::SliderFloat("Z", &z, -5000.0f, 5000.0f);
+		ImGui::SliderFloat("M", &m, 0.0f, 5.0f);
 
-		if (ImGui::Button("Run with matrix"))
+		static bool isAutoOn = false;
+		if (ImGui::Button("Automatic"))
 		{
-			D3DXVECTOR3 dst = { 
-				g_interfaces.player1.GetChar1().GetData()->position_x / 1000.0f + 2048.0f,
-				g_interfaces.player1.GetChar1().GetData()->position_y / 1000.0f + 3072.0f,
-				z
-			};
-			D3DXVECTOR2 screen;
-
-			D3DVIEWPORT9 viewport;
-			g_interfaces.pD3D9ExWrapper->GetViewport(&viewport);
-
-			WorldToScreen(dst, screen, g_gameVals.viewProjMatrix, viewport.Width, viewport.Height);
-
-			result.x = screen.x;
-			result.y = screen.y;
+			isAutoOn ^= 1;
 		}
 
-		if (ImGui::Button("Run with FOV"))
+		if (isAutoOn)
 		{
-			D3DXVECTOR3 src{ 0.f, 0.f, 0.f };
-			D3DXVECTOR3 dst = {
-				g_interfaces.player1.GetChar1().GetData()->position_x / 1000.0f + 2048.0f,
-				g_interfaces.player1.GetChar1().GetData()->position_y / 1000.0f + 3072.0f,
+			D3DXVECTOR3 src =
+			{
+				g_interfaces.player1.GetChar1().GetData()->position_x / 10000 * m,
+				g_interfaces.player1.GetChar1().GetData()->position_y / 10000 * m,
 				z
 			};
-			D3DXVECTOR3 screen;
-			float fovx = 1.0f;
-			float fovy = 0.79f;
 
-			D3DVIEWPORT9 viewport;
-			g_interfaces.pD3D9ExWrapper->GetViewport(&viewport);
+			WorldToScreen(g_interfaces.pD3D9ExWrapper, &src, &result);
 
-			WorldToScreen(src, dst, screen, fovx, fovy,
-			viewport.Width, viewport.Height, *g_gameVals.lookAtVector.pEye, *g_gameVals.lookAtVector.pUp, *g_gameVals.lookAtVector.pAt);
-
-			result.x = screen.x;
-			result.y = screen.y;
+			ImGui::SameLine();
+			ImGui::Text("ON");
 		}
-
-		if (ImGui::Button("Run2"))
+		else
 		{
-			D3DXMATRIX &view = *g_gameVals.viewMatrix;
-			D3DXMATRIX viewInverse;
-			D3DXVECTOR2 normalized;
-
-			LOG(2, "view:\n");
-			for (int i = 0; i < 16; i = i + 4)
+			if (ImGui::Button("Manual input"))
 			{
-				for (int j = 0; j < 4; j++)
-				{
-					LOG(2, "%.2f - ", view[i + j]);
-				}
-				LOG(2, "\n");
+				D3DXVECTOR3 src = { x, y, z };
+
+				WorldToScreen(g_interfaces.pD3D9ExWrapper, &src, &result);
 			}
-
-			D3DXVECTOR2 point(
-				g_interfaces.player1.GetChar1().GetData()->position_x / 1000.0f + 2048.0,
-				g_interfaces.player1.GetChar1().GetData()->position_y / 1000.0f + 3072.0
-			);
-
-			LOG(2, "point: x: %.2f - y: %.2f\n", point.x, point.y);
-
-			D3DVIEWPORT9 viewport;
-			g_interfaces.pD3D9ExWrapper->GetViewport(&viewport);
-
-			normalized.x = -1.f + 2.f * (point.x - viewport.X) / viewport.Width;
-			normalized.y = 1.f - 2.f * (point.y - viewport.Y) / viewport.Height;
-
-			LOG(2, "viewport: X: %d - Y: %d - width: %d - height: %d\n", viewport.X, viewport.Y, viewport.Width, viewport.Height);
-			LOG(2, "normalized: x: %.2f - y: %.2f\n", normalized.x, normalized.y);
-
-			D3DXMatrixInverse(&viewInverse, NULL, &view);
-
-			LOG(2, "viewInverse:\n");
-			for (int i = 0; i < 16; i = i + 4)
-			{
-				for (int j = 0; j < 4; j++)
-				{
-					LOG(2, "%.2f - ", viewInverse[i + j]);
-				}
-				LOG(2, "\n");
-			}
-
-			result.x = viewInverse[0] * normalized.x + viewInverse[4] * normalized.y + viewInverse[12];
-			result.y = viewInverse[1] * normalized.x + viewInverse[5] * normalized.y + viewInverse[13];
-			LOG(2, "result: x: %.2f - y: %.2f\n\n", result.x, result.y);
 		}
 
 		ImGui::Text("Result: x: %.2f - y: %.2f", result.x, result.y);
