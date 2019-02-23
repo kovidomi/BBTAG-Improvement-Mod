@@ -564,6 +564,28 @@ void __declspec(naked)GetViewMatrix()
 	}
 }
 
+DWORD GetViewAndProjMatrixesJmpBackAddr = 0;
+void __declspec(naked)GetViewAndProjMatrixes()
+{
+	__asm
+	{
+		mov g_gameVals.viewMatrix, eax;
+
+		push eax
+		mov eax, [esp + 4]
+		mov g_gameVals.projMatrix, eax;
+		pop eax
+	}
+
+	__asm
+	{
+		mov DWORD PTR [ebp - 24h], 3F800000h
+		push    eax
+		lea     eax, [ebp - 88h]
+		jmp[GetViewAndProjMatrixesJmpBackAddr]
+	}
+}
+
 DWORD GetViewProjMatrixJmpBackAddr = 0;
 void __declspec(naked)GetViewProjMatrix()
 {
@@ -651,10 +673,13 @@ bool placeHooks_bbtag()
 
 
 
-	GetViewMatrixJmpBackAddr = HookManager::SetHook("GetViewMatrix", "\x50\x8d\x46\x4c\x50", "xxxxx", 5, GetViewMatrix);
+	// GetViewMatrixJmpBackAddr = HookManager::SetHook("GetViewMatrix", "\x50\x8d\x46\x4c\x50", "xxxxx", 5, GetViewMatrix);
 
-	GetViewProjMatrixJmpBackAddr = HookManager::SetHook("GetViewProjMatrix", "\x8d\x85\x78\xff\xff\xff\x50\x8d\x45\xd0",
-		"xxxxxxxxxx", 10, GetViewProjMatrix);
+	GetViewAndProjMatrixesJmpBackAddr = HookManager::SetHook("GetViewAndProjMatrixes", "\xc7\x45\xdc\x00\x00\x80\x3f\x50\x8d\x85\x78\xff\xff\xff",
+		"xxxxxxxxxxxxxx", 14, GetViewAndProjMatrixes);
+
+	//GetViewProjMatrixJmpBackAddr = HookManager::SetHook("GetViewProjMatrix", "\x8d\x85\x78\xff\xff\xff\x50\x8d\x45\xd0",
+	//	"xxxxxxxxxx", 10, GetViewProjMatrix);
 
 	///////////////// EXPERIMENTAL HOOKS BELOW ////////////////////////////
 
