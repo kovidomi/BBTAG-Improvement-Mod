@@ -1,5 +1,6 @@
 #include "HitboxOverlay.h"
 #include "../logger.h"
+#include "../interfaces.h"
 
 #define PI 3.1415927f
 
@@ -114,3 +115,20 @@ bool WorldToScreen(D3DXVECTOR3 pos, D3DXVECTOR2 &screen, float matrix[16], int w
 	return true;
 }
 
+bool WorldToScreen(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3* pos, D3DXVECTOR3* out)
+{
+	D3DVIEWPORT9 viewPort;
+	D3DXMATRIX view, projection, world;
+
+	pDevice->GetViewport(&viewPort);
+	pDevice->GetTransform(D3DTS_VIEW, &view);
+	pDevice->GetTransform(D3DTS_PROJECTION, &projection);
+	D3DXMatrixIdentity(&world);
+
+	// D3DXVec3Project(out, pos, &viewPort, &projection, &view, &world);
+	D3DXVec3Project(out, pos, &viewPort, g_gameVals.projMatrix, g_gameVals.viewMatrix, &world);
+	if (out->z < 1) {
+		return true;
+	}
+	return false;
+}
