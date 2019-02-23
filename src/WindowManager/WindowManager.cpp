@@ -699,9 +699,9 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		static float z = 0.0f;
 		static float m = 3.70f;
 
-		ImGui::SliderFloat("X", &x, -5000.0f, 5000.0f);
-		ImGui::SliderFloat("Y", &y, -5000.0f, 5000.0f);
-		ImGui::SliderFloat("Z", &z, -5000.0f, 5000.0f);
+		ImGui::SliderFloat("World_X", &x, -5000.0f, 5000.0f);
+		ImGui::SliderFloat("World_Y", &y, -5000.0f, 5000.0f);
+		ImGui::SliderFloat("World_Z", &z, -5000.0f, 5000.0f);
 		ImGui::SliderFloat("M", &m, 0.0f, 5.0f);
 
 		static bool isAutoOn = false;
