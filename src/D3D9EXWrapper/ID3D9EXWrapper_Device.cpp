@@ -211,7 +211,7 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::CreateCubeTexture(UINT EdgeLength, UI
 
 HRESULT APIENTRY Direct3DDevice9ExWrapper::CreateVertexBuffer(UINT Length, DWORD Usage, DWORD FVF, D3DPOOL Pool, IDirect3DVertexBuffer9** ppVertexBuffer, HANDLE* pSharedHandle)
 {
-	LOG(2, "CreateVertexBuffer\n");
+	LOG(7, "CreateVertexBuffer\n");
 	return m_Direct3DDevice9Ex->CreateVertexBuffer(Length, Usage, FVF, Pool, ppVertexBuffer, pSharedHandle);
 }
 
@@ -247,9 +247,9 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::CreateIndexBuffer(UINT Length, DWORD 
 	// D3DPOOL_SCRATCH = 3,
 	// D3DPOOL_FORCE_DWORD = 0x7fffffff
 
-	LOG(2, "CreateIndexBuffer Length: %ld, Usage: 0x%x, Format: %d, Pool: %d, ppIndexBuffer: 0x%x, ", Length, Usage, Format, Pool, ppIndexBuffer);
+	LOG(7, "CreateIndexBuffer Length: %ld, Usage: 0x%x, Format: %d, Pool: %d, ppIndexBuffer: 0x%x, ", Length, Usage, Format, Pool, ppIndexBuffer);
 	HRESULT result = m_Direct3DDevice9Ex->CreateIndexBuffer(Length, Usage, Format, Pool, ppIndexBuffer, pSharedHandle);
-	LOG(2, "*ppIndexBuffer: 0x%x\n", *ppIndexBuffer);
+	LOG(7, "*ppIndexBuffer: 0x%x\n", *ppIndexBuffer);
 	return result;
 }
 
@@ -650,7 +650,7 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::DrawPrimitive(D3DPRIMITIVETYPE Primit
 
 HRESULT APIENTRY Direct3DDevice9ExWrapper::DrawIndexedPrimitive(D3DPRIMITIVETYPE PrimitiveType, INT BaseVertexIndex, UINT MinVertexIndex, UINT NumVertices, UINT startIndex, UINT primCount)
 {
-	LOG(2, "%d DrawIndexedPrimitive Type: %d, BaseVertexIndex: %d, MinVertexIndex: %ld, NumVertices: %ld, startIndex: %ld, primCount: %ld\n",
+	LOG(7, "%d DrawIndexedPrimitive Type: %d, BaseVertexIndex: %d, MinVertexIndex: %ld, NumVertices: %ld, startIndex: %ld, primCount: %ld\n",
 		drawCount++, PrimitiveType, BaseVertexIndex, MinVertexIndex, NumVertices, startIndex, primCount);
 
 	return m_Direct3DDevice9Ex->DrawIndexedPrimitive(PrimitiveType, BaseVertexIndex, MinVertexIndex, NumVertices, startIndex, primCount);
@@ -792,7 +792,7 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::GetStreamSourceFreq(UINT StreamNumber
 
 HRESULT APIENTRY Direct3DDevice9ExWrapper::SetIndices(IDirect3DIndexBuffer9* pIndexData)
 {
-	LOG(2, "SetIndices pIndexData: 0x%x\n", pIndexData);
+	LOG(7, "SetIndices pIndexData: 0x%x\n", pIndexData);
 	return m_Direct3DDevice9Ex->SetIndices(pIndexData);
 }
 
