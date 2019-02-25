@@ -4,7 +4,7 @@
 
 #include <cstdio>
 
-#define ADD_EMPTY_LINE ImGui::TextUnformatted("")
+#define ADD_EMPTY_LINE() ImGui::TextUnformatted("")
 
 const ImVec4 COLOR_PLATINUM    (0.328f, 1.000f, 0.901f, 1.000f);
 const ImVec4 COLOR_GOLD        (1.000f, 0.794f, 0.000f, 1.000f);
@@ -14,29 +14,30 @@ const ImVec4 COLOR_DEFAULT     (1.000f, 1.000f, 1.000f, 1.000f);
 const ImVec4 COLOR_TRANSPARENT (0.000f, 0.000f, 0.000f, 0.000f);
 
 const std::vector<ImVec4> DONATOR_TIER_COLORS = { COLOR_PLATINUM, COLOR_GOLD, COLOR_SILVER, COLOR_BRONZE };
+ImVec2 backupWindowTitleAlign;
 
-void DonatorsWindow::Show()
+void DonatorsWindow::BeforeDraw()
 {
-	const ImVec2 origWindowTitleAlign = ImGui::GetStyle().WindowTitleAlign;
+	char titleBuffer[128];
+	m_windowTitle = ConstructWindowTitle(titleBuffer);
 
-	ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f); //middle
+	backupWindowTitleAlign = ImGui::GetStyle().WindowTitleAlign;
+	ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f); // middle
 	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.0f);
 	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
-	// ImGui::SetNextWindowPosCenter(ImGuiCond_FirstUseEver);
+}
 
-	char titleBuffer[128];
-	ConstructWindowTitle(titleBuffer);
-
-	ImGui::Begin(titleBuffer, NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
-
+void DonatorsWindow::Draw()
+{
 	PrintDonators();
 	DrawOkButton();
 	PositionWindowToMiddleScreen();
+}
 
-	ImGui::End();
-
+void DonatorsWindow::AfterDraw()
+{
 	ImGui::PopStyleVar();
-	ImGui::GetStyle().WindowTitleAlign = origWindowTitleAlign;
+	ImGui::GetStyle().WindowTitleAlign = backupWindowTitleAlign;
 }
 
 char DonatorsWindow::CalculateAnimatedTitleChar() const
@@ -48,23 +49,25 @@ char DonatorsWindow::CalculateAnimatedTitleChar() const
 	return animationFrames[currentAnimationFrame];
 }
 
-void DonatorsWindow::ConstructWindowTitle(char* outBuffer) const
+char* DonatorsWindow::ConstructWindowTitle(char* outBuffer) const
 {
 	const char animatedCharacter = CalculateAnimatedTitleChar();
 	sprintf(outBuffer, "%c SUPPORTERS %c###Donators", animatedCharacter, animatedCharacter);
+
+	return outBuffer;
 }
 
 void DonatorsWindow::PositionWindowToMiddleScreen() const
 {
 	// Set window to the middle of the screen, on the first call the windowsize is always minimum
 	const float minWindowHeight = 51.0f;
-	const ImVec2 wndSize = ImGui::GetWindowSize();
+	const ImVec2 windowSize = ImGui::GetWindowSize();
 
-	if (minWindowHeight < wndSize.y)
+	if (minWindowHeight < windowSize.y)
 	{
 		const ImGuiIO io = ImGui::GetIO();
 		ImGui::SetWindowPos(
-			ImVec2((io.DisplaySize.x * 0.5f) - (wndSize.x / 2), (io.DisplaySize.y * 0.5f) - (wndSize.y / 2)),
+			ImVec2((io.DisplaySize.x * 0.5f) - (windowSize.x / 2), (io.DisplaySize.y * 0.5f) - (windowSize.y / 2)),
 			ImGuiCond_Once
 		);
 	}
@@ -117,7 +120,7 @@ void DonatorsWindow::PrintDonators() const
 		ImGui::TextColored(donatorColor, donatorName.c_str());
 	}
 
-	ADD_EMPTY_LINE;
+	ADD_EMPTY_LINE();
 }
 
 void DonatorsWindow::DrawOkButton() const
