@@ -30,7 +30,12 @@ void DonatorsWindow::BeforeDraw()
 void DonatorsWindow::Draw()
 {
 	PrintDonators();
-	DrawOkButton();
+
+	const bool buttonPressed = DrawOkButton();
+	if (buttonPressed)
+	{
+		Close();
+	}
 	PositionWindowToMiddleScreen();
 }
 
