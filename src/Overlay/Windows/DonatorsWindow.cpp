@@ -123,7 +123,7 @@ void DonatorsWindow::PrintDonators() const
 	ADD_EMPTY_LINE();
 }
 
-void DonatorsWindow::DrawOkButton() const
+bool DonatorsWindow::DrawOkButton() const
 {
 	const ImVec2 okBtnSize(100, 30);
 	const float buttonPosMiddleWindowX = ImGui::GetWindowSize().x / 2 - (okBtnSize.x / 2);
@@ -131,6 +131,8 @@ void DonatorsWindow::DrawOkButton() const
 
 	if (ImGui::Button("OK", okBtnSize))
 	{
-		show_donators_window = false;
+		return true;
 	}
+
+	return false;
 }
