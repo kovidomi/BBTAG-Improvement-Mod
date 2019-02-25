@@ -488,11 +488,11 @@ void CustomHud::UpdateCharSpecificMeters(const CharInfo & charInfo, bool right_s
 		}
 
 		ImGui::SameLine();
-		ImGui::Text("%s", meterCharNames[charInfo.char_index]);
+		ImGui::Text("%s", meterCharNames[charInfo.char_index].c_str());
 	}
 	else
 	{
-		ImGui::Text("%s", meterCharNames[charInfo.char_index]);
+		ImGui::Text("%s", meterCharNames[charInfo.char_index].c_str());
 		ImGui::SameLine();
 
 		if (show_unique_bar)
