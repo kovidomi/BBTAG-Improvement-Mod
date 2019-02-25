@@ -9,9 +9,10 @@ struct ImGuiLog;
 class OverlayManager
 {
 	static OverlayManager* m_instance;
+	static ImGuiLog m_log;
+
 	CustomHud* m_customHud = nullptr;
 	PaletteEditor* m_paletteEditor = nullptr;
-	static ImGuiLog m_log;
 	bool m_initialized = false;
 	bool m_loggingEnabled = true;
 public:
