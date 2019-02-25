@@ -179,10 +179,12 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 			if (charIndex != fileContents.header.charindex)
 			{
 				LOG(2, "WARNING, '%s' belongs to character %s, but is placed in folder %s\n",
-					fileName.c_str(), charNames[fileContents.header.charindex], charNames[charIndex]);
+					fileName.c_str(), charNames[fileContents.header.charindex].c_str(),
+					charNames[charIndex].c_str());
 
 				OverlayManager::getInstance().AddLog("[warning] '%s' belongs to character '%s', but is placed in folder '%s'\n", 
-					fileName.c_str(), charNames[fileContents.header.charindex], charNames[charIndex]);
+					fileName.c_str(), charNames[fileContents.header.charindex],
+					charNames[charIndex].c_str());
 				//keep going
 			}
 
@@ -360,7 +362,7 @@ bool PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & f
 
 	OverlayManager::getInstance().AddLog(
 		"[system] Loaded '%s.impl' for character '%s'\n",
-		filledPalData.palname, charNames[charIndex]
+		filledPalData.palname, charNames[charIndex].c_str()
 	);
 	return true;
 }

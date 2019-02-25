@@ -1,6 +1,7 @@
 #include "characters.h"
 
-const int CHAR_NAMES_COUNT = charNames.size();
+// TODO: rework this file with better data structures
+const int CHAR_NAMES_COUNT = 41; // charNames.size();
 
 const std::vector<std::string> charNames
 {
