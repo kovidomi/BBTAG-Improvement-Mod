@@ -10,5 +10,5 @@ class Window
 	// void RestorePreviousGlobalStyles();
 public:
 	virtual void Show() = 0;
-	virtual ~Window() {};
+	virtual ~Window() = default;
 };
