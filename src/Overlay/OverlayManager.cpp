@@ -23,7 +23,6 @@
 #define DEFAULT_ALPHA 0.87f
 
 OverlayManager* OverlayManager::m_instance = nullptr;
-bool OverlayManager::Initialized = false;
 
 bool show_main_window = true;
 bool show_demo_window = false;
