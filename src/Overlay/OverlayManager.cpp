@@ -141,7 +141,7 @@ ImGuiLog OverlayManager::m_log;
 
 void OverlayManager::OnMatchInit()
 {
-	if (!Initialized || !m_paletteEditor)
+	if (!m_initialized || !m_paletteEditor)
 		return;
 
 	g_interfaces.pPaletteManager->OnMatchInit(
@@ -186,7 +186,7 @@ OverlayManager & OverlayManager::getInstance()
 
 bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 {
-	if (Initialized)
+	if (m_initialized)
 		return true;
 
 	LOG(2, "OverlayManager::Init\n");
@@ -229,7 +229,7 @@ bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	else if (Settings::settingsIni.menusize == 3)
 		ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(DroidSans_compressed_data, DroidSans_compressed_size, 20);
 
-	Initialized = true;
+	m_initialized = true;
 	AddLog("[system] Initialization starting...\n");
 
 
@@ -303,7 +303,7 @@ bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 
 void OverlayManager::Shutdown()
 {
-	if (!Initialized)
+	if (!m_initialized)
 		return;
 
 	LOG(2, "OverlayManager::Shutdown\n");
@@ -318,7 +318,7 @@ void OverlayManager::Shutdown()
 
 void OverlayManager::InvalidateDeviceObjects()
 {
-	if (!Initialized)
+	if (!m_initialized)
 		return;
 
 	LOG(2, "OverlayManager::InvalidateDeviceObjects\n");
@@ -327,7 +327,7 @@ void OverlayManager::InvalidateDeviceObjects()
 
 void OverlayManager::CreateDeviceObjects()
 {
-	if (!Initialized)
+	if (!m_initialized)
 		return;
 
 	LOG(2, "OverlayManager::CreateDeviceObjects\n");
@@ -336,7 +336,7 @@ void OverlayManager::CreateDeviceObjects()
 
 void OverlayManager::OnRender()
 {
-	if (!Initialized)
+	if (!m_initialized)
 		return;
 
 	LOG(7, "OverlayManager::OnRender\n");
@@ -345,7 +345,7 @@ void OverlayManager::OnRender()
 
 void OverlayManager::OnUpdate()
 {
-	if (!Initialized)
+	if (!m_initialized)
 		return;
 
 	LOG(7, "OverlayManager::HandleImGui\n");
@@ -386,7 +386,7 @@ void OverlayManager::OnUpdate()
 
 void OverlayManager::SetNotification(const char *text, float timeToShowInSec, bool showNotificationWindow)
 {
-	if (!Initialized)
+	if (!m_initialized)
 		return;
 
 	notificationText = text;
@@ -445,7 +445,7 @@ void OverlayManager::ShowNotificationWindow()
 // start with type a of message: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 void OverlayManager::AddLog(const char* message, ...)
 {
-	if (!Initialized || !message || !m_loggingEnabled)
+	if (!m_initialized || !message || !m_loggingEnabled)
 	{ 
 		return; 
 	}
@@ -496,7 +496,7 @@ void OverlayManager::SetLogging(bool value)
 
 void OverlayManager::WriteLogToFile()
 {
-	if (!Initialized)
+	if (!m_initialized)
 		return;
 
 	FILE *file = fopen("BBTAG_IM\\log.txt", "a");
