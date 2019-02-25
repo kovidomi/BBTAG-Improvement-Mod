@@ -9,6 +9,11 @@ Window::Window(std::string title, bool closable, ImGuiWindowFlags windowFlags)
 
 void Window::Update()
 {
+	if (!m_windowOpen)
+	{
+		return;
+	}
+
 	BeforeDraw();
 
 	bool* p_open = nullptr;
