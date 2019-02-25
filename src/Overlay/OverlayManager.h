@@ -26,6 +26,7 @@ public:
 	void InvalidateDeviceObjects();
 	void CreateDeviceObjects();
 	void OnMatchInit();
+	bool IsInitialized() const;
 
 	// start message with one of these: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 	void AddLog(const char* message, ...);

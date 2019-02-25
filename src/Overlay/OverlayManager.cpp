@@ -154,6 +154,11 @@ void OverlayManager::OnMatchInit()
 	m_paletteEditor->OnMatchInit();
 }
 
+bool OverlayManager::IsInitialized() const
+{
+	return m_initialized;
+}
+
 void OverlayManager::SetMainWindowTitle(const char *text)
 {
 	if (text)
