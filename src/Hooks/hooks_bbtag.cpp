@@ -25,7 +25,7 @@ void __declspec(naked)PassMsgToImGui()
 	__asm
 	{
 		pushad
-		movzx eax, OverlayManager::Initialized
+		call OverlayManager::IsInitialized
 		cmp eax, 0
 		je SKIP
 	}
