@@ -12,7 +12,7 @@ class OverlayManager
 	CustomHud* m_customHud = nullptr;
 	PaletteEditor* m_paletteEditor = nullptr;
 	static ImGuiLog m_log;
-	static bool Initialized;
+	bool m_initialized = false;
 	bool m_loggingEnabled = true;
 public:
 	bool IsUpdateAvailable = false;
@@ -26,6 +26,7 @@ public:
 	void InvalidateDeviceObjects();
 	void CreateDeviceObjects();
 	void OnMatchInit();
+
 	// start message with one of these: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 	void AddLog(const char* message, ...);
 	void AddLogSeparator();
