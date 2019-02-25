@@ -177,6 +177,7 @@
       <Filter>src\WindowManager</Filter>
     </ClCompile>
     <ClCompile Include="src\Overlay\Windows\DonatorsWindow.cpp" />
+    <ClCompile Include="src\Overlay\Windows\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">

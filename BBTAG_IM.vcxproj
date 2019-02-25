@@ -144,6 +144,7 @@
     <ClCompile Include="src\Core\main.cpp" />
     <ClCompile Include="src\Core\logger.cpp" />
     <ClCompile Include="src\Overlay\Windows\DonatorsWindow.cpp" />
+    <ClCompile Include="src\Overlay\Windows\Window.cpp" />
     <ClCompile Include="src\PaletteManager\PaletteManager.cpp" />
     <ClCompile Include="src\Core\Settings.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamApiHelper.cpp" />
