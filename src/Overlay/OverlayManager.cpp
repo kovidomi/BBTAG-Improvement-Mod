@@ -11,6 +11,7 @@
 #include "SteamApiWrapper/SteamApiHelper.h"
 #include "Web/update_check.h"
 #include "Web/donators_fetch.h"
+#include "Windows/DonatorsWindow.h"
 
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
@@ -33,6 +34,8 @@ bool show_debug_window = false;
 bool show_donators_window = false;
 bool show_custom_hud = false;
 bool *NO_CLOSE_FLAG = NULL;
+DonatorsWindow* g_donatorsWindow = new DonatorsWindow("", false,
+	ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
 
 bool show_palette_editor = false;
 
@@ -824,7 +827,8 @@ void OverlayManager::ShowDonatorsButton()
 	sprintf(buf, "%s", donatorName.c_str());
 	if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
 	{
-		show_donators_window ^= 1;
+		//show_donators_window ^= 1;
+		g_donatorsWindow->Open();
 	}
 }
 
@@ -1005,8 +1009,9 @@ void OverlayManager::ShowAllWindows()
 	if (IsUpdateAvailable)
 		ShowUpdateWindow();
 
-	if (show_donators_window)
-		ShowDonatorsWindow();
+	//if (show_donators_window)
+	//	ShowDonatorsWindow();
+	g_donatorsWindow->Update();
 
 ////////////// DEBUG Windows
 #ifdef _DEBUG
