@@ -15,10 +15,6 @@ const ImVec4 COLOR_TRANSPARENT (0.000f, 0.000f, 0.000f, 0.000f);
 
 const std::vector<ImVec4> DONATOR_TIER_COLORS = { COLOR_PLATINUM, COLOR_GOLD, COLOR_SILVER, COLOR_BRONZE };
 
-DonatorsWindow::DonatorsWindow()
-{
-}
-
 char DonatorsWindow::CalculateAnimatedTitleChar() const
 {
 	const char animationFrames[] = "|/-\\";
@@ -134,8 +130,4 @@ void DonatorsWindow::Show()
 
 	ImGui::PopStyleVar();
 	ImGui::GetStyle().WindowTitleAlign = origWindowTitleAlign;
-}
-
-DonatorsWindow::~DonatorsWindow()
-{
 }
