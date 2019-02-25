@@ -9,9 +9,6 @@ class Window
 	// void SavePreviousGlobalStyles();
 	// void RestorePreviousGlobalStyles();
 public:
-	virtual void BeforeDraw() = 0;
-	virtual void Draw() = 0;
-	virtual void AfterDraw() = 0;
 	virtual ~Window() = default;
 	Window(std::string title, bool closable, ImGuiWindowFlags windowFlags);
 	void Update();
@@ -19,8 +16,15 @@ public:
 	void Close();
 
 protected:
+	virtual void BeforeDraw() = 0;
+	virtual void Draw() = 0;
+	virtual void AfterDraw() = 0;
+
 	ImGuiWindowFlags m_windowFlags;
 	bool m_windowOpen = false;
 	bool m_windowClosable;
 	std::string m_windowTitle;
+
+private:
+	Window() = delete;
 };
