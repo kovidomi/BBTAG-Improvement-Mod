@@ -3,10 +3,13 @@
 
 #include <imgui.h>
 
-class DonatorsWindow : Window
+class DonatorsWindow : public Window
 {
 public:
-	DonatorsWindow() = default;
+	DonatorsWindow(const std::string& title, bool closable,
+		ImGuiWindowFlags windowFlags)
+		: Window(title, closable, windowFlags) {}
+
 	void BeforeDraw() override;
 	void Draw() override;
 	void AfterDraw() override;
