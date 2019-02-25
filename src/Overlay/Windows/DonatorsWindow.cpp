@@ -15,6 +15,30 @@ const ImVec4 COLOR_TRANSPARENT (0.000f, 0.000f, 0.000f, 0.000f);
 
 const std::vector<ImVec4> DONATOR_TIER_COLORS = { COLOR_PLATINUM, COLOR_GOLD, COLOR_SILVER, COLOR_BRONZE };
 
+void DonatorsWindow::Show()
+{
+	const ImVec2 origWindowTitleAlign = ImGui::GetStyle().WindowTitleAlign;
+
+	ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f); //middle
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.0f);
+	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
+	// ImGui::SetNextWindowPosCenter(ImGuiCond_FirstUseEver);
+
+	char titleBuffer[128];
+	ConstructWindowTitle(titleBuffer);
+
+	ImGui::Begin(titleBuffer, NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
+
+	PrintDonators();
+	DrawOkButton();
+	PositionWindowToMiddleScreen();
+
+	ImGui::End();
+
+	ImGui::PopStyleVar();
+	ImGui::GetStyle().WindowTitleAlign = origWindowTitleAlign;
+}
+
 char DonatorsWindow::CalculateAnimatedTitleChar() const
 {
 	const char animationFrames[] = "|/-\\";
@@ -106,28 +130,4 @@ void DonatorsWindow::DrawOkButton() const
 	{
 		show_donators_window = false;
 	}
-}
-
-void DonatorsWindow::Show()
-{
-	const ImVec2 origWindowTitleAlign = ImGui::GetStyle().WindowTitleAlign;
-
-	ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f); //middle
-	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.0f);
-	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
-	// ImGui::SetNextWindowPosCenter(ImGuiCond_FirstUseEver);
-
-	char titleBuffer[128];
-	ConstructWindowTitle(titleBuffer);
-
-	ImGui::Begin(titleBuffer, NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
-
-	PrintDonators();
-	DrawOkButton();
-	PositionWindowToMiddleScreen();
-
-	ImGui::End();
-
-	ImGui::PopStyleVar();
-	ImGui::GetStyle().WindowTitleAlign = origWindowTitleAlign;
 }
