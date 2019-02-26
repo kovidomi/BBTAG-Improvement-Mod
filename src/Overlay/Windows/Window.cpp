@@ -1,12 +1,5 @@
 #include "Window.h"
 
-Window::Window(std::string title, bool closable, ImGuiWindowFlags windowFlags)
-{
-	m_windowClosable = closable;
-	m_windowFlags = windowFlags;
-	m_windowTitle = title;
-}
-
 void Window::Update()
 {
 	if (!m_windowOpen)
