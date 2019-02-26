@@ -31,3 +31,8 @@ void Window::Close()
 {
 	m_windowOpen = false;
 }
+
+bool Window::isOpen() const
+{
+	return m_windowOpen;
+}
