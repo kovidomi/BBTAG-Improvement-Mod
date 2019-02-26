@@ -26,8 +26,8 @@ protected:
 	virtual void Draw() = 0;
 	virtual void AfterDraw() {}
 
-	std::string m_windowTitle;
-	bool m_windowClosable;
-	ImGuiWindowFlags m_windowFlags;
-	bool m_windowOpen = false;
+	std::string       m_windowTitle;
+	bool              m_windowClosable;
+	ImGuiWindowFlags  m_windowFlags;
+	bool              m_windowOpen = false;
 };
