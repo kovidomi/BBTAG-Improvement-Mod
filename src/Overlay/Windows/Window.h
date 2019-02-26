@@ -19,7 +19,7 @@ public:
 	void Update();
 	void Open();
 	void Close();
-	bool isOpen() const;
+	bool IsOpen() const;
 
 protected:
 	virtual void BeforeDraw() {}

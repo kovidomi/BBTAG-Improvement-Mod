@@ -288,7 +288,7 @@ void OverlayManager::OnUpdate()
 
 	ImGuiIO& io = ImGui::GetIO();
 
-	io.MouseDrawCursor = show_main_window | g_logWindow->isOpen() | show_notification_window
+	io.MouseDrawCursor = show_main_window | g_logWindow->IsOpen() | show_notification_window
 		| show_palette_editor | IsUpdateAvailable | show_demo_window;
 
 	if (Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)

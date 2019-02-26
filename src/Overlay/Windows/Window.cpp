@@ -32,7 +32,7 @@ void Window::Close()
 	m_windowOpen = false;
 }
 
-bool Window::isOpen() const
+bool Window::IsOpen() const
 {
 	return m_windowOpen;
 }
