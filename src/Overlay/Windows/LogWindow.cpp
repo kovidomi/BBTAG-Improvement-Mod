@@ -65,6 +65,11 @@ void LogWindow::Clear()
 
 void LogWindow::AddLog(const char* fmt, ...)
 {
+	if (!m_loggingEnabled)
+	{
+		return;
+	}
+
 	int oldSize = m_buf.size();
 	va_list args;
 	va_start(args, fmt);
@@ -82,4 +87,14 @@ void LogWindow::AddLog(const char* fmt, ...)
 void LogWindow::ToFile(FILE* file) const
 {
 	fprintf(file, "%s", m_buf.begin());
+}
+
+void LogWindow::SetLogging(bool value)
+{
+	m_loggingEnabled = value;
+}
+
+bool LogWindow::IsLoggingOn() const
+{
+	return m_loggingEnabled;
 }
