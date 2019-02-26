@@ -13,7 +13,6 @@ class OverlayManager
 	CustomHud* m_customHud = nullptr;
 	PaletteEditor* m_paletteEditor = nullptr;
 	bool m_initialized = false;
-	bool m_loggingEnabled = true;
 public:
 	bool IsUpdateAvailable = false;
 

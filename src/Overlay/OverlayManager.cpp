@@ -362,7 +362,7 @@ void OverlayManager::ShowNotificationWindow()
 // start with type a of message: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 void OverlayManager::AddLog(const char* message, ...)
 {
-	if (!m_initialized || !message || !m_loggingEnabled)
+	if (!m_initialized || !g_logWindow->IsLoggingOn())
 	{ 
 		return; 
 	}
@@ -400,15 +400,12 @@ void OverlayManager::AddLog(const char* message, ...)
 
 void OverlayManager::AddLogSeparator()
 {
-	if (!m_loggingEnabled)
-		return;
-
 	g_logWindow->AddLog("------------------------------------------------------------------\n");
 }
 
 void OverlayManager::SetLogging(bool value)
 {
-	m_loggingEnabled = value;
+	g_logWindow->SetLogging(value);
 }
 
 void OverlayManager::WriteLogToFile()
