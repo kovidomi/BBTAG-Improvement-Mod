@@ -13,6 +13,7 @@
 #include "Web/donators_fetch.h"
 #include "Windows/DebugWindow.h"
 #include "Windows/DonatorsWindow.h"
+#include "Windows/LogWindow.h"
 
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
@@ -30,7 +31,6 @@ bool show_main_window = true;
 bool show_demo_window = false;
 bool show_notification = false;
 bool show_notification_window = false;
-bool show_log_window = false;
 bool show_custom_hud = false;
 bool *NO_CLOSE_FLAG = NULL;
 
@@ -38,6 +38,8 @@ DonatorsWindow* g_donatorsWindow = new DonatorsWindow("", false,
 	ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
 
 DebugWindow* g_debugWindow = new DebugWindow("DEBUG", true);
+
+LogWindow* g_logWindow = new LogWindow("Log", true, ImGuiWindowFlags_NoCollapse);
 
 bool show_palette_editor = false;
 
@@ -53,96 +55,6 @@ int toggleHUD_key;
 int toggleCustomHUD_key;
 
 ImVec2 middlescreen;
-
-// Usage:
-//  static ExampleAppLog my_log;
-//  my_log.AddLog("Hello %d world\n", 123);
-//  my_log.Draw("title");
-struct ImGuiLog
-{
-	ImGuiTextBuffer     Buf;
-	ImGuiTextFilter     Filter;
-	ImVector<int>       LineOffsets;        // Index to lines offset
-	float				PrevScrollMaxY = 0;
-
-	void _Clear() { Buf.clear(); LineOffsets.clear(); }
-
-	void _AddLog(const char* fmt, ...) IM_FMTARGS(2)
-	{
-		int old_size = Buf.size();
-		va_list args;
-		va_start(args, fmt);
-		Buf.appendfv(fmt, args);
-		va_end(args);
-		for (int new_size = Buf.size(); old_size < new_size; old_size++)
-		{
-			if (Buf[old_size] == '\n')
-			{
-				LineOffsets.push_back(old_size);
-			}
-		}
-	}
-
-	void _Draw(const char* title, bool* p_open = NULL)
-	{
-		ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-		ImGui::Begin(title, p_open, ImGuiWindowFlags_NoCollapse);
-		if (ImGui::Button("Clear")) _Clear();
-		ImGui::SameLine();
-		bool copy = ImGui::Button("Copy");
-		ImGui::SameLine();
-		Filter.Draw("Filter", -100.0f);
-		ImGui::Separator();
-		ImGui::BeginChild("scrolling", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
-		if (copy)
-		{
-			ImGui::LogToClipboard();
-			OverlayManager::getInstance().AddLog("[system] Log has been copied to clipboard\n");
-		}
-
-		if (Filter.IsActive())
-		{
-			const char* buf_begin = Buf.begin();
-			const char* line = buf_begin;
-			for (int line_no = 0; line != NULL; line_no++)
-			{
-				const char* line_end = (line_no < LineOffsets.Size) ? buf_begin + LineOffsets[line_no] : NULL;
-				if (Filter.PassFilter(line, line_end))
-				{
-					ImGui::TextUnformatted(line, line_end);
-					//ImGui::TextWrapped(line, line_end); causes a line limit in the logging for some reason
-				}
-				line = line_end && line_end[1] ? line_end + 1 : NULL;
-			}
-		}
-		else
-		{
-			ImGui::TextUnformatted(Buf.begin());
-			//ImGui::TextWrapped(Buf.begin()); //causes a line limit in the logging for some reason
-		}
-
-		//handle automatic scrolling
-		if (PrevScrollMaxY < ImGui::GetScrollMaxY())
-		{
-			//scroll down automatically only if we didnt scroll up or we closed the window
-			if (ImGui::GetScrollY() >= PrevScrollMaxY - 5)
-			{
-				ImGui::SetScrollY(ImGui::GetScrollMaxY());
-			}
-			PrevScrollMaxY = ImGui::GetScrollMaxY();
-		}
-
-		ImGui::EndChild();
-		ImGui::End();
-	}
-
-	void _ToFile(FILE *file)
-	{
-		fprintf(file, "%s", Buf.begin());
-	}
-};
-
-ImGuiLog OverlayManager::m_log;
 
 void OverlayManager::OnMatchInit()
 {
@@ -376,7 +288,7 @@ void OverlayManager::OnUpdate()
 
 	ImGuiIO& io = ImGui::GetIO();
 
-	io.MouseDrawCursor = show_main_window |show_log_window | show_notification_window
+	io.MouseDrawCursor = show_main_window | g_logWindow->isOpen() | show_notification_window
 		| show_palette_editor | IsUpdateAvailable | show_demo_window;
 
 	if (Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)
@@ -468,7 +380,7 @@ void OverlayManager::AddLog(const char* message, ...)
 	if (strlen(message) > MAX_LOG_MSG_LEN)
 	{
 		LOG(2, "AddLog error: message too long!\nmessage: %s", message);
-		m_log._AddLog("%s [error] Log message too long.", timeString);
+		g_logWindow->AddLog("%s [error] Log message too long.", timeString);
 		return;
 	}
 
@@ -483,7 +395,7 @@ void OverlayManager::AddLog(const char* message, ...)
 	fullMessage += " ";
 	fullMessage += buf;
 
-	m_log._AddLog(fullMessage.c_str());
+	g_logWindow->AddLog(fullMessage.c_str());
 }
 
 void OverlayManager::AddLogSeparator()
@@ -491,7 +403,7 @@ void OverlayManager::AddLogSeparator()
 	if (!m_loggingEnabled)
 		return;
 
-	m_log._AddLog("------------------------------------------------------------------\n");
+	g_logWindow->AddLog("------------------------------------------------------------------\n");
 }
 
 void OverlayManager::SetLogging(bool value)
@@ -552,15 +464,10 @@ void OverlayManager::WriteLogToFile()
 
 	//d3dparams here
 
-	m_log._ToFile(file);
+	g_logWindow->ToFile(file);
 	fprintf(file, "\n#####################################\n\n\n");
 
 	fclose(file);
-}
-
-void OverlayManager::ShowLogWindow(bool* p_open)
-{
-	m_log._Draw("Log", p_open);
 }
 
 void OverlayManager::ShowUpdateWindow()
@@ -749,7 +656,9 @@ void OverlayManager::ShowMainWindow(bool * p_open)
 		}
 #endif
 		if (ImGui::Button("Log"))
-			show_log_window ^= 1;
+		{
+			g_logWindow->Open();
+		}
 
 		ImGui::Text("Current online players:"); ImGui::SameLine();
 		if (g_interfaces.pSteamApiHelper)
@@ -827,8 +736,7 @@ void OverlayManager::ShowAllWindows()
 	if (show_notification)
 		HandleNotification();
 
-	if (show_log_window && show_main_window)
-		ShowLogWindow(&show_log_window);
+	g_logWindow->Update();
 
 	if (IsUpdateAvailable)
 		ShowUpdateWindow();

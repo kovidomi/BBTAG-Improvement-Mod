@@ -9,7 +9,6 @@ struct ImGuiLog;
 class OverlayManager
 {
 	static OverlayManager* m_instance;
-	static ImGuiLog m_log;
 
 	CustomHud* m_customHud = nullptr;
 	PaletteEditor* m_paletteEditor = nullptr;
@@ -39,7 +38,6 @@ private:
 	void SetMainWindowTitle(const char *text = 0);
 	void HandleNotification();
 	void ShowNotificationWindow();
-	void ShowLogWindow(bool* p_open);
 	void ShowUpdateWindow();
 	void ShowLoadedSettingsValues();
 	void ShowDonatorsButton();
