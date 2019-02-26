@@ -4,8 +4,6 @@
 
 #include <d3d9.h>
 
-struct ImGuiLog;
-
 class OverlayManager
 {
 	static OverlayManager* m_instance;
