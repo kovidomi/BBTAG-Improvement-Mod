@@ -11,6 +11,7 @@
 #include "SteamApiWrapper/SteamApiHelper.h"
 #include "Web/update_check.h"
 #include "Web/donators_fetch.h"
+#include "Windows/DebugWindow.h"
 #include "Windows/DonatorsWindow.h"
 
 #include <imgui.h>
@@ -30,11 +31,13 @@ bool show_demo_window = false;
 bool show_notification = false;
 bool show_notification_window = false;
 bool show_log_window = false;
-bool show_debug_window = false;
 bool show_custom_hud = false;
 bool *NO_CLOSE_FLAG = NULL;
+
 DonatorsWindow* g_donatorsWindow = new DonatorsWindow("", false,
 	ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
+
+DebugWindow* g_debugWindow = new DebugWindow("DEBUG", true);
 
 bool show_palette_editor = false;
 
@@ -616,95 +619,6 @@ void OverlayManager::ShowLoadedSettingsValues()
 
 }
 
-void OverlayManager::ShowDebugWindow(bool * p_open)
-{
-	ImGui::Begin("DEBUG", p_open);
-
-	if (ImGui::CollapsingHeader("Gameval addresses"))
-	{
-		if(!g_interfaces.player1.GetChar1().IsCharDataNullPtr())
-			ImGui::Text("pP1Char1_Data 0x%p", g_interfaces.player1.GetChar1().GetData());
-
-		if(!g_interfaces.player1.GetChar2().IsCharDataNullPtr())
-			ImGui::Text("pP1Char2_Data 0x%p", g_interfaces.player1.GetChar2().GetData());
-
-		if(!g_interfaces.player2.GetChar1().IsCharDataNullPtr())
-			ImGui::Text("pP2Char1_Data 0x%p", g_interfaces.player2.GetChar1().GetData());
-
-		if(!g_interfaces.player2.GetChar2().IsCharDataNullPtr())
-			ImGui::Text("pP2Char2_Data 0x%p", g_interfaces.player2.GetChar2().GetData());
-
-		ImGui::Separator();
-		ImGui::Text("pP1Meters 0x%p", g_interfaces.player1.GetMeters());
-		ImGui::Text("pP2Meters 0x%p", g_interfaces.player2.GetMeters());
-
-		ImGui::Separator();
-		if (!g_interfaces.player1.GetChar1().IsCharDataNullPtr())
-			ImGui::Text("P1Char1 meter: %d / %d", 
-				g_interfaces.player1.GetChar1().GetData()->unique_meter_cur_val,
-				g_interfaces.player1.GetChar1().GetData()->unique_meter_max_val);
-
-		if (!g_interfaces.player1.GetChar2().IsCharDataNullPtr())
-			ImGui::Text("P1Char2 meter: %d / %d", 
-				g_interfaces.player1.GetChar2().GetData()->unique_meter_cur_val,
-				g_interfaces.player1.GetChar2().GetData()->unique_meter_max_val);
-
-		if (!g_interfaces.player2.GetChar1().IsCharDataNullPtr())
-			ImGui::Text("P2Char1 meter: %d / %d", 
-				g_interfaces.player2.GetChar1().GetData()->unique_meter_cur_val,
-				g_interfaces.player2.GetChar1().GetData()->unique_meter_max_val);
-
-		if (!g_interfaces.player2.GetChar2().IsCharDataNullPtr())
-			ImGui::Text("P2Char2 meter: %d / %d", 
-				g_interfaces.player2.GetChar2().GetData()->unique_meter_cur_val,
-				g_interfaces.player2.GetChar2().GetData()->unique_meter_max_val);
-
-		ImGui::Separator();
-		ImGui::Text("pPalIndex_P1Char1 0x%p", &(g_interfaces.player1.GetChar1().GetPalHandle().GetPalIndexRef()));
-		ImGui::Text("pPalIndex_P1Char2 0x%p", &(g_interfaces.player1.GetChar2().GetPalHandle().GetPalIndexRef()));
-		ImGui::Text("pPalIndex_P2Char1 0x%p", &(g_interfaces.player2.GetChar1().GetPalHandle().GetPalIndexRef()));
-		ImGui::Text("pPalIndex_P2Char2 0x%p", &(g_interfaces.player2.GetChar2().GetPalHandle().GetPalIndexRef()));
-
-		const int PAL_INDEX_MIN = 0;
-		const int PAL_INDEX_MAX = 15;
-		if(!g_interfaces.player1.GetChar1().GetPalHandle().IsNullPointerPalIndex())
-			ImGui::SliderInt("PalIndex_P1Char1", &g_interfaces.player1.GetChar1().GetPalHandle().GetPalIndexRef(), PAL_INDEX_MIN, PAL_INDEX_MAX);
-
-		if (!g_interfaces.player1.GetChar2().GetPalHandle().IsNullPointerPalIndex())
-			ImGui::SliderInt("PalIndex_P1Char2", &g_interfaces.player1.GetChar2().GetPalHandle().GetPalIndexRef(), PAL_INDEX_MIN, PAL_INDEX_MAX);
-
-		if (!g_interfaces.player2.GetChar1().GetPalHandle().IsNullPointerPalIndex())
-			ImGui::SliderInt("PalIndex_P2Char1", &g_interfaces.player2.GetChar1().GetPalHandle().GetPalIndexRef(), PAL_INDEX_MIN, PAL_INDEX_MAX);
-
-		if (!g_interfaces.player2.GetChar2().GetPalHandle().IsNullPointerPalIndex())
-			ImGui::SliderInt("PalIndex_P2Char2", &g_interfaces.player2.GetChar2().GetPalHandle().GetPalIndexRef(), PAL_INDEX_MIN, PAL_INDEX_MAX);
-
-		//ImGui::Separator();
-		//ImGui::Text("PalBaseAddrP1Char1 0x%p", g_gameVals.PalBaseAddrP1Char1);
-		//ImGui::Text("PalBaseAddrP1Char2 0x%p", g_gameVals.PalBaseAddrP1Char2);
-		//ImGui::Text("PalBaseAddrP2Char1 0x%p", g_gameVals.PalBaseAddrP2Char1);
-		//ImGui::Text("PalBaseAddrP2Char2 0x%p", g_gameVals.PalBaseAddrP2Char2);
-
-		ImGui::Separator();
-		ImGui::Text("pGameState: 0x%p : %d", g_gameVals.pGameState, *g_gameVals.pGameState);
-		ImGui::Text("pGameMode: 0x%p : %d", g_gameVals.pGameMode, *g_gameVals.pGameMode);
-		ImGui::Text("pIsHUDHidden: 0x%p", g_gameVals.pIsHUDHidden);
-		if (g_gameVals.pIsHUDHidden)
-			ImGui::Checkbox("pIsHUDHidden", (bool*)g_gameVals.pIsHUDHidden);
-	}
-
-	if (ImGui::CollapsingHeader("Color tester"))
-	{
-		static float col[4]{ 1.0f, 1.0f, 1.0f, 1.0f };
-		ImVec4 color(col[0], col[1], col[2], col[3]);
-		ImGui::TextColored(color, "ABCD 0123");
-		ImGui::ColoredProgressBar(1.0f, ImVec2(-1.0f, 0.0f), color, NULL, NULL, NULL);
-		ImGui::ColorEdit4("ColEdit", col);
-	}
-
-	ImGui::End();
-}
-
 void OverlayManager::ShowDonatorsButton()
 {
 	if (GetDonatorNames().size() == 0)
@@ -828,8 +742,11 @@ void OverlayManager::ShowMainWindow(bool * p_open)
 #ifdef _DEBUG
 		if (ImGui::Button("Demo"))
 			show_demo_window ^= 1;
+
 		if (ImGui::Button("DEBUG"))
-			show_debug_window ^= 1;
+		{
+			g_debugWindow->Open();
+		}
 #endif
 		if (ImGui::Button("Log"))
 			show_log_window ^= 1;
@@ -926,8 +843,7 @@ void OverlayManager::ShowAllWindows()
 		ImGui::ShowDemoWindow(&show_demo_window);
 	}
 
-	if (show_debug_window)
-		ShowDebugWindow(&show_debug_window);
+	g_debugWindow->Update();
 #endif
 ////////////// 
 

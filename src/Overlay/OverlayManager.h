@@ -42,7 +42,6 @@ private:
 	void ShowLogWindow(bool* p_open);
 	void ShowUpdateWindow();
 	void ShowLoadedSettingsValues();
-	void ShowDebugWindow(bool* p_open);
 	void ShowDonatorsButton();
 	void ShowMainWindow(bool* p_open);
 	void HandleMainWindowVisibility(float timeLeft);
