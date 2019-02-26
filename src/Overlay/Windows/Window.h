@@ -1,5 +1,6 @@
 #pragma once
 #include <imgui.h>
+
 #include <string>
 
 class Window
@@ -9,22 +10,23 @@ class Window
 	// void SavePreviousGlobalStyles();
 	// void RestorePreviousGlobalStyles();
 public:
+	Window(const std::string& windowTitle, bool windowClosable, ImGuiWindowFlags windowFlags)
+		: m_windowTitle(windowTitle),
+		m_windowClosable(windowClosable),
+		m_windowFlags(windowFlags) {}
+
 	virtual ~Window() = default;
-	Window(std::string title, bool closable, ImGuiWindowFlags windowFlags);
 	void Update();
 	void Open();
 	void Close();
 
 protected:
-	virtual void BeforeDraw() = 0;
+	virtual void BeforeDraw() {}
 	virtual void Draw() = 0;
-	virtual void AfterDraw() = 0;
+	virtual void AfterDraw() {}
 
+	std::string m_windowTitle;
+	bool m_windowClosable;
 	ImGuiWindowFlags m_windowFlags;
 	bool m_windowOpen = false;
-	bool m_windowClosable;
-	std::string m_windowTitle;
-
-private:
-	Window() = delete;
 };
