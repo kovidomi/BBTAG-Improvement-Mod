@@ -10,7 +10,7 @@ class Window
 	// void SavePreviousGlobalStyles();
 	// void RestorePreviousGlobalStyles();
 public:
-	Window(const std::string& windowTitle, bool windowClosable, ImGuiWindowFlags windowFlags)
+	Window(const std::string& windowTitle, bool windowClosable, ImGuiWindowFlags windowFlags = 0)
 		: m_windowTitle(windowTitle),
 		m_windowClosable(windowClosable),
 		m_windowFlags(windowFlags) {}
