@@ -9,13 +9,13 @@ void Window::Update()
 
 	BeforeDraw();
 
-	bool* p_open = nullptr;
+	bool* pWindowOpen = nullptr;
 	if (m_windowClosable)
 	{
-		p_open = &m_windowOpen;
+		pWindowOpen = &m_windowOpen;
 	}
 
-	ImGui::Begin(m_windowTitle.c_str(), p_open, m_windowFlags);
+	ImGui::Begin(m_windowTitle.c_str(), pWindowOpen, m_windowFlags);
 	Draw();
 	ImGui::End();
 
