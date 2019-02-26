@@ -179,6 +179,7 @@
     <ClCompile Include="src\Overlay\Windows\DonatorsWindow.cpp" />
     <ClCompile Include="src\Overlay\Windows\Window.cpp" />
     <ClCompile Include="src\Overlay\Windows\DebugWindow.cpp" />
+    <ClCompile Include="src\Overlay\Windows\LogWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -329,6 +330,7 @@
     <ClInclude Include="src\Overlay\Windows\Window.h" />
     <ClInclude Include="src\Overlay\Windows\DonatorsWindow.h" />
     <ClInclude Include="src\Overlay\Windows\DebugWindow.h" />
+    <ClInclude Include="src\Overlay\Windows\LogWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">
