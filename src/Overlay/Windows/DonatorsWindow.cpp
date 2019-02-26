@@ -49,9 +49,9 @@ char DonatorsWindow::CalculateAnimatedTitleChar() const
 {
 	const char animationFrames[] = "|/-\\";
 	const float animationSpeed = 0.25f;
-	const int currentAnimationFrame = (int)(ImGui::GetTime() / animationSpeed) & 3;
+	const int currentAnimationFrameIndex = (int)(ImGui::GetTime() / animationSpeed) & 3;
 
-	return animationFrames[currentAnimationFrame];
+	return animationFrames[currentAnimationFrameIndex];
 }
 
 char* DonatorsWindow::ConstructWindowTitle(char* outBuffer) const
