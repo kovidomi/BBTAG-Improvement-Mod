@@ -31,7 +31,6 @@ bool show_notification = false;
 bool show_notification_window = false;
 bool show_log_window = false;
 bool show_debug_window = false;
-bool show_donators_window = false;
 bool show_custom_hud = false;
 bool *NO_CLOSE_FLAG = NULL;
 DonatorsWindow* g_donatorsWindow = new DonatorsWindow("", false,
@@ -706,97 +705,6 @@ void OverlayManager::ShowDebugWindow(bool * p_open)
 	ImGui::End();
 }
 
-void OverlayManager::ShowDonatorsWindow()
-{
-	const ImVec4 COLOR_PLATINUM(0.328f, 1.000f, 0.901f, 1.000f);
-	const ImVec4 COLOR_GOLD(1.000f, 0.794f, 0.000f, 1.000f);
-	const ImVec4 COLOR_SILVER(0.848f, 0.848f, 0.848f, 1.000f);
-	const ImVec4 COLOR_BRONZE(0.824f, 0.497f, 0.170f, 1.000f);
-	const ImVec4 COLOR_DEFAULT(1.000f, 1.000f, 1.000f, 1.000f);
-
-	ImVec2 origWindowTitleAlign = ImGui::GetStyle().WindowTitleAlign;
-	ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f); //middle
-	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.0f);
-
-	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
-	ImVec2 OK_btn_size = ImVec2(100, 30);
-
-	char buf[128];
-	char flipper = "|/-\\"[(int)(ImGui::GetTime() / 0.25f) & 3];
-	sprintf(buf, "%c SUPPORTERS %c###Donators", flipper, flipper);
-	ImGui::Begin(buf, NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
-
-	const auto donators = GetDonatorNames();
-	const auto tiers = GetDonatorTiers();
-	ImVec4 donatorColor = COLOR_BRONZE;
-	for (int i = 0; i < donators.size(); i++)
-	{
-		if (i == 0)
-		{
-			sprintf(buf, "%s", "TOP DONATOR");
-			ImVec4 invis = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
-			ImGui::TextColored(invis, buf);
-			float width = ImGui::GetItemRectSize().x;
-			ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (width / 2));
-			ImGui::TextColored(COLOR_PLATINUM, buf);
-			float height = ImGui::GetItemRectSize().y;
-			ImGui::SetCursorPosY(ImGui::GetCursorPosY() - height - (ImGui::GetStyle().ItemSpacing.y * 2));
-		}
-
-		sprintf(buf, "%s", donators[i].c_str());
-		ImVec4 invis = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
-		ImGui::TextColored(invis, buf);
-		float width = ImGui::GetItemRectSize().x;
-		ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (width / 2));
-
-		int tier = 99;
-		if (i < tiers.size())
-			tier = tiers[i];
-
-		switch (tier)
-		{
-		case 0:
-			donatorColor = COLOR_PLATINUM;
-			break;
-		case 1:
-			donatorColor = COLOR_GOLD;
-			break;
-		case 2:
-			donatorColor = COLOR_SILVER;
-			break;
-		case 3:
-			donatorColor = COLOR_BRONZE;
-			break;
-		default:
-			donatorColor = COLOR_DEFAULT;
-			break;
-		}
-
-		ImGui::TextColored(donatorColor, buf);
-	}
-	ImGui::Text("");
-
-	ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (OK_btn_size.x / 2));
-
-	if (ImGui::Button("OK", OK_btn_size))
-	{
-		show_donators_window = false;
-	}
-
-	//set window to the middle of the screen, on the first call the windowsize is always minimum
-	ImVec2 wndSize = ImGui::GetWindowSize();
-	if (wndSize.y > 51)
-	{
-		ImGuiIO io = ImGui::GetIO();
-		ImGui::SetWindowPos(ImVec2((io.DisplaySize.x * 0.5f) - (wndSize.x / 2), (io.DisplaySize.y * 0.5f) - (wndSize.y / 2)), ImGuiCond_Once);
-	}
-
-	ImGui::End();
-
-	ImGui::PopStyleVar();
-	ImGui::GetStyle().WindowTitleAlign = origWindowTitleAlign;
-}
-
 void OverlayManager::ShowDonatorsButton()
 {
 	if (GetDonatorNames().size() == 0)
@@ -827,7 +735,6 @@ void OverlayManager::ShowDonatorsButton()
 	sprintf(buf, "%s", donatorName.c_str());
 	if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
 	{
-		//show_donators_window ^= 1;
 		g_donatorsWindow->Open();
 	}
 }
@@ -1009,8 +916,6 @@ void OverlayManager::ShowAllWindows()
 	if (IsUpdateAvailable)
 		ShowUpdateWindow();
 
-	//if (show_donators_window)
-	//	ShowDonatorsWindow();
 	g_donatorsWindow->Update();
 
 ////////////// DEBUG Windows
