@@ -1,6 +1,5 @@
 #pragma once
 #include "CustomHud.h"
-#include "PaletteEditor.h"
 
 #include <d3d9.h>
 
@@ -9,7 +8,6 @@ class OverlayManager
 	static OverlayManager* m_instance;
 
 	CustomHud* m_customHud = nullptr;
-	PaletteEditor* m_paletteEditor = nullptr;
 	bool m_initialized = false;
 public:
 	bool IsUpdateAvailable = false;

@@ -14,6 +14,7 @@
 #include "Windows/DebugWindow.h"
 #include "Windows/DonatorsWindow.h"
 #include "Windows/LogWindow.h"
+#include "Windows/PaletteEditorWindow.h"
 
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
@@ -41,7 +42,7 @@ DebugWindow* g_debugWindow = new DebugWindow("DEBUG", true);
 
 LogWindow* g_logWindow = new LogWindow("Log", true, ImGuiWindowFlags_NoCollapse);
 
-bool show_palette_editor = false;
+PaletteEditorWindow* g_paletteEditorWindow = nullptr;
 
 float main_window_disappear_time = MAIN_WINDOW_DISAPPEAR_TIME_SECONDS;
 
@@ -58,7 +59,7 @@ ImVec2 middlescreen;
 
 void OverlayManager::OnMatchInit()
 {
-	if (!m_initialized || !m_paletteEditor)
+	if (!m_initialized)
 		return;
 
 	g_interfaces.pPaletteManager->OnMatchInit(
@@ -67,7 +68,7 @@ void OverlayManager::OnMatchInit()
 		g_interfaces.player2.GetChar1(),
 		g_interfaces.player2.GetChar2());
 
-	m_paletteEditor->OnMatchInit();
+	g_paletteEditorWindow->OnMatchInit();
 }
 
 bool OverlayManager::IsInitialized() const
@@ -169,7 +170,8 @@ bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	LOG(2, "hud_scale_y: %f\n", hud_scale_y);
 
 	m_customHud = new CustomHud(hud_scale_x, hud_scale_y);
-	m_paletteEditor = new PaletteEditor();
+	g_paletteEditorWindow = new PaletteEditorWindow("Palette Editor", true);
+
 	g_interfaces.pPaletteManager->LoadAllPalettes();
 
 	if (Settings::settingsIni.checkupdates)
@@ -227,7 +229,6 @@ void OverlayManager::Shutdown()
 	WriteLogToFile();
 
 	SAFE_DELETE(m_customHud);
-	SAFE_DELETE(m_paletteEditor);
 	delete m_instance;
 
 	ImGui_ImplDX9_Shutdown();
@@ -289,7 +290,7 @@ void OverlayManager::OnUpdate()
 	ImGuiIO& io = ImGui::GetIO();
 
 	io.MouseDrawCursor = show_main_window | g_logWindow->IsOpen() | show_notification_window
-		| show_palette_editor | IsUpdateAvailable | show_demo_window;
+		| g_paletteEditorWindow->IsOpen() | IsUpdateAvailable | show_demo_window;
 
 	if (Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)
 	{
@@ -619,11 +620,11 @@ void OverlayManager::ShowMainWindow(bool * p_open)
 			}
 			else
 			{
-				m_paletteEditor->ShowAllPaletteSelections();
+				g_paletteEditorWindow->ShowAllPaletteSelections();
 			}
 
 			ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
-			m_paletteEditor->ShowReloadAllPalettesButton();
+			g_paletteEditorWindow->ShowReloadAllPalettesButton();
 
 			ImGui::Text(" "); ImGui::SameLine();
 			bool pressed = ImGui::Button("Palette editor");
@@ -634,7 +635,7 @@ void OverlayManager::ShowMainWindow(bool * p_open)
 			}
 			else if (*g_gameVals.pGameMode == GameMode_Training && pressed)
 			{
-				show_palette_editor ^= 1;
+				g_paletteEditorWindow->Open();
 			}
 		}
 
@@ -727,8 +728,7 @@ void OverlayManager::ShowAllWindows()
 
 	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, DEFAULT_ALPHA);
 
-	if (show_palette_editor)
-		m_paletteEditor->ShowPaletteEditorWindow(&show_palette_editor);
+	g_paletteEditorWindow->Update();
 
 	if (show_notification)
 		HandleNotification();
