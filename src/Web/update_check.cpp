@@ -47,9 +47,12 @@ void CheckUpdate()
 	if (strcmp(m[1].str().c_str(), MOD_VERSION_NUM) != 0)
 	{
 		newVersionNum = m[1].str();
+
 		LOG(2, "New version found: %s\n", newVersionNum.c_str());
-		OverlayManager::getInstance().AddLog("[system] Update available: BBTAG Improvement Mod %s has been released!\n", newVersionNum.c_str());
-		OverlayManager::getInstance().IsUpdateAvailable = true;
+		OverlayManager::getInstance().AddLog("[system] Update available: BBTAG Improvement Mod %s has been released!\n",
+			newVersionNum.c_str());
+
+		OverlayManager::getInstance().SetUpdateAvailable();
 	}
 	else
 	{
