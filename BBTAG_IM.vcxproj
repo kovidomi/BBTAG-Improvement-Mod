@@ -146,6 +146,7 @@
     <ClCompile Include="src\Overlay\Windows\DebugWindow.cpp" />
     <ClCompile Include="src\Overlay\Windows\DonatorsWindow.cpp" />
     <ClCompile Include="src\Overlay\Windows\LogWindow.cpp" />
+    <ClCompile Include="src\Overlay\Windows\MainWindow.cpp" />
     <ClCompile Include="src\Overlay\Windows\UpdateNotifierWindow.cpp" />
     <ClCompile Include="src\Overlay\Windows\Window.cpp" />
     <ClCompile Include="src\PaletteManager\PaletteManager.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="src\Overlay\Windows\DebugWindow.h" />
     <ClInclude Include="src\Overlay\Windows\DonatorsWindow.h" />
     <ClInclude Include="src\Overlay\Windows\LogWindow.h" />
+    <ClInclude Include="src\Overlay\Windows\MainWindow.h" />
     <ClInclude Include="src\Overlay\Windows\UpdateNotifierWindow.h" />
     <ClInclude Include="src\Overlay\Windows\Window.h" />
     <ClInclude Include="src\PaletteManager\impl_format.h" />

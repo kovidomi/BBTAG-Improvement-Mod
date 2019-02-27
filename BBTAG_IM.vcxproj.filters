@@ -181,6 +181,7 @@
       <Filter>src\WindowManager</Filter>
     </ClCompile>
     <ClCompile Include="src\Overlay\Windows\UpdateNotifierWindow.cpp" />
+    <ClCompile Include="src\Overlay\Windows\MainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -333,6 +334,7 @@
       <Filter>src\WindowManager</Filter>
     </ClInclude>
     <ClInclude Include="src\Overlay\Windows\UpdateNotifierWindow.h" />
+    <ClInclude Include="src\Overlay\Windows\MainWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">
