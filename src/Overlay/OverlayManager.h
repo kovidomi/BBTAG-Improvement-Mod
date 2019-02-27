@@ -5,15 +5,8 @@
 
 class OverlayManager
 {
-	static OverlayManager* m_instance;
-
-	CustomHud* m_customHud = nullptr;
-	bool m_initialized = false;
 public:
-	bool IsUpdateAvailable = false;
-
 	static OverlayManager& getInstance();
-
 	bool Init(void *hwnd, IDirect3DDevice9 *device);
 	void OnUpdate();
 	void OnRender();
@@ -28,12 +21,13 @@ public:
 	void AddLogSeparator();
 	void SetLogging(bool value);
 	void SetNotification(const char *text, float timeToShowInSec = 5.0, bool showNotificationWindow = false);
+	void SetUpdateAvailable();
+
 private:
 	OverlayManager();
 	void SetMainWindowTitle(const char *text = 0);
 	void HandleNotification();
 	void ShowNotificationWindow();
-	void ShowUpdateWindow();
 	void ShowLoadedSettingsValues();
 	void ShowDonatorsButton();
 	void ShowMainWindow(bool* p_open);
@@ -42,4 +36,8 @@ private:
 	void ShowAllWindows();
 	void WriteLogToFile();
 	void HandleButtons();
+
+	static OverlayManager* m_instance;
+	CustomHud*             m_customHud = nullptr;
+	bool                   m_initialized = false;
 };

@@ -15,6 +15,7 @@
 #include "Windows/DonatorsWindow.h"
 #include "Windows/LogWindow.h"
 #include "Windows/PaletteEditorWindow.h"
+#include "Windows/UpdateNotifierWindow.h"
 
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
@@ -41,6 +42,9 @@ DonatorsWindow* g_donatorsWindow = new DonatorsWindow("", false,
 DebugWindow* g_debugWindow = new DebugWindow("DEBUG", true);
 
 LogWindow* g_logWindow = new LogWindow("Log", true, ImGuiWindowFlags_NoCollapse);
+
+UpdateNotifierWindow* g_updateNotifierWindow = new UpdateNotifierWindow("Update available",
+	true, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
 
 PaletteEditorWindow* g_paletteEditorWindow = nullptr;
 
@@ -290,7 +294,7 @@ void OverlayManager::OnUpdate()
 	ImGuiIO& io = ImGui::GetIO();
 
 	io.MouseDrawCursor = show_main_window | g_logWindow->IsOpen() | show_notification_window
-		| g_paletteEditorWindow->IsOpen() | IsUpdateAvailable | show_demo_window;
+		| g_paletteEditorWindow->IsOpen() | g_updateNotifierWindow->IsOpen() | show_demo_window;
 
 	if (Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)
 	{
@@ -311,6 +315,11 @@ void OverlayManager::SetNotification(const char *text, float timeToShowInSec, bo
 	notificationTimer = timeToShowInSec;
 	show_notification = true;
 	show_notification_window = showNotificationWindow & Settings::settingsIni.notificationpopups;
+}
+
+void OverlayManager::SetUpdateAvailable()
+{
+	g_updateNotifierWindow->Open();
 }
 
 OverlayManager::OverlayManager()
@@ -466,24 +475,6 @@ void OverlayManager::WriteLogToFile()
 	fprintf(file, "\n#####################################\n\n\n");
 
 	fclose(file);
-}
-
-void OverlayManager::ShowUpdateWindow()
-{
-	ImGui::SetNextWindowPosCenter(ImGuiCond_Once);
-	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
-	ImVec2 OK_btn_size = ImVec2(100, 30);
-
-	ImGui::Begin("Update available", &IsUpdateAvailable, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
-
-	ImGui::Text("BBTAG Improvement Mod %s has been released!", GetNewVersionNum().c_str());
-	ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (OK_btn_size.x / 2));
-
-	if (ImGui::Button("OK", OK_btn_size))
-	{
-		IsUpdateAvailable = false;
-	}
-	ImGui::End();
 }
 
 void OverlayManager::ShowLoadedSettingsValues()
@@ -735,8 +726,7 @@ void OverlayManager::ShowAllWindows()
 
 	g_logWindow->Update();
 
-	if (IsUpdateAvailable)
-		ShowUpdateWindow();
+	g_updateNotifierWindow->Update();
 
 	g_donatorsWindow->Update();
 
