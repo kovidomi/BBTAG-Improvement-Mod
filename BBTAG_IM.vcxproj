@@ -163,7 +163,7 @@
     <ClCompile Include="src\Web\url_downloader.cpp" />
     <ClCompile Include="src\Overlay\CustomHud.cpp" />
     <ClCompile Include="src\Overlay\fonts.cpp" />
-    <ClCompile Include="src\Overlay\PaletteEditor.cpp" />
+    <ClCompile Include="src\Overlay\Windows\PaletteEditorWindow.cpp" />
     <ClCompile Include="src\Overlay\OverlayManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -218,7 +218,7 @@
     <ClInclude Include="src\Web\url_downloader.h" />
     <ClInclude Include="src\Overlay\CustomHud.h" />
     <ClInclude Include="src\Overlay\fonts.h" />
-    <ClInclude Include="src\Overlay\PaletteEditor.h" />
+    <ClInclude Include="src\Overlay\Windows\PaletteEditorWindow.h" />
     <ClInclude Include="src\Overlay\OverlayManager.h" />
   </ItemGroup>
   <ItemGroup>

@@ -170,9 +170,6 @@
     <ClCompile Include="src\Overlay\fonts.cpp">
       <Filter>src\WindowManager</Filter>
     </ClCompile>
-    <ClCompile Include="src\Overlay\PaletteEditor.cpp">
-      <Filter>src\WindowManager</Filter>
-    </ClCompile>
     <ClCompile Include="src\Overlay\OverlayManager.cpp">
       <Filter>src\WindowManager</Filter>
     </ClCompile>
@@ -180,6 +177,9 @@
     <ClCompile Include="src\Overlay\Windows\Window.cpp" />
     <ClCompile Include="src\Overlay\Windows\DebugWindow.cpp" />
     <ClCompile Include="src\Overlay\Windows\LogWindow.cpp" />
+    <ClCompile Include="src\Overlay\Windows\PaletteEditorWindow.cpp">
+      <Filter>src\WindowManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -321,9 +321,6 @@
     <ClInclude Include="src\Overlay\fonts.h">
       <Filter>src\WindowManager</Filter>
     </ClInclude>
-    <ClInclude Include="src\Overlay\PaletteEditor.h">
-      <Filter>src\WindowManager</Filter>
-    </ClInclude>
     <ClInclude Include="src\Overlay\OverlayManager.h">
       <Filter>src\WindowManager</Filter>
     </ClInclude>
@@ -331,6 +328,9 @@
     <ClInclude Include="src\Overlay\Windows\DonatorsWindow.h" />
     <ClInclude Include="src\Overlay\Windows\DebugWindow.h" />
     <ClInclude Include="src\Overlay\Windows\LogWindow.h" />
+    <ClInclude Include="src\Overlay\Windows\PaletteEditorWindow.h">
+      <Filter>src\WindowManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">
