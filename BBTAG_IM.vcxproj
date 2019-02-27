@@ -143,12 +143,12 @@
     <ClCompile Include="src\Core\interfaces.cpp" />
     <ClCompile Include="src\Core\main.cpp" />
     <ClCompile Include="src\Core\logger.cpp" />
-    <ClCompile Include="src\Overlay\Windows\DebugWindow.cpp" />
-    <ClCompile Include="src\Overlay\Windows\DonatorsWindow.cpp" />
-    <ClCompile Include="src\Overlay\Windows\LogWindow.cpp" />
-    <ClCompile Include="src\Overlay\Windows\MainWindow.cpp" />
-    <ClCompile Include="src\Overlay\Windows\UpdateNotifierWindow.cpp" />
-    <ClCompile Include="src\Overlay\Windows\Window.cpp" />
+    <ClCompile Include="src\Overlay\Window\DebugWindow.cpp" />
+    <ClCompile Include="src\Overlay\Window\DonatorsWindow.cpp" />
+    <ClCompile Include="src\Overlay\Window\LogWindow.cpp" />
+    <ClCompile Include="src\Overlay\Window\MainWindow.cpp" />
+    <ClCompile Include="src\Overlay\Window\UpdateNotifierWindow.cpp" />
+    <ClCompile Include="src\Overlay\Window\Window.cpp" />
     <ClCompile Include="src\PaletteManager\PaletteManager.cpp" />
     <ClCompile Include="src\Core\Settings.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamApiHelper.cpp" />
@@ -165,7 +165,7 @@
     <ClCompile Include="src\Web\url_downloader.cpp" />
     <ClCompile Include="src\Overlay\CustomHud.cpp" />
     <ClCompile Include="src\Overlay\fonts.cpp" />
-    <ClCompile Include="src\Overlay\Windows\PaletteEditorWindow.cpp" />
+    <ClCompile Include="src\Overlay\Window\PaletteEditorWindow.cpp" />
     <ClCompile Include="src\Overlay\OverlayManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -199,12 +199,12 @@
     <ClInclude Include="src\Core\info.h" />
     <ClInclude Include="src\Core\interfaces.h" />
     <ClInclude Include="src\Core\logger.h" />
-    <ClInclude Include="src\Overlay\Windows\DebugWindow.h" />
-    <ClInclude Include="src\Overlay\Windows\DonatorsWindow.h" />
-    <ClInclude Include="src\Overlay\Windows\LogWindow.h" />
-    <ClInclude Include="src\Overlay\Windows\MainWindow.h" />
-    <ClInclude Include="src\Overlay\Windows\UpdateNotifierWindow.h" />
-    <ClInclude Include="src\Overlay\Windows\Window.h" />
+    <ClInclude Include="src\Overlay\Window\DebugWindow.h" />
+    <ClInclude Include="src\Overlay\Window\DonatorsWindow.h" />
+    <ClInclude Include="src\Overlay\Window\LogWindow.h" />
+    <ClInclude Include="src\Overlay\Window\MainWindow.h" />
+    <ClInclude Include="src\Overlay\Window\UpdateNotifierWindow.h" />
+    <ClInclude Include="src\Overlay\Window\Window.h" />
     <ClInclude Include="src\PaletteManager\impl_format.h" />
     <ClInclude Include="src\PaletteManager\PaletteManager.h" />
     <ClInclude Include="src\Core\Settings.h" />
@@ -222,7 +222,7 @@
     <ClInclude Include="src\Web\url_downloader.h" />
     <ClInclude Include="src\Overlay\CustomHud.h" />
     <ClInclude Include="src\Overlay\fonts.h" />
-    <ClInclude Include="src\Overlay\Windows\PaletteEditorWindow.h" />
+    <ClInclude Include="src\Overlay\Window\PaletteEditorWindow.h" />
     <ClInclude Include="src\Overlay\OverlayManager.h" />
   </ItemGroup>
   <ItemGroup>

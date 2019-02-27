@@ -11,11 +11,11 @@
 #include "SteamApiWrapper/SteamApiHelper.h"
 #include "Web/update_check.h"
 #include "Web/donators_fetch.h"
-#include "Windows/DebugWindow.h"
-#include "Windows/DonatorsWindow.h"
-#include "Windows/LogWindow.h"
-#include "Windows/PaletteEditorWindow.h"
-#include "Windows/UpdateNotifierWindow.h"
+#include "Window/DebugWindow.h"
+#include "Window/DonatorsWindow.h"
+#include "Window/LogWindow.h"
+#include "Window/PaletteEditorWindow.h"
+#include "Window/UpdateNotifierWindow.h"
 
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
