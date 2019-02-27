@@ -28,11 +28,11 @@ private:
 	void SetMainWindowTitle(const char *text = 0);
 	void HandleNotification();
 	void ShowNotificationWindow();
-	void ShowLoadedSettingsValues();
-	void ShowDonatorsButton();
-	void ShowMainWindow(bool* p_open);
+	// void ShowLoadedSettingsValues();
+	// void ShowDonatorsButton();
+	// void ShowMainWindow(bool* p_open);
 	void HandleMainWindowVisibility(float timeLeft);
-	void ShowLinks();
+	// void ShowLinks();
 	void ShowAllWindows();
 	void WriteLogToFile();
 	void HandleButtons();

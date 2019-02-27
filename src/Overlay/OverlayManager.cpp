@@ -477,194 +477,194 @@ void OverlayManager::WriteLogToFile()
 	fclose(file);
 }
 
-void OverlayManager::ShowLoadedSettingsValues()
-{
-	//not using ImGui columns here because they are bugged if the window has always_autoresize flag. The window 
-	//starts extending to infinity, if the left edge of the window touches any edges of the screen
+//void OverlayManager::ShowLoadedSettingsValues()
+//{
+//	//not using ImGui columns here because they are bugged if the window has always_autoresize flag. The window 
+//	//starts extending to infinity, if the left edge of the window touches any edges of the screen
+//
+//	//TODO: Put the strings into the X-Macro as well. Somehow...
+//	//strings cant be put into the X-Macro (.c_str() cannot be put on non-std::string types)
+//	ImGui::Separator();
+//	ImGui::Text(" ToggleButton"); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f);
+//	ImGui::Text("= %s", Settings::settingsIni.togglebutton.c_str());
+//	ImGui::Separator();
+//
+//	ImGui::Text(" ToggleHUDButton"); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f);
+//	ImGui::Text("= %s", Settings::settingsIni.toggleHUDbutton.c_str());
+//	ImGui::Separator();
+//
+//	ImGui::Text(" ToggleCustomHUDButton"); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f);
+//	ImGui::Text("= %s", Settings::settingsIni.togglecustomHUDbutton.c_str());
+//	ImGui::Separator();
+//
+//	std::string printText = "";
+//
+//	//X-Macro
+//#define SETTING(_type, _var, _inistring, _defaultval) \
+//	if(strcmp(#_type, "std::string") != 0) { \
+//	printText = " "; \
+//	printText += _inistring; \
+//	ImGui::Text(printText.c_str()); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f); \
+//	if(strcmp(#_type, "bool") == 0 || strcmp(#_type, "int") == 0) \
+//		printText = "= %d"; \
+//	else if(strcmp(#_type, "float") == 0) \
+//		printText = "= %.2f"; \
+//	ImGui::Text(printText.c_str(), Settings::settingsIni.##_var); ImGui::Separator(); }
+//#include "Core/settings.def"
+//#undef SETTING
+//
+//}
 
-	//TODO: Put the strings into the X-Macro as well. Somehow...
-	//strings cant be put into the X-Macro (.c_str() cannot be put on non-std::string types)
-	ImGui::Separator();
-	ImGui::Text(" ToggleButton"); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f);
-	ImGui::Text("= %s", Settings::settingsIni.togglebutton.c_str());
-	ImGui::Separator();
+//void OverlayManager::ShowDonatorsButton()
+//{
+//	if (GetDonatorNames().size() == 0)
+//		return;
+//
+//	const float SPEED = 2.0f;
+//	int passedTime = (int)(ImGui::GetTime() / SPEED);
+//	static int prevPassedTime = 0;
+//	int donatorSize = GetDonatorNames().size() - 1;
+//	static int index = 0;
+//
+//	if (passedTime > prevPassedTime)
+//	{
+//		prevPassedTime = passedTime;
+//		index++;
+//		if (index > donatorSize)
+//			index = 0;
+//	}
+//
+//	std::string donatorName = "";
+//
+//	if (index == 0)
+//		donatorName += "Top Donator: ";
+//
+//	donatorName += GetDonatorNames()[index];
+//
+//	char buf[128];
+//	sprintf(buf, "%s", donatorName.c_str());
+//	if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
+//	{
+//		g_donatorsWindow->Open();
+//	}
+//}
 
-	ImGui::Text(" ToggleHUDButton"); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f);
-	ImGui::Text("= %s", Settings::settingsIni.toggleHUDbutton.c_str());
-	ImGui::Separator();
-
-	ImGui::Text(" ToggleCustomHUDButton"); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f);
-	ImGui::Text("= %s", Settings::settingsIni.togglecustomHUDbutton.c_str());
-	ImGui::Separator();
-
-	std::string printText = "";
-
-	//X-Macro
-#define SETTING(_type, _var, _inistring, _defaultval) \
-	if(strcmp(#_type, "std::string") != 0) { \
-	printText = " "; \
-	printText += _inistring; \
-	ImGui::Text(printText.c_str()); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f); \
-	if(strcmp(#_type, "bool") == 0 || strcmp(#_type, "int") == 0) \
-		printText = "= %d"; \
-	else if(strcmp(#_type, "float") == 0) \
-		printText = "= %.2f"; \
-	ImGui::Text(printText.c_str(), Settings::settingsIni.##_var); ImGui::Separator(); }
-#include "Core/settings.def"
-#undef SETTING
-
-}
-
-void OverlayManager::ShowDonatorsButton()
-{
-	if (GetDonatorNames().size() == 0)
-		return;
-
-	const float SPEED = 2.0f;
-	int passedTime = (int)(ImGui::GetTime() / SPEED);
-	static int prevPassedTime = 0;
-	int donatorSize = GetDonatorNames().size() - 1;
-	static int index = 0;
-
-	if (passedTime > prevPassedTime)
-	{
-		prevPassedTime = passedTime;
-		index++;
-		if (index > donatorSize)
-			index = 0;
-	}
-
-	std::string donatorName = "";
-
-	if (index == 0)
-		donatorName += "Top Donator: ";
-
-	donatorName += GetDonatorNames()[index];
-
-	char buf[128];
-	sprintf(buf, "%s", donatorName.c_str());
-	if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
-	{
-		g_donatorsWindow->Open();
-	}
-}
-
-void OverlayManager::ShowMainWindow(bool * p_open)
-{
-	if (*p_open)
-	{
-		//First run settings
-		ImGui::SetWindowPos(main_title.c_str(), ImVec2(12, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the initial state a bit more friendly!
-
-		if (Settings::settingsIni.menusize == 1)
-			ImGui::SetNextWindowSizeConstraints(ImVec2(250, 190), ImVec2(1000, 1000));
-		else if (Settings::settingsIni.menusize == 3)
-			ImGui::SetNextWindowSizeConstraints(ImVec2(400, 230), ImVec2(1000, 1000));
-		else
-			ImGui::SetNextWindowSizeConstraints(ImVec2(330, 230), ImVec2(1000, 1000));
-
-		ImGui::Begin(main_title.c_str(), NO_CLOSE_FLAG, ImGuiWindowFlags_AlwaysAutoResize);
-
-		// prevent disappearing if clicked on
-		if (main_window_disappear_time > 0)
-		{
-			if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(0))
-			{
-				HandleMainWindowVisibility(0);
-			}
-		}
-
-		ImGui::Text("Toggle me with %s", Settings::settingsIni.togglebutton.c_str());
-		ImGui::Text("Toggle HUD with %s", Settings::settingsIni.toggleHUDbutton.c_str());
-		ImGui::Text("Toggle Custom HUD with %s", Settings::settingsIni.togglecustomHUDbutton.c_str());
-		ImGui::Separator();
-
-		ShowDonatorsButton();
-
-		ImGui::Text("");
-
-		if (ImGui::CollapsingHeader("Custom HUD"))
-		{
-			if (g_gameVals.pIsHUDHidden)
-			{
-				ImGui::Text(" "); ImGui::SameLine();
-				ImGui::Checkbox("Show HUD", (bool*)g_gameVals.pIsHUDHidden);
-				if (Settings::settingsIni.forcecustomhud)
-				{
-					ImGui::SameLine(); ImGui::TextDisabled("(ForceCustomHUD is ON)");
-				}
-			}
-
-			ImGui::Text(" "); ImGui::SameLine();
-			ImGui::Checkbox("Show Custom HUD", &show_custom_hud);
-
-			ImGui::Text(" "); ImGui::SameLine();
-			m_customHud->ShowResetPositionsButton(middlescreen);
-		}
-
-		if (ImGui::CollapsingHeader("Custom palettes"))
-		{
-			if (*g_gameVals.pGameState != GameState_Match)
-			{
-				ImGui::Text(" "); ImGui::SameLine(); 
-				ImGui::TextDisabled("Not in match!");
-			}
-			else
-			{
-				g_paletteEditorWindow->ShowAllPaletteSelections();
-			}
-
-			ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
-			g_paletteEditorWindow->ShowReloadAllPalettesButton();
-
-			ImGui::Text(" "); ImGui::SameLine();
-			bool pressed = ImGui::Button("Palette editor");
-
-			if (*g_gameVals.pGameMode != GameMode_Training)
-			{
-				ImGui::SameLine(); ImGui::TextDisabled("Not in training mode!");
-			}
-			else if (*g_gameVals.pGameMode == GameMode_Training && pressed)
-			{
-				g_paletteEditorWindow->Open();
-			}
-		}
-
-		if (ImGui::CollapsingHeader("Loaded settings.ini values"))
-		{
-			ShowLoadedSettingsValues();
-		}
-
-#ifdef _DEBUG
-		if (ImGui::Button("Demo"))
-			show_demo_window ^= 1;
-
-		if (ImGui::Button("DEBUG"))
-		{
-			g_debugWindow->Open();
-		}
-#endif
-		if (ImGui::Button("Log"))
-		{
-			g_logWindow->Open();
-		}
-
-		ImGui::Text("Current online players:"); ImGui::SameLine();
-		if (g_interfaces.pSteamApiHelper)
-		{
-			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "%s",
-				g_interfaces.pSteamApiHelper->current_players <= 0 ? "<No data>" : std::to_string(g_interfaces.pSteamApiHelper->current_players).c_str());
-		}
-		else
-		{
-			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "%s", "<No data>");
-		}
-
-		ShowLinks();
-
-		ImGui::End();
-	}
-}
+//void OverlayManager::ShowMainWindow(bool * p_open)
+//{
+//	if (*p_open)
+//	{
+//		//First run settings
+//		ImGui::SetWindowPos(main_title.c_str(), ImVec2(12, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the initial state a bit more friendly!
+//
+//		if (Settings::settingsIni.menusize == 1)
+//			ImGui::SetNextWindowSizeConstraints(ImVec2(250, 190), ImVec2(1000, 1000));
+//		else if (Settings::settingsIni.menusize == 3)
+//			ImGui::SetNextWindowSizeConstraints(ImVec2(400, 230), ImVec2(1000, 1000));
+//		else
+//			ImGui::SetNextWindowSizeConstraints(ImVec2(330, 230), ImVec2(1000, 1000));
+//
+//		ImGui::Begin(main_title.c_str(), NO_CLOSE_FLAG, ImGuiWindowFlags_AlwaysAutoResize);
+//
+//		// prevent disappearing if clicked on
+//		if (main_window_disappear_time > 0)
+//		{
+//			if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(0))
+//			{
+//				HandleMainWindowVisibility(0);
+//			}
+//		}
+//
+//		ImGui::Text("Toggle me with %s", Settings::settingsIni.togglebutton.c_str());
+//		ImGui::Text("Toggle HUD with %s", Settings::settingsIni.toggleHUDbutton.c_str());
+//		ImGui::Text("Toggle Custom HUD with %s", Settings::settingsIni.togglecustomHUDbutton.c_str());
+//		ImGui::Separator();
+//
+//		ShowDonatorsButton();
+//
+//		ImGui::Text("");
+//
+//		if (ImGui::CollapsingHeader("Custom HUD"))
+//		{
+//			if (g_gameVals.pIsHUDHidden)
+//			{
+//				ImGui::Text(" "); ImGui::SameLine();
+//				ImGui::Checkbox("Show HUD", (bool*)g_gameVals.pIsHUDHidden);
+//				if (Settings::settingsIni.forcecustomhud)
+//				{
+//					ImGui::SameLine(); ImGui::TextDisabled("(ForceCustomHUD is ON)");
+//				}
+//			}
+//
+//			ImGui::Text(" "); ImGui::SameLine();
+//			ImGui::Checkbox("Show Custom HUD", &show_custom_hud);
+//
+//			ImGui::Text(" "); ImGui::SameLine();
+//			m_customHud->ShowResetPositionsButton(middlescreen);
+//		}
+//
+//		if (ImGui::CollapsingHeader("Custom palettes"))
+//		{
+//			if (*g_gameVals.pGameState != GameState_Match)
+//			{
+//				ImGui::Text(" "); ImGui::SameLine(); 
+//				ImGui::TextDisabled("Not in match!");
+//			}
+//			else
+//			{
+//				g_paletteEditorWindow->ShowAllPaletteSelections();
+//			}
+//
+//			ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
+//			g_paletteEditorWindow->ShowReloadAllPalettesButton();
+//
+//			ImGui::Text(" "); ImGui::SameLine();
+//			bool pressed = ImGui::Button("Palette editor");
+//
+//			if (*g_gameVals.pGameMode != GameMode_Training)
+//			{
+//				ImGui::SameLine(); ImGui::TextDisabled("Not in training mode!");
+//			}
+//			else if (*g_gameVals.pGameMode == GameMode_Training && pressed)
+//			{
+//				g_paletteEditorWindow->Open();
+//			}
+//		}
+//
+//		if (ImGui::CollapsingHeader("Loaded settings.ini values"))
+//		{
+//			ShowLoadedSettingsValues();
+//		}
+//
+//#ifdef _DEBUG
+//		if (ImGui::Button("Demo"))
+//			show_demo_window ^= 1;
+//
+//		if (ImGui::Button("DEBUG"))
+//		{
+//			g_debugWindow->Open();
+//		}
+//#endif
+//		if (ImGui::Button("Log"))
+//		{
+//			g_logWindow->Open();
+//		}
+//
+//		ImGui::Text("Current online players:"); ImGui::SameLine();
+//		if (g_interfaces.pSteamApiHelper)
+//		{
+//			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "%s",
+//				g_interfaces.pSteamApiHelper->current_players <= 0 ? "<No data>" : std::to_string(g_interfaces.pSteamApiHelper->current_players).c_str());
+//		}
+//		else
+//		{
+//			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "%s", "<No data>");
+//		}
+//
+//		ShowLinks();
+//
+//		ImGui::End();
+//	}
+//}
 
 void OverlayManager::HandleMainWindowVisibility(float timeLeft)
 {
@@ -691,31 +691,31 @@ void OverlayManager::HandleMainWindowVisibility(float timeLeft)
 	}
 }
 
-void OverlayManager::ShowLinks()
-{
-	if (ImGui::Button("Discord"))
-		ShellExecute(NULL, L"open", MOD_LINK_DISCORD, NULL, NULL, SW_SHOWNORMAL);
-
-	ImGui::SameLine();
-	if (ImGui::Button("Forum"))
-		ShellExecute(NULL, L"open", MOD_LINK_FORUM, NULL, NULL, SW_SHOWNORMAL);
-
-	ImGui::SameLine();
-	if (ImGui::Button("Nexusmods"))
-		ShellExecute(NULL, L"open", MOD_LINK_NEXUSMODS, NULL, NULL, SW_SHOWNORMAL);
-
-	ImGui::SameLine();
-	if (ImGui::Button("GitHub"))
-		ShellExecute(NULL, L"open", MOD_LINK_GITHUB, NULL, NULL, SW_SHOWNORMAL);
-
-	ImGui::SameLine();
-	if (ImGui::Button("Donate"))
-		ShellExecute(NULL, L"open", MOD_LINK_DONATE, NULL, NULL, SW_SHOWNORMAL);
-}
+//void OverlayManager::ShowLinks()
+//{
+//	if (ImGui::Button("Discord"))
+//		ShellExecute(NULL, L"open", MOD_LINK_DISCORD, NULL, NULL, SW_SHOWNORMAL);
+//
+//	ImGui::SameLine();
+//	if (ImGui::Button("Forum"))
+//		ShellExecute(NULL, L"open", MOD_LINK_FORUM, NULL, NULL, SW_SHOWNORMAL);
+//
+//	ImGui::SameLine();
+//	if (ImGui::Button("Nexusmods"))
+//		ShellExecute(NULL, L"open", MOD_LINK_NEXUSMODS, NULL, NULL, SW_SHOWNORMAL);
+//
+//	ImGui::SameLine();
+//	if (ImGui::Button("GitHub"))
+//		ShellExecute(NULL, L"open", MOD_LINK_GITHUB, NULL, NULL, SW_SHOWNORMAL);
+//
+//	ImGui::SameLine();
+//	if (ImGui::Button("Donate"))
+//		ShellExecute(NULL, L"open", MOD_LINK_DONATE, NULL, NULL, SW_SHOWNORMAL);
+//}
 
 void OverlayManager::ShowAllWindows()
 {
-	ShowMainWindow(&show_main_window);
+	// ShowMainWindow(&show_main_window);
 
 	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, DEFAULT_ALPHA);
 
