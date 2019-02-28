@@ -20,14 +20,14 @@ public:
 	void AddLog(const char* message, ...);
 	void AddLogSeparator();
 	void SetLogging(bool value);
-	void SetNotification(const char *text, float timeToShowInSec = 5.0, bool showNotificationWindow = false);
+	// void SetNotification(const char *text, float timeToShowInSec = 5.0, bool showNotificationWindow = false);
 	void SetUpdateAvailable();
 
 private:
 	OverlayManager();
 	void SetMainWindowTitle(const char *text = 0);
 	void HandleNotification();
-	void ShowNotificationWindow();
+	// void ShowNotificationWindow();
 	// void ShowLoadedSettingsValues();
 	// void ShowDonatorsButton();
 	// void ShowMainWindow(bool* p_open);

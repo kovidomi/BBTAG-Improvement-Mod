@@ -306,16 +306,16 @@ void OverlayManager::OnUpdate()
 	LOG(7, "END OF OverlayManager::HandleImGui\n");
 }
 
-void OverlayManager::SetNotification(const char *text, float timeToShowInSec, bool showNotificationWindow)
-{
-	if (!m_initialized)
-		return;
-
-	notificationText = text;
-	notificationTimer = timeToShowInSec;
-	show_notification = true;
-	show_notification_window = showNotificationWindow & Settings::settingsIni.notificationpopups;
-}
+//void OverlayManager::SetNotification(const char *text, float timeToShowInSec, bool showNotificationWindow)
+//{
+//	if (!m_initialized)
+//		return;
+//
+//	notificationText = text;
+//	notificationTimer = timeToShowInSec;
+//	show_notification = true;
+//	show_notification_window = showNotificationWindow & Settings::settingsIni.notificationpopups;
+//}
 
 void OverlayManager::SetUpdateAvailable()
 {
@@ -345,29 +345,29 @@ void OverlayManager::HandleNotification()
 	notificationTimer -= ImGui::GetIO().DeltaTime;
 }
 
-void OverlayManager::ShowNotificationWindow()
-{
-	ImGui::SetNextWindowPosCenter(ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
-	ImVec2 OK_btn_size = ImVec2(100, 30);
-
-	ImGui::Begin("Notification", NO_CLOSE_FLAG, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
-	ImGui::Text(notificationText.c_str());
-
-	std::ostringstream stringBuf;
-	stringBuf << "OK (" << round(ceil(notificationTimer)) << ")";
-	std::string timeLeft(stringBuf.str());
-
-	ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (OK_btn_size.x / 2));
-
-	if (ImGui::Button(timeLeft.c_str(), OK_btn_size))
-	{
-		show_notification_window = false;
-		notificationTimer = -0.2f; //setting it below 0
-	}
-
-	ImGui::End();
-}
+//void OverlayManager::ShowNotificationWindow()
+//{
+//	ImGui::SetNextWindowPosCenter(ImGuiCond_FirstUseEver);
+//	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
+//	ImVec2 OK_btn_size = ImVec2(100, 30);
+//
+//	ImGui::Begin("Notification", NO_CLOSE_FLAG, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
+//	ImGui::Text(notificationText.c_str());
+//
+//	std::ostringstream stringBuf;
+//	stringBuf << "OK (" << round(ceil(notificationTimer)) << ")";
+//	std::string timeLeft(stringBuf.str());
+//
+//	ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (OK_btn_size.x / 2));
+//
+//	if (ImGui::Button(timeLeft.c_str(), OK_btn_size))
+//	{
+//		show_notification_window = false;
+//		notificationTimer = -0.2f; //setting it below 0
+//	}
+//
+//	ImGui::End();
+//}
 
 // start with type a of message: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 void OverlayManager::AddLog(const char* message, ...)
