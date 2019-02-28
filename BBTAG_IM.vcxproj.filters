@@ -176,7 +176,7 @@
     <ClCompile Include="src\Web\palette_download.cpp">
       <Filter>src\Web</Filter>
     </ClCompile>
-    <ClCompile Include="src\WindowManager\HitboxOverlay.cpp" />
+    <ClCompile Include="src\WindowManager\WorldToScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -324,7 +324,7 @@
       <Filter>src\Web</Filter>
     </ClInclude>
     <ClInclude Include="src\info.h" />
-    <ClInclude Include="src\WindowManager\HitboxOverlay.h" />
+    <ClInclude Include="src\WindowManager\WorldToScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">

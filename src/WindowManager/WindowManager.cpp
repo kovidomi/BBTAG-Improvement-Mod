@@ -8,12 +8,12 @@
 #include "../logger.h"
 #include "../info.h"
 #include "../Game/gamestates.h"
+#include "WorldToScreen.h"
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
 #include <shellapi.h>
 #include <sstream>
 #include <time.h>
-#include "HitboxOverlay.h"
 
 #define MAX_LOG_MSG_LEN 1024
 #define MAIN_WINDOW_DISAPPEAR_TIME_SECONDS 15.0f
