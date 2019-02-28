@@ -24,6 +24,7 @@ bool WindowManager::DoLogging = true;
 bool WindowManager::Initialized = false;
 CustomHud* WindowManager::m_customHud = 0;
 PaletteEditor* WindowManager::m_paletteEditor = 0;
+HitboxOverlay* WindowManager::m_hitboxOverlay = 0;
 
 bool show_main_window = true;
 bool show_demo_window = false;
@@ -239,6 +240,7 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 
 	m_customHud = new CustomHud(hud_scale_x, hud_scale_y);
 	m_paletteEditor = new PaletteEditor();
+	m_hitboxOverlay = new HitboxOverlay();
 	g_interfaces.pPaletteManager->LoadAllPalettes();
 
 	if (Settings::settingsIni.checkupdates)
@@ -1044,6 +1046,8 @@ void WindowManager::ShowAllWindows()
 
 	if (show_donators_window)
 		ShowDonatorsWindow();
+
+	m_hitboxOverlay->Update();
 
 ////////////// DEBUG Windows
 #ifdef _DEBUG

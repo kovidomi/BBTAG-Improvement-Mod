@@ -2,6 +2,7 @@
 #include "../interfaces.h"
 #include "CustomHud.h"
 #include "PaletteEditor.h"
+#include "HitboxOverlay.h"
 
 //forward declaration
 struct ImGuiLog;
@@ -11,6 +12,7 @@ class WindowManager
 private:
 	static CustomHud* m_customHud;
 	static PaletteEditor* m_paletteEditor;
+	static HitboxOverlay* m_hitboxOverlay;
 	static ImGuiLog Log;
 	static bool Initialized;
 	static bool DoLogging;
