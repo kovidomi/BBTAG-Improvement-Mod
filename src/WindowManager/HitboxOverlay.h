@@ -1,19 +1,27 @@
 #pragma once
+#include "../Game/CharInfo.h"
+
 #include <imgui.h>
+
+#include <d3dx9.h>
 
 typedef unsigned int uint32_t;
 
 class HitboxOverlay
 {
 public:
-	HitboxOverlay();
+	HitboxOverlay() = default;
 	void Update();
-	void SetChar1ScreenPos(float x, float y);
+	void DrawOriginLine(ImVec2 screenPos);
+	void DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR2 playerWorldPos);
 
 private:
 	void BeforeDraw();
 	void Draw();
 	void AfterDraw();
+
+	D3DXVECTOR2 CalculatePlayerWorldPosition(const CharInfo * charObj);
+	D3DXVECTOR3 CalculateScreenPosition(D3DXVECTOR3 worldPos);
 
 	void RenderLine(const ImVec2& from, const ImVec2& to, uint32_t color, float thickness = 1.0f);
 	void RenderCircle(const ImVec2& position, float radius, uint32_t color, float thickness = 1.0f, uint32_t segments = 16);
@@ -23,19 +31,13 @@ private:
 
 
 	ImGuiWindowFlags m_windowFlags =
-		ImGuiWindowFlags_AlwaysAutoResize
-		| ImGuiWindowFlags_NoTitleBar
-		| ImGuiWindowFlags_NoMove;
-			//| ImGuiWindowFlags_NoBringToFrontOnFocus
-			//| ImGuiWindowFlags_NoFocusOnAppearing
-			//| ImGuiWindowFlags_NoInputs;
-	// ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoInputs
+		ImGuiWindowFlags_NoTitleBar
+		| ImGuiWindowFlags_NoInputs
+		| ImGuiWindowFlags_NoBringToFrontOnFocus
+		| ImGuiWindowFlags_NoFocusOnAppearing;
 
 	float m_rectAx = 100.0f;
 	float m_rectAy = 100.0f;
 	float m_rectBx = 200.0f;
 	float m_rectBy = 200.0f;
-
-	ImVec2 m_lineFrom;
-	ImVec2 m_lineTo;
 };

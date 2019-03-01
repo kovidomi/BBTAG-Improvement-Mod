@@ -1,10 +1,14 @@
 #include "HitboxOverlay.h"
 
+#include "WorldToScreen.h"
+
+#include "../Game/JonbReader.h"
+#include "../interfaces.h"
 #include "imgui_internal.h"
 
-HitboxOverlay::HitboxOverlay()
-{
-}
+// Literally a magic number as of now
+// TODO: Figure out how to calculate properly on all resolutions
+const float M = 0.3685f;
 
 void HitboxOverlay::Update()
 {
@@ -33,10 +37,22 @@ void HitboxOverlay::BeforeDraw()
 
 void HitboxOverlay::Draw()
 {
-	ImGui::SliderFloat4("Box", &m_rectAx, 0.0f, 1600.0f, "%.0f");
+	//ImGui::SliderFloat4("Box", &m_rectAx, 0.0f, 1600.0f, "%.0f");
 
-	RenderLine(m_lineFrom, m_lineTo, 0xFFFF9900, 2);
-	RenderRect(ImVec2(m_rectAx, m_rectAy), ImVec2(m_rectBx, m_rectBy), 0xFF0033CC, 0, ImDrawCornerFlags_All, 2);
+	D3DXVECTOR2 playerOneCharOneWorldPos = CalculatePlayerWorldPosition(g_interfaces.player1.GetChar1().GetData());
+	DrawCollisionAreas(g_interfaces.player1.GetChar1().GetData(), playerOneCharOneWorldPos);
+
+	D3DXVECTOR2 playerOneCharTwoWorldPos = CalculatePlayerWorldPosition(g_interfaces.player1.GetChar2().GetData());
+	DrawCollisionAreas(g_interfaces.player1.GetChar2().GetData(), playerOneCharTwoWorldPos);
+
+	D3DXVECTOR2 playerTwoCharOneWorldPos = CalculatePlayerWorldPosition(g_interfaces.player2.GetChar1().GetData());
+	DrawCollisionAreas(g_interfaces.player2.GetChar1().GetData(), playerTwoCharOneWorldPos);
+
+	D3DXVECTOR2 playerTwoCharTwoWorldPos = CalculatePlayerWorldPosition(g_interfaces.player2.GetChar2().GetData());
+	DrawCollisionAreas(g_interfaces.player2.GetChar2().GetData(), playerTwoCharTwoWorldPos);
+
+	//D3DXVECTOR3 playerScreenPos = CalculateScreenPosition(D3DXVECTOR3(playerWorldPos.x, playerWorldPos.y, 0.0f));
+	//DrawOriginLine(ImVec2(playerScreenPos.x, playerScreenPos.y));
 }
 
 void HitboxOverlay::AfterDraw()
@@ -45,10 +61,74 @@ void HitboxOverlay::AfterDraw()
 	ImGui::PopStyleVar(2);
 }
 
-void HitboxOverlay::SetChar1ScreenPos(float x, float y)
+D3DXVECTOR2 HitboxOverlay::CalculatePlayerWorldPosition(const CharInfo* charObj)
 {
-	m_lineFrom = ImVec2(x, y);
-	m_lineTo = ImVec2(x, y - 500);
+	return D3DXVECTOR2(
+		floor(charObj->position_x / 1000 * M),
+		floor(charObj->position_y / 1000 * M)
+	);
+}
+
+D3DXVECTOR3 HitboxOverlay::CalculateScreenPosition(D3DXVECTOR3 worldPos)
+{
+	D3DXVECTOR3 result;
+	WorldToScreen(g_interfaces.pD3D9ExWrapper, &worldPos, &result);
+
+	result.x = floor(result.x);
+	result.y = floor(result.y);
+
+	return result;
+}
+
+void HitboxOverlay::DrawOriginLine(ImVec2 screenPos)
+{
+	const unsigned int colorOrange = 0xFFFF9900;
+
+	ImVec2 lineFrom = ImVec2(screenPos.x, screenPos.y);
+	ImVec2 lineTo = ImVec2(screenPos.x, screenPos.y - 500);
+
+	RenderLine(lineFrom, lineTo, colorOrange, 2);
+}
+
+void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR2 playerWorldPos)
+{
+	std::vector<JonbEntry> entries = JonbReader::getJonbEntries(charObj);
+
+	for (JonbEntry entry : entries)
+	{
+		float offsetX =  floor(entry.offsetX * M);
+		float offsetY = -floor(entry.offsetY * M);
+		float width =    floor(entry.width * M);
+		float height =  -floor(entry.height * M);
+
+		if (!charObj->facingLeft)
+		{
+			offsetX = -offsetX;
+			width = -width;
+		}
+
+		D3DXVECTOR3 rectFrom = CalculateScreenPosition(
+			D3DXVECTOR3(
+				playerWorldPos.x + offsetX,
+				playerWorldPos.y + offsetY,
+				0.0f
+			)
+		);
+
+		D3DXVECTOR3 rectTo = CalculateScreenPosition(
+			D3DXVECTOR3(
+				playerWorldPos.x + offsetX + width,
+				playerWorldPos.y + offsetY + height,
+				0.0f
+			)
+		);
+
+		const unsigned int colorBlue = 0xFF0033CC;
+		const unsigned int colorRed = 0xFFFF0000;
+		unsigned int rectColor = entry.type == JonbChunkType_Hurtbox ? colorBlue : colorRed;
+
+		RenderRect(ImVec2(rectFrom.x, rectFrom.y), ImVec2(rectTo.x, rectTo.y), rectColor, 0, ImDrawCornerFlags_All, 3);
+	}
 }
 
 
