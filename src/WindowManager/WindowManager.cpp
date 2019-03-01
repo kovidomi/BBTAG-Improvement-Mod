@@ -730,7 +730,8 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 
 			result.x = floor(result.x);
 			result.y = floor(result.y);
-			m_hitboxOverlay->SetChar1ScreenPos(result.x, result.y);
+
+			m_hitboxOverlay->Update();
 
 			ImGui::SameLine();
 			ImGui::Text("ON");
@@ -1059,7 +1060,7 @@ void WindowManager::ShowAllWindows()
 	if (show_donators_window)
 		ShowDonatorsWindow();
 
-	m_hitboxOverlay->Update();
+	// m_hitboxOverlay->Update();
 
 ////////////// DEBUG Windows
 #ifdef _DEBUG
