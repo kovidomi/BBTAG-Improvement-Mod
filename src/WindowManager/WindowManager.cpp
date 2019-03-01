@@ -699,7 +699,7 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		static float x = 0.0f;
 		static float y = 0.0f;
 		static float z = 0.0f;
-		static float m = 3.70f;
+		static float m = 3.685f; // 3.70f;
 
 		ImGui::SliderFloat("World_X", &x, -5000.0f, 5000.0f);
 		ImGui::SliderFloat("World_Y", &y, -5000.0f, 5000.0f);
@@ -722,6 +722,10 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 			};
 
 			WorldToScreen(g_interfaces.pD3D9ExWrapper, &src, &result);
+			result.x = floor(result.x);
+			result.y = floor(result.y);
+
+			m_hitboxOverlay->SetChar1ScreenPos(result.x, result.y);
 
 			ImGui::SameLine();
 			ImGui::Text("ON");
