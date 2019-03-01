@@ -178,6 +178,7 @@
     </ClCompile>
     <ClCompile Include="src\WindowManager\WorldToScreen.cpp" />
     <ClCompile Include="src\WindowManager\HitboxOverlay.cpp" />
+    <ClCompile Include="src\Game\JonbReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -327,6 +328,8 @@
     <ClInclude Include="src\info.h" />
     <ClInclude Include="src\WindowManager\WorldToScreen.h" />
     <ClInclude Include="src\WindowManager\HitboxOverlay.h" />
+    <ClInclude Include="src\Game\JonbEntry.h" />
+    <ClInclude Include="src\Game\JonbReader.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">

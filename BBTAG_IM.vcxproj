@@ -127,6 +127,7 @@
     <ClCompile Include="src\Game\characters.cpp" />
     <ClCompile Include="src\Game\CharHandle.cpp" />
     <ClCompile Include="src\Game\CharPaletteHandle.cpp" />
+    <ClCompile Include="src\Game\JonbReader.cpp" />
     <ClCompile Include="src\Game\MeterInfo.cpp" />
     <ClCompile Include="src\Game\Player.cpp" />
     <ClCompile Include="src\Hooks\HookManager.cpp" />
@@ -186,6 +187,8 @@
     <ClInclude Include="src\Game\CharInfo.h" />
     <ClInclude Include="src\Game\CharPaletteHandle.h" />
     <ClInclude Include="src\Game\gamestates.h" />
+    <ClInclude Include="src\Game\JonbEntry.h" />
+    <ClInclude Include="src\Game\JonbReader.h" />
     <ClInclude Include="src\Game\MeterInfo.h" />
     <ClInclude Include="src\Game\Player.h" />
     <ClInclude Include="src\Hooks\HookManager.h" />
