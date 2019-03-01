@@ -1,6 +1,6 @@
 #include "JonbReader.h"
 
-std::vector<JonbEntry> JonbReader::getJonbEntries(CharInfo * charObj)
+std::vector<JonbEntry> JonbReader::getJonbEntries(const CharInfo * charObj)
 {
 	std::vector<JonbEntry> jonbEntries;
 
@@ -10,7 +10,7 @@ std::vector<JonbEntry> JonbReader::getJonbEntries(CharInfo * charObj)
 	for (int i = 0; i < entriesCount; i++)
 	{
 		jonbEntries.push_back(*pEntry);
-		pEntry += sizeof(JonbEntry);
+		pEntry++;
 	}
 
 	return jonbEntries;
