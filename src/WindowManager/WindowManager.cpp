@@ -714,17 +714,22 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 
 		if (isAutoOn)
 		{
+			float divided_m = m / 10;
+
+			float playerPosX = g_interfaces.player1.GetChar1().GetData()->position_x / 1000 * divided_m;
+			float playerPosY = g_interfaces.player1.GetChar1().GetData()->position_y / 1000 * divided_m;
+
 			D3DXVECTOR3 src =
 			{
-				g_interfaces.player1.GetChar1().GetData()->position_x / 10000 * m,
-				g_interfaces.player1.GetChar1().GetData()->position_y / 10000 * m,
+				floor(playerPosX),
+				floor(playerPosY),
 				z
 			};
 
 			WorldToScreen(g_interfaces.pD3D9ExWrapper, &src, &result);
+
 			result.x = floor(result.x);
 			result.y = floor(result.y);
-
 			m_hitboxOverlay->SetChar1ScreenPos(result.x, result.y);
 
 			ImGui::SameLine();
@@ -737,6 +742,9 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 				D3DXVECTOR3 src = { x, y, z };
 
 				WorldToScreen(g_interfaces.pD3D9ExWrapper, &src, &result);
+
+				result.x = floor(result.x);
+				result.y = floor(result.y);
 			}
 		}
 
