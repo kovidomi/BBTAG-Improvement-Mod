@@ -189,9 +189,6 @@ bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	if (donatorsThread)
 		CloseHandle(donatorsThread);
 
-	if (g_interfaces.pSteamUserStatsWrapper && g_interfaces.pSteamFriendsWrapper)
-		g_interfaces.pSteamApiHelper = new SteamApiHelper(g_interfaces.pSteamUserStatsWrapper, g_interfaces.pSteamFriendsWrapper);
-
 	//Add the default font
 	ImFontConfig cfg;
 	cfg.SizePixels = 13;
