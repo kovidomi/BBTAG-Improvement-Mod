@@ -52,7 +52,7 @@ void NotificationWindow::SetNotificationTextOnMainWindowTitle()
 {
 	std::ostringstream stringBuf;
 	stringBuf << m_notificationText << " (" << round(ceil(m_notificationTimer)) << ")";
-	SetMainWindowTitle(stringBuf.str().c_str());
+	//SetMainWindowTitle(stringBuf.str().c_str());
 }
 
 void NotificationWindow::UpdateNotificationTimer()

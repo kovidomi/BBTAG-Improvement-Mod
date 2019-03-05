@@ -15,13 +15,10 @@ const ImVec4 blaze_val_color(1.0f, 0.4f, 1.0f, 1.0f);
 const ImVec4 astral_available_color(1.000f, 0.949f, 0.000f, 1.000f);
 const ImVec4 invis_color(0.0f, 0.0f, 0.0f, 0.0f);
 
-//bool *NO_CLOSE_FLAG = NULL;
-
-CustomHud::CustomHud(float hud_scale_x, float hud_scale_y)
+void CustomHud::SetScale(float hudScaleX, float hudScaleY)
 {
-	LOG(2, "CustomHud constructor\n");
-	this->hud_scale_x = hud_scale_x;
-	this->hud_scale_y = hud_scale_y;
+	this->hud_scale_x = hudScaleX;
+	this->hud_scale_y = hudScaleY;
 }
 
 void CustomHud::OnUpdate(bool show_custom_hud, bool show_main_window)

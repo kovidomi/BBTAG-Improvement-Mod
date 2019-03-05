@@ -2,14 +2,15 @@
 #include "CustomHud.h"
 
 #include <d3d9.h>
+#include "Window/MainWindow.h"
 
 class OverlayManager
 {
 public:
 	static OverlayManager& getInstance();
 	bool Init(void *hwnd, IDirect3DDevice9 *device);
-	void OnUpdate();
-	void OnRender();
+	void Update();
+	void Render();
 	void Shutdown();
 	void InvalidateDeviceObjects();
 	void CreateDeviceObjects();
@@ -20,24 +21,18 @@ public:
 	void AddLog(const char* message, ...);
 	void AddLogSeparator();
 	void SetLogging(bool value);
-	// void SetNotification(const char *text, float timeToShowInSec = 5.0, bool showNotificationWindow = false);
+	void SetNotification(const char *text, float timeToShowInSec = 5.0, bool showNotificationWindow = false);
 	void SetUpdateAvailable();
 
 private:
-	OverlayManager();
+	OverlayManager() = default;
 	void SetMainWindowTitle(const char *text = 0);
-	void HandleNotification();
-	// void ShowNotificationWindow();
-	// void ShowLoadedSettingsValues();
-	// void ShowDonatorsButton();
-	// void ShowMainWindow(bool* p_open);
 	void HandleMainWindowVisibility(float timeLeft);
-	// void ShowLinks();
 	void ShowAllWindows();
 	void WriteLogToFile();
 	void HandleButtons();
 
 	static OverlayManager* m_instance;
-	CustomHud*             m_customHud = nullptr;
-	bool                   m_initialized = false;
+	bool        m_initialized = false;
+	MainWindow* m_mainWindow = nullptr;
 };

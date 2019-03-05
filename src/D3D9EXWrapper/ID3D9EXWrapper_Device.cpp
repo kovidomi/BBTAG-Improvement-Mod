@@ -345,7 +345,7 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::BeginScene()
 {
 	LOG(7, "BeginScene\n");
 
-	OverlayManager::getInstance().OnUpdate();
+	OverlayManager::getInstance().Update();
 
 	return m_Direct3DDevice9Ex->BeginScene();
 }
@@ -354,7 +354,7 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::EndScene()
 {
 	LOG(7, "EndScene\n");
 
-	OverlayManager::getInstance().OnRender();
+	OverlayManager::getInstance().Render();
 
 	return m_Direct3DDevice9Ex->EndScene();
 }

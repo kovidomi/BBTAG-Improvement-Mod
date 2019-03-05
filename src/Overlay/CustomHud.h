@@ -5,11 +5,8 @@
 
 class CustomHud
 {
-private:
-	float hud_scale_x;
-	float hud_scale_y;
 public:
-	CustomHud(float hud_scale_x, float hud_scale_y);
+	void SetScale(float hud_scale_x, float hud_scale_y);
 	void OnUpdate(bool show_custom_hud, bool show_main_window);
 	void ShowResetPositionsButton(ImVec2 middlescreen);
 private:
@@ -20,4 +17,7 @@ private:
 		bool is_blaze_available, bool is_astral_available, bool is_blaze_active, bool right_side = false);
 	void UpdateCharSpecificMeters(const CharInfo &charInfo, bool right_side = false);
 	bool IsAstralAvailable(const int curSkill, const int otherCharHP1, const int otherCharHP2);
+
+	float hud_scale_x = 0;
+	float hud_scale_y = 0;
 };
