@@ -19,6 +19,7 @@ public:
 	void Update();
 	void Open();
 	void Close();
+	void ToggleOpen();
 	bool IsOpen() const;
 
 protected:

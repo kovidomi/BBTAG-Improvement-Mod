@@ -32,6 +32,11 @@ void Window::Close()
 	m_windowOpen = false;
 }
 
+void Window::ToggleOpen()
+{
+	m_windowOpen = !m_windowOpen;
+}
+
 bool Window::IsOpen() const
 {
 	return m_windowOpen;
