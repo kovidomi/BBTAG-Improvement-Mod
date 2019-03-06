@@ -161,9 +161,6 @@
     <ClCompile Include="src\Core\Settings.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\utils.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\Overlay\CustomHud.cpp">
       <Filter>src\WindowManager</Filter>
     </ClCompile>
@@ -183,6 +180,8 @@
     <ClCompile Include="src\Overlay\Window\UpdateNotifierWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\Window.cpp" />
     <ClCompile Include="src\Overlay\Window\NotificationWindow.cpp" />
+    <ClCompile Include="src\Overlay\WindowHandler.cpp" />
+    <ClCompile Include="src\Core\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -299,9 +298,6 @@
     <ClInclude Include="src\Web\palette_download.h">
       <Filter>src\Web</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\utils.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\bbtag_im.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -337,6 +333,9 @@
     <ClInclude Include="src\Overlay\Window\UpdateNotifierWindow.h" />
     <ClInclude Include="src\Overlay\Window\Window.h" />
     <ClInclude Include="src\Overlay\Window\NotificationWindow.h" />
+    <ClInclude Include="src\Overlay\WindowHandler.h" />
+    <ClInclude Include="src\Core\utils.h" />
+    <ClInclude Include="src\Overlay\IWindowHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">
