@@ -9,7 +9,6 @@
 #include "Core/utils.h"
 #include "Web/update_check.h"
 #include "Web/donators_fetch.h"
-#include "Window/DebugWindow.h"
 #include "Window/LogWindow.h"
 #include "Window/PaletteEditorWindow.h"
 #include <imgui.h>
@@ -19,27 +18,13 @@
 #include <time.h>
 
 #define MAX_LOG_MSG_LEN 1024
-#define MAIN_WINDOW_DISAPPEAR_TIME_SECONDS 15.0f
 #define DEFAULT_ALPHA 0.87f
 
 OverlayManager* OverlayManager::m_instance = nullptr;
 
-
-bool *NO_CLOSE_FLAG = NULL;
-
-
-float main_window_disappear_time = MAIN_WINDOW_DISAPPEAR_TIME_SECONDS;
-
-std::string notificationText;
-float notificationTimer = 0;
-
-std::string main_title = "";
-
 int toggle_key;
 int toggleHUD_key;
 int toggleCustomHUD_key;
-
-ImVec2 middlescreen;
 
 void OverlayManager::OnMatchInit()
 {
@@ -52,28 +37,12 @@ void OverlayManager::OnMatchInit()
 		g_interfaces.player2.GetChar1(),
 		g_interfaces.player2.GetChar2());
 
-	m_mainWindow->getPaletteEditorWindow().OnMatchInit();
+	((PaletteEditorWindow*)m_windowHandler->GetWindow(WindowType_PaletteEditor))->OnMatchInit();
 }
 
 bool OverlayManager::IsInitialized() const
 {
 	return m_initialized;
-}
-
-void OverlayManager::SetMainWindowTitle(const char *text)
-{
-	if (text)
-		main_title = text;
-	else
-	{
-		main_title = MOD_WINDOW_TITLE;
-		main_title += " ";
-		main_title += MOD_VERSION_NUM;
-#ifdef _DEBUG
-		main_title += " (DEBUG)";
-#endif
-	}
-	main_title += "###MainTitle"; //set unique identifier
 }
 
 OverlayManager & OverlayManager::getInstance()
@@ -104,16 +73,14 @@ bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 		return false;
 	}
 
-	bool ret = ImGui_ImplDX9_Init(hwnd, device);
-	if (!ret)
+	m_initialized = ImGui_ImplDX9_Init(hwnd, device);
+	if (!m_initialized)
 	{
 		LOG(2, "ImGui_ImplDX9_Init failed!\n");
 		return false;
 	}
 
-	SetMainWindowTitle();
-
-	m_mainWindow = new MainWindow(MOD_WINDOW_TITLE, false, ImGuiWindowFlags_AlwaysAutoResize);
+	m_windowHandler = new WindowHandler();
 
 	ImGui::StyleColorsDark();
 	ImGuiStyle& style = ImGui::GetStyle();
@@ -189,7 +156,7 @@ bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	AddLogSeparator();
 
 	LOG(2, "Init end\n");
-	return ret;
+	return m_initialized;
 }
 
 void OverlayManager::Shutdown()
@@ -200,7 +167,7 @@ void OverlayManager::Shutdown()
 	LOG(2, "OverlayManager::Shutdown\n");
 	WriteLogToFile();
 
-	SAFE_DELETE(m_mainWindow);
+	SAFE_DELETE(m_windowHandler);
 	delete m_instance;
 
 	ImGui_ImplDX9_Shutdown();
@@ -246,8 +213,6 @@ void OverlayManager::Update()
 		g_interfaces.player2.GetChar1().GetPalHandle(),
 		g_interfaces.player2.GetChar2().GetPalHandle());
 
-	HandleMainWindowVisibility(main_window_disappear_time);
-
 	// return if game window is minimized, to avoid the custom hud elements
 	// being thrown in the upper left corner due to resolution shrinking
 	if (IsIconic(g_gameProc.hWndGameWindow))
@@ -259,11 +224,11 @@ void OverlayManager::Update()
 
 	ImGuiIO& io = ImGui::GetIO();
 
-	bool isUpdateNotifierWindowOpen = m_mainWindow->getUpdateNotifierWindow().IsOpen();
-	bool isPaletteEditorWindowOpen = m_mainWindow->getPaletteEditorWindow().IsOpen();
-	bool isLogWindowOpen = m_mainWindow->getLogWindow().IsOpen();
+	bool isUpdateNotifierWindowOpen = ((UpdateNotifierWindow*)m_windowHandler->GetWindow(WindowType_UpdateNotifier))->IsOpen();
+	bool isPaletteEditorWindowOpen = ((PaletteEditorWindow*)m_windowHandler->GetWindow(WindowType_PaletteEditor))->IsOpen();
+	bool isLogWindowOpen = ((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->IsOpen();
 
-	io.MouseDrawCursor = m_mainWindow->IsOpen() | isLogWindowOpen
+	io.MouseDrawCursor = m_windowHandler->GetWindow(WindowType_Main)->IsOpen() | isLogWindowOpen
 		| isPaletteEditorWindowOpen | isUpdateNotifierWindowOpen; // show_notification_window | show_demo_window;
 
 	if (Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)
@@ -271,20 +236,20 @@ void OverlayManager::Update()
 		io.DisplaySize = ImVec2((float)Settings::settingsIni.renderwidth, (float)Settings::settingsIni.renderheight);
 	}
 
-	ShowAllWindows();
+	m_windowHandler->DrawAllWindows();
 
 	LOG(7, "END OF OverlayManager::Update\n");
 }
 
 void OverlayManager::SetUpdateAvailable()
 {
-	m_mainWindow->getUpdateNotifierWindow().Open();
+	m_windowHandler->GetWindow(WindowType_UpdateNotifier)->Open();
 }
 
 // start with type a of message: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 void OverlayManager::AddLog(const char* message, ...)
 {
-	if (!m_initialized || !m_mainWindow->getLogWindow().IsLoggingOn())
+	if (!m_initialized || !((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->IsLoggingOn())
 	{ 
 		return; 
 	}
@@ -302,7 +267,7 @@ void OverlayManager::AddLog(const char* message, ...)
 	if (strlen(message) > MAX_LOG_MSG_LEN)
 	{
 		LOG(2, "AddLog error: message too long!\nmessage: %s", message);
-		m_mainWindow->getLogWindow().AddLog("%s [error] Log message too long.", timeString);
+		((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->AddLog("%s [error] Log message too long.", timeString);
 		return;
 	}
 
@@ -317,17 +282,17 @@ void OverlayManager::AddLog(const char* message, ...)
 	fullMessage += " ";
 	fullMessage += buf;
 
-	m_mainWindow->getLogWindow().AddLog(fullMessage.c_str());
+	((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->AddLog(fullMessage.c_str());
 }
 
 void OverlayManager::AddLogSeparator()
 {
-	m_mainWindow->getLogWindow().AddLog("------------------------------------------------------------------\n");
+	((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->AddLog("------------------------------------------------------------------\n");
 }
 
 void OverlayManager::SetLogging(bool value)
 {
-	m_mainWindow->getLogWindow().SetLogging(value);
+	((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->SetLogging(value);
 }
 
 void OverlayManager::WriteLogToFile()
@@ -383,56 +348,10 @@ void OverlayManager::WriteLogToFile()
 
 	//d3dparams here
 
-	m_mainWindow->getLogWindow().ToFile(file);
+	((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->ToFile(file);
 	fprintf(file, "\n#####################################\n\n\n");
 
 	fclose(file);
-}
-
-
-void OverlayManager::HandleMainWindowVisibility(float timeLeft)
-{
-	main_window_disappear_time = timeLeft;
-
-	//start making the mod's menu disappear upon start, within MAIN_WINDOW_DISAPPEAR_TIME_SECONDS
-	if (main_window_disappear_time > 0)
-	{	
-		main_window_disappear_time -= ImGui::GetIO().DeltaTime;
-		
-		if(main_window_disappear_time > 0)
-			ImGui::GetStyle().Alpha = main_window_disappear_time / MAIN_WINDOW_DISAPPEAR_TIME_SECONDS;
-
-		//disappear upon reaching main_window_disappear_time < 0
-		if (main_window_disappear_time <= 0)
-		{
-			m_mainWindow->Close();
-			ImGui::GetStyle().Alpha = DEFAULT_ALPHA;
-		}
-	}
-	else
-	{
-		ImGui::GetStyle().Alpha = DEFAULT_ALPHA;
-	}
-}
-
-void OverlayManager::ShowAllWindows()
-{
-	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, DEFAULT_ALPHA);
-
-	m_mainWindow->Update();
-	m_mainWindow->UpdateWindows();
-
-////////////// DEBUG Windows
-#ifdef _DEBUG
-	//if (show_demo_window)
-	//{
-	//	ImGui::SetNextWindowPos(ImVec2(550, 20), ImGuiCond_FirstUseEver); // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!
-	//	ImGui::ShowDemoWindow(&show_demo_window);
-	//}
-#endif
-////////////// 
-
-	ImGui::PopStyleVar();
 }
 
 void OverlayManager::HandleButtons()
@@ -454,7 +373,6 @@ void OverlayManager::HandleButtons()
 
 	if (ImGui::IsKeyPressed(toggle_key))
 	{
-		m_mainWindow->ToggleOpen();
-		HandleMainWindowVisibility(0);
+		m_windowHandler->GetWindow(WindowType_Main)->ToggleOpen();
 	}
 }

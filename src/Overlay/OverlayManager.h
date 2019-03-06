@@ -1,8 +1,7 @@
 #pragma once
-#include "CustomHud.h"
+#include "WindowHandler.h"
 
 #include <d3d9.h>
-#include "Window/MainWindow.h"
 
 class OverlayManager
 {
@@ -23,16 +22,12 @@ public:
 	void SetLogging(bool value);
 	void SetNotification(const char *text, float timeToShowInSec = 5.0, bool showNotificationWindow = false);
 	void SetUpdateAvailable();
-
 private:
 	OverlayManager() = default;
-	void SetMainWindowTitle(const char *text = 0);
-	void HandleMainWindowVisibility(float timeLeft);
-	void ShowAllWindows();
 	void WriteLogToFile();
 	void HandleButtons();
 
 	static OverlayManager* m_instance;
-	bool        m_initialized = false;
-	MainWindow* m_mainWindow = nullptr;
+	bool m_initialized = false;
+	WindowHandler* m_windowHandler = nullptr;
 };
