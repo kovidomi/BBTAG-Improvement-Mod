@@ -1,23 +1,34 @@
 #include "MainWindow.h"
 #include "Core/Settings.h"
 #include "Core/info.h"
+#include "Core/interfaces.h"
 #include "Game/gamestates.h"
 #include "Web/donators_fetch.h"
+#include "Overlay/WindowHandler.h"
 
-PaletteEditorWindow& MainWindow::getPaletteEditorWindow()
+void MainWindow::SetMainWindowTitle(const std::string text)
 {
-	return m_paletteEditorWindow;
+	if (text != "")
+	{
+		m_windowTitle = text;
+	}
+	else
+	{
+		m_windowTitle = MOD_WINDOW_TITLE;
+		m_windowTitle += " ";
+		m_windowTitle += MOD_VERSION_NUM;
+#ifdef _DEBUG
+		m_windowTitle += " (DEBUG)";
+#endif
+	}
+	m_windowTitle += "###MainTitle"; //set unique identifier
 }
 
-LogWindow& MainWindow::getLogWindow()
+void MainWindow::SetWindowHandler(IWindowHandler & windowHandler)
 {
-	return m_logWindow;
+	m_pWindowHandler = &windowHandler;
 }
 
-UpdateNotifierWindow& MainWindow::getUpdateNotifierWindow()
-{
-	return m_updateNotifierWindow;
-}
 
 void MainWindow::BeforeDraw()
 {
@@ -41,23 +52,12 @@ void MainWindow::BeforeDraw()
 
 void MainWindow::Draw()
 {
-	//ImGui::Begin(main_title.c_str(), NO_CLOSE_FLAG, ImGuiWindowFlags_AlwaysAutoResize);
-
-	// prevent disappearing if clicked on
-	//if (main_window_disappear_time > 0)
-	//{
-	//	if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(0))
-	//	{
-	//		HandleMainWindowVisibility(0);
-	//	}
-	//}
-
 	ImGui::Text("Toggle me with %s", Settings::settingsIni.togglebutton.c_str());
 	ImGui::Text("Toggle HUD with %s", Settings::settingsIni.toggleHUDbutton.c_str());
 	ImGui::Text("Toggle Custom HUD with %s", Settings::settingsIni.togglecustomHUDbutton.c_str());
 	ImGui::Separator();
 
-	DrawDonatorsButton(m_donatorsWindow);
+	DrawDonatorsButton();
 
 	ImGui::Text("");
 
@@ -74,10 +74,10 @@ void MainWindow::Draw()
 		}
 
 		ImGui::Text(" "); ImGui::SameLine();
-		ImGui::Checkbox("Show Custom HUD", &m_showCustomHud);
+		//ImGui::Checkbox("Show Custom HUD", &m_showCustomHud);
 
 		ImGui::Text(" "); ImGui::SameLine();
-		m_customHud.ShowResetPositionsButton(m_middleScreen);
+		//m_customHud.ShowResetPositionsButton(m_middleScreen);
 	}
 
 	if (ImGui::CollapsingHeader("Custom palettes"))
@@ -89,11 +89,11 @@ void MainWindow::Draw()
 		}
 		else
 		{
-			m_paletteEditorWindow.ShowAllPaletteSelections();
+			((PaletteEditorWindow*)m_pWindowHandler->GetWindow(WindowType_PaletteEditor))->ShowAllPaletteSelections();
 		}
 
 		ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
-		m_paletteEditorWindow.ShowReloadAllPalettesButton();
+		((PaletteEditorWindow*)m_pWindowHandler->GetWindow(WindowType_PaletteEditor))->ShowReloadAllPalettesButton();
 
 		ImGui::Text(" "); ImGui::SameLine();
 		bool pressed = ImGui::Button("Palette editor");
@@ -104,7 +104,7 @@ void MainWindow::Draw()
 		}
 		else if (*g_gameVals.pGameMode == GameMode_Training && pressed)
 		{
-			m_paletteEditorWindow.Open();
+			m_pWindowHandler->GetWindow(WindowType_PaletteEditor)->Open();
 		}
 	}
 
@@ -119,12 +119,12 @@ void MainWindow::Draw()
 
 	if (ImGui::Button("DEBUG"))
 	{
-		m_debugWindow.Open();
+		m_pWindowHandler->GetWindow(WindowType_Debug)->Open();
 	}
 #endif
 	if (ImGui::Button("Log"))
 	{
-		m_logWindow.Open();
+		m_pWindowHandler->GetWindow(WindowType_Log)->Open();
 	}
 
 	ImGui::Text("Current online players:"); ImGui::SameLine();
@@ -141,21 +141,7 @@ void MainWindow::Draw()
 	DrawLinkButtons();
 }
 
-void MainWindow::UpdateWindows()
-{
-	m_debugWindow.Update();
-	m_logWindow.Update();
-	m_paletteEditorWindow.Update();
-	m_donatorsWindow.Update();
-	m_updateNotifierWindow.Update();
-
-	if(m_showCustomHud)
-	{
-		m_customHud.OnUpdate(m_showCustomHud, m_windowOpen);
-	}
-}
-
-void MainWindow::DrawDonatorsButton(Window & donatorsWindow)
+void MainWindow::DrawDonatorsButton()
 {
 	if (GetDonatorNames().empty())
 	{
@@ -187,7 +173,7 @@ void MainWindow::DrawDonatorsButton(Window & donatorsWindow)
 	sprintf(buf, "%s", donatorName.c_str());
 	if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
 	{
-		donatorsWindow.Open();
+		m_pWindowHandler->GetWindow(WindowType_Donators)->Open();
 	}
 }
 
