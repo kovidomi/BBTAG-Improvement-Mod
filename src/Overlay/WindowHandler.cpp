@@ -13,18 +13,14 @@ void WindowHandler::DrawAllWindows()
 	}
 }
 
-Window* WindowHandler::GetWindow(WindowType_ type)
-{
-	return m_windows[type];
-}
-
 void WindowHandler::InitWindowMap()
 {
-	m_windows[WindowType_Main] = &m_mainWindow;
-	m_windows[WindowType_Debug] = &m_debugWindow;
-	m_windows[WindowType_Log] = &m_logWindow;
-	m_windows[WindowType_Donators] = &m_donatorsWindow;
-	m_windows[WindowType_UpdateNotifier] = &m_updateNotifierWindow;
-	m_windows[WindowType_PaletteEditor] = &m_paletteEditorWindow;
+	AddWindow(WindowType_Main, &m_mainWindow);
+	AddWindow(WindowType_Main, &m_mainWindow);
+	AddWindow(WindowType_Debug, &m_debugWindow);
+	AddWindow(WindowType_Log, &m_logWindow);
+	AddWindow(WindowType_Donators, &m_donatorsWindow);
+	AddWindow(WindowType_UpdateNotifier, &m_updateNotifierWindow);
+	AddWindow(WindowType_PaletteEditor, &m_paletteEditorWindow);
 	//m_windows[WindowType_CustomHud] = &m_customHud;
 }

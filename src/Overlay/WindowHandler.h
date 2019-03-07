@@ -1,6 +1,6 @@
 #pragma once
 #include "CustomHud.h"
-#include "IWindowHandler.h"
+#include "WindowContainer.h"
 
 #include "Window/PaletteEditorWindow.h"
 #include "Window/LogWindow.h"
@@ -15,18 +15,7 @@
 #include "imgui.h"
 #include <map>
 
-enum WindowType_
-{
-	WindowType_Main,
-	WindowType_Debug,
-	WindowType_Log,
-	WindowType_Donators,
-	WindowType_UpdateNotifier,
-	WindowType_PaletteEditor,
-	WindowType_CustomHud
-};
-
-class WindowHandler : public IWindowHandler
+class WindowHandler : public WindowContainer
 {
 public:
 	WindowHandler()
@@ -47,7 +36,6 @@ public:
 
 	~WindowHandler() override = default;
 	void DrawAllWindows();
-	Window* GetWindow(WindowType_ type) override;
 private:
 	void InitWindowMap();
 
@@ -63,5 +51,4 @@ private:
 
 	bool m_showCustomHud = false;
 	//ImVec2 m_middleScreen;
-	std::map<WindowType_, Window*> m_windows;
 };
