@@ -1,6 +1,6 @@
-#include "WindowHandler.h"
+#include "WindowManager.h"
 
-void WindowHandler::DrawAllWindows()
+void WindowManager::DrawAllWindows()
 {
 	for (const auto& window : m_windows)
 	{
@@ -13,7 +13,7 @@ void WindowHandler::DrawAllWindows()
 	}
 }
 
-void WindowHandler::InitWindowMap()
+void WindowManager::InitWindowMap()
 {
 	AddWindow(WindowType_Main, &m_mainWindow);
 	AddWindow(WindowType_Main, &m_mainWindow);

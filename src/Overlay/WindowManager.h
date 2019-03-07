@@ -13,12 +13,11 @@
 #include "Core/logger.h"
 #include "Core/Settings.h"
 #include "imgui.h"
-#include <map>
 
-class WindowHandler : public WindowContainer
+class WindowManager : public WindowContainer
 {
 public:
-	WindowHandler()
+	WindowManager()
 	{
 		//m_middleScreen = ImVec2((float)Settings::settingsIni.renderwidth / 2, (float)Settings::settingsIni.renderheight / 2);
 
@@ -34,7 +33,7 @@ public:
 		InitWindowMap();
 	}
 
-	~WindowHandler() override = default;
+	~WindowManager() override = default;
 	void DrawAllWindows();
 private:
 	void InitWindowMap();

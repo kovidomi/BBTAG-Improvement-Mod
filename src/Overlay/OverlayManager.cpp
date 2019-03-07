@@ -37,7 +37,7 @@ void OverlayManager::OnMatchInit()
 		g_interfaces.player2.GetChar1(),
 		g_interfaces.player2.GetChar2());
 
-	m_windowHandler->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->OnMatchInit();
+	m_windowManager->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->OnMatchInit();
 }
 
 bool OverlayManager::IsInitialized() const
@@ -80,7 +80,7 @@ bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 		return false;
 	}
 
-	m_windowHandler = new WindowHandler();
+	m_windowManager = new WindowManager();
 
 	ImGui::StyleColorsDark();
 	ImGuiStyle& style = ImGui::GetStyle();
@@ -167,7 +167,7 @@ void OverlayManager::Shutdown()
 	LOG(2, "OverlayManager::Shutdown\n");
 	WriteLogToFile();
 
-	SAFE_DELETE(m_windowHandler);
+	SAFE_DELETE(m_windowManager);
 	delete m_instance;
 
 	ImGui_ImplDX9_Shutdown();
@@ -225,13 +225,13 @@ void OverlayManager::Update()
 	ImGuiIO& io = ImGui::GetIO();
 
 	bool isUpdateNotifierWindowOpen =
-		m_windowHandler->GetWindow<UpdateNotifierWindow>(WindowType_UpdateNotifier)->IsOpen();
+		m_windowManager->GetWindow<UpdateNotifierWindow>(WindowType_UpdateNotifier)->IsOpen();
 	bool isPaletteEditorWindowOpen =
-		m_windowHandler->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->IsOpen();
+		m_windowManager->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->IsOpen();
 	bool isLogWindowOpen =
-		m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->IsOpen();
+		m_windowManager->GetWindow<LogWindow>(WindowType_Log)->IsOpen();
 
-	io.MouseDrawCursor = m_windowHandler->GetWindow(WindowType_Main)->IsOpen() | isLogWindowOpen
+	io.MouseDrawCursor = m_windowManager->GetWindow(WindowType_Main)->IsOpen() | isLogWindowOpen
 		| isPaletteEditorWindowOpen | isUpdateNotifierWindowOpen; // show_notification_window | show_demo_window;
 
 	if (Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)
@@ -239,20 +239,20 @@ void OverlayManager::Update()
 		io.DisplaySize = ImVec2((float)Settings::settingsIni.renderwidth, (float)Settings::settingsIni.renderheight);
 	}
 
-	m_windowHandler->DrawAllWindows();
+	m_windowManager->DrawAllWindows();
 
 	LOG(7, "END OF OverlayManager::Update\n");
 }
 
 void OverlayManager::SetUpdateAvailable()
 {
-	m_windowHandler->GetWindow(WindowType_UpdateNotifier)->Open();
+	m_windowManager->GetWindow(WindowType_UpdateNotifier)->Open();
 }
 
 // start with type a of message: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 void OverlayManager::AddLog(const char* message, ...)
 {
-	if (!m_initialized || ! m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->IsLoggingOn())
+	if (!m_initialized || ! m_windowManager->GetWindow<LogWindow>(WindowType_Log)->IsLoggingOn())
 	{ 
 		return; 
 	}
@@ -270,7 +270,7 @@ void OverlayManager::AddLog(const char* message, ...)
 	if (strlen(message) > MAX_LOG_MSG_LEN)
 	{
 		LOG(2, "AddLog error: message too long!\nmessage: %s", message);
-		m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->AddLog("%s [error] Log message too long.", timeString);
+		m_windowManager->GetWindow<LogWindow>(WindowType_Log)->AddLog("%s [error] Log message too long.", timeString);
 		return;
 	}
 
@@ -285,17 +285,17 @@ void OverlayManager::AddLog(const char* message, ...)
 	fullMessage += " ";
 	fullMessage += buf;
 
-	m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->AddLog(fullMessage.c_str());
+	m_windowManager->GetWindow<LogWindow>(WindowType_Log)->AddLog(fullMessage.c_str());
 }
 
 void OverlayManager::AddLogSeparator()
 {
-	m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->AddLog("------------------------------------------------------------------\n");
+	m_windowManager->GetWindow<LogWindow>(WindowType_Log)->AddLog("------------------------------------------------------------------\n");
 }
 
 void OverlayManager::SetLogging(bool value)
 {
-	m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->SetLogging(value);
+	m_windowManager->GetWindow<LogWindow>(WindowType_Log)->SetLogging(value);
 }
 
 void OverlayManager::WriteLogToFile()
@@ -351,7 +351,7 @@ void OverlayManager::WriteLogToFile()
 
 	//d3dparams here
 
-	m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->ToFile(file);
+	m_windowManager->GetWindow<LogWindow>(WindowType_Log)->ToFile(file);
 	fprintf(file, "\n#####################################\n\n\n");
 
 	fclose(file);
@@ -376,6 +376,6 @@ void OverlayManager::HandleButtons()
 
 	if (ImGui::IsKeyPressed(toggle_key))
 	{
-		m_windowHandler->GetWindow<MainWindow>(WindowType_Main)->ToggleOpen();
+		m_windowManager->GetWindow<MainWindow>(WindowType_Main)->ToggleOpen();
 	}
 }
