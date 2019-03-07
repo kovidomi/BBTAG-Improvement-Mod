@@ -335,7 +335,7 @@
     <ClInclude Include="src\Overlay\Window\NotificationWindow.h" />
     <ClInclude Include="src\Overlay\WindowHandler.h" />
     <ClInclude Include="src\Core\utils.h" />
-    <ClInclude Include="src\Overlay\IWindowHandler.h" />
+    <ClInclude Include="src\Overlay\WindowContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">

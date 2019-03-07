@@ -202,7 +202,7 @@
     <ClInclude Include="src\Core\info.h" />
     <ClInclude Include="src\Core\interfaces.h" />
     <ClInclude Include="src\Core\logger.h" />
-    <ClInclude Include="src\Overlay\IWindowHandler.h" />
+    <ClInclude Include="src\Overlay\WindowContainer.h" />
     <ClInclude Include="src\Overlay\WindowHandler.h" />
     <ClInclude Include="src\Overlay\Window\DebugWindow.h" />
     <ClInclude Include="src\Overlay\Window\DonatorsWindow.h" />
