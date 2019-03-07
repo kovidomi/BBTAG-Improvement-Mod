@@ -24,9 +24,9 @@ void MainWindow::SetMainWindowTitle(const std::string text)
 	m_windowTitle += "###MainTitle"; //set unique identifier
 }
 
-void MainWindow::SetWindowHandler(IWindowHandler & windowHandler)
+void MainWindow::SetWindowHandler(WindowContainer & windowContainer)
 {
-	m_pWindowHandler = &windowHandler;
+	m_pWindowContainer = &windowContainer;
 }
 
 
@@ -89,11 +89,11 @@ void MainWindow::Draw()
 		}
 		else
 		{
-			((PaletteEditorWindow*)m_pWindowHandler->GetWindow(WindowType_PaletteEditor))->ShowAllPaletteSelections();
+			m_pWindowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->ShowAllPaletteSelections();
 		}
 
 		ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
-		((PaletteEditorWindow*)m_pWindowHandler->GetWindow(WindowType_PaletteEditor))->ShowReloadAllPalettesButton();
+		m_pWindowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->ShowReloadAllPalettesButton();
 
 		ImGui::Text(" "); ImGui::SameLine();
 		bool pressed = ImGui::Button("Palette editor");
@@ -104,7 +104,7 @@ void MainWindow::Draw()
 		}
 		else if (*g_gameVals.pGameMode == GameMode_Training && pressed)
 		{
-			m_pWindowHandler->GetWindow(WindowType_PaletteEditor)->Open();
+			m_pWindowContainer->GetWindow(WindowType_PaletteEditor)->Open();
 		}
 	}
 
@@ -119,12 +119,12 @@ void MainWindow::Draw()
 
 	if (ImGui::Button("DEBUG"))
 	{
-		m_pWindowHandler->GetWindow(WindowType_Debug)->Open();
+		m_pWindowContainer->GetWindow(WindowType_Debug)->Open();
 	}
 #endif
 	if (ImGui::Button("Log"))
 	{
-		m_pWindowHandler->GetWindow(WindowType_Log)->Open();
+		m_pWindowContainer->GetWindow(WindowType_Log)->Open();
 	}
 
 	ImGui::Text("Current online players:"); ImGui::SameLine();
@@ -173,7 +173,7 @@ void MainWindow::DrawDonatorsButton()
 	sprintf(buf, "%s", donatorName.c_str());
 	if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
 	{
-		m_pWindowHandler->GetWindow(WindowType_Donators)->Open();
+		m_pWindowContainer->GetWindow(WindowType_Donators)->Open();
 	}
 }
 

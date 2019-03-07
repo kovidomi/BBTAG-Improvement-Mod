@@ -37,7 +37,7 @@ void OverlayManager::OnMatchInit()
 		g_interfaces.player2.GetChar1(),
 		g_interfaces.player2.GetChar2());
 
-	((PaletteEditorWindow*)m_windowHandler->GetWindow(WindowType_PaletteEditor))->OnMatchInit();
+	m_windowHandler->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->OnMatchInit();
 }
 
 bool OverlayManager::IsInitialized() const
@@ -224,9 +224,12 @@ void OverlayManager::Update()
 
 	ImGuiIO& io = ImGui::GetIO();
 
-	bool isUpdateNotifierWindowOpen = ((UpdateNotifierWindow*)m_windowHandler->GetWindow(WindowType_UpdateNotifier))->IsOpen();
-	bool isPaletteEditorWindowOpen = ((PaletteEditorWindow*)m_windowHandler->GetWindow(WindowType_PaletteEditor))->IsOpen();
-	bool isLogWindowOpen = ((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->IsOpen();
+	bool isUpdateNotifierWindowOpen =
+		m_windowHandler->GetWindow<UpdateNotifierWindow>(WindowType_UpdateNotifier)->IsOpen();
+	bool isPaletteEditorWindowOpen =
+		m_windowHandler->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->IsOpen();
+	bool isLogWindowOpen =
+		m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->IsOpen();
 
 	io.MouseDrawCursor = m_windowHandler->GetWindow(WindowType_Main)->IsOpen() | isLogWindowOpen
 		| isPaletteEditorWindowOpen | isUpdateNotifierWindowOpen; // show_notification_window | show_demo_window;
@@ -249,7 +252,7 @@ void OverlayManager::SetUpdateAvailable()
 // start with type a of message: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 void OverlayManager::AddLog(const char* message, ...)
 {
-	if (!m_initialized || !((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->IsLoggingOn())
+	if (!m_initialized || ! m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->IsLoggingOn())
 	{ 
 		return; 
 	}
@@ -267,7 +270,7 @@ void OverlayManager::AddLog(const char* message, ...)
 	if (strlen(message) > MAX_LOG_MSG_LEN)
 	{
 		LOG(2, "AddLog error: message too long!\nmessage: %s", message);
-		((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->AddLog("%s [error] Log message too long.", timeString);
+		m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->AddLog("%s [error] Log message too long.", timeString);
 		return;
 	}
 
@@ -282,17 +285,17 @@ void OverlayManager::AddLog(const char* message, ...)
 	fullMessage += " ";
 	fullMessage += buf;
 
-	((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->AddLog(fullMessage.c_str());
+	m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->AddLog(fullMessage.c_str());
 }
 
 void OverlayManager::AddLogSeparator()
 {
-	((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->AddLog("------------------------------------------------------------------\n");
+	m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->AddLog("------------------------------------------------------------------\n");
 }
 
 void OverlayManager::SetLogging(bool value)
 {
-	((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->SetLogging(value);
+	m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->SetLogging(value);
 }
 
 void OverlayManager::WriteLogToFile()
@@ -348,7 +351,7 @@ void OverlayManager::WriteLogToFile()
 
 	//d3dparams here
 
-	((LogWindow*)m_windowHandler->GetWindow(WindowType_Log))->ToFile(file);
+	m_windowHandler->GetWindow<LogWindow>(WindowType_Log)->ToFile(file);
 	fprintf(file, "\n#####################################\n\n\n");
 
 	fclose(file);
@@ -373,6 +376,6 @@ void OverlayManager::HandleButtons()
 
 	if (ImGui::IsKeyPressed(toggle_key))
 	{
-		m_windowHandler->GetWindow(WindowType_Main)->ToggleOpen();
+		m_windowHandler->GetWindow<MainWindow>(WindowType_Main)->ToggleOpen();
 	}
 }

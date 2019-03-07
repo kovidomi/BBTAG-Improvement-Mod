@@ -2,7 +2,7 @@
 #include "Window.h"
 #include "DonatorsWindow.h"
 
-#include "Overlay/IWindowHandler.h"
+#include "Overlay/WindowContainer.h"
 
 class MainWindow : public Window
 {
@@ -16,7 +16,7 @@ public:
 
 	~MainWindow() override = default;
 	void SetMainWindowTitle(const std::string text = "");
-	void SetWindowHandler(IWindowHandler& windowHandler);
+	void SetWindowHandler(WindowContainer& windowContainer);
 protected:
 	void BeforeDraw() override;
 	void Draw() override;
@@ -26,5 +26,5 @@ private:
 	void DrawLinkButtons() const;
 	void DrawLoadedSettingsValues() const;
 
-	IWindowHandler* m_pWindowHandler = nullptr;
+	WindowContainer* m_pWindowContainer = nullptr;
 };
