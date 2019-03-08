@@ -42,7 +42,7 @@ void HitboxOverlay::Draw()
 	for (int i = 0; i < g_gameVals.entityCount; i++)
 	{
 		CharInfo* pEntity = (CharInfo*)g_gameVals.pEntityList[i];
-		D3DXVECTOR2 entityWorldPos = CalculatePlayerWorldPosition(pEntity);
+		D3DXVECTOR2 entityWorldPos = CalculateObjWorldPosition(pEntity);
 		DrawCollisionAreas(pEntity, entityWorldPos);
 	}
 }
@@ -53,7 +53,7 @@ void HitboxOverlay::AfterDraw()
 	ImGui::PopStyleVar(2);
 }
 
-D3DXVECTOR2 HitboxOverlay::CalculatePlayerWorldPosition(const CharInfo* charObj)
+D3DXVECTOR2 HitboxOverlay::CalculateObjWorldPosition(const CharInfo* charObj)
 {
 	return D3DXVECTOR2(
 		floor(charObj->position_x / 1000 * M),

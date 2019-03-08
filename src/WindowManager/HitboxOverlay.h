@@ -20,7 +20,7 @@ private:
 	void Draw();
 	void AfterDraw();
 
-	D3DXVECTOR2 CalculatePlayerWorldPosition(const CharInfo * charObj);
+	D3DXVECTOR2 CalculateObjWorldPosition(const CharInfo * charObj);
 	D3DXVECTOR3 CalculateScreenPosition(D3DXVECTOR3 worldPos);
 
 	void RenderLine(const ImVec2& from, const ImVec2& to, uint32_t color, float thickness = 1.0f);
