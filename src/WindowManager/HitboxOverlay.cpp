@@ -45,21 +45,6 @@ void HitboxOverlay::Draw()
 		D3DXVECTOR2 entityWorldPos = CalculatePlayerWorldPosition(pEntity);
 		DrawCollisionAreas(pEntity, entityWorldPos);
 	}
-
-	//D3DXVECTOR2 playerOneCharOneWorldPos = CalculatePlayerWorldPosition(g_interfaces.player1.GetChar1().GetData());
-	//DrawCollisionAreas(g_interfaces.player1.GetChar1().GetData(), playerOneCharOneWorldPos);
-
-	//D3DXVECTOR2 playerOneCharTwoWorldPos = CalculatePlayerWorldPosition(g_interfaces.player1.GetChar2().GetData());
-	//DrawCollisionAreas(g_interfaces.player1.GetChar2().GetData(), playerOneCharTwoWorldPos);
-
-	//D3DXVECTOR2 playerTwoCharOneWorldPos = CalculatePlayerWorldPosition(g_interfaces.player2.GetChar1().GetData());
-	//DrawCollisionAreas(g_interfaces.player2.GetChar1().GetData(), playerTwoCharOneWorldPos);
-
-	//D3DXVECTOR2 playerTwoCharTwoWorldPos = CalculatePlayerWorldPosition(g_interfaces.player2.GetChar2().GetData());
-	//DrawCollisionAreas(g_interfaces.player2.GetChar2().GetData(), playerTwoCharTwoWorldPos);
-
-	//D3DXVECTOR3 playerScreenPos = CalculateScreenPosition(D3DXVECTOR3(playerWorldPos.x, playerWorldPos.y, 0.0f));
-	//DrawOriginLine(ImVec2(playerScreenPos.x, playerScreenPos.y));
 }
 
 void HitboxOverlay::AfterDraw()
