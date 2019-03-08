@@ -241,6 +241,32 @@ JMPBACKADDR HookManager::RegisterHook(const char *label, const char *pattern, co
 
 //startIndexOfWildCard = set to the wildcard's starting index
 //bytesToReturn = 1/2/4
+int HookManager::GetOriginalBytes(const char *label, int startIndex, int bytesToReturn)
+{
+	int index = GetHookStructIndex(label);
+	if (index == -1)
+	{
+		LOG(2, "%s hook not found!\n", label);
+		return 0;
+	}
+
+	void* needle = (char*)hooks[index].originalBytes + (char)startIndex;
+
+	switch (bytesToReturn)
+	{
+	case 1:
+		return *(unsigned char*)needle;
+	case 2:
+		return *(unsigned short*)needle;
+	case 4:
+		return *(unsigned int*)needle;
+	default:
+		return 0;
+	}
+}
+
+//startIndexOfWildCard = set to the wildcard's starting index
+//bytesToReturn = 1/2/4
 int HookManager::GetBytesFromAddr(const char *label, int startIndex, int bytesToReturn)
 {
 	int index = GetHookStructIndex(label);
@@ -263,7 +289,6 @@ int HookManager::GetBytesFromAddr(const char *label, int startIndex, int bytesTo
 	default:
 		return 0;
 	}
-	return 0;
 }
 
 void HookManager::Cleanup()
