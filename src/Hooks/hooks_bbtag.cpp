@@ -607,6 +607,25 @@ void __declspec(naked)GetViewProjMatrix()
 	}
 }
 
+DWORD GetEntityListAddrJmpBackAddr = 0;
+int entityListSize = 0;
+void __declspec(naked)GetEntityListAddr()
+{
+	LOG_ASM(7, "GetEntityListAddr\n");
+
+	__asm mov [g_gameVals.pEntityList], eax
+
+// Original:
+// push    650h
+// mov[esi + 0A4210h], eax
+	__asm
+	{
+		push[entityListSize]
+		mov[esi + 0A4210h], eax
+		jmp[GetEntityListAddrJmpBackAddr]
+	}
+}
+
 //runs in additional_hooks.cpp in the hook_steamnetworking and ID3D9EXWrapper_Device.cpp in constructor, since unlike in CF in this game this method runs after steam init
 //These functions can be hooked after steam drm does its thing and d3d9device is up
 bool placeHooks_bbtag()
@@ -668,8 +687,10 @@ bool placeHooks_bbtag()
 	GetPaletteIndexAddrOfflineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOffline", "\xc7\x40\x24\x64\x00\x00\x00\xe8\x00\x00\x00\x00\x46", 
 		"xxxxxxxx????x", 7, GetPaletteIndexAddrOffline);
 
-
-
+	GetEntityListAddrJmpBackAddr = HookManager::SetHook("GetEntityListAddr", "\x68\x00\x00\x00\x00\x89\x86\x10\x42\x0a\x00",
+		"x????xxxxxx", 11, GetEntityListAddr);
+	entityListSize = HookManager::GetOriginalBytes("GetEntityListAddr", 1, 4);
+	g_gameVals.entityCount = entityListSize / 4;
 
 
 

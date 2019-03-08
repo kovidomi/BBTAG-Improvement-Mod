@@ -48,6 +48,9 @@ struct gameVals_t
 	D3DXMATRIX* viewMatrix;
 	D3DXMATRIX* projMatrix;
 	D3DXMATRIX viewProjMatrix;
+
+	int* pEntityList;
+	int entityCount;
 };
 
 struct gameProc_t
