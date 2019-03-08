@@ -682,6 +682,9 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		ImGui::Text("pIsHUDHidden: 0x%p", g_gameVals.pIsHUDHidden);
 		if (g_gameVals.pIsHUDHidden)
 			ImGui::Checkbox("pIsHUDHidden", (bool*)g_gameVals.pIsHUDHidden);
+
+		ImGui::Text("pEntityList: 0x%p", g_gameVals.pEntityList);
+		ImGui::Text("pEntityCount: %d", g_gameVals.entityCount);
 	}
 
 	if (ImGui::CollapsingHeader("Color tester"))
