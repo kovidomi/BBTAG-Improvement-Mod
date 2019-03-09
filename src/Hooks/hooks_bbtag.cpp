@@ -528,13 +528,13 @@ void __declspec(naked)VictoryScreen()
 	}
 }
 
-DWORD GetViewMatrixJmpBackAddr = 0;
-void __declspec(naked)GetViewMatrix()
+DWORD GetLookAtVectorJmpBackAddr = 0;
+void __declspec(naked)GetLookAtVector()
 {
 	static D3DXMATRIX* pViewMatrix;
 	static D3DXVECTOR3* pVec;
 
-	LOG_ASM(7, "GetViewMatrix\n");
+	LOG_ASM(7, "GetLookAtVecAndViewMatrix\n");
 
 	__asm pushad
 	__asm lea eax, [esi + 10h]
@@ -549,10 +549,10 @@ void __declspec(naked)GetViewMatrix()
 	__asm mov pVec, eax
 	g_gameVals.lookAtVector.pEye = pVec;
 
-	__asm lea eax, [esi + 4Ch]
-	__asm mov pViewMatrix, eax
-	g_gameVals.viewMatrix = pViewMatrix;
-	LOG_ASM(7, "GetViewMatrix: 0x%x\n", pViewMatrix);
+	//__asm lea eax, [esi + 4Ch]
+	//__asm mov pViewMatrix, eax
+	//g_gameVals.viewMatrix = pViewMatrix;
+	//LOG_ASM(7, "GetViewMatrix: 0x%x\n", pViewMatrix);
 	__asm popad
 
 	__asm
@@ -560,7 +560,7 @@ void __declspec(naked)GetViewMatrix()
 		push    eax
 		lea     eax, [esi + 4Ch]
 		push    eax
-		jmp[GetViewMatrixJmpBackAddr]
+		jmp[GetLookAtVectorJmpBackAddr]
 	}
 }
 
@@ -583,27 +583,6 @@ void __declspec(naked)GetViewAndProjMatrixes()
 		push    eax
 		lea     eax, [ebp - 88h]
 		jmp[GetViewAndProjMatrixesJmpBackAddr]
-	}
-}
-
-DWORD GetViewProjMatrixJmpBackAddr = 0;
-void __declspec(naked)GetViewProjMatrix()
-{
-	static D3DXMATRIX* pViewProjMatrix;
-
-	LOG_ASM(7, "GetViewProjMatrix\n");
-
-	__asm pushad
-	__asm mov pViewProjMatrix, eax
-	g_gameVals.viewProjMatrix = *pViewProjMatrix;
-	__asm popad
-
-	__asm
-	{
-		lea     eax, [ebp - 88h]
-		push    eax
-		lea     eax, [ebp - 30h]
-		jmp[GetViewProjMatrixJmpBackAddr]
 	}
 }
 
@@ -692,15 +671,10 @@ bool placeHooks_bbtag()
 	entityListSize = HookManager::GetOriginalBytes("GetEntityListAddr", 1, 4);
 	g_gameVals.entityCount = entityListSize / 4;
 
-
-
-	// GetViewMatrixJmpBackAddr = HookManager::SetHook("GetViewMatrix", "\x50\x8d\x46\x4c\x50", "xxxxx", 5, GetViewMatrix);
+	GetLookAtVectorJmpBackAddr = HookManager::SetHook("GetLookAtVector", "\x50\x8d\x46\x4c\x50", "xxxxx", 5, GetLookAtVector);
 
 	GetViewAndProjMatrixesJmpBackAddr = HookManager::SetHook("GetViewAndProjMatrixes", "\xc7\x45\xdc\x00\x00\x80\x3f\x50\x8d\x85\x78\xff\xff\xff",
 		"xxxxxxxxxxxxxx", 14, GetViewAndProjMatrixes);
-
-	//GetViewProjMatrixJmpBackAddr = HookManager::SetHook("GetViewProjMatrix", "\x8d\x85\x78\xff\xff\xff\x50\x8d\x45\xd0",
-	//	"xxxxxxxxxx", 10, GetViewProjMatrix);
 
 	///////////////// EXPERIMENTAL HOOKS BELOW ////////////////////////////
 

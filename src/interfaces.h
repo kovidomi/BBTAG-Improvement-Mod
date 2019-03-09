@@ -47,7 +47,6 @@ struct gameVals_t
 	lookat_t lookAtVector;
 	D3DXMATRIX* viewMatrix;
 	D3DXMATRIX* projMatrix;
-	D3DXMATRIX viewProjMatrix;
 
 	int* pEntityList;
 	int entityCount;
