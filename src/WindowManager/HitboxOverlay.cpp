@@ -42,8 +42,14 @@ void HitboxOverlay::Draw()
 	for (int i = 0; i < g_gameVals.entityCount; i++)
 	{
 		CharInfo* pEntity = (CharInfo*)g_gameVals.pEntityList[i];
-		D3DXVECTOR2 entityWorldPos = CalculateObjWorldPosition(pEntity);
-		DrawCollisionAreas(pEntity, entityWorldPos);
+		const bool isCharacter = i < 4;
+		const bool isEntityActive = pEntity->unknownStatus1 == 1 && pEntity->pJonbEntryBegin;
+
+		if (isCharacter || isEntityActive)
+		{
+			const D3DXVECTOR2 entityWorldPos = CalculateObjWorldPosition(pEntity);
+			DrawCollisionAreas(pEntity, entityWorldPos);
+		}
 	}
 }
 

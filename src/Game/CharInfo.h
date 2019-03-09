@@ -4,7 +4,9 @@
 class CharInfo
 {
 public:
-	char pad_0000[52]; //0x0000
+	char pad_0000[16]; //0x0000
+	int32_t unknownStatus1; //0x0010
+	char pad_0014[32]; //0x0014
 	uint32_t char_index; //0x0034
 	char pad_0038[20]; //0x0038
 	class JonbEntry* pJonbEntryBegin; //0x004C
