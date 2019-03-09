@@ -62,7 +62,7 @@ void HitboxOverlay::AfterDraw()
 D3DXVECTOR2 HitboxOverlay::CalculateObjWorldPosition(const CharInfo* charObj)
 {
 	return D3DXVECTOR2(
-		floor(charObj->position_x / 1000 * M),
+		floor((charObj->position_x - charObj->positionOffsetX) / 1000 * M),
 		floor(charObj->position_y / 1000 * M)
 	);
 }

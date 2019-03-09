@@ -21,7 +21,9 @@ public:
 	int32_t facingLeft; //0x0274
 	int32_t position_x; //0x0278
 	int32_t position_y; //0x027C
-	char pad_0280[216]; //0x0280
+	char pad_0280[4]; //0x0280
+	int32_t positionOffsetX; //0x0284
+	char pad_0288[208]; //0x0288
 	int32_t stageEdgeTouchTimer; //0x0358
 	char pad_035C[888]; //0x035C
 	uint32_t deny_opponent_burst; //0x06D4
@@ -39,4 +41,5 @@ public:
 	uint32_t unique_meter_max_val; //0x210D0
 	uint32_t unique_meter_cur_val; //0x210D4
 	char pad_210D8[40]; //0x210D8
+
 }; //Size: 0x21100
