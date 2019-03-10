@@ -8,7 +8,7 @@
 
 // Literally a magic number as of now
 // TODO: Figure out how to calculate properly on all resolutions
-const float M = 0.3685f;
+float scale = 0.3685f;
 
 void HitboxOverlay::Update()
 {
@@ -62,8 +62,8 @@ void HitboxOverlay::AfterDraw()
 D3DXVECTOR2 HitboxOverlay::CalculateObjWorldPosition(const CharInfo* charObj)
 {
 	return D3DXVECTOR2(
-		floor((charObj->position_x - charObj->positionOffsetX) / 1000 * M),
-		floor(charObj->position_y / 1000 * M)
+		floor((charObj->position_x - charObj->positionOffsetX) / 1000 * scale),
+		floor(charObj->position_y / 1000 * scale)
 	);
 }
 
@@ -94,10 +94,10 @@ void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR
 
 	for (JonbEntry entry : entries)
 	{
-		float offsetX =  floor(entry.offsetX * M);
-		float offsetY = -floor(entry.offsetY * M);
-		float width =    floor(entry.width * M);
-		float height =  -floor(entry.height * M);
+		float offsetX =  floor(entry.offsetX * scale);
+		float offsetY = -floor(entry.offsetY * scale);
+		float width =    floor(entry.width * scale);
+		float height =  -floor(entry.height * scale);
 
 		if (!charObj->facingLeft)
 		{
@@ -127,6 +127,11 @@ void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR
 
 		RenderRect(ImVec2(rectFrom.x, rectFrom.y), ImVec2(rectTo.x, rectTo.y), rectColor, 0, ImDrawCornerFlags_All, 3);
 	}
+}
+
+float& HitboxOverlay::GetMagicNumber()
+{
+	return scale;
 }
 
 

@@ -14,6 +14,7 @@ public:
 	void Update();
 	void DrawOriginLine(ImVec2 screenPos);
 	void DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR2 playerWorldPos);
+	float& GetMagicNumber();
 
 private:
 	void BeforeDraw();

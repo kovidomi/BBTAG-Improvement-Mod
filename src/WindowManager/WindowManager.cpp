@@ -702,12 +702,12 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		static float x = 0.0f;
 		static float y = 0.0f;
 		static float z = 0.0f;
-		static float m = 3.685f; // 3.70f;
+		float& scale = m_hitboxOverlay->GetMagicNumber();
 
 		ImGui::SliderFloat("World_X", &x, -5000.0f, 5000.0f);
 		ImGui::SliderFloat("World_Y", &y, -5000.0f, 5000.0f);
 		ImGui::SliderFloat("World_Z", &z, -5000.0f, 5000.0f);
-		ImGui::SliderFloat("M", &m, 0.0f, 5.0f);
+		ImGui::SliderFloat("Scale", &scale, 0.0f, 1.0f, "%.4f");
 
 		static bool isAutoOn = false;
 		if (ImGui::Button("Automatic"))
@@ -717,10 +717,8 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 
 		if (isAutoOn)
 		{
-			float divided_m = m / 10;
-
-			float playerPosX = g_interfaces.player1.GetChar1().GetData()->position_x / 1000 * divided_m;
-			float playerPosY = g_interfaces.player1.GetChar1().GetData()->position_y / 1000 * divided_m;
+			float playerPosX = g_interfaces.player1.GetChar1().GetData()->position_x / 1000 * scale;
+			float playerPosY = g_interfaces.player1.GetChar1().GetData()->position_y / 1000 * scale;
 
 			D3DXVECTOR3 src =
 			{
