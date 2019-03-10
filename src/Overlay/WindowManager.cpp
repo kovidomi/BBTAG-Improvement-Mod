@@ -16,7 +16,6 @@ void WindowManager::DrawAllWindows()
 void WindowManager::InitWindowMap()
 {
 	AddWindow(WindowType_Main, &m_mainWindow);
-	AddWindow(WindowType_Main, &m_mainWindow);
 	AddWindow(WindowType_Debug, &m_debugWindow);
 	AddWindow(WindowType_Log, &m_logWindow);
 	AddWindow(WindowType_Donators, &m_donatorsWindow);
