@@ -1,5 +1,6 @@
 #pragma once
 #include "CustomHud.h"
+#include "WindowDrawer.h"
 #include "WindowContainer.h"
 
 enum WindowType_
@@ -13,7 +14,7 @@ enum WindowType_
 	WindowType_CustomHud
 };
 
-class WindowManager : public WindowContainer
+class WindowManager : public WindowDrawer, public WindowContainer
 {
 public:
 	WindowManager();

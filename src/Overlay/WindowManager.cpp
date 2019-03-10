@@ -29,10 +29,7 @@ WindowManager::WindowManager()
 
 void WindowManager::DrawAllWindows()
 {
-	for (const auto& window : GetWindows())
-	{
-		window.second->Update();
-	}
+	WindowDrawer::DrawAllWindows(this);
 
 	if (m_showCustomHud)
 	{
