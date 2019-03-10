@@ -30,6 +30,6 @@ protected:
 	// Call in constructor of child class
 	virtual void InitWindows() = 0;
 	void AddWindow(WindowType_ type, Window* pWindow) { m_windows[type] = pWindow; }
-
+private:
 	std::map<WindowType_, Window*> m_windows;
 };
