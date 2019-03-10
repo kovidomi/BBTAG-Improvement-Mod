@@ -23,8 +23,6 @@ WindowManager::WindowManager()
 	LOG(2, "hud_scale_y: %f\n", hudScaleY);
 	m_customHud.SetScale(hudScaleX, hudScaleY);
 	m_showCustomHud = Settings::settingsIni.forcecustomhud;
-
-	GetWindow<MainWindow>(WindowType_Main)->SetWindowHandler(*this);
 }
 
 void WindowManager::DrawAllWindows()
@@ -39,9 +37,9 @@ void WindowManager::DrawAllWindows()
 
 void WindowManager::FillWindowContainer()
 {
-	AddWindow(WindowType_Main,
-		new MainWindow(MOD_WINDOW_TITLE, false,
-			ImGuiWindowFlags_AlwaysAutoResize));
+	MainWindow* mainWindow = new MainWindow(MOD_WINDOW_TITLE, false, ImGuiWindowFlags_AlwaysAutoResize);
+	mainWindow->SetWindowContainer(*this);
+	AddWindow(WindowType_Main, mainWindow);
 
 	AddWindow(WindowType_Debug,
 		new DebugWindow("DEBUG", true));
