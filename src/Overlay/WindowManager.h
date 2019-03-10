@@ -24,7 +24,5 @@ protected:
 	void FillWindowContainer() override;
 private:
 	CustomHud m_customHud = CustomHud();
-
 	bool m_showCustomHud = false;
-	//ImVec2 m_middleScreen;
 };
