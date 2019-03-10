@@ -19,8 +19,9 @@ public:
 	template <class T>
 	T* GetWindow(WindowType_ type) { return (T*)m_windows[type]; }
 	Window* GetWindow(WindowType_ type) { return m_windows[type]; }
-	void AddWindow(WindowType_ type, Window* pWindow) { m_windows[type] = pWindow; }
 	virtual ~WindowContainer() {}
 protected:
+	void AddWindow(WindowType_ type, Window* pWindow) { m_windows[type] = pWindow; }
+
 	std::map<WindowType_, Window*> m_windows;
 };
