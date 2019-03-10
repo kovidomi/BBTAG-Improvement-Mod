@@ -1,4 +1,7 @@
 #include "MainWindow.h"
+
+#include "PaletteEditorWindow.h"
+
 #include "Core/Settings.h"
 #include "Core/info.h"
 #include "Core/interfaces.h"

@@ -10,7 +10,9 @@
 #include "Web/update_check.h"
 #include "Web/donators_fetch.h"
 #include "Window/LogWindow.h"
+#include "Window/MainWindow.h"
 #include "Window/PaletteEditorWindow.h"
+#include "Window/UpdateNotifierWindow.h"
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
 
