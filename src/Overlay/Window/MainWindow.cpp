@@ -27,7 +27,7 @@ void MainWindow::SetMainWindowTitle(const std::string text)
 	m_windowTitle += "###MainTitle"; //set unique identifier
 }
 
-void MainWindow::SetWindowHandler(WindowContainer & windowContainer)
+void MainWindow::SetWindowContainer(WindowContainer & windowContainer)
 {
 	m_pWindowContainer = &windowContainer;
 }

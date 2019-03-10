@@ -15,7 +15,7 @@ public:
 
 	~MainWindow() override = default;
 	void SetMainWindowTitle(const std::string text = "");
-	void SetWindowHandler(WindowContainer& windowContainer);
+	void SetWindowContainer(WindowContainer& windowContainer);
 protected:
 	void BeforeDraw() override;
 	void Draw() override;
