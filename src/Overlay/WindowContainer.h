@@ -19,7 +19,13 @@ public:
 	template <class T>
 	T* GetWindow(WindowType_ type) { return (T*)m_windows[type]; }
 	Window* GetWindow(WindowType_ type) { return m_windows[type]; }
-	virtual ~WindowContainer() {}
+	virtual ~WindowContainer()
+	{
+		for (auto window : m_windows)
+		{
+			delete window.second;
+		}
+	}
 protected:
 	void AddWindow(WindowType_ type, Window* pWindow) { m_windows[type] = pWindow; }
 

@@ -25,14 +25,6 @@ WindowManager::WindowManager()
 	GetWindow<MainWindow>(WindowType_Main)->SetWindowHandler(*this);
 }
 
-WindowManager::~WindowManager()
-{
-	for (auto window : m_windows)
-	{
-		delete window.second;
-	}
-}
-
 void WindowManager::DrawAllWindows()
 {
 	for (const auto& window : m_windows)
