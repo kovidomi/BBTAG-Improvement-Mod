@@ -1,14 +1,15 @@
 #include "WindowManager.h"
 
-#include "Core/info.h"
-#include "Core/logger.h"
-#include "Core/Settings.h"
 #include "Window/DebugWindow.h"
 #include "Window/DonatorsWindow.h"
 #include "Window/LogWindow.h"
 #include "Window/MainWindow.h"
 #include "Window/PaletteEditorWindow.h"
 #include "Window/UpdateNotifierWindow.h"
+
+#include "Core/info.h"
+#include "Core/logger.h"
+#include "Core/Settings.h"
 
 WindowManager::WindowManager()
 {
