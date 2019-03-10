@@ -2,16 +2,9 @@
 #include "Window/Window.h"
 #include <map>
 
-enum WindowType_
-{
-	WindowType_Main,
-	WindowType_Debug,
-	WindowType_Log,
-	WindowType_Donators,
-	WindowType_UpdateNotifier,
-	WindowType_PaletteEditor,
-	WindowType_CustomHud
-};
+enum WindowType_;
+
+typedef std::map<WindowType_, Window*> WindowMap;
 
 class WindowContainer
 {
@@ -21,15 +14,17 @@ public:
 	Window* GetWindow(WindowType_ type) { return m_windows[type]; }
 	virtual ~WindowContainer()
 	{
-		for (auto window : m_windows)
+		for (const auto& window : m_windows)
 		{
 			delete window.second;
 		}
 	}
 protected:
-	// Call in constructor of child class
-	virtual void InitWindows() = 0;
+	// Call AddWindow for each window in here 
+	virtual void FillWindowContainer() = 0;
+	void InitWindowContainer() { FillWindowContainer(); }
 	void AddWindow(WindowType_ type, Window* pWindow) { m_windows[type] = pWindow; }
+	const WindowMap& GetWindows() const { return m_windows; }
 private:
-	std::map<WindowType_, Window*> m_windows;
+	WindowMap m_windows;
 };

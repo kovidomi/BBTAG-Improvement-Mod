@@ -1,6 +1,7 @@
 #include "WindowManager.h"
-#include "Core/logger.h"
+
 #include "Core/info.h"
+#include "Core/logger.h"
 #include "Core/Settings.h"
 #include "Window/DebugWindow.h"
 #include "Window/DonatorsWindow.h"
@@ -11,7 +12,7 @@
 
 WindowManager::WindowManager()
 {
-	InitWindows();
+	InitWindowContainer();
 	//m_middleScreen = ImVec2((float)Settings::settingsIni.renderwidth / 2, (float)Settings::settingsIni.renderheight / 2);
 
 	//dividing by 1904x1042 because the custom HUD was designed on that resolution
@@ -27,7 +28,7 @@ WindowManager::WindowManager()
 
 void WindowManager::DrawAllWindows()
 {
-	for (const auto& window : m_windows)
+	for (const auto& window : GetWindows())
 	{
 		window.second->Update();
 	}
@@ -38,7 +39,7 @@ void WindowManager::DrawAllWindows()
 	}
 }
 
-void WindowManager::InitWindows()
+void WindowManager::FillWindowContainer()
 {
 	AddWindow(WindowType_Main,
 		new MainWindow(MOD_WINDOW_TITLE, false,
