@@ -143,9 +143,6 @@
     <ClCompile Include="src\Web\palette_download.cpp">
       <Filter>src\Web</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\bbtag_im.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\crashdump.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -153,9 +150,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\logger.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Settings.cpp">
@@ -166,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="src\Overlay\fonts.cpp">
       <Filter>src\WindowManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\dllmain.cpp">
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Overlay\OverlayManager.cpp">
       <Filter>src\WindowManager</Filter>
@@ -301,9 +298,6 @@
     </ClInclude>
     <ClInclude Include="src\Web\palette_download.h">
       <Filter>src\Web</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\bbtag_im.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\crashdump.h">
       <Filter>src</Filter>

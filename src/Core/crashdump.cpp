@@ -5,7 +5,6 @@
 #include <shlobj.h>
 #include <tchar.h>
 #include <time.h>
-#include <TlHelp32.h>
 
 LONG WINAPI UnhandledExFilter(PEXCEPTION_POINTERS ExPtr)
 {

@@ -134,7 +134,6 @@
     <ClCompile Include="src\Hooks\hooks_bbtag.cpp" />
     <ClCompile Include="src\Hooks\hooks_detours.cpp" />
     <ClCompile Include="src\Hooks\hooks_steamApiWrapper.cpp" />
-    <ClCompile Include="src\Core\bbtag_im.cpp" />
     <ClCompile Include="src\Core\crashdump.cpp" />
     <ClCompile Include="src\D3D9EXWrapper\D3DXMath.cpp" />
     <ClCompile Include="src\D3D9EXWrapper\ID3D9EXWrapper.cpp" />
@@ -142,7 +141,7 @@
     <ClCompile Include="src\D3D9EXWrapper\ID3D9Wrapper_Sprite.cpp" />
     <ClCompile Include="src\D3D9EXWrapper\ID3DXWrapper_Effect.cpp" />
     <ClCompile Include="src\Core\interfaces.cpp" />
-    <ClCompile Include="src\Core\main.cpp" />
+    <ClCompile Include="src\Core\dllmain.cpp" />
     <ClCompile Include="src\Core\logger.cpp" />
     <ClCompile Include="src\Overlay\WindowManager.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\CustomHudWindowHealth.cpp" />
@@ -182,7 +181,6 @@
     <ClInclude Include="depends\imgui\stb_rect_pack.h" />
     <ClInclude Include="depends\imgui\stb_textedit.h" />
     <ClInclude Include="depends\imgui\stb_truetype.h" />
-    <ClInclude Include="src\Core\bbtag_im.h" />
     <ClInclude Include="src\Core\crashdump.h" />
     <ClInclude Include="src\Core\utils.h" />
     <ClInclude Include="src\D3D9EXWrapper\d3d9.h" />
