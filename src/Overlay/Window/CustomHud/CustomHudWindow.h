@@ -16,6 +16,7 @@ public:
 
 	~CustomHudWindow() override = default;
 	void SetScale(const ImVec2& scale);
+	void SetWindowsMovable(bool isMainWindowVisible);
 protected:
 	void BeforeDraw() override;
 	// We do not want anything in Draw(), since this class is just a wrapper for all other custom hud windows
