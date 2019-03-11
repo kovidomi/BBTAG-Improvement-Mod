@@ -6,7 +6,6 @@ const ImVec4 COLOR_HEALTH_BAR_FULL        (0.000f, 0.850f, 1.000f, 1.000f);
 const ImVec4 COLOR_HEALTH_BAR_INJURED     (0.100f, 1.000f, 0.000f, 1.000f);
 const ImVec4 COLOR_HEALTH_BAR_DANGER      (1.000f, 0.250f, 0.000f, 1.000f);
 const ImVec4 COLOR_HEALTH_BAR_RECOVERABLE (0.700f, 0.000f, 0.000f, 0.750f);
-const ImVec2 DEFAULT_BAR_SIZE(635.0f, 45.0f);
 
 void CustomHudWindowHealth::Draw()
 {
@@ -48,7 +47,7 @@ ImVec4 CustomHudWindowHealth::CalculateCurrentHealthBarColor(float currentHealth
 
 void CustomHudWindowHealth::DrawHealthBar(const float healthPercentage, const ImVec4 & color) const
 {
-	ImGui::ColoredProgressBar(healthPercentage, m_barSize, color, nullptr, false, m_isRightSide);
+	ImGui::ColoredProgressBar(healthPercentage, m_healthBarSize, color, nullptr, false, m_isRightSide);
 }
 
 void CustomHudWindowHealth::DrawHealthBarRecoverable() const

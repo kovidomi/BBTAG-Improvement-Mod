@@ -19,7 +19,7 @@ public:
 	~CustomHudWindowHealth() override = default;
 	void SetCharObj(const CharInfo& charObj) { m_pCharObj = &charObj; }
 	void SetSide(PlayerSide_ side) { side == PlayerSide_TwoRight ? m_isRightSide = true : m_isRightSide = false; }
-	void SetScale(const ImVec2& scale) { m_barSize = ImVec2(635.0f * scale.x, 45.0f * scale.y); }
+	void SetScale(const ImVec2& scale) { m_healthBarSize = ImVec2(635.0f * scale.x, 45.0f * scale.y); }
 protected:
 	void Draw() override;
 private:
@@ -33,5 +33,5 @@ private:
 
 	const CharInfo* m_pCharObj = nullptr;
 	bool m_isRightSide = false;
-	ImVec2 m_barSize = { 635.0f , 45.0f};
+	ImVec2 m_healthBarSize = { 635.0f , 45.0f};
 };
