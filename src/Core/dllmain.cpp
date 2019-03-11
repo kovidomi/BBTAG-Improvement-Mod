@@ -64,7 +64,7 @@ DWORD WINAPI BBTAG_IM_Start(HMODULE hModule)
 
 	if (!LoadOriginalDinputDll())
 	{
-		MessageBoxA(NULL, "Could not load original dinput8.dll!", "BBTAGIM", MB_OK);
+		MessageBoxA(nullptr, "Could not load original dinput8.dll!", "BBTAGIM", MB_OK);
 		ExitProcess(0);
 	}
 
@@ -75,7 +75,7 @@ DWORD WINAPI BBTAG_IM_Start(HMODULE hModule)
 
 		if (!placeHooks_detours())
 		{
-			MessageBoxA(NULL, "Failed IAT hook", "BBTAGIM", MB_OK);
+			MessageBoxA(nullptr, "Failed IAT hook", "BBTAGIM", MB_OK);
 			ExitProcess(0);
 		}
 
