@@ -8,7 +8,7 @@ void CustomHudWindow::SetScale(const ImVec2 & scale)
 
 void CustomHudWindow::BeforeDraw()
 {
-	m_timer.Update();
+	m_timerWindow.Update();
 	m_healthWindowLeft.Update();
 	m_healthWindowRight.Update();
 }

@@ -24,7 +24,7 @@ protected:
 private:
 	ImGuiWindowFlags m_windowFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar;
 
-	CustomHudWindowTimer m_timer = CustomHudWindowTimer("Timer", false, 0);
+	CustomHudWindowTimer m_timerWindow = CustomHudWindowTimer("Timer", false, 0);
 	CustomHudWindowHealth m_healthWindowLeft = CustomHudWindowHealth("PlayerOneHealthWindow", false, 0);
 	CustomHudWindowHealth m_healthWindowRight = CustomHudWindowHealth("PlayerTwoHealthWindow", false, 0);
 };
