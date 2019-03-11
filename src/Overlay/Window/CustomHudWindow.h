@@ -1,6 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "CustomHudWindowHealth.h"
+#include "CustomHudWindowTimer.h"
 
 class CustomHudWindow : public Window
 {
@@ -20,6 +21,7 @@ protected:
 	// We do not want anything in Draw(), since this class is just a wrapper for all other custom hud windows
 	void Draw() override {}
 
+	CustomHudWindowTimer m_timer = CustomHudWindowTimer("Timer", false, 0);
 	CustomHudWindowHealth m_healthWindowLeft = CustomHudWindowHealth("PlayerOneHealthWindow", false, 0);
 	CustomHudWindowHealth m_healthWindowRight = CustomHudWindowHealth("PlayerTwoHealthWindow", false, 0);
 };
