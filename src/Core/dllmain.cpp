@@ -9,6 +9,8 @@
 
 #include <Windows.h>
 
+HMODULE hOriginalDinput;
+
 typedef HRESULT(WINAPI *DirectInput8Create_t)(HINSTANCE hinstHandle, DWORD version, const IID& r_iid, LPVOID* outWrapper, LPUNKNOWN pUnk);
 DirectInput8Create_t orig_DirectInput8Create;
 
@@ -39,13 +41,13 @@ bool LoadOriginalDinputDll()
 	GetSystemDirectoryA(dllPath, MAX_PATH);
 	strcat_s(dllPath, "\\dinput8.dll");
 
-	HMODULE hMod = LoadLibraryA(dllPath);
-	if (hMod == INVALID_HANDLE_VALUE)
+	hOriginalDinput = LoadLibraryA(dllPath);
+	if (hOriginalDinput == INVALID_HANDLE_VALUE)
 	{
 		return false;
 	}
 
-	orig_DirectInput8Create = (DirectInput8Create_t)GetProcAddress(hMod, "DirectInput8Create");
+	orig_DirectInput8Create = (DirectInput8Create_t)GetProcAddress(hOriginalDinput, "DirectInput8Create");
 	if (!orig_DirectInput8Create)
 	{
 		return false;
@@ -96,6 +98,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 
 	case DLL_PROCESS_DETACH:
 		BBTAG_IM_Shutdown();
+		FreeLibrary(hOriginalDinput);
 		break;
 	}
 	return TRUE;
