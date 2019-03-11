@@ -9,14 +9,14 @@
 
 #include <Windows.h>
 
-typedef HRESULT(WINAPI *DirectInput8Create_t)(HINSTANCE inst_handle, DWORD version, const IID& r_iid, LPVOID* out_wrapper, LPUNKNOWN p_unk);
+typedef HRESULT(WINAPI *DirectInput8Create_t)(HINSTANCE hinstHandle, DWORD version, const IID& r_iid, LPVOID* outWrapper, LPUNKNOWN pUnk);
 DirectInput8Create_t orig_DirectInput8Create;
 
 // Exported function
-HRESULT WINAPI DirectInput8Create(HINSTANCE inst_handle, DWORD version, const IID& r_iid, LPVOID* out_wrapper, LPUNKNOWN p_unk)
+HRESULT WINAPI DirectInput8Create(HINSTANCE hinstHandle, DWORD version, const IID& r_iid, LPVOID* outWrapper, LPUNKNOWN pUnk)
 {
 	LOG(1, "DirectInput8Create\n");
-	return orig_DirectInput8Create(inst_handle, version, r_iid, out_wrapper, p_unk);
+	return orig_DirectInput8Create(hinstHandle, version, r_iid, outWrapper, pUnk);
 }
 
 void CreateCustomDirectories()
@@ -85,13 +85,13 @@ DWORD WINAPI BBTAG_IM_Start(HMODULE hModule)
 	return 0;
 }
 
-BOOL WINAPI DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
+BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
-	switch (ul_reason_for_call)
+	switch (fdwReason)
 	{
 	case DLL_PROCESS_ATTACH:
-		DisableThreadLibraryCalls(hModule);
-		CloseHandle(CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)BBTAG_IM_Start, hModule, 0, nullptr));
+		DisableThreadLibraryCalls(hinstDLL);
+		CloseHandle(CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)BBTAG_IM_Start, hinstDLL, 0, nullptr));
 		break;
 
 	case DLL_PROCESS_DETACH:
