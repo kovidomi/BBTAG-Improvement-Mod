@@ -147,6 +147,7 @@
     <ClCompile Include="src\Overlay\WindowManager.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\CustomHudWindowHealth.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\CustomHudWindow.cpp" />
+    <ClCompile Include="src\Overlay\Window\CustomHud\CustomHudWindowMeters.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\CustomHudWindowTimer.cpp" />
     <ClCompile Include="src\Overlay\Window\DebugWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\DonatorsWindow.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="src\Overlay\WindowDrawer.h" />
     <ClInclude Include="src\Overlay\WindowManager.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\CustomHudWindowHealth.h" />
+    <ClInclude Include="src\Overlay\Window\CustomHud\CustomHudWindowMeters.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\CustomHudWindowTimer.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\CustomHudWindow.h" />
     <ClInclude Include="src\Overlay\Window\DebugWindow.h" />

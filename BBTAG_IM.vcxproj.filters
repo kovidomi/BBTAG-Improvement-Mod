@@ -185,6 +185,7 @@
     <ClCompile Include="src\Overlay\Window\CustomHud\CustomHudWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\CustomHudWindowHealth.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\CustomHudWindowTimer.cpp" />
+    <ClCompile Include="src\Overlay\Window\CustomHud\CustomHudWindowMeters.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -343,6 +344,7 @@
     <ClInclude Include="src\Overlay\Window\CustomHud\CustomHudWindowTimer.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\CustomHudWindow.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\CustomHudWindowHealth.h" />
+    <ClInclude Include="src\Overlay\Window\CustomHud\CustomHudWindowMeters.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">
