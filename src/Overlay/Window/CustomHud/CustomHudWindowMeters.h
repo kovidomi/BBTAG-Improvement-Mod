@@ -2,6 +2,7 @@
 #include "Overlay/Window/Window.h"
 
 #include "Game/MeterInfo.h"
+#include "Game/Player.h"
 
 class CustomHudWindowMeters : public Window
 {
@@ -22,9 +23,19 @@ protected:
 	void Draw() override;
 	void AfterDraw() override;
 private:
-	void CalculateCrossBarBlazeAvailableColor(ImVec4& colorCrossBar) const;
-	void DrawCrossBar(const float crossPercentage, const ImVec4 & color) const;
-	void DrawSkillBar(const float skillPercentage, const ImVec4 & color) const;
+	void  DrawAlignedToLeft(const ImVec4& colorSkillBar, const ImVec4& colorCrossBar) const;
+	void  DrawAlignedToRight(const ImVec4& colorSkillBar, const ImVec4& colorCrossBar) const;
+	void  CalculateCrossBarBlazeAvailableColor(ImVec4& colorCrossBar) const;
+	int	  BlazeValueToSingleDigit() const;
+	// To fill up the skill gauge several times like the original HUD does
+	int   SkillValueToSingleBar() const;
+	float SkillValueToSingleBarPercent() const;
+	int   SkillValueToSingleDigit() const;
+	float CrossValueToBarPercent() const;
+	bool  IsAstralAvailable(Player & opponentPlayer) const;
+	bool  SetAstralAvailableColors() const;
+	void  DrawCrossBar(float crossPercentage, const ImVec4 & color) const;
+	void  DrawSkillBar(float skillPercentage, const ImVec4 & color) const;
 
 	const MeterInfo* m_meterData = nullptr;
 	bool m_isRightSide = false;

@@ -141,57 +141,6 @@ ImVec4 get_char_unique_meter_color(const CharInfo& charData)
 	return ret;
 }
 
-int blaze_to_single_digit(int blaze_value)
-{
-	if (blaze_value < BLAZE_GAUGE_GAIN_STAR2)
-		return 1;
-	else if (blaze_value >= BLAZE_GAUGE_GAIN_STAR2 && blaze_value < BLAZE_GAUGE_GAIN_STAR3)
-		return 2;
-	else if (blaze_value >= BLAZE_GAUGE_GAIN_STAR3 && blaze_value < BLAZE_GAUGE_MAX_VALUE)
-		return 3;
-	else //BLAZE_GAUGE_MAX_VALUE
-		return 4;
-}
-
-int total_skill_to_single_bar_value(int skill_value)
-{
-	if (skill_value < SKILL_GAUGE_DIVIDER)
-		return skill_value;
-	else if (skill_value == SKILL_GAUGE_MAX_VALUE || skill_value == SKILL_GAUGE_MAX_VALUE_BLAZE_ACTIVE)
-		return SKILL_GAUGE_DIVIDER;
-
-	return skill_value % SKILL_GAUGE_DIVIDER;
-}
-float total_skill_to_single_bar_percent(int skill_value, bool is_blaze_active)
-{
-	int cur_single_bar_val = total_skill_to_single_bar_value(skill_value);
-
-	//meter is filled due to activated blaze, return a full gauge
-	if (cur_single_bar_val == 0 && is_blaze_active)
-		return 1.0f;
-
-	if (cur_single_bar_val == 0)
-		return 0.0f;
-
-	return (float)cur_single_bar_val / (float)SKILL_GAUGE_DIVIDER;
-}
-
-int total_skill_to_single_digit(int skill_value)
-{
-	if (skill_value == 0)
-		return 0;
-
-	return skill_value / SKILL_GAUGE_DIVIDER;
-}
-
-float total_cross_to_bar_percent(int cross_value)
-{
-	if (cross_value == 0)
-		return 0.0f;
-
-	return (float)cross_value / (float)CROSS_GAUGE_MAX_VALUE;
-}
-
 bool show_char_unique_meter_num(const CharInfo& charData)
 {
 	//always show

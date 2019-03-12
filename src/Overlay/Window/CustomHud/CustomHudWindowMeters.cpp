@@ -1,5 +1,16 @@
 #include "CustomHudWindowMeters.h"
 
+#include "Core/interfaces.h"
+#include "Game/MeterInfo.h"
+
+const int SKILL_GAUGE_MAX_VALUE                    = 25000;
+const int SKILL_GAUGE_MAX_VALUE_WHILE_BLAZE_ACTIVE = 45000;
+const int CROSS_GAUGE_MAX_VALUE                    = 10000;
+const int BLAZE_GAUGE_LVL_TWO                      = 34000;
+const int BLAZE_GAUGE_LVL_THREE                    = 67000;
+const int BLAZE_GAUGE_LVL_MAX                      = 100000;
+const int SKILL_GAUGE_DIVIDER                      = 5000;
+
 const ImVec4 COLOR_CROSS_BAR_DEFAULT      (0.150f, 1.000f, 1.000f, 1.000f);
 const ImVec4 COLOR_SKILL_BAR_DEFAULT      (1.000f, 0.340f, 0.000f, 1.000f);
 const ImVec4 COLOR_SKILL_BAR_BLAZE_ACTIVE (0.450f, 1.000f, 1.000f, 1.000f);
@@ -14,12 +25,7 @@ void CustomHudWindowMeters::BeforeDraw()
 
 void CustomHudWindowMeters::Draw()
 {
-	//set colors
-	if (is_astral_available)
-	{
-		ImGui::PushStyleColor(ImGuiCol_Border, COLOR_ASTRAL_AVAILABLE);
-		ImGui::PushStyleColor(ImGuiCol_BorderShadow, COLOR_ASTRAL_AVAILABLE);
-	}
+	const bool isAstralColorOn = SetAstralAvailableColors();
 
 	ImVec4 colorCrossBar = COLOR_CROSS_BAR_DEFAULT;
 	ImVec4 colorSkillBar = COLOR_SKILL_BAR_DEFAULT;
@@ -39,61 +45,66 @@ void CustomHudWindowMeters::Draw()
 
 	if (m_isRightSide)
 	{
-		char blaze_lvl[8];
-		char skill_lvl[8];
-		sprintf(blaze_lvl, "Lv %d", blaze_to_single_digit(cur_blaze_val));
-		sprintf(skill_lvl, "%d", total_skill_to_single_digit(cur_skill_val));
-
-		///////////////// POSITIONING
-		ImGui::TextColored(COLOR_INVIS, blaze_lvl); //invis
-		ImGui::SameLine();
-
-		//push styles
-		ImGui::PushStyleColor(ImGuiCol_Border, COLOR_INVIS); //invis
-		ImGui::PushStyleColor(ImGuiCol_FrameBg, COLOR_INVIS); //invis
-
-		//invis box
-		ImGui::ColoredProgressBar(1.0f, m_skillBarSize, COLOR_INVIS, nullptr, false);
-
-		ImGui::PopStyleColor(2);
-
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() - ImGui::CalcTextSize(skill_lvl).x - (ImGui::GetStyle().ItemSpacing.x * 2));
-		//////////////////////////
-
-		/////////// SKILL BAR
-		ImGui::TextColored(colorSkillBar, skill_lvl);
-		ImGui::SameLine();
-		DrawSkillBar(total_skill_to_single_bar_percent(cur_skill_val, isBlazeActive), colorSkillBar);
-
-		////////// BLAZE VAL
-		ImGui::TextColored(blaze_val_color, blaze_lvl);
-		ImGui::SameLine();
-
-		DrawCrossBar(total_cross_to_bar_percent(cur_cross_val), colorCrossBar);
+		DrawAlignedToRight(colorSkillBar, colorCrossBar);
 	}
 	else
 	{
-		/////////// SKILL BAR
-		DrawSkillBar(total_skill_to_single_bar_percent(cur_skill_val, isBlazeActive), colorSkillBar);
-
-		ImGui::SameLine();
-		ImGui::TextColored(colorSkillBar, "%d", total_skill_to_single_digit(cur_skill_val));
-
-		////////// CROSS BAR
-		DrawCrossBar(total_cross_to_bar_percent(cur_cross_val), colorCrossBar);
-
-		////////// BLAZE VAL
-		ImGui::SameLine();
-		ImGui::TextColored(COLOR_BLAZE_VALUE, "Lv %d", blaze_to_single_digit(cur_blaze_val));
+		DrawAlignedToLeft(colorSkillBar, colorCrossBar);
 	}
 
-	if (is_astral_available)
+	if (isAstralColorOn)
+	{
 		ImGui::PopStyleColor(2);
+	}
 }
 
 void CustomHudWindowMeters::AfterDraw()
 {
+}
+
+void CustomHudWindowMeters::DrawAlignedToLeft(const ImVec4& colorSkillBar, const ImVec4& colorCrossBar) const
+{
+	DrawSkillBar(SkillValueToSingleBarPercent(), colorSkillBar);
+
+	ImGui::SameLine();
+	ImGui::TextColored(colorSkillBar, "%d", SkillValueToSingleDigit());
+
+	DrawCrossBar(CrossValueToBarPercent(), colorCrossBar);
+
+	ImGui::SameLine();
+	ImGui::TextColored(COLOR_BLAZE_VALUE, "Lv %d", BlazeValueToSingleDigit());
+}
+
+void CustomHudWindowMeters::DrawAlignedToRight(const ImVec4& colorSkillBar, const ImVec4& colorCrossBar) const
+{
+	std::string blazeLvl = "Lv ";
+	blazeLvl += std::to_string(BlazeValueToSingleDigit());
+
+	///////////////// Positioning with invisible text and bar
+	ImGui::TextColored(COLOR_INVIS, blazeLvl.c_str());
+	ImGui::SameLine();
+
+	ImGui::PushStyleColor(ImGuiCol_Border, COLOR_INVIS);
+	ImGui::PushStyleColor(ImGuiCol_FrameBg, COLOR_INVIS);
+
+	ImGui::ColoredProgressBar(1.0f, m_skillBarSize, COLOR_INVIS, nullptr, false);
+
+	ImGui::PopStyleColor(2);
+	ImGui::SameLine();
+	///////////////// Positioning End
+
+	std::string skillLvl = std::to_string(SkillValueToSingleDigit());
+	ImGui::SetCursorPosX(ImGui::GetCursorPosX()
+		- ImGui::CalcTextSize(skillLvl.c_str()).x - (ImGui::GetStyle().ItemSpacing.x * 2));
+
+	ImGui::TextColored(colorSkillBar, skillLvl.c_str());
+	ImGui::SameLine();
+	DrawSkillBar(SkillValueToSingleBarPercent(), colorSkillBar);
+
+	ImGui::TextColored(COLOR_BLAZE_VALUE, blazeLvl.c_str());
+	ImGui::SameLine();
+
+	DrawCrossBar(CrossValueToBarPercent(), colorCrossBar);
 }
 
 void CustomHudWindowMeters::CalculateCrossBarBlazeAvailableColor(ImVec4 & colorCrossBar) const
@@ -108,12 +119,113 @@ void CustomHudWindowMeters::CalculateCrossBarBlazeAvailableColor(ImVec4 & colorC
 	colorCrossBar.y = progressValue;
 }
 
-void CustomHudWindowMeters::DrawCrossBar(const float crossPercentage, const ImVec4 & color) const
+int CustomHudWindowMeters::BlazeValueToSingleDigit() const
+{
+	const int currentBlazeValue = m_meterData->cur_blaze;
+	int blazeDigit;
+
+	if (currentBlazeValue < BLAZE_GAUGE_LVL_TWO)
+	{
+		blazeDigit = 1;
+	}
+	else if (BLAZE_GAUGE_LVL_TWO <= currentBlazeValue && currentBlazeValue < BLAZE_GAUGE_LVL_THREE)
+	{
+		blazeDigit = 2;
+	}
+	else if (BLAZE_GAUGE_LVL_THREE <= currentBlazeValue && currentBlazeValue < BLAZE_GAUGE_LVL_MAX)
+	{
+		blazeDigit = 3;
+	}
+	else
+	{
+		// BLAZE_GAUGE_LVL_MAX
+		blazeDigit = 4;
+	}
+
+	return blazeDigit;
+}
+
+int CustomHudWindowMeters::SkillValueToSingleBar() const
+{
+	const int currentSkillValue = m_meterData->cur_skill;
+
+	const bool isLessThanABar = currentSkillValue < SKILL_GAUGE_DIVIDER;
+	const bool isBarFull = currentSkillValue == SKILL_GAUGE_MAX_VALUE
+		|| currentSkillValue == SKILL_GAUGE_MAX_VALUE_WHILE_BLAZE_ACTIVE;
+
+	if (isLessThanABar)
+	{
+		return currentSkillValue;
+	}
+	if (isBarFull)
+	{
+		return SKILL_GAUGE_DIVIDER;
+	}
+
+	return currentSkillValue % SKILL_GAUGE_DIVIDER;
+}
+
+float CustomHudWindowMeters::SkillValueToSingleBarPercent() const
+{
+	if (m_meterData->is_blaze_active)
+	{
+		return 1.0f;
+	}
+
+	return SkillValueToSingleBar() / (float)SKILL_GAUGE_DIVIDER;
+}
+
+int CustomHudWindowMeters::SkillValueToSingleDigit() const
+{
+	return m_meterData->cur_skill / (float)SKILL_GAUGE_DIVIDER;
+}
+
+float CustomHudWindowMeters::CrossValueToBarPercent() const
+{
+	return m_meterData->cur_cross / (float)CROSS_GAUGE_MAX_VALUE;
+}
+
+bool CustomHudWindowMeters::IsAstralAvailable(Player & opponentPlayer) const
+{
+	const int characterOneCurrentHp = opponentPlayer.GetChar1().GetData()->cur_hp;
+	const int characterTwoCurrentHp = opponentPlayer.GetChar2().GetData()->cur_hp;
+	const bool anyCharactersDead = characterOneCurrentHp <= 0 || characterTwoCurrentHp <= 0;
+	const int currentSkillValue = m_meterData->cur_skill;
+
+	if (SKILL_GAUGE_MAX_VALUE_WHILE_BLAZE_ACTIVE <= currentSkillValue && anyCharactersDead)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool CustomHudWindowMeters::SetAstralAvailableColors() const
+{
+	Player* opponentPlayer = &g_interfaces.player2;
+
+	if (m_isRightSide)
+	{
+		opponentPlayer = &g_interfaces.player1;
+	}
+
+	const bool isAstralAvailable = IsAstralAvailable(*opponentPlayer);
+
+	if (isAstralAvailable)
+	{
+		ImGui::PushStyleColor(ImGuiCol_Border, COLOR_ASTRAL_AVAILABLE);
+		ImGui::PushStyleColor(ImGuiCol_BorderShadow, COLOR_ASTRAL_AVAILABLE);
+	}
+
+	return isAstralAvailable;
+}
+
+void CustomHudWindowMeters::DrawCrossBar(float crossPercentage, const ImVec4 & color) const
 {
 	ImGui::ColoredProgressBar(crossPercentage, m_crossBarSize, color, nullptr, false, m_isRightSide);
 }
 
-void CustomHudWindowMeters::DrawSkillBar(const float skillPercentage, const ImVec4 & color) const
+void CustomHudWindowMeters::DrawSkillBar(float skillPercentage, const ImVec4 & color) const
 {
 	ImGui::ColoredProgressBar(skillPercentage, m_skillBarSize, color, nullptr, false, m_isRightSide);
 }
