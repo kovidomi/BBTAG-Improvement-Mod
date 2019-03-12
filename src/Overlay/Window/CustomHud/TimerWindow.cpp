@@ -1,8 +1,8 @@
-#include "CustomHudWindowTimer.h"
+#include "TimerWindow.h"
 
 #include "Core/interfaces.h"
 
-void CustomHudWindowTimer::Draw()
+void TimerWindow::Draw()
 {
 	if(!g_gameVals.pGameTimer)
 	{

@@ -4,14 +4,14 @@
 #include "Game/MeterInfo.h"
 #include "Game/Player.h"
 
-class CustomHudWindowMeters : public Window
+class MetersWindow : public Window
 {
 public:
-	CustomHudWindowMeters(const std::string& windowTitle, bool windowClosable,
+	MetersWindow(const std::string& windowTitle, bool windowClosable,
 		ImGuiWindowFlags windowFlags)
 		: Window(windowTitle, windowClosable, windowFlags) {}
 
-	~CustomHudWindowMeters() override = default;
+	~MetersWindow() override = default;
 	void SetMeterData(const MeterInfo& meterData) { m_meterData = &meterData; }
 	void SetScale(const ImVec2& scale)
 	{

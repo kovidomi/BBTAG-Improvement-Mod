@@ -1,4 +1,4 @@
-#include "CustomHudWindowHealth.h"
+#include "HealthWindow.h"
 
 #include "Game/characters.h"
 
@@ -7,7 +7,7 @@ const ImVec4 COLOR_HEALTH_BAR_INJURED     (0.100f, 1.000f, 0.000f, 1.000f);
 const ImVec4 COLOR_HEALTH_BAR_DANGER      (1.000f, 0.250f, 0.000f, 1.000f);
 const ImVec4 COLOR_HEALTH_BAR_RECOVERABLE (0.700f, 0.000f, 0.000f, 0.750f);
 
-void CustomHudWindowHealth::Draw()
+void HealthWindow::Draw()
 {
 	DrawHealthBarRecoverable();
 
@@ -26,7 +26,7 @@ void CustomHudWindowHealth::Draw()
 	ImGui::SetCursorPos(savedCursorPosition);
 }
 
-ImVec4 CustomHudWindowHealth::CalculateCurrentHealthBarColor(float currentHealthPercentage) const
+ImVec4 HealthWindow::CalculateCurrentHealthBarColor(float currentHealthPercentage) const
 {
 	ImVec4 healthColor;
 	if (currentHealthPercentage == 1.0f)
@@ -45,12 +45,12 @@ ImVec4 CustomHudWindowHealth::CalculateCurrentHealthBarColor(float currentHealth
 	return healthColor;
 }
 
-void CustomHudWindowHealth::DrawHealthBar(float healthPercentage, const ImVec4 & color) const
+void HealthWindow::DrawHealthBar(float healthPercentage, const ImVec4 & color) const
 {
 	ImGui::ColoredProgressBar(healthPercentage, m_healthBarSize, color, nullptr, false, m_isRightSide);
 }
 
-void CustomHudWindowHealth::DrawHealthBarRecoverable() const
+void HealthWindow::DrawHealthBarRecoverable() const
 {
 	const float recoverableHealthPercent =
 		(float)(m_pCharObj->recoverable_hp + m_pCharObj->cur_hp) / (float)m_pCharObj->max_hp;
@@ -58,21 +58,21 @@ void CustomHudWindowHealth::DrawHealthBarRecoverable() const
 	DrawHealthBar(recoverableHealthPercent, COLOR_HEALTH_BAR_RECOVERABLE);
 }
 
-void CustomHudWindowHealth::DrawHealthBarCurrent() const
+void HealthWindow::DrawHealthBarCurrent() const
 {
 	const float currentHealthPercent = (float)m_pCharObj->cur_hp / (float)m_pCharObj->max_hp;
 	const ImVec4 healthBarColor = CalculateCurrentHealthBarColor(currentHealthPercent);
 	DrawHealthBar(currentHealthPercent, healthBarColor);
 }
 
-void CustomHudWindowHealth::DrawCharacterName(const ImVec2& healthBarSize) const
+void HealthWindow::DrawCharacterName(const ImVec2& healthBarSize) const
 {
 	const char* charname = GetCharacterName();
 	SetCursorPosForCharacterName(charname, healthBarSize);
 	ImGui::Text("%s", charname);
 }
 
-const char * CustomHudWindowHealth::GetCharacterName() const
+const char * HealthWindow::GetCharacterName() const
 {
 	const char* charname;
 	const int charIndex = m_pCharObj->char_index;
@@ -89,7 +89,7 @@ const char * CustomHudWindowHealth::GetCharacterName() const
 	return charname;
 }
 
-void CustomHudWindowHealth::SetCursorPosForCharacterName(const char * charname, const ImVec2& healthBarSize) const
+void HealthWindow::SetCursorPosForCharacterName(const char * charname, const ImVec2& healthBarSize) const
 {
 	const ImVec2 nameSize = ImGui::CalcTextSize(charname);
 	ImVec2 newPos { 

@@ -1,4 +1,4 @@
-#include "CustomHudWindowMeters.h"
+#include "MetersWindow.h"
 
 #include "Core/interfaces.h"
 #include "Game/MeterInfo.h"
@@ -19,11 +19,11 @@ const ImVec4 COLOR_BLAZE_VALUE            (1.000f, 0.400f, 1.000f, 1.000f);
 const ImVec4 COLOR_ASTRAL_AVAILABLE       (1.000f, 0.949f, 0.000f, 1.000f);
 const ImVec4 COLOR_INVIS                  (0.000f, 0.000f, 0.000f, 0.000f);
 
-void CustomHudWindowMeters::BeforeDraw()
+void MetersWindow::BeforeDraw()
 {
 }
 
-void CustomHudWindowMeters::Draw()
+void MetersWindow::Draw()
 {
 	const bool isAstralColorOn = SetAstralAvailableColors();
 
@@ -58,11 +58,11 @@ void CustomHudWindowMeters::Draw()
 	}
 }
 
-void CustomHudWindowMeters::AfterDraw()
+void MetersWindow::AfterDraw()
 {
 }
 
-void CustomHudWindowMeters::DrawAlignedToLeft(const ImVec4& colorSkillBar, const ImVec4& colorCrossBar) const
+void MetersWindow::DrawAlignedToLeft(const ImVec4& colorSkillBar, const ImVec4& colorCrossBar) const
 {
 	DrawSkillBar(SkillValueToSingleBarPercent(), colorSkillBar);
 
@@ -75,7 +75,7 @@ void CustomHudWindowMeters::DrawAlignedToLeft(const ImVec4& colorSkillBar, const
 	ImGui::TextColored(COLOR_BLAZE_VALUE, "Lv %d", BlazeValueToSingleDigit());
 }
 
-void CustomHudWindowMeters::DrawAlignedToRight(const ImVec4& colorSkillBar, const ImVec4& colorCrossBar) const
+void MetersWindow::DrawAlignedToRight(const ImVec4& colorSkillBar, const ImVec4& colorCrossBar) const
 {
 	std::string blazeLvl = "Lv ";
 	blazeLvl += std::to_string(BlazeValueToSingleDigit());
@@ -107,7 +107,7 @@ void CustomHudWindowMeters::DrawAlignedToRight(const ImVec4& colorSkillBar, cons
 	DrawCrossBar(CrossValueToBarPercent(), colorCrossBar);
 }
 
-void CustomHudWindowMeters::CalculateCrossBarBlazeAvailableColor(ImVec4 & colorCrossBar) const
+void MetersWindow::CalculateCrossBarBlazeAvailableColor(ImVec4 & colorCrossBar) const
 {
 	static float progressValue = 0.0f;
 	static float progressDirection = 1.0f;
@@ -119,7 +119,7 @@ void CustomHudWindowMeters::CalculateCrossBarBlazeAvailableColor(ImVec4 & colorC
 	colorCrossBar.y = progressValue;
 }
 
-int CustomHudWindowMeters::BlazeValueToSingleDigit() const
+int MetersWindow::BlazeValueToSingleDigit() const
 {
 	const int currentBlazeValue = m_meterData->cur_blaze;
 	int blazeDigit;
@@ -145,7 +145,7 @@ int CustomHudWindowMeters::BlazeValueToSingleDigit() const
 	return blazeDigit;
 }
 
-int CustomHudWindowMeters::SkillValueToSingleBar() const
+int MetersWindow::SkillValueToSingleBar() const
 {
 	const int currentSkillValue = m_meterData->cur_skill;
 
@@ -165,7 +165,7 @@ int CustomHudWindowMeters::SkillValueToSingleBar() const
 	return currentSkillValue % SKILL_GAUGE_DIVIDER;
 }
 
-float CustomHudWindowMeters::SkillValueToSingleBarPercent() const
+float MetersWindow::SkillValueToSingleBarPercent() const
 {
 	if (m_meterData->is_blaze_active)
 	{
@@ -175,17 +175,17 @@ float CustomHudWindowMeters::SkillValueToSingleBarPercent() const
 	return SkillValueToSingleBar() / (float)SKILL_GAUGE_DIVIDER;
 }
 
-int CustomHudWindowMeters::SkillValueToSingleDigit() const
+int MetersWindow::SkillValueToSingleDigit() const
 {
 	return m_meterData->cur_skill / (float)SKILL_GAUGE_DIVIDER;
 }
 
-float CustomHudWindowMeters::CrossValueToBarPercent() const
+float MetersWindow::CrossValueToBarPercent() const
 {
 	return m_meterData->cur_cross / (float)CROSS_GAUGE_MAX_VALUE;
 }
 
-bool CustomHudWindowMeters::IsAstralAvailable(Player & opponentPlayer) const
+bool MetersWindow::IsAstralAvailable(Player & opponentPlayer) const
 {
 	const int characterOneCurrentHp = opponentPlayer.GetChar1().GetData()->cur_hp;
 	const int characterTwoCurrentHp = opponentPlayer.GetChar2().GetData()->cur_hp;
@@ -200,7 +200,7 @@ bool CustomHudWindowMeters::IsAstralAvailable(Player & opponentPlayer) const
 	return false;
 }
 
-bool CustomHudWindowMeters::SetAstralAvailableColors() const
+bool MetersWindow::SetAstralAvailableColors() const
 {
 	Player* opponentPlayer = &g_interfaces.player2;
 
@@ -220,12 +220,12 @@ bool CustomHudWindowMeters::SetAstralAvailableColors() const
 	return isAstralAvailable;
 }
 
-void CustomHudWindowMeters::DrawCrossBar(float crossPercentage, const ImVec4 & color) const
+void MetersWindow::DrawCrossBar(float crossPercentage, const ImVec4 & color) const
 {
 	ImGui::ColoredProgressBar(crossPercentage, m_crossBarSize, color, nullptr, false, m_isRightSide);
 }
 
-void CustomHudWindowMeters::DrawSkillBar(float skillPercentage, const ImVec4 & color) const
+void MetersWindow::DrawSkillBar(float skillPercentage, const ImVec4 & color) const
 {
 	ImGui::ColoredProgressBar(skillPercentage, m_skillBarSize, color, nullptr, false, m_isRightSide);
 }

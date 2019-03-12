@@ -39,7 +39,7 @@ void CustomHudWindow::UpdateHealthWindow(bool isPlayerTwo)
 {
 	const CharInfo* characterTop = g_interfaces.player1.GetChar1().GetData();
 	const CharInfo* characterBottom = g_interfaces.player1.GetChar2().GetData();
-	CustomHudWindowHealth* healthWindow = &m_healthWindowLeft;
+	HealthWindow* healthWindow = &m_healthWindowLeft;
 
 	if (isPlayerTwo)
 	{

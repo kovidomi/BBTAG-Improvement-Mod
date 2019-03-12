@@ -1,8 +1,8 @@
 #pragma once
-#include "CustomHudWindowHealth.h"
-#include "CustomHudWindowTimer.h"
 #include "Overlay/Window/Window.h"
-#include "CustomHudWindowMeters.h"
+#include "HealthWindow.h"
+#include "MetersWindow.h"
+#include "TimerWindow.h"
 
 class CustomHudWindow : public Window
 {
@@ -29,9 +29,9 @@ private:
 
 	ImGuiWindowFlags m_windowFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar;
 
-	CustomHudWindowTimer m_timerWindow = CustomHudWindowTimer("TimerWindow", false, 0);
-	CustomHudWindowHealth m_healthWindowLeft = CustomHudWindowHealth("PlayerOneHealthWindow", false, 0);
-	CustomHudWindowHealth m_healthWindowRight = CustomHudWindowHealth("PlayerTwoHealthWindow", false, 0);
-	CustomHudWindowMeters m_metersWindowLeft = CustomHudWindowMeters("PlayerOneMetersWindow", false, 0);
-	CustomHudWindowMeters m_metersWindowRight = CustomHudWindowMeters("PlayerTwoMetersWindow", false, 0);
+	TimerWindow m_timerWindow = TimerWindow("TimerWindow", false, 0);
+	HealthWindow m_healthWindowLeft = HealthWindow("PlayerOneHealthWindow", false, 0);
+	HealthWindow m_healthWindowRight = HealthWindow("PlayerTwoHealthWindow", false, 0);
+	MetersWindow m_metersWindowLeft = MetersWindow("PlayerOneMetersWindow", false, 0);
+	MetersWindow m_metersWindowRight = MetersWindow("PlayerTwoMetersWindow", false, 0);
 };
