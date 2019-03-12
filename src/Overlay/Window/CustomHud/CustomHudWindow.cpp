@@ -3,6 +3,22 @@
 #include "Core/interfaces.h"
 #include "Core/logger.h"
 
+CustomHudWindow::CustomHudWindow(const std::string & windowTitle, bool windowClosable, ImGuiWindowFlags windowFlags)
+	:Window(windowTitle, windowClosable, windowFlags)
+{
+	m_healthWindowRight.SetRightSide(true);
+	m_metersWindowRight.SetRightSide(true);
+
+	m_metersWindowLeft.SetMeterData(g_interfaces.player1.GetMeters());
+	m_metersWindowRight.SetMeterData(g_interfaces.player2.GetMeters());
+
+	m_timerWindow.Open();
+	m_healthWindowLeft.Open();
+	m_healthWindowRight.Open();
+	m_metersWindowLeft.Open();
+	m_metersWindowRight.Open();
+}
+
 void CustomHudWindow::SetScale(const ImVec2 & scale)
 {
 	m_healthWindowLeft.SetScale(scale);

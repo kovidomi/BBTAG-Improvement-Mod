@@ -9,23 +9,7 @@
 class CustomHudWindow : public Window
 {
 public:
-	CustomHudWindow(const std::string& windowTitle, bool windowClosable,
-		ImGuiWindowFlags windowFlags)
-		: Window(windowTitle, windowClosable, windowFlags)
-	{
-		m_healthWindowRight.SetRightSide(true);
-		m_metersWindowRight.SetRightSide(true);
-
-		m_metersWindowLeft.SetMeterData(g_interfaces.player1.GetMeters());
-		m_metersWindowRight.SetMeterData(g_interfaces.player2.GetMeters());
-
-		m_timerWindow.Open();
-		m_healthWindowLeft.Open();
-		m_healthWindowRight.Open();
-		m_metersWindowLeft.Open();
-		m_metersWindowRight.Open();
-	}
-
+	CustomHudWindow(const std::string& windowTitle, bool windowClosable, ImGuiWindowFlags windowFlags);
 	~CustomHudWindow() override = default;
 	void SetScale(const ImVec2& scale);
 	void SetWindowsMovable(bool isMainWindowVisible);
