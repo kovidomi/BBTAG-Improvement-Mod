@@ -26,11 +26,6 @@ WindowManager::WindowManager()
 
 void WindowManager::DrawAllWindows()
 {
-	if (Settings::settingsIni.forcecustomhud)
-	{
-		GetWindow(WindowType_CustomHud)->Open();
-	}
-
 	WindowDrawer::DrawAllWindows(this);
 }
 

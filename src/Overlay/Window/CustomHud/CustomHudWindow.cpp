@@ -2,6 +2,7 @@
 
 #include "Core/interfaces.h"
 #include "Core/logger.h"
+#include "Overlay/WindowManager.h"
 
 void CustomHudWindow::SetScale(const ImVec2 & scale)
 {
@@ -25,13 +26,21 @@ void CustomHudWindow::SetWindowsMovable(bool isMainWindowVisible)
 	}
 }
 
-void CustomHudWindow::BeforeDraw()
+void CustomHudWindow::Update()
 {
 	if (HasNullPointerInData())
 	{
 		return;
 	}
 
+	if (m_windowOpen || Settings::settingsIni.forcecustomhud)
+	{
+		Draw();
+	}
+}
+
+void CustomHudWindow::Draw()
+{
 	m_timerWindow.Update();
 
 	UpdateHealthWindow(false);
