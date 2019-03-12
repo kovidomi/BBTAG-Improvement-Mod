@@ -10,8 +10,8 @@ public:
 		ImGuiWindowFlags windowFlags)
 		: Window(windowTitle, windowClosable, windowFlags)
 	{
-		m_healthWindowLeft.SetSide(PlayerSide_OneLeft);
-		m_healthWindowRight.SetSide(PlayerSide_TwoRight);
+		m_healthWindowLeft.SetSide(PlayerSide_Left);
+		m_healthWindowRight.SetSide(PlayerSide_Right);
 	}
 
 	~CustomHudWindow() override = default;
