@@ -24,6 +24,7 @@ protected:
 	void Draw() override {}
 
 private:
+	bool HasNullPointerInData() const;
 	void UpdateHealthWindow(bool isPlayerTwo);
 	void SwapHealthBars(const CharInfo* characterActive, const CharInfo* characterInactive) const;
 

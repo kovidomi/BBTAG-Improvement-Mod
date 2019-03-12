@@ -1,6 +1,7 @@
 #include "CustomHudWindow.h"
 
 #include "Core/interfaces.h"
+#include "Core/logger.h"
 
 void CustomHudWindow::SetScale(const ImVec2 & scale)
 {
@@ -26,6 +27,11 @@ void CustomHudWindow::SetWindowsMovable(bool isMainWindowVisible)
 
 void CustomHudWindow::BeforeDraw()
 {
+	if (HasNullPointerInData())
+	{
+		return;
+	}
+
 	m_timerWindow.Update();
 
 	UpdateHealthWindow(false);
@@ -33,6 +39,27 @@ void CustomHudWindow::BeforeDraw()
 
 	m_metersWindowLeft.Update();
 	m_metersWindowRight.Update();
+}
+
+bool CustomHudWindow::HasNullPointerInData() const
+{
+	if (g_interfaces.player1.GetChar1().IsCharDataNullPtr()
+		|| g_interfaces.player1.GetChar2().IsCharDataNullPtr()
+		|| g_interfaces.player2.GetChar1().IsCharDataNullPtr()
+		|| g_interfaces.player2.GetChar2().IsCharDataNullPtr())
+	{
+		LOG(2, "One of Player.Char() is NULL !!!!!\n");
+		return true;
+	}
+
+	if (g_interfaces.player1.IsMetersNullPtr()
+		|| g_interfaces.player2.IsMetersNullPtr())
+	{
+		LOG(2, "One of Player.Meter() is NULL !!!!\n");
+		return true;
+	}
+
+	return false;
 }
 
 void CustomHudWindow::UpdateHealthWindow(bool isPlayerTwo)
