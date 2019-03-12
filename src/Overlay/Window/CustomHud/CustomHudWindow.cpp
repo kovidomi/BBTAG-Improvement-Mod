@@ -60,8 +60,7 @@ bool CustomHudWindow::HasNullPointerInData() const
 		return true;
 	}
 
-	if (g_interfaces.player1.IsMetersNullPtr()
-		|| g_interfaces.player2.IsMetersNullPtr())
+	if (m_metersWindowLeft.IsMeterDataNull() || m_metersWindowRight.IsMeterDataNull())
 	{
 		LOG(2, "One of Player.Meter() is NULL !!!!\n");
 		return true;

@@ -4,6 +4,8 @@
 #include "MetersWindow.h"
 #include "TimerWindow.h"
 
+#include "Core/interfaces.h"
+
 class CustomHudWindow : public Window
 {
 public:
@@ -13,6 +15,9 @@ public:
 	{
 		m_healthWindowRight.SetRightSide(true);
 		m_metersWindowRight.SetRightSide(true);
+
+		m_metersWindowLeft.SetMeterData(g_interfaces.player1.GetMeters());
+		m_metersWindowRight.SetMeterData(g_interfaces.player2.GetMeters());
 
 		m_timerWindow.Open();
 		m_healthWindowLeft.Open();
