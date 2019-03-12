@@ -24,7 +24,7 @@ protected:
 	void Draw() override;
 private:
 	ImVec4 CalculateCurrentHealthBarColor(float currentHealthPercentage) const;
-	void DrawHealthBar(const float healthPercentage, const ImVec4& color) const;
+	void DrawHealthBar(float healthPercentage, const ImVec4& color) const;
 	void DrawHealthBarRecoverable() const;
 	void DrawHealthBarCurrent() const;
 	void DrawCharacterName(const ImVec2& healthBarSize) const;

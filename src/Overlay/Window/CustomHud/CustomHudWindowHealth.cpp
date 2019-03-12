@@ -45,18 +45,16 @@ ImVec4 CustomHudWindowHealth::CalculateCurrentHealthBarColor(float currentHealth
 	return healthColor;
 }
 
-void CustomHudWindowHealth::DrawHealthBar(const float healthPercentage, const ImVec4 & color) const
+void CustomHudWindowHealth::DrawHealthBar(float healthPercentage, const ImVec4 & color) const
 {
 	ImGui::ColoredProgressBar(healthPercentage, m_healthBarSize, color, nullptr, false, m_isRightSide);
 }
 
 void CustomHudWindowHealth::DrawHealthBarRecoverable() const
 {
-	float recoverableHealthPercent = 0.0f;
-	if (0 < m_pCharObj->recoverable_hp)
-	{
-		recoverableHealthPercent = (float)(m_pCharObj->recoverable_hp + m_pCharObj->cur_hp) / (float)m_pCharObj->max_hp;
-	}
+	const float recoverableHealthPercent =
+		(float)(m_pCharObj->recoverable_hp + m_pCharObj->cur_hp) / (float)m_pCharObj->max_hp;
+
 	DrawHealthBar(recoverableHealthPercent, COLOR_HEALTH_BAR_RECOVERABLE);
 }
 
