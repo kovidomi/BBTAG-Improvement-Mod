@@ -373,11 +373,11 @@ void OverlayManager::HandleButtons()
 
 	if (ImGui::IsKeyPressed(toggleCustomHUD_key))
 	{
-		// show_custom_hud ^= 1;
+		m_windowManager->GetWindow(WindowType_CustomHud)->ToggleOpen();
 	}
 
 	if (ImGui::IsKeyPressed(toggle_key))
 	{
-		m_windowManager->GetWindow<MainWindow>(WindowType_Main)->ToggleOpen();
+		m_windowManager->GetWindow(WindowType_Main)->ToggleOpen();
 	}
 }
