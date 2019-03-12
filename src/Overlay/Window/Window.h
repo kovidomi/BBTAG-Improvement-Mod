@@ -16,7 +16,7 @@ public:
 		m_windowFlags(windowFlags) {}
 
 	virtual ~Window() = default;
-	void Update();
+	virtual void Update();
 	void Open();
 	void Close();
 	void ToggleOpen();
