@@ -20,9 +20,7 @@ public:
 	}
 	void SetRightSide(bool isRightSide) { m_isRightSide = isRightSide; }
 protected:
-	void BeforeDraw() override;
 	void Draw() override;
-	void AfterDraw() override;
 private:
 	void  DrawAlignedToLeft(const ImVec4& colorSkillBar, const ImVec4& colorCrossBar) const;
 	void  DrawAlignedToRight(const ImVec4& colorSkillBar, const ImVec4& colorCrossBar) const;

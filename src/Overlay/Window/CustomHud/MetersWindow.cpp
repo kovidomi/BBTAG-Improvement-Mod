@@ -19,10 +19,6 @@ const ImVec4 COLOR_BLAZE_VALUE            (1.000f, 0.400f, 1.000f, 1.000f);
 const ImVec4 COLOR_ASTRAL_AVAILABLE       (1.000f, 0.949f, 0.000f, 1.000f);
 const ImVec4 COLOR_INVIS                  (0.000f, 0.000f, 0.000f, 0.000f);
 
-void MetersWindow::BeforeDraw()
-{
-}
-
 void MetersWindow::Draw()
 {
 	const bool isAstralColorOn = SetAstralAvailableColors();
@@ -56,10 +52,6 @@ void MetersWindow::Draw()
 	{
 		ImGui::PopStyleColor(2);
 	}
-}
-
-void MetersWindow::AfterDraw()
-{
 }
 
 void MetersWindow::DrawAlignedToLeft(const ImVec4& colorSkillBar, const ImVec4& colorCrossBar) const
