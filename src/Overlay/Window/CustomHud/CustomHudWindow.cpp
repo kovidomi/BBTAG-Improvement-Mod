@@ -2,7 +2,6 @@
 
 #include "Core/interfaces.h"
 #include "Core/logger.h"
-#include "Overlay/WindowManager.h"
 
 void CustomHudWindow::SetScale(const ImVec2 & scale)
 {

@@ -13,6 +13,12 @@ public:
 	{
 		m_healthWindowRight.SetRightSide(true);
 		m_metersWindowRight.SetRightSide(true);
+
+		m_timerWindow.Open();
+		m_healthWindowLeft.Open();
+		m_healthWindowRight.Open();
+		m_metersWindowLeft.Open();
+		m_metersWindowRight.Open();
 	}
 
 	~CustomHudWindow() override = default;
