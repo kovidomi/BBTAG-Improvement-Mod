@@ -2,6 +2,7 @@
 #include "CustomHudWindowHealth.h"
 #include "CustomHudWindowTimer.h"
 #include "Overlay/Window/Window.h"
+#include "CustomHudWindowMeters.h"
 
 class CustomHudWindow : public Window
 {
@@ -10,8 +11,8 @@ public:
 		ImGuiWindowFlags windowFlags)
 		: Window(windowTitle, windowClosable, windowFlags)
 	{
-		m_healthWindowLeft.SetSide(PlayerSide_Left);
-		m_healthWindowRight.SetSide(PlayerSide_Right);
+		m_healthWindowRight.SetRightSide(true);
+		m_metersWindowRight.SetRightSide(true);
 	}
 
 	~CustomHudWindow() override = default;
@@ -23,9 +24,14 @@ protected:
 	void Draw() override {}
 
 private:
+	void UpdateHealthWindow(bool isPlayerTwo);
+	void SwapHealthBars(const CharInfo* characterActive, const CharInfo* characterInactive) const;
+
 	ImGuiWindowFlags m_windowFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar;
 
 	CustomHudWindowTimer m_timerWindow = CustomHudWindowTimer("TimerWindow", false, 0);
 	CustomHudWindowHealth m_healthWindowLeft = CustomHudWindowHealth("PlayerOneHealthWindow", false, 0);
 	CustomHudWindowHealth m_healthWindowRight = CustomHudWindowHealth("PlayerTwoHealthWindow", false, 0);
+	CustomHudWindowMeters m_metersWindowLeft = CustomHudWindowMeters("PlayerOneMetersWindow", false, 0);
+	CustomHudWindowMeters m_metersWindowRight = CustomHudWindowMeters("PlayerTwoMetersWindow", false, 0);
 };
