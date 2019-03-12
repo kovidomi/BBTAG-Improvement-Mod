@@ -202,12 +202,8 @@ bool MetersWindow::IsAstralAvailable(Player & opponentPlayer) const
 
 bool MetersWindow::SetAstralAvailableColors() const
 {
-	Player* opponentPlayer = &g_interfaces.player2;
-
-	if (m_isRightSide)
-	{
-		opponentPlayer = &g_interfaces.player1;
-	}
+	Player* opponentPlayer =
+		m_isRightSide ? &g_interfaces.player2 : &g_interfaces.player1;
 
 	const bool isAstralAvailable = IsAstralAvailable(*opponentPlayer);
 
