@@ -5,21 +5,21 @@
 #include "Game/MeterInfo.h"
 
 ImGuiWindowFlags customHUDWindowFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar;
-const ImVec4 default_cross_bar_color(0.15f, 1.0f, 1.0f, 1.0f);
-const ImVec4 default_skill_bar_color(1.0f, 0.34f, 0.0f, 1.0f);
-const ImVec4 skill_bar_color_blaze_active(0.45f, 1.0f, 1.0f, 1.0f);
-const ImVec4 cross_bar_color_blaze_active(0.0f, 0.4f, 1.0f, 1.0f);
-ImVec4 skill_bar_color(1.0f, 0.34f, 0.0f, 1.0f);
-ImVec4 cross_bar_color(0.15f, 1.0f, 1.0f, 1.0f);
-const ImVec4 blaze_val_color(1.0f, 0.4f, 1.0f, 1.0f);
-const ImVec4 astral_available_color(1.000f, 0.949f, 0.000f, 1.000f);
+//const ImVec4 default_cross_bar_color(0.15f, 1.0f, 1.0f, 1.0f);
+//const ImVec4 default_skill_bar_color(1.0f, 0.34f, 0.0f, 1.0f);
+//const ImVec4 skill_bar_color_blaze_active(0.45f, 1.0f, 1.0f, 1.0f);
+//const ImVec4 cross_bar_color_blaze_active(0.0f, 0.4f, 1.0f, 1.0f);
+//ImVec4 skill_bar_color(1.0f, 0.34f, 0.0f, 1.0f);
+//ImVec4 cross_bar_color(0.15f, 1.0f, 1.0f, 1.0f);
+//const ImVec4 blaze_val_color(1.0f, 0.4f, 1.0f, 1.0f);
+//const ImVec4 astral_available_color(1.000f, 0.949f, 0.000f, 1.000f);
 const ImVec4 invis_color(0.0f, 0.0f, 0.0f, 0.0f);
 
-void CustomHud::SetScale(float hudScaleX, float hudScaleY)
-{
-	this->hud_scale_x = hudScaleX;
-	this->hud_scale_y = hudScaleY;
-}
+//void CustomHud::SetScale(float hudScaleX, float hudScaleY)
+//{
+//	this->hud_scale_x = hudScaleX;
+//	this->hud_scale_y = hudScaleY;
+//}
 
 void CustomHud::OnUpdate(bool show_custom_hud, bool show_main_window)
 {

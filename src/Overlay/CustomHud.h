@@ -6,7 +6,7 @@
 class CustomHud
 {
 public:
-	void SetScale(float hud_scale_x, float hud_scale_y);
+	//void SetScale(float hud_scale_x, float hud_scale_y);
 	void OnUpdate(bool show_custom_hud, bool show_main_window);
 	void ShowResetPositionsButton(ImVec2 middlescreen);
 private:
