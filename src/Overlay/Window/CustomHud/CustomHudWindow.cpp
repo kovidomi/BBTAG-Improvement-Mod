@@ -37,16 +37,14 @@ void CustomHudWindow::BeforeDraw()
 
 void CustomHudWindow::UpdateHealthWindow(bool isPlayerTwo)
 {
-	const CharInfo* characterTop = g_interfaces.player1.GetChar1().GetData();
-	const CharInfo* characterBottom = g_interfaces.player1.GetChar2().GetData();
-	HealthWindow* healthWindow = &m_healthWindowLeft;
+	const CharInfo* characterTop =
+		isPlayerTwo ? g_interfaces.player2.GetChar1().GetData() : g_interfaces.player1.GetChar1().GetData();
 
-	if (isPlayerTwo)
-	{
-		characterTop = g_interfaces.player2.GetChar1().GetData();
-		characterBottom = g_interfaces.player2.GetChar2().GetData();
-		healthWindow = &m_healthWindowRight;
-	}
+	const CharInfo* characterBottom =
+		isPlayerTwo ? g_interfaces.player2.GetChar2().GetData() : g_interfaces.player1.GetChar2().GetData();
+
+	HealthWindow* healthWindow =
+		isPlayerTwo ? &m_healthWindowRight : &m_healthWindowLeft;
 
 	if (characterBottom->is_char_active)
 	{
