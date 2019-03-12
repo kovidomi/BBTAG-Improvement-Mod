@@ -1,5 +1,4 @@
 #pragma once
-#include "CustomHud.h"
 #include "WindowDrawer.h"
 #include "WindowContainer.h"
 
@@ -23,6 +22,5 @@ public:
 protected:
 	void FillWindowContainer() override;
 private:
-	CustomHud m_customHud = CustomHud();
-	bool m_showCustomHud = false;
+	ImVec2 m_scale;
 };

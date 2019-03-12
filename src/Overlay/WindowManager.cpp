@@ -10,36 +10,35 @@
 #include "Core/info.h"
 #include "Core/logger.h"
 #include "Core/Settings.h"
+#include "Window/CustomHud/CustomHudWindow.h"
 
 WindowManager::WindowManager()
 {
-	InitWindowContainer();
-	//m_middleScreen = ImVec2((float)Settings::settingsIni.renderwidth / 2, (float)Settings::settingsIni.renderheight / 2);
-
 	//dividing by 1904x1042 because the custom HUD was designed on that resolution
-	float hudScaleX = ((float)Settings::settingsIni.renderwidth * Settings::settingsIni.customhudscale) / 1904.0f;
-	float hudScaleY = ((float)Settings::settingsIni.renderheight * Settings::settingsIni.customhudscale) / 1042.0f;
-	LOG(2, "hud_scale_x: %f\n", hudScaleX);
-	LOG(2, "hud_scale_y: %f\n", hudScaleY);
-	m_customHud.SetScale(hudScaleX, hudScaleY);
-	m_showCustomHud = Settings::settingsIni.forcecustomhud;
+	m_scale = ImVec2(
+		(Settings::settingsIni.renderwidth * Settings::settingsIni.customhudscale) / 1904.0f,
+		(Settings::settingsIni.renderheight * Settings::settingsIni.customhudscale) / 1042.0f
+	);
+	LOG(2, "Overlay scale: x: %.2f y: %.2f\n", m_scale.x, m_scale.y);
+
+	InitWindowContainer();
 }
 
 void WindowManager::DrawAllWindows()
 {
-	WindowDrawer::DrawAllWindows(this);
-
-	if (m_showCustomHud)
+	if (Settings::settingsIni.forcecustomhud)
 	{
-		m_customHud.OnUpdate(m_showCustomHud, GetWindow(WindowType_Main)->IsOpen());
+		GetWindow(WindowType_CustomHud)->Open();
 	}
+
+	WindowDrawer::DrawAllWindows(this);
 }
 
 void WindowManager::FillWindowContainer()
 {
-	MainWindow* mainWindow = new MainWindow(MOD_WINDOW_TITLE, false, ImGuiWindowFlags_AlwaysAutoResize);
-	mainWindow->SetWindowContainer(*this);
-	AddWindow(WindowType_Main, mainWindow);
+	MainWindow* pMainWindow = new MainWindow(MOD_WINDOW_TITLE, false, ImGuiWindowFlags_AlwaysAutoResize);
+	pMainWindow->SetWindowContainer(*this);
+	AddWindow(WindowType_Main, pMainWindow);
 
 	AddWindow(WindowType_Debug,
 		new DebugWindow("DEBUG", true));
@@ -59,5 +58,9 @@ void WindowManager::FillWindowContainer()
 	AddWindow(WindowType_PaletteEditor,
 		new PaletteEditorWindow("Palette Editor", true));
 
-	//m_windows[WindowType_CustomHud] = &m_customHud;
+	CustomHudWindow* pCustomHud = new CustomHudWindow("Custom Hud", false, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar);
+	pCustomHud->SetScale(m_scale);
+	// TODO: Add a button or something for this:
+	pCustomHud->SetWindowsMovable(true);
+	AddWindow(WindowType_CustomHud, pCustomHud);
 }
