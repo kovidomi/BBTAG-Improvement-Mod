@@ -9,13 +9,7 @@ void Window::Update()
 
 	BeforeDraw();
 
-	bool* pWindowOpen = nullptr;
-	if (m_windowClosable)
-	{
-		pWindowOpen = &m_windowOpen;
-	}
-
-	ImGui::Begin(m_windowTitle.c_str(), pWindowOpen, m_windowFlags);
+	ImGui::Begin(m_windowTitle.c_str(), GetWindowOpenPointer(), m_windowFlags);
 	Draw();
 	ImGui::End();
 
@@ -40,4 +34,14 @@ void Window::ToggleOpen()
 bool Window::IsOpen() const
 {
 	return m_windowOpen;
+}
+
+bool * Window::GetWindowOpenPointer()
+{
+	if (m_windowClosable)
+	{
+		return &m_windowOpen;
+	}
+
+	return nullptr;
 }
