@@ -77,7 +77,10 @@ void MainWindow::Draw()
 		}
 
 		ImGui::Text(" "); ImGui::SameLine();
-		//ImGui::Checkbox("Show Custom HUD", &m_showCustomHud);
+		if (ImGui::Button("Toggle Custom HUD"))
+		{
+			m_pWindowContainer->GetWindow(WindowType_CustomHud)->ToggleOpen();
+		}
 
 		ImGui::Text(" "); ImGui::SameLine();
 		//m_customHud.ShowResetPositionsButton(m_middleScreen);
