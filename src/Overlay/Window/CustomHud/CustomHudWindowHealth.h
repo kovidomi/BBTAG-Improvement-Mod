@@ -3,12 +3,6 @@
 
 #include "Game/CharInfo.h"
 
-enum PlayerSide_
-{
-	PlayerSide_Left,
-	PlayerSide_Right
-};
-
 class CustomHudWindowHealth : public Window
 {
 public:
@@ -18,8 +12,8 @@ public:
 
 	~CustomHudWindowHealth() override = default;
 	void SetCharObj(const CharInfo& charObj) { m_pCharObj = &charObj; }
-	void SetSide(PlayerSide_ side) { side == PlayerSide_Right ? m_isRightSide = true : m_isRightSide = false; }
 	void SetScale(const ImVec2& scale) { m_healthBarSize = ImVec2(635.0f * scale.x, 45.0f * scale.y); }
+	void SetRightSide(bool isRightSide) { m_isRightSide = isRightSide; }
 protected:
 	void Draw() override;
 private:

@@ -18,6 +18,7 @@ public:
 		m_skillBarSize = ImVec2(200.0f * scale.x, 35.0f * scale.y);
 		m_crossBarSize = ImVec2(400.0f * scale.x, 40.0f * scale.y);
 	}
+	void SetRightSide(bool isRightSide) { m_isRightSide = isRightSide; }
 protected:
 	void BeforeDraw() override;
 	void Draw() override;
