@@ -20,7 +20,7 @@ protected:
 private:
 	bool HasNullPointerInData() const;
 	void UpdateHealthWindow(bool isPlayerTwo);
-	void SwapHealthBars(const CharInfo* characterActive, const CharInfo* characterInactive) const;
+	void SwapHealthBars(const CharInfo** characterActive, const CharInfo** characterInactive) const;
 
 	TimerWindow m_timerWindow = TimerWindow("TimerWindow", false, m_windowFlags);
 	HealthWindow m_healthWindowLeft = HealthWindow("PlayerOneHealthWindow", false, m_windowFlags);

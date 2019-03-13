@@ -99,7 +99,7 @@ void CustomHudWindow::UpdateHealthWindow(bool isPlayerTwo)
 
 	if (characterBottom->is_char_active)
 	{
-		SwapHealthBars(characterTop, characterBottom);
+		SwapHealthBars(&characterTop, &characterBottom);
 	}
 
 	healthWindow->SetCharObj(*characterTop);
@@ -108,9 +108,9 @@ void CustomHudWindow::UpdateHealthWindow(bool isPlayerTwo)
 	healthWindow->Update();
 }
 
-void CustomHudWindow::SwapHealthBars(const CharInfo * characterActive, const CharInfo * characterInactive) const
+void CustomHudWindow::SwapHealthBars(const CharInfo ** characterActive, const CharInfo ** characterInactive) const
 {
-	const CharInfo* temp = characterActive;
-	characterActive = characterInactive;
-	characterInactive = temp;
+	const CharInfo* temp = *characterActive;
+	*characterActive = *characterInactive;
+	*characterInactive = temp;
 }
