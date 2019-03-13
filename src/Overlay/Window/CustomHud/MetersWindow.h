@@ -12,14 +12,14 @@ public:
 		: Window(windowTitle, windowClosable, windowFlags) {}
 
 	~MetersWindow() override = default;
-	void SetMeterData(const MeterInfo* meterData) { m_pMetersData = meterData; }
+	void SetMeterData(const MeterInfo** ppMeterData) { m_ppMetersData = ppMeterData; }
 	void SetScale(const ImVec2& scale)
 	{
 		m_skillBarSize = ImVec2(200.0f * scale.x, 35.0f * scale.y);
 		m_crossBarSize = ImVec2(400.0f * scale.x, 40.0f * scale.y);
 	}
 	void SetRightSide(bool isRightSide) { m_isRightSide = isRightSide; }
-	bool IsMetersDataNullptr() const { return m_pMetersData == nullptr; }
+	bool IsMetersDataNullptr() const { return *m_ppMetersData == nullptr; }
 protected:
 	void Draw() override;
 private:
@@ -37,7 +37,7 @@ private:
 	void  DrawCrossBar(float crossPercentage, const ImVec4 & color) const;
 	void  DrawSkillBar(float skillPercentage, const ImVec4 & color) const;
 
-	const MeterInfo* m_pMetersData = nullptr;
+	const MeterInfo** m_ppMetersData = nullptr;
 	bool m_isRightSide = false;
 	ImVec2 m_skillBarSize = { 200.0f , 35.0f };
 	ImVec2 m_crossBarSize = { 400.0f , 40.0f };

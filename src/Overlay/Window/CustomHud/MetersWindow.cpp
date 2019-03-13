@@ -26,8 +26,8 @@ void MetersWindow::Draw()
 	ImVec4 colorCrossBar = COLOR_CROSS_BAR_DEFAULT;
 	ImVec4 colorSkillBar = COLOR_SKILL_BAR_DEFAULT;
 
-	const bool isBlazeActive = m_pMetersData->is_blaze_active;
-	const bool isBlazeAvailable = m_pMetersData->is_blaze_available;
+	const bool isBlazeActive = (*m_ppMetersData)->is_blaze_active;
+	const bool isBlazeAvailable = (*m_ppMetersData)->is_blaze_available;
 
 	if (isBlazeActive)
 	{
@@ -113,7 +113,7 @@ void MetersWindow::CalculateCrossBarBlazeAvailableColor(ImVec4 & colorCrossBar) 
 
 int MetersWindow::BlazeValueToSingleDigit() const
 {
-	const int currentBlazeValue = m_pMetersData->cur_blaze;
+	const int currentBlazeValue = (*m_ppMetersData)->cur_blaze;
 	int blazeDigit;
 
 	if (currentBlazeValue < BLAZE_GAUGE_LVL_TWO)
@@ -139,7 +139,7 @@ int MetersWindow::BlazeValueToSingleDigit() const
 
 int MetersWindow::SkillValueToSingleBar() const
 {
-	const int currentSkillValue = m_pMetersData->cur_skill;
+	const int currentSkillValue = (*m_ppMetersData)->cur_skill;
 
 	const bool isLessThanABar = currentSkillValue < SKILL_GAUGE_DIVIDER;
 	const bool isBarFull = currentSkillValue == SKILL_GAUGE_MAX_VALUE
@@ -159,7 +159,7 @@ int MetersWindow::SkillValueToSingleBar() const
 
 float MetersWindow::SkillValueToSingleBarPercent() const
 {
-	if (m_pMetersData->is_blaze_active)
+	if ((*m_ppMetersData)->is_blaze_active)
 	{
 		return 1.0f;
 	}
@@ -169,12 +169,12 @@ float MetersWindow::SkillValueToSingleBarPercent() const
 
 int MetersWindow::SkillValueToSingleDigit() const
 {
-	return m_pMetersData->cur_skill / (float)SKILL_GAUGE_DIVIDER;
+	return (*m_ppMetersData)->cur_skill / (float)SKILL_GAUGE_DIVIDER;
 }
 
 float MetersWindow::CrossValueToBarPercent() const
 {
-	return m_pMetersData->cur_cross / (float)CROSS_GAUGE_MAX_VALUE;
+	return (*m_ppMetersData)->cur_cross / (float)CROSS_GAUGE_MAX_VALUE;
 }
 
 bool MetersWindow::IsAstralAvailable(Player & opponentPlayer) const
@@ -182,7 +182,7 @@ bool MetersWindow::IsAstralAvailable(Player & opponentPlayer) const
 	const int characterOneCurrentHp = opponentPlayer.GetChar1().GetData()->cur_hp;
 	const int characterTwoCurrentHp = opponentPlayer.GetChar2().GetData()->cur_hp;
 	const bool anyCharactersDead = characterOneCurrentHp <= 0 || characterTwoCurrentHp <= 0;
-	const int currentSkillValue = m_pMetersData->cur_skill;
+	const int currentSkillValue = (*m_ppMetersData)->cur_skill;
 
 	if (SKILL_GAUGE_MAX_VALUE_WHILE_BLAZE_ACTIVE <= currentSkillValue && anyCharactersDead)
 	{
