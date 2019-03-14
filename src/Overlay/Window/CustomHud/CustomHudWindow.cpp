@@ -18,6 +18,8 @@ CustomHudWindow::CustomHudWindow(const std::string & windowTitle, bool windowClo
 	m_healthWindowRight.Open();
 	m_metersWindowLeft.Open();
 	m_metersWindowRight.Open();
+	m_uniqueMetersWindowLeft.Open();
+	m_uniqueMetersWindowRight.Open();
 }
 
 void CustomHudWindow::SetScale(const ImVec2 & scale)
@@ -26,20 +28,13 @@ void CustomHudWindow::SetScale(const ImVec2 & scale)
 	m_healthWindowRight.SetScale(scale);
 	m_metersWindowLeft.SetScale(scale);
 	m_metersWindowRight.SetScale(scale);
+	m_uniqueMetersWindowLeft.SetScale(scale);
+	m_uniqueMetersWindowRight.SetScale(scale);
 }
 
 void CustomHudWindow::SetWindowsMovable(bool isMainWindowVisible)
 {
-	if (isMainWindowVisible)
-	{
-		// Clear flag
-		m_windowFlags &= ~ImGuiWindowFlags_NoMove;
-	}
-	else
-	{
-		// Set flag
-		m_windowFlags |= ImGuiWindowFlags_NoMove;
-	}
+	isMainWindowVisible ? m_windowFlags &= ~ImGuiWindowFlags_NoMove : m_windowFlags |= ImGuiWindowFlags_NoMove;
 }
 
 void CustomHudWindow::Update()
@@ -64,6 +59,9 @@ void CustomHudWindow::Draw()
 
 	m_metersWindowLeft.Update();
 	m_metersWindowRight.Update();
+
+	UpdateUniqueMeterWindow(false);
+	UpdateUniqueMeterWindow(true);
 }
 
 bool CustomHudWindow::HasNullPointerInData() const
@@ -99,7 +97,7 @@ void CustomHudWindow::UpdateHealthWindow(bool isPlayerTwo)
 
 	if (characterBottom->is_char_active)
 	{
-		SwapHealthBars(&characterTop, &characterBottom);
+		SwapActive(&characterTop, &characterBottom);
 	}
 
 	healthWindow->SetCharObj(*characterTop);
@@ -108,7 +106,36 @@ void CustomHudWindow::UpdateHealthWindow(bool isPlayerTwo)
 	healthWindow->Update();
 }
 
-void CustomHudWindow::SwapHealthBars(const CharInfo ** characterActive, const CharInfo ** characterInactive) const
+void CustomHudWindow::UpdateUniqueMeterWindow(bool isPlayerTwo)
+{
+	const CharInfo* characterTop =
+		isPlayerTwo ? g_interfaces.player2.GetChar1().GetData() : g_interfaces.player1.GetChar1().GetData();
+
+	const CharInfo* characterBottom =
+		isPlayerTwo ? g_interfaces.player2.GetChar2().GetData() : g_interfaces.player1.GetChar2().GetData();
+
+	CharMetersWindow* uniqueMeterWindow =
+		isPlayerTwo ? &m_uniqueMetersWindowRight : &m_uniqueMetersWindowLeft;
+
+	if (characterBottom->is_char_active)
+	{
+		SwapActive(&characterTop, &characterBottom);
+	}
+
+	uniqueMeterWindow->SetCharObj(*characterTop);
+	if (uniqueMeterWindow->CharacterHasUniqueMeter())
+	{
+		uniqueMeterWindow->Update();
+	}
+
+	uniqueMeterWindow->SetCharObj(*characterBottom);
+	if (uniqueMeterWindow->CharacterHasUniqueMeter())
+	{
+		uniqueMeterWindow->Update();
+	}
+}
+
+void CustomHudWindow::SwapActive(const CharInfo ** characterActive, const CharInfo ** characterInactive) const
 {
 	const CharInfo* temp = *characterActive;
 	*characterActive = *characterInactive;

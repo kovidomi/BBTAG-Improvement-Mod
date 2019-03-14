@@ -1,5 +1,6 @@
 #pragma once
 #include "Overlay/Window/Window.h"
+#include "CharMetersWindow.h"
 #include "HealthWindow.h"
 #include "MetersWindow.h"
 #include "TimerWindow.h"
@@ -20,11 +21,14 @@ protected:
 private:
 	bool HasNullPointerInData() const;
 	void UpdateHealthWindow(bool isPlayerTwo);
-	void SwapHealthBars(const CharInfo** characterActive, const CharInfo** characterInactive) const;
+	void UpdateUniqueMeterWindow(bool isPlayerTwo);
+	void SwapActive(const CharInfo** characterActive, const CharInfo** characterInactive) const;
 
 	TimerWindow m_timerWindow = TimerWindow("TimerWindow", false, m_windowFlags);
 	HealthWindow m_healthWindowLeft = HealthWindow("PlayerOneHealthWindow", false, m_windowFlags);
 	HealthWindow m_healthWindowRight = HealthWindow("PlayerTwoHealthWindow", false, m_windowFlags);
 	MetersWindow m_metersWindowLeft = MetersWindow("PlayerOneMetersWindow", false, m_windowFlags);
 	MetersWindow m_metersWindowRight = MetersWindow("PlayerTwoMetersWindow", false, m_windowFlags);
+	CharMetersWindow m_uniqueMetersWindowLeft = CharMetersWindow("PlayerOneUniqueMetersWindow", false, m_windowFlags);
+	CharMetersWindow m_uniqueMetersWindowRight = CharMetersWindow("PlayerTwoUniqueMetersWindow", false, m_windowFlags);
 };
