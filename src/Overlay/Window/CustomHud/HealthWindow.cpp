@@ -74,16 +74,12 @@ void HealthWindow::DrawCharacterName(const ImVec2& healthBarSize) const
 
 const char * HealthWindow::GetCharacterName() const
 {
-	const char* charname;
+	const char* charname = "<UNKNOWN>";
 	const int charIndex = m_pCharObj->char_index;
 
 	if (charIndex < CHAR_NAMES_COUNT - 1)
 	{
 		charname = charNames[charIndex].c_str();
-	}
-	else
-	{
-		charname = "<UNKNOWN>";
 	}
 
 	return charname;
