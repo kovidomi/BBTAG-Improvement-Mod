@@ -17,7 +17,7 @@ const ImVec4 COLOR_SKILL_BAR_BLAZE_ACTIVE (0.450f, 1.000f, 1.000f, 1.000f);
 const ImVec4 COLOR_CROSS_BAR_BLAZE_ACTIVE (0.000f, 0.400f, 1.000f, 1.000f);
 const ImVec4 COLOR_BLAZE_VALUE            (1.000f, 0.400f, 1.000f, 1.000f);
 const ImVec4 COLOR_ASTRAL_AVAILABLE       (1.000f, 0.949f, 0.000f, 1.000f);
-const ImVec4 COLOR_INVIS                  (0.000f, 0.000f, 0.000f, 0.000f);
+const ImVec4 COLOR_TRANSPARENT            (0.000f, 0.000f, 0.000f, 0.000f);
 
 void MetersWindow::Draw()
 {
@@ -73,13 +73,13 @@ void MetersWindow::DrawAlignedToRight(const ImVec4& colorSkillBar, const ImVec4&
 	blazeLvl += std::to_string(BlazeValueToSingleDigit());
 
 	///////////////// Positioning with invisible text and bar
-	ImGui::TextColored(COLOR_INVIS, blazeLvl.c_str());
+	ImGui::TextColored(COLOR_TRANSPARENT, blazeLvl.c_str());
 	ImGui::SameLine();
 
-	ImGui::PushStyleColor(ImGuiCol_Border, COLOR_INVIS);
-	ImGui::PushStyleColor(ImGuiCol_FrameBg, COLOR_INVIS);
+	ImGui::PushStyleColor(ImGuiCol_Border, COLOR_TRANSPARENT);
+	ImGui::PushStyleColor(ImGuiCol_FrameBg, COLOR_TRANSPARENT);
 
-	ImGui::ColoredProgressBar(1.0f, m_skillBarSize, COLOR_INVIS, nullptr, false);
+	ImGui::ColoredProgressBar(1.0f, m_skillBarSize, COLOR_TRANSPARENT, nullptr, false);
 
 	ImGui::PopStyleColor(2);
 	ImGui::SameLine();
