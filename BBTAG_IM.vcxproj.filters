@@ -119,9 +119,6 @@
     <ClCompile Include="src\Game\CharPaletteHandle.cpp">
       <Filter>src\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\MeterInfo.cpp">
-      <Filter>src\Game</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\Player.cpp">
       <Filter>src\Game</Filter>
     </ClCompile>
@@ -183,6 +180,7 @@
     <ClCompile Include="src\Overlay\Window\CustomHud\HealthWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\TimerWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\MetersWindow.cpp" />
+    <ClCompile Include="src\Overlay\Window\CustomHud\CharMetersWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -339,6 +337,7 @@
     <ClInclude Include="src\Overlay\Window\CustomHud\HealthWindow.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\TimerWindow.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\MetersWindow.h" />
+    <ClInclude Include="src\Overlay\Window\CustomHud\CharMetersWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">
