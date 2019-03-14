@@ -1,17 +1,5 @@
 #pragma once
-#include "characters.h"
-#include "CharInfo.h"
-
-#include <imgui.h>
-
 #include <stdint.h>
-
-extern const std::vector<std::string> meterCharNames;
-
-bool	show_char_unique_meter_num(const CharInfo& charData);
-bool	show_char_unique_meter_bar(const CharInfo& charData);
-bool	char_has_unique_meter(CharIndex index);
-ImVec4	get_char_unique_meter_color(const CharInfo& charData);
 
 // For player2 the base address needs to be offset by 4 bytes
 class MeterInfo
