@@ -702,7 +702,7 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		static float x = 0.0f;
 		static float y = 0.0f;
 		static float z = 0.0f;
-		float& scale = m_hitboxOverlay->GetMagicNumber();
+		float& scale = m_hitboxOverlay->GetScale();
 
 		m_hitboxOverlay->DrawRectThicknessSlider();
 		m_hitboxOverlay->DrawRectFillTransparencySlider();

@@ -6,9 +6,6 @@
 #include "../interfaces.h"
 #include "imgui_internal.h"
 
-// Literally a magic number as of now
-float scale = 0.368f;
-
 void HitboxOverlay::Update()
 {
 	BeforeDraw();
@@ -59,8 +56,8 @@ void HitboxOverlay::AfterDraw()
 D3DXVECTOR2 HitboxOverlay::CalculateObjWorldPosition(const CharInfo* charObj)
 {
 	return D3DXVECTOR2(
-		floor((charObj->position_x - charObj->positionOffsetX) / 1000 * scale),
-		floor(charObj->position_y / 1000 * scale)
+		floor((charObj->position_x - charObj->positionOffsetX) / 1000 * m_scale),
+		floor(charObj->position_y / 1000 * m_scale)
 	);
 }
 
@@ -91,10 +88,10 @@ void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR
 
 	for (JonbEntry entry : entries)
 	{
-		float offsetX =  floor(entry.offsetX * scale);
-		float offsetY = -floor(entry.offsetY * scale);
-		float width =    floor(entry.width * scale);
-		float height =  -floor(entry.height * scale);
+		float offsetX =  floor(entry.offsetX * m_scale);
+		float offsetY = -floor(entry.offsetY * m_scale);
+		float width =    floor(entry.width * m_scale);
+		float height =  -floor(entry.height * m_scale);
 
 		if (!charObj->facingLeft)
 		{
@@ -132,9 +129,9 @@ void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR
 	}
 }
 
-float& HitboxOverlay::GetMagicNumber()
+float& HitboxOverlay::GetScale()
 {
-	return scale;
+	return m_scale;
 }
 
 void HitboxOverlay::DrawRectThicknessSlider()

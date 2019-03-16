@@ -14,7 +14,7 @@ public:
 	void Update();
 	void DrawOriginLine(ImVec2 screenPos);
 	void DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR2 playerWorldPos);
-	float& GetMagicNumber();
+	float& GetScale();
 	void DrawRectThicknessSlider();
 	void DrawRectFillTransparencySlider();
 
@@ -32,6 +32,8 @@ private:
 	void RenderRect(const ImVec2& from, const ImVec2& to, uint32_t color, float rounding = 0.0f, uint32_t roundingCornersFlags = ImDrawCornerFlags_All, float thickness = 1.0f);
 	void RenderRectFilled(const ImVec2& from, const ImVec2& to, uint32_t color, float rounding = 0.0f, uint32_t roundingCornersFlags = ImDrawCornerFlags_All);
 
+	// Literally a magic number as of now
+	float m_scale = 0.368f;
 	float m_rectThickness = 2.5f;
 	float m_rectFillTransparency = 0.5f;
 
