@@ -7,7 +7,6 @@
 #include "imgui_internal.h"
 
 // Literally a magic number as of now
-// TODO: Figure out how to calculate properly on all resolutions
 float scale = 0.3685f;
 
 void HitboxOverlay::Update()
