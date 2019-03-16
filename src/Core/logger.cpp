@@ -1,8 +1,9 @@
 #include "logger.h"
-#include <time.h>
-#include <fstream>
 
-bool checkHookSuccess(PBYTE addr, const char* funcName)
+#include <fstream>
+#include <time.h>
+
+bool hookSucceeded(PBYTE addr, const char* funcName)
 {
 	if (!addr)
 	{

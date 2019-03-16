@@ -1,6 +1,7 @@
 #pragma once
-#include <Windows.h>
 #include <isteamutils.h>
+
+#include <Windows.h>
 
 interface SteamUtilsWrapper : public ISteamUtils
 {

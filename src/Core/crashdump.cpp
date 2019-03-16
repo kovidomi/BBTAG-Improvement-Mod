@@ -1,11 +1,10 @@
 #include "crashdump.h"
-#include "interfaces.h"
+
 #include <dbghelp.h>
+#include <memory>
 #include <shlobj.h>
 #include <tchar.h>
 #include <time.h>
-#include <TlHelp32.h>
-#include <memory>
 
 LONG WINAPI UnhandledExFilter(PEXCEPTION_POINTERS ExPtr)
 {
@@ -18,21 +17,15 @@ LONG WINAPI UnhandledExFilter(PEXCEPTION_POINTERS ExPtr)
 	TCHAR buf[MAX_PATH], buf2[MAX_PATH];
 
 	if (pMiniDumpWriteDump) {
-		//SHGetFolderPath(NULL, CSIDL_DESKTOPDIRECTORY, NULL, SHGFP_TYPE_CURRENT, buf);
-		//int rnd;
-		//__asm push edx
-		//__asm rdtsc
-		//__asm pop edx
-		//__asm mov rnd, eax
-		//rnd &= 0xFFFF;
-		//wsprintf(buf2, _T("%s\\Crash_%x.dmp"), buf, rnd);
-
 		time_t timer;
 		char timebuffer[26];
 		struct tm* tm_info;
+
 		time(&timer);
 		tm_info = localtime(&timer);
+
 		strftime(timebuffer, 26, "%Y%m%d%H%M%S", tm_info);
+
 		//convert from char* to wchar_t*
 		size_t newsize = strlen(timebuffer) + 1;
 		wchar_t * wtimestring = new wchar_t[newsize]; 
@@ -69,5 +62,5 @@ LONG WINAPI UnhandledExFilter(PEXCEPTION_POINTERS ExPtr)
 		wsprintf(buf, _T("Could not load dbghelp"));
 	}
 	MessageBox(NULL, buf, _T("Unhandled exception"), MB_OK | MB_ICONERROR);
-	ExitProcess(0);    //do whatever u want here
+	ExitProcess(0);
 }

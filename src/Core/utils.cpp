@@ -1,7 +1,8 @@
 #include "utils.h"
+
 #include <cstdio>
-#include <Psapi.h>
 #include <fstream>
+#include <Psapi.h>
 
 void WriteToProtectedMemory(uintptr_t addressToWrite, char* valueToWrite, int byteNum)
 {

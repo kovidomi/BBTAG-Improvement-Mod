@@ -1,8 +1,11 @@
 #include "update_check.h"
+
 #include "url_downloader.h"
-#include "../WindowManager/WindowManager.h"
-#include "../logger.h"
-#include "../info.h"
+
+#include "Core/logger.h"
+#include "Core/info.h"
+#include "WindowManager/WindowManager.h"
+
 #include <regex>
 
 std::string newVersionNum = "";

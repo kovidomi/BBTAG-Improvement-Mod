@@ -1,6 +1,7 @@
 #include "SteamApiHelper.h"
-#include "../WindowManager/WindowManager.h"
-#include "../logger.h"
+
+#include "Core/logger.h"
+#include "WindowManager/WindowManager.h"
 
 //note: commented out functions are not working
 

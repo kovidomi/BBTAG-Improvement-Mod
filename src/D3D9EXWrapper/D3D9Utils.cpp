@@ -1,4 +1,5 @@
 #include "D3D9Utils.h"
+
 #include <sstream>
 
 std::vector<long> D3D9Utils::texturePointers;

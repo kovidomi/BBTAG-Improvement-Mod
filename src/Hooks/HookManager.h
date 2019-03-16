@@ -1,6 +1,8 @@
 #pragma once
-#include <Windows.h>
 #include <vector>
+#include <Windows.h>
+
+#define MAX_LENGTH 32
 
 typedef DWORD JMPBACKADDR;
 
@@ -13,7 +15,7 @@ struct functionhook_t
 	DWORD startAddress; //address is 0 if signature scanning was unsuccessful
 	DWORD jmpBackAddr;
 	void *newFunc;
-	char originalBytes[50];
+	char originalBytes[MAX_LENGTH];
 	bool activated; //is the hook in effect
 };
 

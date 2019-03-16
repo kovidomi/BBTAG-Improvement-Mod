@@ -1,11 +1,20 @@
 #include "HookManager.h"
-#include "../logger.h"
+
+#include "Core/logger.h"
+
 #include <Psapi.h>
 
 std::vector<functionhook_t> HookManager::hooks;
 
-JMPBACKADDR HookManager::SetHook(const char *label, const char *pattern, const char *mask, const int len, void *newFunc, bool activate)
+JMPBACKADDR HookManager::SetHook(const char *label, const char *pattern, const char *mask,
+	const int len, void *newFunc, bool activate)
 {
+	if (len > MAX_LENGTH)
+	{
+		LOG(2, "Overwritten bytes more than %d (%d)! \n", MAX_LENGTH, len);
+		return 0;
+	}
+
 	//check if there is already a hook registered with same label
 	int index = GetHookStructIndex(label);
 	if (index != -1)
@@ -112,8 +121,6 @@ bool HookManager::IsHookActivated(const char *label)
 	return hooks[index].activated;
 }
 
-//0 failed
-//1 success
 bool HookManager::ActivateHook(const char *label)
 {
 	int index = GetHookStructIndex(label);
@@ -137,8 +144,6 @@ bool HookManager::ActivateHook(const char *label)
 	return true;
 }
 
-//0 failed
-//1 success
 bool HookManager::DeactivateHook(const char *label)
 {
 	LOG(2, "Deactivating %s hook.\n", label);
@@ -306,8 +311,6 @@ int HookManager::GetHookStructIndex(const char* label)
 	return -1;
 }
 
-//0 failed
-//1 success
 bool HookManager::RestoreOriginalBytes(int index)
 {
 	DWORD curProtection;
@@ -328,7 +331,7 @@ bool HookManager::RestoreOriginalBytes(int index)
 
 bool HookManager::PlaceHook(void* toHook, void* ourFunc, int len)
 {
-	if (len < 5)
+	if (len < 5 || len > MAX_LENGTH)
 	{
 		return false;
 	}
@@ -351,9 +354,10 @@ bool HookManager::PlaceHook(void* toHook, void* ourFunc, int len)
 	return true;
 }
 
-int HookManager::OverWriteBytes(void* startAddress, void* endAddress, const char *pattern, const char *mask, const char *newBytes)
+int HookManager::OverWriteBytes(void* startAddress, void* endAddress, const char *pattern,
+	const char *mask, const char *newBytes)
 {
-	int overwritten_count = 0;
+	int overwrittenCount = 0;
 
 	DWORD base = (DWORD)startAddress;
 	DWORD size = (DWORD)endAddress - (DWORD)startAddress;
@@ -378,21 +382,21 @@ int HookManager::OverWriteBytes(void* startAddress, void* endAddress, const char
 
 			DWORD curProtection;
 			if (!VirtualProtect(toOverwrite, patternLength, PAGE_EXECUTE_READWRITE, &curProtection))
-				return overwritten_count;
+				return overwrittenCount;
 
 			for (int k = 0; k < patternLength; k++)
 			{
 				*((BYTE*)(toOverwrite + k)) = newBytes[k];
 			}
 
-			overwritten_count++;
+			overwrittenCount++;
 
 			DWORD temp;
 			if (!VirtualProtect(toOverwrite, patternLength, curProtection, &temp))
-				return overwritten_count;
+				return overwrittenCount;
 		}
 	}
-	return overwritten_count;
+	return overwrittenCount;
 }
 
 DWORD HookManager::FindPattern(const char *pattern, const char *mask)

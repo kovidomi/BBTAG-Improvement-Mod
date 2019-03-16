@@ -1,8 +1,9 @@
 #pragma once
-#include "../interfaces.h"
 #include "CustomHud.h"
 #include "PaletteEditor.h"
 #include "HitboxOverlay.h"
+
+#include <d3d9.h>
 
 //forward declaration
 struct ImGuiLog;

@@ -1,7 +1,8 @@
 #include "CustomHud.h"
-#include "../interfaces.h"
-#include "../Game/MeterInfo.h"
-#include "../logger.h"
+
+#include "Core/interfaces.h"
+#include "Core/logger.h"
+#include "Game/MeterInfo.h"
 
 ImGuiWindowFlags customHUDWindowFlags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar;
 const ImVec4 default_cross_bar_color(0.15f, 1.0f, 1.0f, 1.0f);
@@ -274,8 +275,8 @@ void CustomHud::UpdateHP(const CharInfo &charInfo, bool right_side)
 
 	///////////////////////////
 	const char* charname;
-	if (charInfo.char_index < TOTAL_CHAR_INDEXES)
-		charname = charNames[charInfo.char_index];
+	if (charInfo.char_index < CHAR_NAMES_COUNT)
+		charname = charNames[charInfo.char_index].c_str();
 	else
 		charname = "<UNKNOWN>";
 
@@ -487,11 +488,11 @@ void CustomHud::UpdateCharSpecificMeters(const CharInfo & charInfo, bool right_s
 		}
 
 		ImGui::SameLine();
-		ImGui::Text("%s", meterCharNames[charInfo.char_index]);
+		ImGui::Text("%s", meterCharNames[charInfo.char_index].c_str());
 	}
 	else
 	{
-		ImGui::Text("%s", meterCharNames[charInfo.char_index]);
+		ImGui::Text("%s", meterCharNames[charInfo.char_index].c_str());
 		ImGui::SameLine();
 
 		if (show_unique_bar)

@@ -1,6 +1,7 @@
 #pragma once
-#include <Windows.h>
 #include <isteammatchmaking.h>
+
+#include <Windows.h>
 
 interface SteamMatchmakingWrapper : public ISteamMatchmaking
 {
