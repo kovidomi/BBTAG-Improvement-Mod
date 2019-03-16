@@ -36,9 +36,4 @@ private:
 		| ImGuiWindowFlags_NoInputs
 		| ImGuiWindowFlags_NoBringToFrontOnFocus
 		| ImGuiWindowFlags_NoFocusOnAppearing;
-
-	float m_rectAx = 100.0f;
-	float m_rectAy = 100.0f;
-	float m_rectBx = 200.0f;
-	float m_rectBy = 200.0f;
 };

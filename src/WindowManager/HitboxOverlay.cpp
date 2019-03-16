@@ -36,8 +36,6 @@ void HitboxOverlay::BeforeDraw()
 
 void HitboxOverlay::Draw()
 {
-	//ImGui::SliderFloat4("Box", &m_rectAx, 0.0f, 1600.0f, "%.0f");
-
 	for (int i = 0; i < g_gameVals.entityCount; i++)
 	{
 		CharInfo* pEntity = (CharInfo*)g_gameVals.pEntityList[i];
@@ -125,6 +123,7 @@ void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR
 		unsigned int rectColor = entry.type == JonbChunkType_Hurtbox ? colorBlue : colorRed;
 
 		RenderRect(ImVec2(rectFrom.x, rectFrom.y), ImVec2(rectTo.x, rectTo.y), rectColor, 0, ImDrawCornerFlags_All, 3);
+		RenderRectFilled(ImVec2(rectFrom.x, rectFrom.y), ImVec2(rectTo.x, rectTo.y), rectColor);
 	}
 }
 
