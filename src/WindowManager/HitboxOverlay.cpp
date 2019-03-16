@@ -120,16 +120,31 @@ void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR
 
 		const unsigned int colorBlue = 0xFF0033CC;
 		const unsigned int colorRed = 0xFFFF0000;
-		unsigned int rectColor = entry.type == JonbChunkType_Hurtbox ? colorBlue : colorRed;
+		const unsigned int rectBorderColor = entry.type == JonbChunkType_Hurtbox ? colorBlue : colorRed;
 
-		RenderRect(ImVec2(rectFrom.x, rectFrom.y), ImVec2(rectTo.x, rectTo.y), rectColor, 0, ImDrawCornerFlags_All, 3);
-		RenderRectFilled(ImVec2(rectFrom.x, rectFrom.y), ImVec2(rectTo.x, rectTo.y), rectColor);
+		RenderRect(ImVec2(rectFrom.x, rectFrom.y), ImVec2(rectTo.x, rectTo.y), rectBorderColor, 0, ImDrawCornerFlags_All, m_rectThickness);
+
+		const unsigned char transparency = 0xFF * m_rectFillTransparency;
+		unsigned int clearedTransparencyBits = (rectBorderColor & ~0xFF000000);
+		unsigned int transparencyPercentage = ((int)transparency << 24) & 0xFF000000;
+		const unsigned int rectFillColor = clearedTransparencyBits | transparencyPercentage;
+		RenderRectFilled(ImVec2(rectFrom.x, rectFrom.y), ImVec2(rectTo.x, rectTo.y), rectFillColor);
 	}
 }
 
 float& HitboxOverlay::GetMagicNumber()
 {
 	return scale;
+}
+
+void HitboxOverlay::DrawRectThicknessSlider()
+{
+	ImGui::SliderFloat("Border thickness", &m_rectThickness, 0.0f, 5.0f, "%.1f");
+}
+
+void HitboxOverlay::DrawRectFillTransparencySlider()
+{
+	ImGui::SliderFloat("Fill transparency", &m_rectFillTransparency, 0.0f, 1.0f, "%.2f");
 }
 
 

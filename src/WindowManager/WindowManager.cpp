@@ -704,6 +704,9 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		static float z = 0.0f;
 		float& scale = m_hitboxOverlay->GetMagicNumber();
 
+		m_hitboxOverlay->DrawRectThicknessSlider();
+		m_hitboxOverlay->DrawRectFillTransparencySlider();
+
 		ImGui::SliderFloat("World_X", &x, -5000.0f, 5000.0f);
 		ImGui::SliderFloat("World_Y", &y, -5000.0f, 5000.0f);
 		ImGui::SliderFloat("World_Z", &z, -5000.0f, 5000.0f);
