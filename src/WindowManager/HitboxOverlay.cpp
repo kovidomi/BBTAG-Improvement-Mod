@@ -7,7 +7,7 @@
 #include "imgui_internal.h"
 
 // Literally a magic number as of now
-float scale = 0.3685f;
+float scale = 0.368f; // 0.3685f
 
 void HitboxOverlay::Update()
 {
