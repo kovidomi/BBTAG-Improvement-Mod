@@ -25,7 +25,7 @@ void HitboxOverlay::Update()
 void HitboxOverlay::BeforeDraw()
 {
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0.0f, 0.0f });
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
 
 	ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
