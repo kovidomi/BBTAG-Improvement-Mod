@@ -8,6 +8,11 @@
 
 void HitboxOverlay::Update()
 {
+	if (HasNullptrInData())
+	{
+		return;
+	}
+
 	BeforeDraw();
 
 	ImGui::Begin("##HitboxOverlay", nullptr, m_windowFlags);
@@ -51,6 +56,11 @@ void HitboxOverlay::AfterDraw()
 {
 	ImGui::PopStyleColor();
 	ImGui::PopStyleVar(2);
+}
+
+bool HitboxOverlay::HasNullptrInData()
+{
+	return !g_gameVals.pEntityList;
 }
 
 D3DXVECTOR2 HitboxOverlay::CalculateObjWorldPosition(const CharInfo* charObj)

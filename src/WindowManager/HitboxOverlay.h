@@ -10,6 +10,8 @@ typedef unsigned int uint32_t;
 class HitboxOverlay
 {
 public:
+	bool windowOpen = false;
+
 	HitboxOverlay() = default;
 	void Update();
 	void DrawOriginLine(ImVec2 screenPos);
@@ -17,6 +19,7 @@ public:
 	float& GetScale();
 	void DrawRectThicknessSlider();
 	void DrawRectFillTransparencySlider();
+	bool HasNullptrInData();
 
 private:
 	void BeforeDraw();
@@ -37,8 +40,7 @@ private:
 	float m_rectThickness = 2.5f;
 	float m_rectFillTransparency = 0.5f;
 
-	ImGuiWindowFlags m_windowFlags =
-		ImGuiWindowFlags_NoTitleBar
+	ImGuiWindowFlags m_windowFlags = ImGuiWindowFlags_NoTitleBar
 		| ImGuiWindowFlags_NoInputs
 		| ImGuiWindowFlags_NoBringToFrontOnFocus
 		| ImGuiWindowFlags_NoFocusOnAppearing;

@@ -696,66 +696,6 @@ void WindowManager::ShowDebugWindow(bool * p_open)
 		ImGui::ColorEdit4("ColEdit", col);
 	}
 
-	if (ImGui::CollapsingHeader("P1 World2Screen"))
-	{
-		static D3DXVECTOR3 result(0, 0, 0);
-		static float x = 0.0f;
-		static float y = 0.0f;
-		static float z = 0.0f;
-		float& scale = m_hitboxOverlay->GetScale();
-
-		m_hitboxOverlay->DrawRectThicknessSlider();
-		m_hitboxOverlay->DrawRectFillTransparencySlider();
-
-		ImGui::SliderFloat("World_X", &x, -5000.0f, 5000.0f);
-		ImGui::SliderFloat("World_Y", &y, -5000.0f, 5000.0f);
-		ImGui::SliderFloat("World_Z", &z, -5000.0f, 5000.0f);
-		ImGui::SliderFloat("Scale", &scale, 0.0f, 1.0f, "%.4f");
-
-		static bool isAutoOn = false;
-		if (ImGui::Button("Automatic"))
-		{
-			isAutoOn ^= 1;
-		}
-
-		if (isAutoOn)
-		{
-			float playerPosX = g_interfaces.player1.GetChar1().GetData()->position_x / 1000 * scale;
-			float playerPosY = g_interfaces.player1.GetChar1().GetData()->position_y / 1000 * scale;
-
-			D3DXVECTOR3 src =
-			{
-				floor(playerPosX),
-				floor(playerPosY),
-				z
-			};
-
-			WorldToScreen(g_interfaces.pD3D9ExWrapper, &src, &result);
-
-			result.x = floor(result.x);
-			result.y = floor(result.y);
-
-			m_hitboxOverlay->Update();
-
-			ImGui::SameLine();
-			ImGui::Text("ON");
-		}
-		else
-		{
-			if (ImGui::Button("Manual input"))
-			{
-				D3DXVECTOR3 src = { x, y, z };
-
-				WorldToScreen(g_interfaces.pD3D9ExWrapper, &src, &result);
-
-				result.x = floor(result.x);
-				result.y = floor(result.y);
-			}
-		}
-
-		ImGui::Text("Result: x: %.2f - y: %.2f", result.x, result.y);
-	}
-
 	ImGui::End();
 }
 
@@ -965,6 +905,18 @@ void WindowManager::ShowMainWindow(bool * p_open)
 			}
 		}
 
+		if (ImGui::CollapsingHeader("Hitbox overlay"))
+		{
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			ImGui::Checkbox("Enable", &m_hitboxOverlay->windowOpen);
+
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			m_hitboxOverlay->DrawRectThicknessSlider();
+
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			m_hitboxOverlay->DrawRectFillTransparencySlider();
+		}
+
 		if (ImGui::CollapsingHeader("Loaded settings.ini values"))
 		{
 			ShowLoadedSettingsValues();
@@ -1064,8 +1016,10 @@ void WindowManager::ShowAllWindows()
 	if (show_donators_window)
 		ShowDonatorsWindow();
 
-	// m_hitboxOverlay->Update();
-
+	if (m_hitboxOverlay->windowOpen)
+	{
+		m_hitboxOverlay->Update();
+	}
 ////////////// DEBUG Windows
 #ifdef _DEBUG
 	if (show_demo_window)
