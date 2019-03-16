@@ -2,8 +2,8 @@
 
 #include "WorldToScreen.h"
 
-#include "../Game/JonbReader.h"
-#include "../interfaces.h"
+#include "Core/interfaces.h"
+#include "Game/JonbReader.h"
 #include "imgui_internal.h"
 
 void HitboxOverlay::Update()

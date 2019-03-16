@@ -1,6 +1,6 @@
 #include "WorldToScreen.h"
 
-#include "../interfaces.h"
+#include "Core/interfaces.h"
 
 #define PI 3.1415927f
 
