@@ -605,6 +605,19 @@ void __declspec(naked)GetEntityListAddr()
 	}
 }
 
+DWORD GetEntityListDeleteAddrJmpBackAddr = 0;
+void __declspec(naked)GetEntityListDeleteAddr()
+{
+	LOG_ASM(7, "GetEntityListDeleteAddr\n");
+
+	_asm
+	{
+		mov [g_gameVals.pEntityList], 0
+		mov [esi + 0A4210h], edi
+		jmp [GetEntityListDeleteAddrJmpBackAddr]
+	}
+}
+
 //runs in additional_hooks.cpp in the hook_steamnetworking and ID3D9EXWrapper_Device.cpp in constructor, since unlike in CF in this game this method runs after steam init
 //These functions can be hooked after steam drm does its thing and d3d9device is up
 bool placeHooks_bbtag()
@@ -670,6 +683,9 @@ bool placeHooks_bbtag()
 		"x????xxxxxx", 11, GetEntityListAddr);
 	entityListSize = HookManager::GetOriginalBytes("GetEntityListAddr", 1, 4);
 	g_gameVals.entityCount = entityListSize / 4;
+
+	GetEntityListDeleteAddrJmpBackAddr = HookManager::SetHook("GetEntityListDeleteAddr", "\x89\xbe\x10\x42\x0a\x00\x89\xbe\x14\x42\x0a\x00",
+		"xxxxxxxxxxxx", 6, GetEntityListDeleteAddr);
 
 	GetLookAtVectorJmpBackAddr = HookManager::SetHook("GetLookAtVector", "\x50\x8d\x46\x4c\x50", "xxxxx", 5, GetLookAtVector);
 
