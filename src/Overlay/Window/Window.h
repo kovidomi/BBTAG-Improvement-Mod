@@ -5,10 +5,6 @@
 
 class Window
 {
-	// virtual void PushStyles() = 0;
-	// virtual void PopStyles() = 0;
-	// void SavePreviousGlobalStyles();
-	// void RestorePreviousGlobalStyles();
 public:
 	Window(const std::string& windowTitle, bool windowClosable, ImGuiWindowFlags windowFlags = 0)
 		: m_windowTitle(windowTitle),
@@ -21,12 +17,10 @@ public:
 	void Close();
 	void ToggleOpen();
 	bool IsOpen() const;
-
 protected:
 	virtual void BeforeDraw() {}
 	virtual void Draw() = 0;
 	virtual void AfterDraw() {}
-
 private:
 	bool* GetWindowOpenPointer();
 
