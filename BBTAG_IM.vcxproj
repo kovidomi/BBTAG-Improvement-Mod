@@ -168,7 +168,6 @@
     <ClCompile Include="src\Web\palette_download.cpp" />
     <ClCompile Include="src\Web\update_check.cpp" />
     <ClCompile Include="src\Web\url_downloader.cpp" />
-    <ClCompile Include="src\Overlay\CustomHud.cpp" />
     <ClCompile Include="src\Overlay\fonts.cpp" />
     <ClCompile Include="src\Overlay\Window\PaletteEditorWindow.cpp" />
     <ClCompile Include="src\Overlay\OverlayManager.cpp" />
@@ -233,7 +232,6 @@
     <ClInclude Include="src\Web\palette_download.h" />
     <ClInclude Include="src\Web\update_check.h" />
     <ClInclude Include="src\Web\url_downloader.h" />
-    <ClInclude Include="src\Overlay\CustomHud.h" />
     <ClInclude Include="src\Overlay\fonts.h" />
     <ClInclude Include="src\Overlay\Window\PaletteEditorWindow.h" />
     <ClInclude Include="src\Overlay\OverlayManager.h" />

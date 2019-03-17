@@ -152,9 +152,6 @@
     <ClCompile Include="src\Core\Settings.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Overlay\CustomHud.cpp">
-      <Filter>src\WindowManager</Filter>
-    </ClCompile>
     <ClCompile Include="src\Overlay\fonts.cpp">
       <Filter>src\WindowManager</Filter>
     </ClCompile>
@@ -309,9 +306,6 @@
     </ClInclude>
     <ClInclude Include="src\Core\Settings.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Overlay\CustomHud.h">
-      <Filter>src\WindowManager</Filter>
     </ClInclude>
     <ClInclude Include="src\Overlay\fonts.h">
       <Filter>src\WindowManager</Filter>
