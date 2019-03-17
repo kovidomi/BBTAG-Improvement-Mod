@@ -17,13 +17,18 @@ public:
 	void DrawResetWindowsPositionsButton();
 protected:
 	void Update() override;
+	void BeforeDraw() override;
+	void AfterDraw() override;
 	void Draw() override;
-
 private:
 	bool HasNullPointerInData() const;
+	void PushStyles();
+	void PopStyles();
 	void UpdateHealthWindow(bool isPlayerTwo);
 	void UpdateUniqueMeterWindow(bool isPlayerTwo);
 	void SwapActive(const CharInfo** characterActive, const CharInfo** characterInactive) const;
+
+	bool m_isBlazeActivate = false;
 
 	TimerWindow m_timerWindow = TimerWindow("TimerWindow", false, m_windowFlags);
 	HealthWindow m_healthWindowLeft = HealthWindow("PlayerOneHealthWindow", false, m_windowFlags);

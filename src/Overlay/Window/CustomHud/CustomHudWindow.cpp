@@ -67,8 +67,25 @@ void CustomHudWindow::Update()
 
 	if (m_windowOpen || Settings::settingsIni.forcecustomhud)
 	{
+		BeforeDraw();
 		Draw();
+		AfterDraw();
 	}
+}
+
+void CustomHudWindow::BeforeDraw()
+{
+	if (Settings::settingsIni.forcecustomhud && *g_gameVals.pIsHUDHidden == 0)
+	{
+		*g_gameVals.pIsHUDHidden = 1;
+	}
+
+	PushStyles();
+}
+
+void CustomHudWindow::AfterDraw()
+{
+	PopStyles();
 }
 
 void CustomHudWindow::Draw()
@@ -103,6 +120,39 @@ bool CustomHudWindow::HasNullPointerInData() const
 	}
 
 	return false;
+}
+
+void CustomHudWindow::PushStyles()
+{
+	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0.0f, 0.0f));
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(4.0f, 4.0f));
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(1.0f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f)); //black
+	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.286f, 0.286f, 0.286f, 0.54f)); //grey
+
+	m_isBlazeActivate =
+		g_interfaces.player1.GetMeters()->is_blaze_active || g_interfaces.player2.GetMeters()->is_blaze_active;
+
+	if (m_isBlazeActivate)
+	{
+		ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.0f, 1.0f, 1.0f, 1.0f)); //cyan
+		ImGui::PushStyleColor(ImGuiCol_BorderShadow, ImVec4(0.0f, 1.0f, 1.0f, 1.0f)); //cyan
+	}
+
+	ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[1]);
+}
+
+void CustomHudWindow::PopStyles()
+{
+	ImGui::PopFont();
+
+	if (m_isBlazeActivate)
+	{
+		ImGui::PopStyleColor(2);
+	}
+
+	ImGui::PopStyleColor(2);
+	ImGui::PopStyleVar(3);
 }
 
 void CustomHudWindow::UpdateHealthWindow(bool isPlayerTwo)
