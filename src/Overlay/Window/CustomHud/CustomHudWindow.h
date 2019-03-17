@@ -14,6 +14,7 @@ public:
 	~CustomHudWindow() override = default;
 	void SetScale(const ImVec2& scale);
 	void SetWindowsMovable(bool isMainWindowVisible);
+	void DrawResetWindowsPositionsButton();
 protected:
 	void Update() override;
 	void Draw() override;

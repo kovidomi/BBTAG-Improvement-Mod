@@ -37,6 +37,27 @@ void CustomHudWindow::SetWindowsMovable(bool isMainWindowVisible)
 	isMainWindowVisible ? m_windowFlags &= ~ImGuiWindowFlags_NoMove : m_windowFlags |= ImGuiWindowFlags_NoMove;
 }
 
+void CustomHudWindow::DrawResetWindowsPositionsButton()
+{
+	const ImVec2 middleScreen = ImVec2(ImGui::GetIO().DisplaySize.x / 2, ImGui::GetIO().DisplaySize.y / 2);
+	if (ImGui::Button("Reset custom HUD positions"))
+	{
+		ImGui::SetWindowPos("TimerWindow", middleScreen);
+		ImGui::SetWindowPos("PlayerOneHealthWindow", middleScreen);
+		ImGui::SetWindowPos("PlayerTwoHealthWindow", middleScreen);
+		ImGui::SetWindowPos("PlayerOneMetersWindow", middleScreen);
+		ImGui::SetWindowPos("PlayerTwoMetersWindow", middleScreen);
+		ImGui::SetWindowPos("PlayerOneUniqueMetersWindow", middleScreen);
+		ImGui::SetWindowPos("PlayerTwoUniqueMetersWindow", middleScreen);
+	}
+	if (ImGui::IsItemHovered())
+	{
+		ImGui::BeginTooltip();
+		ImGui::Text("Used to recover elements of the custom HUD that have\nbecome unrecoverable due to going beyond the screen");
+		ImGui::EndTooltip();
+	}
+}
+
 void CustomHudWindow::Update()
 {
 	if (HasNullPointerInData())
