@@ -9,7 +9,7 @@ typedef std::map<WindowType_, Window*> WindowMap;
 class WindowContainer
 {
 public:
-	WindowContainer() { InitWindowContainer(); }
+	WindowContainer() { Init(); }
 	virtual ~WindowContainer()
 	{
 		for (const auto& window : m_windows)
@@ -26,7 +26,7 @@ protected:
 	virtual void FillWindowContainer() = 0;
 	void AddWindow(WindowType_ type, Window* pWindow) { m_windows[type] = pWindow; }
 private:
-	void InitWindowContainer() { FillWindowContainer(); }
+	void Init() { FillWindowContainer(); }
 
 	WindowMap m_windows;
 };
