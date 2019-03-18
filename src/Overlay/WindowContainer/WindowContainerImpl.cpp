@@ -36,7 +36,9 @@ void WindowContainerImpl::FillWindowContainer()
 	AddWindow(WindowType_PaletteEditor,
 		new PaletteEditorWindow("Palette Editor", true));
 
-	CustomHudWindow* pCustomHud = new CustomHudWindow("Custom Hud", false, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar);
+	CustomHudWindow* pCustomHud = new CustomHudWindow("Custom Hud", false,
+		ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove);
+
 	//dividing by 1904x1042 because the custom HUD was designed on that resolution
 	ImVec2 scale = ImVec2(
 		(Settings::settingsIni.renderwidth * Settings::settingsIni.customhudscale) / 1904.0f,

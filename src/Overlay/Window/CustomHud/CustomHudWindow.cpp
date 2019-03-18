@@ -33,9 +33,19 @@ void CustomHudWindow::SetScale(const ImVec2 & scale)
 	m_uniqueMetersWindowRight.SetScale(scale);
 }
 
-void CustomHudWindow::SetWindowsMovable(bool isMainWindowVisible)
+void CustomHudWindow::SetWindowsMovable(bool movable)
 {
-	isMainWindowVisible ? m_windowFlags &= ~ImGuiWindowFlags_NoMove : m_windowFlags |= ImGuiWindowFlags_NoMove;
+	// Pointer to member functions SetFlag or ClearFlag
+	void (Window::*pWindowFlagFunc)(ImGuiWindowFlags) =
+		movable ? &Window::SetWindowFlag : &Window::ClearWindowFlag;
+
+	(m_timerWindow.*pWindowFlagFunc)(ImGuiWindowFlags_NoMove);
+	(m_healthWindowLeft.*pWindowFlagFunc)(ImGuiWindowFlags_NoMove);
+	(m_healthWindowRight.*pWindowFlagFunc)(ImGuiWindowFlags_NoMove);
+	(m_metersWindowLeft.*pWindowFlagFunc)(ImGuiWindowFlags_NoMove);
+	(m_metersWindowRight.*pWindowFlagFunc)(ImGuiWindowFlags_NoMove);
+	(m_uniqueMetersWindowLeft.*pWindowFlagFunc)(ImGuiWindowFlags_NoMove);
+	(m_uniqueMetersWindowRight.*pWindowFlagFunc)(ImGuiWindowFlags_NoMove);
 }
 
 void CustomHudWindow::DrawResetWindowsPositionsButton()
