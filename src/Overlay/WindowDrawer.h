@@ -1,9 +1,10 @@
 #pragma once
-#include "WindowContainer.h"
+#include "WindowContainer/WindowContainer.h"
 
-namespace WindowDrawer
+class WindowDrawer
 {
-	inline void DrawAllWindows(WindowContainer* pWindowContainer)
+public:
+	static void DrawAllWindows(WindowContainer* pWindowContainer)
 	{
 		for (const auto& window : pWindowContainer->GetWindows())
 		{
