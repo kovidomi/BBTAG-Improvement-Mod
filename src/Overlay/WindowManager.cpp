@@ -13,7 +13,6 @@
 #include "Core/Settings.h"
 #include "Core/utils.h"
 #include "Web/update_check.h"
-#include "Web/donators_fetch.h"
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
 
@@ -117,17 +116,6 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	AddLog("[system] CustomHUD toggling key set to '%s'\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
 
 	g_interfaces.pPaletteManager->LoadAllPalettes();
-
-	if (Settings::settingsIni.checkupdates)
-	{
-		HANDLE updateThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)CheckUpdate, NULL, NULL, NULL);
-		if(updateThread)
-			CloseHandle(updateThread);
-	}
-
-	HANDLE donatorsThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)FetchDonators, NULL, NULL, NULL);
-	if (donatorsThread)
-		CloseHandle(donatorsThread);
 
 	//Add the default font
 	ImFontConfig cfg;

@@ -65,3 +65,8 @@ void FetchDonators()
 #include "../../resource/donators.txt"
 #undef DONATOR
 }
+
+void StartAsyncDonatorsFetch()
+{
+	CloseHandle(CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)FetchDonators, nullptr, 0, nullptr));
+}
