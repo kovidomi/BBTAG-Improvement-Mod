@@ -55,7 +55,5 @@ void WindowManager::FillWindowContainer()
 
 	CustomHudWindow* pCustomHud = new CustomHudWindow("Custom Hud", false, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar);
 	pCustomHud->SetScale(m_scale);
-	// TODO: Add a button or something for this:
-	pCustomHud->SetWindowsMovable(true);
 	AddWindow(WindowType_CustomHud, pCustomHud);
 }

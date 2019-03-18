@@ -81,6 +81,9 @@ void MainWindow::Draw()
 		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawShowCustomHudWindowCheckbox();
 
 		ImGui::Text(" "); ImGui::SameLine();
+		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawSetWindowsMovableCheckbox();
+
+		ImGui::Text(" "); ImGui::SameLine();
 		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawResetWindowsPositionsButton();
 	}
 

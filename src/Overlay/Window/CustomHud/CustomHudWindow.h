@@ -13,15 +13,16 @@ public:
 	CustomHudWindow(const std::string& windowTitle, bool windowClosable, ImGuiWindowFlags windowFlags);
 	~CustomHudWindow() override = default;
 	void SetScale(const ImVec2& scale);
-	void SetWindowsMovable(bool isMainWindowVisible);
 	void DrawResetWindowsPositionsButton();
 	void DrawShowCustomHudWindowCheckbox();
+	void DrawSetWindowsMovableCheckbox();
 protected:
 	void Update() override;
 	void BeforeDraw() override;
 	void AfterDraw() override;
 	void Draw() override;
 private:
+	void SetWindowsMovable(bool movable);
 	bool HasNullPointerInData() const;
 	void PushStyles();
 	void PopStyles();

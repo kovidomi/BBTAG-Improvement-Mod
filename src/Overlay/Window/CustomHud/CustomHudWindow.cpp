@@ -64,6 +64,15 @@ void CustomHudWindow::DrawShowCustomHudWindowCheckbox()
 	ImGui::Checkbox("Show Custom HUD", &m_windowOpen);
 }
 
+void CustomHudWindow::DrawSetWindowsMovableCheckbox()
+{
+	static bool moveWindows = false;
+	if(ImGui::Checkbox("Move windows", &moveWindows))
+	{
+		SetWindowsMovable(moveWindows);
+	}
+}
+
 void CustomHudWindow::Update()
 {
 	if (HasNullPointerInData())
