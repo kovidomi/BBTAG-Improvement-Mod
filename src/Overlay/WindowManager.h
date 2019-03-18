@@ -29,5 +29,5 @@ private:
 
 	static WindowManager* m_instance;
 	bool m_initialized = false;
-	WindowContainer* m_windowManager = nullptr;
+	WindowContainer* m_windowContainer = nullptr;
 };

@@ -40,7 +40,7 @@ void WindowManager::OnMatchInit()
 		g_interfaces.player2.GetChar1(),
 		g_interfaces.player2.GetChar2());
 
-	m_windowManager->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->OnMatchInit();
+	m_windowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->OnMatchInit();
 }
 
 bool WindowManager::IsInitialized() const
@@ -83,7 +83,7 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 		return false;
 	}
 
-	m_windowManager = new WindowContainerImpl();
+	m_windowContainer = new WindowContainerImpl();
 
 	ImGui::StyleColorsDark();
 	ImGuiStyle& style = ImGui::GetStyle();
@@ -170,7 +170,7 @@ void WindowManager::Shutdown()
 	LOG(2, "WindowManager::Shutdown\n");
 	WriteLogToFile();
 
-	SAFE_DELETE(m_windowManager);
+	SAFE_DELETE(m_windowContainer);
 	delete m_instance;
 
 	ImGui_ImplDX9_Shutdown();
@@ -228,13 +228,13 @@ void WindowManager::Update()
 	ImGuiIO& io = ImGui::GetIO();
 
 	bool isUpdateNotifierWindowOpen =
-		m_windowManager->GetWindow<UpdateNotifierWindow>(WindowType_UpdateNotifier)->IsOpen();
+		m_windowContainer->GetWindow<UpdateNotifierWindow>(WindowType_UpdateNotifier)->IsOpen();
 	bool isPaletteEditorWindowOpen =
-		m_windowManager->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->IsOpen();
+		m_windowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->IsOpen();
 	bool isLogWindowOpen =
-		m_windowManager->GetWindow<LogWindow>(WindowType_Log)->IsOpen();
+		m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->IsOpen();
 
-	io.MouseDrawCursor = m_windowManager->GetWindow(WindowType_Main)->IsOpen() | isLogWindowOpen
+	io.MouseDrawCursor = m_windowContainer->GetWindow(WindowType_Main)->IsOpen() | isLogWindowOpen
 		| isPaletteEditorWindowOpen | isUpdateNotifierWindowOpen; // show_notification_window | show_demo_window;
 
 	if (Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)
@@ -242,20 +242,20 @@ void WindowManager::Update()
 		io.DisplaySize = ImVec2((float)Settings::settingsIni.renderwidth, (float)Settings::settingsIni.renderheight);
 	}
 
-	WindowDrawer::DrawAllWindows(m_windowManager);
+	WindowDrawer::DrawAllWindows(m_windowContainer);
 
 	LOG(7, "END OF WindowManager::Update\n");
 }
 
 void WindowManager::SetUpdateAvailable()
 {
-	m_windowManager->GetWindow(WindowType_UpdateNotifier)->Open();
+	m_windowContainer->GetWindow(WindowType_UpdateNotifier)->Open();
 }
 
 // start with type a of message: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
 void WindowManager::AddLog(const char* message, ...)
 {
-	if (!m_initialized || ! m_windowManager->GetWindow<LogWindow>(WindowType_Log)->IsLoggingOn())
+	if (!m_initialized || ! m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->IsLoggingOn())
 	{ 
 		return; 
 	}
@@ -273,7 +273,7 @@ void WindowManager::AddLog(const char* message, ...)
 	if (strlen(message) > MAX_LOG_MSG_LEN)
 	{
 		LOG(2, "AddLog error: message too long!\nmessage: %s", message);
-		m_windowManager->GetWindow<LogWindow>(WindowType_Log)->AddLog("%s [error] Log message too long.", timeString);
+		m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->AddLog("%s [error] Log message too long.", timeString);
 		return;
 	}
 
@@ -288,17 +288,17 @@ void WindowManager::AddLog(const char* message, ...)
 	fullMessage += " ";
 	fullMessage += buf;
 
-	m_windowManager->GetWindow<LogWindow>(WindowType_Log)->AddLog(fullMessage.c_str());
+	m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->AddLog(fullMessage.c_str());
 }
 
 void WindowManager::AddLogSeparator()
 {
-	m_windowManager->GetWindow<LogWindow>(WindowType_Log)->AddLog("------------------------------------------------------------------\n");
+	m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->AddLog("------------------------------------------------------------------\n");
 }
 
 void WindowManager::SetLogging(bool value)
 {
-	m_windowManager->GetWindow<LogWindow>(WindowType_Log)->SetLogging(value);
+	m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->SetLogging(value);
 }
 
 void WindowManager::WriteLogToFile()
@@ -354,7 +354,7 @@ void WindowManager::WriteLogToFile()
 
 	//d3dparams here
 
-	m_windowManager->GetWindow<LogWindow>(WindowType_Log)->ToFile(file);
+	m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->ToFile(file);
 	fprintf(file, "\n#####################################\n\n\n");
 
 	fclose(file);
@@ -374,11 +374,11 @@ void WindowManager::HandleButtons()
 
 	if (ImGui::IsKeyPressed(toggleCustomHUD_key))
 	{
-		m_windowManager->GetWindow(WindowType_CustomHud)->ToggleOpen();
+		m_windowContainer->GetWindow(WindowType_CustomHud)->ToggleOpen();
 	}
 
 	if (ImGui::IsKeyPressed(toggle_key))
 	{
-		m_windowManager->GetWindow(WindowType_Main)->ToggleOpen();
+		m_windowContainer->GetWindow(WindowType_Main)->ToggleOpen();
 	}
 }
