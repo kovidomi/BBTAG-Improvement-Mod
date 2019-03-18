@@ -37,7 +37,7 @@ void CustomHudWindow::SetWindowsMovable(bool movable)
 {
 	// Pointer to member functions SetFlag or ClearFlag
 	void (Window::*pWindowFlagFunc)(ImGuiWindowFlags) =
-		movable ? &Window::SetWindowFlag : &Window::ClearWindowFlag;
+		movable ? &Window::ClearWindowFlag : &Window::SetWindowFlag;
 
 	(m_timerWindow.*pWindowFlagFunc)(ImGuiWindowFlags_NoMove);
 	(m_healthWindowLeft.*pWindowFlagFunc)(ImGuiWindowFlags_NoMove);
