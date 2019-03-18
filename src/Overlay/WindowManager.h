@@ -13,7 +13,7 @@ enum WindowType_
 	WindowType_CustomHud
 };
 
-class WindowManager : public WindowDrawer, public WindowContainer
+class WindowManager : public WindowContainer
 {
 public:
 	~WindowManager() override = default;
