@@ -58,6 +58,11 @@ void CustomHudWindow::DrawResetWindowsPositionsButton()
 	}
 }
 
+void CustomHudWindow::DrawShowCustomHudWindowCheckbox()
+{
+	ImGui::Checkbox("Show Custom HUD", &m_windowOpen);
+}
+
 void CustomHudWindow::Update()
 {
 	if (HasNullPointerInData())
@@ -127,6 +132,7 @@ void CustomHudWindow::PushStyles()
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0.0f, 0.0f));
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(4.0f, 4.0f));
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(1.0f, 1.0f));
+
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f)); //black
 	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.286f, 0.286f, 0.286f, 0.54f)); //grey
 
@@ -194,13 +200,13 @@ void CustomHudWindow::UpdateUniqueMeterWindow(bool isPlayerTwo)
 	}
 
 	uniqueMeterWindow->SetCharObj(*characterTop);
-	if (uniqueMeterWindow->CharacterHasUniqueMeter())
+	if (uniqueMeterWindow->CharacterHasUniqueMeterToDraw())
 	{
 		uniqueMeterWindow->Update();
 	}
 
 	uniqueMeterWindow->SetCharObj(*characterBottom);
-	if (uniqueMeterWindow->CharacterHasUniqueMeter())
+	if (uniqueMeterWindow->CharacterHasUniqueMeterToDraw())
 	{
 		uniqueMeterWindow->Update();
 	}

@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 
 #include "PaletteEditorWindow.h"
+#include "CustomHud/CustomHudWindow.h"
 
 #include "Core/Settings.h"
 #include "Core/info.h"
@@ -77,13 +78,10 @@ void MainWindow::Draw()
 		}
 
 		ImGui::Text(" "); ImGui::SameLine();
-		if (ImGui::Button("Toggle Custom HUD"))
-		{
-			m_pWindowContainer->GetWindow(WindowType_CustomHud)->ToggleOpen();
-		}
+		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawShowCustomHudWindowCheckbox();
 
 		ImGui::Text(" "); ImGui::SameLine();
-		//m_customHud.ShowResetPositionsButton(m_middleScreen);
+		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawResetWindowsPositionsButton();
 	}
 
 	if (ImGui::CollapsingHeader("Custom palettes"))

@@ -15,6 +15,7 @@ public:
 	void SetScale(const ImVec2& scale);
 	void SetWindowsMovable(bool isMainWindowVisible);
 	void DrawResetWindowsPositionsButton();
+	void DrawShowCustomHudWindowCheckbox();
 protected:
 	void Update() override;
 	void BeforeDraw() override;
