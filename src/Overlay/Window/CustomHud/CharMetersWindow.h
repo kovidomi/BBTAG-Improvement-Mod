@@ -14,7 +14,7 @@ public:
 	void SetCharObj(const CharInfo& charObj) { m_pCharObj = &charObj; }
 	void SetScale(const ImVec2& scale) { m_uniqueBarSize = ImVec2(140.0f * scale.x, 20.0f * scale.y); }
 	void SetRightSide(bool isRightSide) { m_isRightSide = isRightSide; }
-	bool CharacterHasUniqueMeter() const;
+	bool CharacterHasUniqueMeterToDraw() const;
 protected:
 	void Draw() override;
 private:

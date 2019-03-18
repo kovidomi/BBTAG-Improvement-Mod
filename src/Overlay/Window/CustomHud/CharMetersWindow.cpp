@@ -71,7 +71,7 @@ const ImVec4 COLOR_BAR_YUKIKO           (0.706f, 0.000f, 0.000f, 1.000f);
 
 const ImVec4 COLOR_TRANSPARENT          (0.000f, 0.000f, 0.000f, 0.000f);
 
-bool CharMetersWindow::CharacterHasUniqueMeter() const
+bool CharMetersWindow::CharacterHasUniqueMeterToDraw() const
 {
 	switch (m_pCharObj->char_index)
 	{
@@ -85,7 +85,7 @@ bool CharMetersWindow::CharacterHasUniqueMeter() const
 	case CharIndex_Platinum:
 	case CharIndex_Rachel:
 	case CharIndex_Yukiko:
-		return true;
+		return (ShouldShowUniqueMeterNumber() || ShouldShowUniqueMeterBar()) && m_pCharObj->cur_hp != 0;
 	default:
 		return false;
 	}
@@ -93,11 +93,6 @@ bool CharMetersWindow::CharacterHasUniqueMeter() const
 
 void CharMetersWindow::Draw()
 {
-	if ((!ShouldShowUniqueMeterNumber() && !ShouldShowUniqueMeterBar()) || m_pCharObj->cur_hp == 0)
-	{
-		return;
-	}
-
 	if (m_isRightSide)
 	{
 		DrawAlignedToRight();
