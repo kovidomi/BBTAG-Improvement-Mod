@@ -5,9 +5,7 @@ class UpdateNotifierWindow : public Window
 {
 public:
 	UpdateNotifierWindow(const std::string& windowTitle, bool windowClosable,
-		ImGuiWindowFlags windowFlags = 0)
-		: Window(windowTitle, windowClosable, windowFlags) {}
-
+		ImGuiWindowFlags windowFlags = 0);
 	~UpdateNotifierWindow() override = default;
 
 protected:

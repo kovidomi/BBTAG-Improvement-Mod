@@ -6,6 +6,8 @@
 #include "Core/info.h"
 #include "Overlay/WindowManager.h"
 
+#include <handleapi.h>
+#include <processthreadsapi.h>
 #include <regex>
 
 std::string newVersionNum = "";
@@ -13,9 +15,10 @@ std::string newVersionNum = "";
 std::string GetNewVersionNum()
 {
 	if (newVersionNum != "")
+	{
 		return newVersionNum;
-	else
-		return "";
+	}
+	return "";
 }
 
 void CheckUpdate()
@@ -57,5 +60,13 @@ void CheckUpdate()
 	else
 	{
 		WindowManager::getInstance().AddLog("[system] BBTAG Improvement Mod is up-to-date\n");
+	}
+}
+
+void StartAsyncUpdateCheck()
+{
+	if (Settings::settingsIni.checkupdates)
+	{
+		CloseHandle(CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)CheckUpdate, nullptr, 0, nullptr));
 	}
 }

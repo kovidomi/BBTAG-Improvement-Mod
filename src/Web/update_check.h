@@ -2,5 +2,4 @@
 #include <string>
 
 std::string GetNewVersionNum();
-
-void CheckUpdate();
+void StartAsyncUpdateCheck();

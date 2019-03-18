@@ -2,6 +2,12 @@
 
 #include "Web/update_check.h"
 
+UpdateNotifierWindow::UpdateNotifierWindow(const std::string& windowTitle, bool windowClosable, ImGuiWindowFlags windowFlags)
+	: Window(windowTitle, windowClosable, windowFlags)
+{
+	StartAsyncUpdateCheck();
+}
+
 void UpdateNotifierWindow::BeforeDraw()
 {
 	ImGui::SetNextWindowPosCenter(ImGuiCond_Once);
