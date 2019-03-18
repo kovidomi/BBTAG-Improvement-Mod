@@ -6,7 +6,10 @@
 class DonatorsWindow : public Window
 {
 public:
-	DonatorsWindow(const std::string& windowTitle, bool windowClosable, ImGuiWindowFlags windowFlags);
+
+	DonatorsWindow(const std::string& windowTitle, bool windowClosable,
+		ImGuiWindowFlags windowFlags)
+		: Window(windowTitle, windowClosable, windowFlags) {}
 	~DonatorsWindow() override = default;
 
 protected:

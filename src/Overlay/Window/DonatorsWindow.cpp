@@ -16,12 +16,6 @@ const ImVec4 COLOR_TRANSPARENT (0.000f, 0.000f, 0.000f, 0.000f);
 const std::vector<ImVec4> DONATOR_TIER_COLORS = { COLOR_PLATINUM, COLOR_GOLD, COLOR_SILVER, COLOR_BRONZE };
 ImVec2 backupWindowTitleAlign;
 
-DonatorsWindow::DonatorsWindow(const std::string& windowTitle, bool windowClosable, ImGuiWindowFlags windowFlags) 
-	: Window(windowTitle, windowClosable, windowFlags)
-{
-	StartAsyncDonatorsFetch();
-}
-
 void DonatorsWindow::BeforeDraw()
 {
 	char titleBuffer[128];
