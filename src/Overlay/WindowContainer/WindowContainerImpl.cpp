@@ -18,12 +18,12 @@ void WindowContainerImpl::FillWindowContainer()
 	pMainWindow->SetWindowContainer(*this);
 	AddWindow(WindowType_Main, pMainWindow);
 
-	AddWindow(WindowType_Debug,
-		new DebugWindow("DEBUG", true));
-
 	AddWindow(WindowType_Log,
 		new LogWindow("Log", true,
 			ImGuiWindowFlags_NoCollapse));
+
+	AddWindow(WindowType_Debug,
+		new DebugWindow("DEBUG", true));
 
 	AddWindow(WindowType_Donators,
 		new DonatorsWindow("##DONATORS", false,
