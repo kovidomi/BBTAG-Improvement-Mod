@@ -241,7 +241,7 @@ void OverlayManager::Update()
 		io.DisplaySize = ImVec2((float)Settings::settingsIni.renderwidth, (float)Settings::settingsIni.renderheight);
 	}
 
-	m_windowManager->DrawAllWindows();
+	WindowDrawer::DrawAllWindows(m_windowManager);
 
 	LOG(7, "END OF OverlayManager::Update\n");
 }

@@ -12,11 +12,6 @@
 #include "Core/logger.h"
 #include "Core/Settings.h"
 
-void WindowManager::DrawAllWindows()
-{
-	WindowDrawer::DrawAllWindows(this);
-}
-
 void WindowManager::FillWindowContainer()
 {
 	MainWindow* pMainWindow = new MainWindow(MOD_WINDOW_TITLE, false, ImGuiWindowFlags_AlwaysAutoResize);

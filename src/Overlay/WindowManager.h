@@ -17,7 +17,6 @@ class WindowManager : public WindowDrawer, public WindowContainer
 {
 public:
 	~WindowManager() override = default;
-	void DrawAllWindows();
 protected:
 	void FillWindowContainer() override;
 };

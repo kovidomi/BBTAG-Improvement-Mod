@@ -4,13 +4,11 @@
 class WindowDrawer
 {
 public:
-	virtual void DrawAllWindows(WindowContainer* pWindowContainer)
+	void static DrawAllWindows(WindowContainer* pWindowContainer)
 	{
 		for (const auto& window : pWindowContainer->GetWindows())
 		{
 			window.second->Update();
 		}
 	}
-
-	virtual ~WindowDrawer() = default;
 };
