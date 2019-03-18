@@ -192,7 +192,7 @@ void CustomHudWindow::UpdateUniqueMeterWindow(bool isPlayerTwo)
 	const CharInfo* characterBottom =
 		isPlayerTwo ? g_interfaces.player2.GetChar2().GetData() : g_interfaces.player1.GetChar2().GetData();
 
-	CharMetersWindow* uniqueMeterWindow =
+	UniqueMetersWindow* uniqueMeterWindow =
 		isPlayerTwo ? &m_uniqueMetersWindowRight : &m_uniqueMetersWindowLeft;
 
 	if (characterBottom->is_char_active)

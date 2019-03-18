@@ -3,14 +3,14 @@
 
 #include "Game/CharInfo.h"
 
-class CharMetersWindow : public Window
+class UniqueMetersWindow : public Window
 {
 public:
-	CharMetersWindow(const std::string& windowTitle, bool windowClosable,
+	UniqueMetersWindow(const std::string& windowTitle, bool windowClosable,
 		ImGuiWindowFlags windowFlags)
 		: Window(windowTitle, windowClosable, windowFlags) {}
 
-	~CharMetersWindow() override = default;
+	~UniqueMetersWindow() override = default;
 	void SetCharObj(const CharInfo& charObj) { m_pCharObj = &charObj; }
 	void SetScale(const ImVec2& scale) { m_uniqueBarSize = ImVec2(140.0f * scale.x, 20.0f * scale.y); }
 	void SetRightSide(bool isRightSide) { m_isRightSide = isRightSide; }

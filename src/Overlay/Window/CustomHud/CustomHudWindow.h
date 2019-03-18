@@ -1,9 +1,9 @@
 #pragma once
 #include "Overlay/Window/Window.h"
-#include "CharMetersWindow.h"
 #include "HealthWindow.h"
 #include "MetersWindow.h"
 #include "TimerWindow.h"
+#include "UniqueMetersWindow.h"
 
 #include "Core/interfaces.h"
 
@@ -36,6 +36,6 @@ private:
 	HealthWindow m_healthWindowRight = HealthWindow("PlayerTwoHealthWindow", false, m_windowFlags);
 	MetersWindow m_metersWindowLeft = MetersWindow("PlayerOneMetersWindow", false, m_windowFlags);
 	MetersWindow m_metersWindowRight = MetersWindow("PlayerTwoMetersWindow", false, m_windowFlags);
-	CharMetersWindow m_uniqueMetersWindowLeft = CharMetersWindow("PlayerOneUniqueMetersWindow", false, m_windowFlags);
-	CharMetersWindow m_uniqueMetersWindowRight = CharMetersWindow("PlayerTwoUniqueMetersWindow", false, m_windowFlags);
+	UniqueMetersWindow m_uniqueMetersWindowLeft = UniqueMetersWindow("PlayerOneUniqueMetersWindow", false, m_windowFlags);
+	UniqueMetersWindow m_uniqueMetersWindowRight = UniqueMetersWindow("PlayerTwoUniqueMetersWindow", false, m_windowFlags);
 };

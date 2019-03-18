@@ -1,4 +1,4 @@
-#include "CharMetersWindow.h"
+#include "UniqueMetersWindow.h"
 
 #include "Game/characters.h"
 
@@ -71,7 +71,7 @@ const ImVec4 COLOR_BAR_YUKIKO           (0.706f, 0.000f, 0.000f, 1.000f);
 
 const ImVec4 COLOR_TRANSPARENT          (0.000f, 0.000f, 0.000f, 0.000f);
 
-bool CharMetersWindow::CharacterHasUniqueMeterToDraw() const
+bool UniqueMetersWindow::CharacterHasUniqueMeterToDraw() const
 {
 	switch (m_pCharObj->char_index)
 	{
@@ -91,7 +91,7 @@ bool CharMetersWindow::CharacterHasUniqueMeterToDraw() const
 	}
 }
 
-void CharMetersWindow::Draw()
+void UniqueMetersWindow::Draw()
 {
 	if (m_isRightSide)
 	{
@@ -103,12 +103,12 @@ void CharMetersWindow::Draw()
 	}
 }
 
-float CharMetersWindow::GetUniqueMeterBarPercentage() const
+float UniqueMetersWindow::GetUniqueMeterBarPercentage() const
 {
 	return (float)m_pCharObj->unique_meter_cur_val / (float)m_pCharObj->unique_meter_max_val;
 }
 
-std::string CharMetersWindow::GetUniqueMeterNumberString() const
+std::string UniqueMetersWindow::GetUniqueMeterNumberString() const
 {
 	std::string valueToShow = "?";
 	const CharIndex charIndex = (CharIndex)m_pCharObj->char_index;
@@ -129,7 +129,7 @@ std::string CharMetersWindow::GetUniqueMeterNumberString() const
 	return valueToShow;
 }
 
-void CharMetersWindow::DrawAlignedToLeft() const
+void UniqueMetersWindow::DrawAlignedToLeft() const
 {
 	ImGui::Text("%s", meterCharNames[m_pCharObj->char_index].c_str());
 	ImGui::SameLine();
@@ -154,7 +154,7 @@ void CharMetersWindow::DrawAlignedToLeft() const
 	}
 }
 
-void CharMetersWindow::DrawAlignedToRight() const
+void UniqueMetersWindow::DrawAlignedToRight() const
 {
 	if (ShouldShowUniqueMeterNumber())
 	{
@@ -180,7 +180,7 @@ void CharMetersWindow::DrawAlignedToRight() const
 	ImGui::Text("%s", meterCharNames[m_pCharObj->char_index].c_str());
 }
 
-bool CharMetersWindow::ShouldShowUniqueMeterNumber() const
+bool UniqueMetersWindow::ShouldShowUniqueMeterNumber() const
 {
 	const CharIndex charIndex = (CharIndex)m_pCharObj->char_index;
 
@@ -204,7 +204,7 @@ bool CharMetersWindow::ShouldShowUniqueMeterNumber() const
 	return false;
 }
 
-bool CharMetersWindow::ShouldShowUniqueMeterBar() const
+bool UniqueMetersWindow::ShouldShowUniqueMeterBar() const
 {
 	// Always show 
 	switch (m_pCharObj->char_index)
@@ -229,7 +229,7 @@ bool CharMetersWindow::ShouldShowUniqueMeterBar() const
 	}
 }
 
-ImVec4 CharMetersWindow::GetBarColor() const
+ImVec4 UniqueMetersWindow::GetBarColor() const
 {
 	const CharIndex charIndex = (CharIndex)m_pCharObj->char_index;
 
