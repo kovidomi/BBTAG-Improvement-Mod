@@ -1,6 +1,11 @@
 #include "OverlayManager.h"
 
 #include "fonts.h"
+#include "WindowDrawer.h"
+#include "WindowContainer/WindowContainerImpl.h"
+#include "Window/LogWindow.h"
+#include "Window/PaletteEditorWindow.h"
+#include "Window/UpdateNotifierWindow.h"
 
 #include "Core/info.h"
 #include "Core/interfaces.h"
@@ -9,10 +14,6 @@
 #include "Core/utils.h"
 #include "Web/update_check.h"
 #include "Web/donators_fetch.h"
-#include "Window/LogWindow.h"
-#include "Window/MainWindow.h"
-#include "Window/PaletteEditorWindow.h"
-#include "Window/UpdateNotifierWindow.h"
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
 
@@ -82,7 +83,7 @@ bool OverlayManager::Init(void *hwnd, IDirect3DDevice9 *device)
 		return false;
 	}
 
-	m_windowManager = new WindowManager();
+	m_windowManager = new WindowContainerImpl();
 
 	ImGui::StyleColorsDark();
 	ImGuiStyle& style = ImGui::GetStyle();

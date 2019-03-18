@@ -1,5 +1,5 @@
 #pragma once
-#include "WindowManager.h"
+#include "WindowContainer/WindowContainer.h"
 
 #include <d3d9.h>
 
@@ -29,5 +29,5 @@ private:
 
 	static OverlayManager* m_instance;
 	bool m_initialized = false;
-	WindowManager* m_windowManager = nullptr;
+	WindowContainer* m_windowManager = nullptr;
 };

@@ -142,7 +142,7 @@
     <ClCompile Include="src\Core\interfaces.cpp" />
     <ClCompile Include="src\Core\dllmain.cpp" />
     <ClCompile Include="src\Core\logger.cpp" />
-    <ClCompile Include="src\Overlay\WindowManager.cpp" />
+    <ClCompile Include="src\Overlay\WindowContainer\WindowContainerImpl.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\UniqueMetersWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\HealthWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\CustomHudWindow.cpp" />
@@ -203,9 +203,10 @@
     <ClInclude Include="src\Core\info.h" />
     <ClInclude Include="src\Core\interfaces.h" />
     <ClInclude Include="src\Core\logger.h" />
-    <ClInclude Include="src\Overlay\WindowContainer.h" />
+    <ClInclude Include="src\Overlay\WindowContainer\WindowContainer.h" />
+    <ClInclude Include="src\Overlay\WindowContainer\WindowType.h" />
     <ClInclude Include="src\Overlay\WindowDrawer.h" />
-    <ClInclude Include="src\Overlay\WindowManager.h" />
+    <ClInclude Include="src\Overlay\WindowContainer\WindowContainerImpl.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\UniqueMetersWindow.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\HealthWindow.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\MetersWindow.h" />

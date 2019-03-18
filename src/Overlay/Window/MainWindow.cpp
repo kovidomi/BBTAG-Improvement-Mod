@@ -8,7 +8,6 @@
 #include "Core/interfaces.h"
 #include "Game/gamestates.h"
 #include "Web/donators_fetch.h"
-#include "Overlay/WindowManager.h"
 
 void MainWindow::SetMainWindowTitle(const std::string text)
 {

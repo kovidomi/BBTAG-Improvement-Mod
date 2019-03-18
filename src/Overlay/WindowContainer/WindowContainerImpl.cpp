@@ -1,18 +1,18 @@
-#include "WindowManager.h"
+#include "WindowContainerImpl.h"
 
-#include "Window/CustomHud/CustomHudWindow.h"
-#include "Window/DebugWindow.h"
-#include "Window/DonatorsWindow.h"
-#include "Window/LogWindow.h"
-#include "Window/MainWindow.h"
-#include "Window/PaletteEditorWindow.h"
-#include "Window/UpdateNotifierWindow.h"
+#include "Overlay/Window/CustomHud/CustomHudWindow.h"
+#include "Overlay/Window/DebugWindow.h"
+#include "Overlay/Window/DonatorsWindow.h"
+#include "Overlay/Window/LogWindow.h"
+#include "Overlay/Window/MainWindow.h"
+#include "Overlay/Window/PaletteEditorWindow.h"
+#include "Overlay/Window/UpdateNotifierWindow.h"
 
 #include "Core/info.h"
 #include "Core/logger.h"
 #include "Core/Settings.h"
 
-void WindowManager::FillWindowContainer()
+void WindowContainerImpl::FillWindowContainer()
 {
 	MainWindow* pMainWindow = new MainWindow(MOD_WINDOW_TITLE, false, ImGuiWindowFlags_AlwaysAutoResize);
 	pMainWindow->SetWindowContainer(*this);

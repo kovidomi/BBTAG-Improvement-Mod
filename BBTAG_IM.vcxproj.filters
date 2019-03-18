@@ -172,12 +172,12 @@
     <ClCompile Include="src\Overlay\Window\Window.cpp" />
     <ClCompile Include="src\Overlay\Window\NotificationWindow.cpp" />
     <ClCompile Include="src\Core\utils.cpp" />
-    <ClCompile Include="src\Overlay\WindowManager.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\CustomHudWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\HealthWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\TimerWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\MetersWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\CustomHud\UniqueMetersWindow.cpp" />
+    <ClCompile Include="src\Overlay\WindowContainer\WindowContainerImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -324,14 +324,15 @@
     <ClInclude Include="src\Overlay\Window\Window.h" />
     <ClInclude Include="src\Overlay\Window\NotificationWindow.h" />
     <ClInclude Include="src\Core\utils.h" />
-    <ClInclude Include="src\Overlay\WindowContainer.h" />
-    <ClInclude Include="src\Overlay\WindowManager.h" />
     <ClInclude Include="src\Overlay\WindowDrawer.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\CustomHudWindow.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\HealthWindow.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\TimerWindow.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\MetersWindow.h" />
     <ClInclude Include="src\Overlay\Window\CustomHud\UniqueMetersWindow.h" />
+    <ClInclude Include="src\Overlay\WindowContainer\WindowContainerImpl.h" />
+    <ClInclude Include="src\Overlay\WindowContainer\WindowContainer.h" />
+    <ClInclude Include="src\Overlay\WindowContainer\WindowType.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">

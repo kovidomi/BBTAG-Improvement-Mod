@@ -1,8 +1,8 @@
 #pragma once
-#include "Window/Window.h"
-#include <map>
+#include "WindowType.h"
+#include "Overlay/Window/Window.h"
 
-enum WindowType_;
+#include <map>
 
 typedef std::map<WindowType_, Window*> WindowMap;
 
