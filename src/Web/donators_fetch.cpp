@@ -4,7 +4,7 @@
 
 #include "Core/info.h"
 #include "Core/logger.h"
-#include "Overlay/OverlayManager.h"
+#include "Overlay/WindowManager.h"
 
 #include <sstream>
 
@@ -55,7 +55,7 @@ void FetchDonators()
 		}
 		return;
 	}
-	OverlayManager::getInstance().AddLog("[error] Donators fetch failed. No data downloaded.\n");
+	WindowManager::getInstance().AddLog("[error] Donators fetch failed. No data downloaded.\n");
 	LOG(2, "Donators fetch failed. No data downloaded.\n");
 
 	//X-MACRO, loading donators and tiers from file

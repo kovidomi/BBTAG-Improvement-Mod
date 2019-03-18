@@ -6,7 +6,7 @@
 #include "Core/interfaces.h"
 #include "Core/logger.h"
 #include "Game/gamestates.h"
-#include "Overlay/OverlayManager.h"
+#include "Overlay/WindowManager.h"
 #include "SteamApiWrapper/SteamMatchmakingWrapper.h"
 #include "SteamApiWrapper/SteamNetworkingWrapper.h"
 
@@ -25,7 +25,7 @@ void __declspec(naked)PassMsgToImGui()
 	__asm
 	{
 		pushad
-		call OverlayManager::IsInitialized
+		call WindowManager::IsInitialized
 		cmp eax, 0
 		je SKIP
 	}
@@ -80,7 +80,7 @@ void __declspec(naked)GetGameStateAndModeTitleScreen()
 
 	placeHooks_steamApiWrapper();
 
-	OverlayManager::getInstance().Init(g_gameProc.hWndGameWindow, g_interfaces.pD3D9ExWrapper);
+	WindowManager::getInstance().Init(g_gameProc.hWndGameWindow, g_interfaces.pD3D9ExWrapper);
 
 	__asm
 	{
@@ -109,7 +109,7 @@ void __declspec(naked)GetGameStateAndModeEntranceScreen()
 
 	placeHooks_steamApiWrapper();
 
-	OverlayManager::getInstance().Init(g_gameProc.hWndGameWindow, g_interfaces.pD3D9ExWrapper);
+	WindowManager::getInstance().Init(g_gameProc.hWndGameWindow, g_interfaces.pD3D9ExWrapper);
 
 	//ResetBackToMenu();
 
@@ -197,7 +197,7 @@ void __declspec(naked)GetTimer()
 	}
 
 	__asm pushad
-	OverlayManager::getInstance().OnMatchInit();
+	WindowManager::getInstance().OnMatchInit();
 	__asm popad
 
 	__asm

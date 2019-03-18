@@ -4,7 +4,7 @@
 
 #include "Core/logger.h"
 #include "Core/info.h"
-#include "Overlay/OverlayManager.h"
+#include "Overlay/WindowManager.h"
 
 #include <regex>
 
@@ -25,7 +25,7 @@ void CheckUpdate()
 
 	if (strcmp(data.c_str(), "") == 0)
 	{
-		OverlayManager::getInstance().AddLog("[error] Update check failed. No data downloaded.\n");
+		WindowManager::getInstance().AddLog("[error] Update check failed. No data downloaded.\n");
 		LOG(2, "Update check failed.No data downloaded.\n");
 		return;
 	}
@@ -40,7 +40,7 @@ void CheckUpdate()
 
 	if (m[1].str() == "")
 	{
-		OverlayManager::getInstance().AddLog("[error] Update check failed. Regex no match.\n");
+		WindowManager::getInstance().AddLog("[error] Update check failed. Regex no match.\n");
 		return;
 	}
 
@@ -49,13 +49,13 @@ void CheckUpdate()
 		newVersionNum = m[1].str();
 
 		LOG(2, "New version found: %s\n", newVersionNum.c_str());
-		OverlayManager::getInstance().AddLog("[system] Update available: BBTAG Improvement Mod %s has been released!\n",
+		WindowManager::getInstance().AddLog("[system] Update available: BBTAG Improvement Mod %s has been released!\n",
 			newVersionNum.c_str());
 
-		OverlayManager::getInstance().SetUpdateAvailable();
+		WindowManager::getInstance().SetUpdateAvailable();
 	}
 	else
 	{
-		OverlayManager::getInstance().AddLog("[system] BBTAG Improvement Mod is up-to-date\n");
+		WindowManager::getInstance().AddLog("[system] BBTAG Improvement Mod is up-to-date\n");
 	}
 }

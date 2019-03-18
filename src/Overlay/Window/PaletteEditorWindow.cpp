@@ -3,7 +3,7 @@
 #include "Core/interfaces.h"
 #include "Core/logger.h"
 #include "Game/gamestates.h"
-#include "Overlay/OverlayManager.h"
+#include "Overlay/WindowManager.h"
 #include "PaletteManager/impl_format.h"
 
 #include <imgui.h>
@@ -329,13 +329,13 @@ void PaletteEditorWindow::SavePaletteToFile()
 		if (strncmp(palNameBuf, "", IMPL_PALNAME_LENGTH) == 0)
 		{
 			memcpy(message, "Error, no filename given", 25);
-			OverlayManager::getInstance().AddLog("[error] Could not save custom palette, no filename was given\n");
+			WindowManager::getInstance().AddLog("[error] Could not save custom palette, no filename was given\n");
 			return;
 		}
 		else if (strncmp(palNameBuf, "Default", IMPL_PALNAME_LENGTH) == 0 || strncmp(palNameBuf, "Random", IMPL_PALNAME_LENGTH) == 0)
 		{
 			memcpy(message, "Error, not a valid filename", 28);
-			OverlayManager::getInstance().AddLog("[error] Could not save custom palette: not a valid filename\n");
+			WindowManager::getInstance().AddLog("[error] Could not save custom palette: not a valid filename\n");
 			return;
 		}
 
@@ -373,14 +373,14 @@ void PaletteEditorWindow::SavePaletteToFile()
 			if (g_interfaces.pPaletteManager->WritePaletteToFile(m_selectedCharIndex, &curPalData))
 			{
 				std::string fullPath(wFullPath.begin(), wFullPath.end());
-				OverlayManager::getInstance().AddLog("[system] Custom palette '%s' successfully saved to:\n'%s'\n", filenameTemp.c_str(), fullPath.c_str());
+				WindowManager::getInstance().AddLog("[system] Custom palette '%s' successfully saved to:\n'%s'\n", filenameTemp.c_str(), fullPath.c_str());
 				messageText += "' saved successfully";
 
 				ReloadSavedPalette(palNameBuf);
 			}
 			else
 			{
-				OverlayManager::getInstance().AddLog("[error] Custom palette '%s' failed to be saved.\n", filenameTemp.c_str());
+				WindowManager::getInstance().AddLog("[error] Custom palette '%s' failed to be saved.\n", filenameTemp.c_str());
 				messageText += "' save failed";
 			}
 
@@ -391,16 +391,16 @@ void PaletteEditorWindow::SavePaletteToFile()
 
 void PaletteEditorWindow::ReloadSavedPalette(const char* palName)
 {
-	OverlayManager::getInstance().SetLogging(false);
+	WindowManager::getInstance().SetLogging(false);
 	g_interfaces.pPaletteManager->ReloadAllPalettes();
-	OverlayManager::getInstance().SetLogging(true);
+	WindowManager::getInstance().SetLogging(true);
 
 	//find the newly loaded custom pal
 	m_selectedPalIndex = g_interfaces.pPaletteManager->FindCustomPalIndex(m_selectedCharIndex, palName);
 
 	if (m_selectedPalIndex < 0)
 	{
-		OverlayManager::getInstance().AddLog("[error] Saved custom palette couldn't be reloaded. Not found.\n");
+		WindowManager::getInstance().AddLog("[error] Saved custom palette couldn't be reloaded. Not found.\n");
 		m_selectedPalIndex = 0;
 	}
 
