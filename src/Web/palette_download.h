@@ -1,3 +1,3 @@
 #pragma once
 
-void InitiateDownloadingPaletteArchive();
+void StartAsyncPaletteArchiveDownload();

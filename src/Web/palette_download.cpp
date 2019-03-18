@@ -130,10 +130,8 @@ void DownloadPaletteArchive()
 	GetPalettesFromArchive();
 }
 
-void InitiateDownloadingPaletteArchive()
+void StartAsyncPaletteArchiveDownload()
 {
-	HANDLE paletteDownloadThread = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)DownloadPaletteArchive, NULL, NULL, NULL);
-	if (paletteDownloadThread)
-		CloseHandle(paletteDownloadThread);
+	CloseHandle(CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)DownloadPaletteArchive, nullptr, 0, nullptr));
 }
 

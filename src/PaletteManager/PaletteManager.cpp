@@ -398,7 +398,7 @@ void PaletteManager::LoadAllPalettes()
 	LoadPaletteSettingsFile();
 
 	if(m_loadOnlinePalettes)
-		InitiateDownloadingPaletteArchive();
+		StartAsyncPaletteArchiveDownload();
 }
 
 void PaletteManager::ReloadAllPalettes()
