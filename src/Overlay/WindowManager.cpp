@@ -86,6 +86,7 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	m_windowContainer = new WindowContainerImpl();
 
 	AddLog("[system] Initialization starting...\n");
+
 	StartAsyncUpdateCheck();
 	StartAsyncDonatorsFetch();
 
@@ -95,9 +96,6 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	style.FrameBorderSize = 1;
 	style.ScrollbarSize = 14;
 	style.Alpha = DEFAULT_ALPHA;
-
-	//disable menu.ini saving?
-	//ImGui::GetIO().IniFilename = NULL;
 
 	if (Settings::settingsIni.menusize == 1)
 	{
@@ -189,6 +187,8 @@ void WindowManager::Render()
 		return;
 
 	LOG(7, "WindowManager::Render\n");
+
+	WindowDrawer::DrawAllWindows(m_windowContainer);
 	ImGui::Render();
 }
 
@@ -205,16 +205,9 @@ void WindowManager::Update()
 		g_interfaces.player2.GetChar1().GetPalHandle(),
 		g_interfaces.player2.GetChar2().GetPalHandle());
 
-	// return if game window is minimized, to avoid the custom hud elements
-	// being thrown in the upper left corner due to resolution shrinking
-	if (IsIconic(g_gameProc.hWndGameWindow))
-		return;
-
 	HandleButtons();
 
 	ImGui_ImplDX9_NewFrame();
-
-	ImGuiIO& io = ImGui::GetIO();
 
 	bool isUpdateNotifierWindowOpen =
 		m_windowContainer->GetWindow<UpdateNotifierWindow>(WindowType_UpdateNotifier)->IsOpen();
@@ -223,15 +216,15 @@ void WindowManager::Update()
 	bool isLogWindowOpen =
 		m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->IsOpen();
 
+	ImGuiIO& io = ImGui::GetIO();
 	io.MouseDrawCursor = m_windowContainer->GetWindow(WindowType_Main)->IsOpen() | isLogWindowOpen
 		| isPaletteEditorWindowOpen | isUpdateNotifierWindowOpen; // show_notification_window | show_demo_window;
 
 	if (Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)
 	{
-		io.DisplaySize = ImVec2((float)Settings::settingsIni.renderwidth, (float)Settings::settingsIni.renderheight);
+		io.DisplaySize =
+			ImVec2((float)Settings::settingsIni.renderwidth, (float)Settings::settingsIni.renderheight);
 	}
-
-	WindowDrawer::DrawAllWindows(m_windowContainer);
 
 	LOG(7, "END OF WindowManager::Update\n");
 }
