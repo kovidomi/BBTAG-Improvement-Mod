@@ -1,5 +1,6 @@
 #include "WindowManager.h"
 
+#include "Window/CustomHud/CustomHudWindow.h"
 #include "Window/DebugWindow.h"
 #include "Window/DonatorsWindow.h"
 #include "Window/LogWindow.h"
@@ -10,19 +11,6 @@
 #include "Core/info.h"
 #include "Core/logger.h"
 #include "Core/Settings.h"
-#include "Window/CustomHud/CustomHudWindow.h"
-
-WindowManager::WindowManager()
-{
-	//dividing by 1904x1042 because the custom HUD was designed on that resolution
-	m_scale = ImVec2(
-		(Settings::settingsIni.renderwidth * Settings::settingsIni.customhudscale) / 1904.0f,
-		(Settings::settingsIni.renderheight * Settings::settingsIni.customhudscale) / 1042.0f
-	);
-	LOG(2, "Overlay scale: x: %.2f y: %.2f\n", m_scale.x, m_scale.y);
-
-	InitWindowContainer();
-}
 
 void WindowManager::DrawAllWindows()
 {
@@ -54,6 +42,12 @@ void WindowManager::FillWindowContainer()
 		new PaletteEditorWindow("Palette Editor", true));
 
 	CustomHudWindow* pCustomHud = new CustomHudWindow("Custom Hud", false, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar);
-	pCustomHud->SetScale(m_scale);
+	//dividing by 1904x1042 because the custom HUD was designed on that resolution
+	ImVec2 scale = ImVec2(
+		(Settings::settingsIni.renderwidth * Settings::settingsIni.customhudscale) / 1904.0f,
+		(Settings::settingsIni.renderheight * Settings::settingsIni.customhudscale) / 1042.0f
+	);
+	LOG(2, "Overlay scale: x: %.2f y: %.2f\n", scale.x, scale.y);
+	pCustomHud->SetScale(scale);
 	AddWindow(WindowType_CustomHud, pCustomHud);
 }

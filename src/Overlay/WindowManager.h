@@ -16,11 +16,8 @@ enum WindowType_
 class WindowManager : public WindowDrawer, public WindowContainer
 {
 public:
-	WindowManager();
 	~WindowManager() override = default;
 	void DrawAllWindows();
 protected:
 	void FillWindowContainer() override;
-private:
-	ImVec2 m_scale;
 };
