@@ -36,6 +36,16 @@ bool Window::IsOpen() const
 	return m_windowOpen;
 }
 
+void Window::SetWindowFlag(ImGuiWindowFlags flag)
+{
+	m_windowFlags |= flag;
+}
+
+void Window::ClearWindowFlag(ImGuiWindowFlags flag)
+{
+	m_windowFlags &= ~flag;
+}
+
 bool * Window::GetWindowOpenPointer()
 {
 	if (m_windowClosable)

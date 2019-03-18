@@ -17,6 +17,8 @@ public:
 	void Close();
 	void ToggleOpen();
 	bool IsOpen() const;
+	void SetWindowFlag(ImGuiWindowFlags flag);
+	void ClearWindowFlag(ImGuiWindowFlags flag);
 protected:
 	virtual void BeforeDraw() {}
 	virtual void Draw() = 0;
