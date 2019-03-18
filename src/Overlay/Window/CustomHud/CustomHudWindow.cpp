@@ -8,6 +8,7 @@ CustomHudWindow::CustomHudWindow(const std::string & windowTitle, bool windowClo
 {
 	m_healthWindowRight.SetRightSide(true);
 	m_metersWindowRight.SetRightSide(true);
+	m_uniqueMetersWindowRight.SetRightSide(true);
 
 	// TODO: fix this doublepointer abomination
 	m_metersWindowLeft.SetMeterData(g_interfaces.player1.GetMetersMemberRef());
