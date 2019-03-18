@@ -12,6 +12,7 @@
 #include "Core/logger.h"
 #include "Core/Settings.h"
 #include "Core/utils.h"
+#include "Web/donators_fetch.h"
 #include "Web/update_check.h"
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
@@ -84,6 +85,10 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 
 	m_windowContainer = new WindowContainerImpl();
 
+	AddLog("[system] Initialization starting...\n");
+	StartAsyncUpdateCheck();
+	StartAsyncDonatorsFetch();
+
 	ImGui::StyleColorsDark();
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.WindowBorderSize = 1;
@@ -101,10 +106,6 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	}
 	else if (Settings::settingsIni.menusize == 3)
 		ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(DroidSans_compressed_data, DroidSans_compressed_size, 20);
-
-	m_initialized = true;
-	AddLog("[system] Initialization starting...\n");
-
 
 	toggle_key = Settings::getButtonValue(Settings::settingsIni.togglebutton);
 	AddLog("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
