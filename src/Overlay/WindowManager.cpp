@@ -146,7 +146,7 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	AddLogSeparator();
 	LOG(2, "Init end\n");
 
-	return m_initialized;
+	return true;
 }
 
 void WindowManager::Shutdown()
