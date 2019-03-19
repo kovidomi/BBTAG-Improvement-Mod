@@ -87,9 +87,6 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 
 	AddLog("[system] Initialization starting...\n");
 
-	StartAsyncUpdateCheck();
-	StartAsyncDonatorsFetch();
-
 	ImGui::StyleColorsDark();
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.WindowBorderSize = 1;
@@ -142,10 +139,13 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 
 	srand(time(NULL));
 
+	StartAsyncUpdateCheck();
+	StartAsyncDonatorsFetch();
+
 	AddLog("[system] Finished initialization\n");
 	AddLogSeparator();
-
 	LOG(2, "Init end\n");
+
 	return m_initialized;
 }
 
