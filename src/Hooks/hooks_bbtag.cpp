@@ -80,7 +80,7 @@ void __declspec(naked)GetGameStateAndModeTitleScreen()
 
 	placeHooks_steamApiWrapper();
 
-	WindowManager::getInstance().Init(g_gameProc.hWndGameWindow, g_interfaces.pD3D9ExWrapper);
+	WindowManager::GetInstance().Init(g_gameProc.hWndGameWindow, g_interfaces.pD3D9ExWrapper);
 
 	__asm
 	{
@@ -109,7 +109,7 @@ void __declspec(naked)GetGameStateAndModeEntranceScreen()
 
 	placeHooks_steamApiWrapper();
 
-	WindowManager::getInstance().Init(g_gameProc.hWndGameWindow, g_interfaces.pD3D9ExWrapper);
+	WindowManager::GetInstance().Init(g_gameProc.hWndGameWindow, g_interfaces.pD3D9ExWrapper);
 
 	//ResetBackToMenu();
 
@@ -197,7 +197,7 @@ void __declspec(naked)GetTimer()
 	}
 
 	__asm pushad
-	WindowManager::getInstance().OnMatchInit();
+	WindowManager::GetInstance().OnMatchInit();
 	__asm popad
 
 	__asm

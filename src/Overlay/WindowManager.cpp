@@ -20,7 +20,6 @@
 #include <sstream>
 #include <time.h>
 
-#define MAX_LOG_MSG_LEN 1024
 #define DEFAULT_ALPHA 0.87f
 
 WindowManager* WindowManager::m_instance = nullptr;
@@ -48,7 +47,12 @@ bool WindowManager::IsInitialized() const
 	return m_initialized;
 }
 
-WindowManager & WindowManager::getInstance()
+WindowContainer * WindowManager::GetWindowContainer() const
+{
+	return m_windowContainer;
+}
+
+WindowManager & WindowManager::GetInstance()
 {
 	if (m_instance == nullptr)
 	{
@@ -83,9 +87,11 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 		return false;
 	}
 
-	m_windowContainer = new WindowContainerImpl();
+	m_pLogger = g_imGuiLogger;
 
-	AddLog("[system] Initialization starting...\n");
+	m_pLogger->AddLog("[system] Initialization starting...\n");
+
+	m_windowContainer = new WindowContainerImpl();
 
 	ImGui::StyleColorsDark();
 	ImGuiStyle& style = ImGui::GetStyle();
@@ -103,13 +109,13 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 		ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(DroidSans_compressed_data, DroidSans_compressed_size, 20);
 
 	toggle_key = Settings::getButtonValue(Settings::settingsIni.togglebutton);
-	AddLog("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
+	m_pLogger->AddLog("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
 
 	toggleHUD_key = Settings::getButtonValue(Settings::settingsIni.toggleHUDbutton);
-	AddLog("[system] HUD toggling key set to '%s'\n", Settings::settingsIni.toggleHUDbutton.c_str());
+	m_pLogger->AddLog("[system] HUD toggling key set to '%s'\n", Settings::settingsIni.toggleHUDbutton.c_str());
 
 	toggleCustomHUD_key = Settings::getButtonValue(Settings::settingsIni.togglecustomHUDbutton);
-	AddLog("[system] CustomHUD toggling key set to '%s'\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
+	m_pLogger->AddLog("[system] CustomHUD toggling key set to '%s'\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
 
 	g_interfaces.pPaletteManager->LoadAllPalettes();
 
@@ -142,8 +148,8 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	StartAsyncUpdateCheck();
 	StartAsyncDonatorsFetch();
 
-	AddLog("[system] Finished initialization\n");
-	AddLogSeparator();
+	m_pLogger->AddLog("[system] Finished initialization\n");
+	m_pLogger->AddLogSeparator();
 	LOG(2, "Init end\n");
 
 	return true;
@@ -229,60 +235,6 @@ void WindowManager::Update()
 	LOG(7, "END OF WindowManager::Update\n");
 }
 
-void WindowManager::SetUpdateAvailable()
-{
-	m_windowContainer->GetWindow(WindowType_UpdateNotifier)->Open();
-}
-
-// start with type a of message: "[system]", "[info]", "[warning]", "[error]", "[fatal]", "[notice]", "[log]"
-void WindowManager::AddLog(const char* message, ...)
-{
-	if (!m_initialized || ! m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->IsLoggingOn())
-	{ 
-		return; 
-	}
-
-	//Get current time into a string
-	time_t current_time;
-	struct tm * time_info;
-	char timeString[9];  // extra space for nullbyte: "HH:MM:SS\0"
-
-	time(&current_time);
-	time_info = localtime(&current_time);
-
-	strftime(timeString, sizeof(timeString), "%H:%M:%S", time_info);
-
-	if (strlen(message) > MAX_LOG_MSG_LEN)
-	{
-		LOG(2, "AddLog error: message too long!\nmessage: %s", message);
-		m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->AddLog("%s [error] Log message too long.", timeString);
-		return;
-	}
-
-	std::string fullMessage(timeString);
-
-	char buf[MAX_LOG_MSG_LEN];
-	va_list args;
-	va_start(args, message);
-	vsprintf(buf, message, args);
-	va_end(args);
-
-	fullMessage += " ";
-	fullMessage += buf;
-
-	m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->AddLog(fullMessage.c_str());
-}
-
-void WindowManager::AddLogSeparator()
-{
-	m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->AddLog("------------------------------------------------------------------\n");
-}
-
-void WindowManager::SetLogging(bool value)
-{
-	m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->SetLogging(value);
-}
-
 void WindowManager::WriteLogToFile()
 {
 	if (!m_initialized)
@@ -336,7 +288,7 @@ void WindowManager::WriteLogToFile()
 
 	//d3dparams here
 
-	m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->ToFile(file);
+	m_pLogger->ToFile(file);
 	fprintf(file, "\n#####################################\n\n\n");
 
 	fclose(file);

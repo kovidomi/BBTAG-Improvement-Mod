@@ -30,7 +30,7 @@ void CreateCustomDirectories()
 
 void BBTAG_IM_Shutdown()
 {
-	WindowManager::getInstance().Shutdown();
+	WindowManager::GetInstance().Shutdown();
 	CleanupInterfaces();
 	closeLogger();
 }
