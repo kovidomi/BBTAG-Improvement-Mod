@@ -19,7 +19,7 @@ void WindowContainerImpl::FillWindowContainer()
 	AddWindow(WindowType_Main, pMainWindow);
 
 	AddWindow(WindowType_Log,
-		new LogWindow("Log", true,
+		new LogWindow("Log", true, *(ImGuiLogger*)g_imGuiLogger,
 			ImGuiWindowFlags_NoCollapse));
 
 	AddWindow(WindowType_Debug,
