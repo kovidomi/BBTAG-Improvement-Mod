@@ -3,7 +3,7 @@
 #include "Core/interfaces.h"
 #include "Core/logger.h"
 #include "Game/gamestates.h"
-#include "Overlay/WindowManager.h"
+#include "Overlay/Logger/ImGuiLogger.h"
 #include "PaletteManager/impl_format.h"
 
 #include <imgui.h>
@@ -329,13 +329,13 @@ void PaletteEditorWindow::SavePaletteToFile()
 		if (strncmp(palNameBuf, "", IMPL_PALNAME_LENGTH) == 0)
 		{
 			memcpy(message, "Error, no filename given", 25);
-			WindowManager::getInstance().AddLog("[error] Could not save custom palette, no filename was given\n");
+			g_imGuiLogger->AddLog("[error] Could not save custom palette, no filename was given\n");
 			return;
 		}
 		else if (strncmp(palNameBuf, "Default", IMPL_PALNAME_LENGTH) == 0 || strncmp(palNameBuf, "Random", IMPL_PALNAME_LENGTH) == 0)
 		{
 			memcpy(message, "Error, not a valid filename", 28);
-			WindowManager::getInstance().AddLog("[error] Could not save custom palette: not a valid filename\n");
+			g_imGuiLogger->AddLog("[error] Could not save custom palette: not a valid filename\n");
 			return;
 		}
 
@@ -373,14 +373,14 @@ void PaletteEditorWindow::SavePaletteToFile()
 			if (g_interfaces.pPaletteManager->WritePaletteToFile(m_selectedCharIndex, &curPalData))
 			{
 				std::string fullPath(wFullPath.begin(), wFullPath.end());
-				WindowManager::getInstance().AddLog("[system] Custom palette '%s' successfully saved to:\n'%s'\n", filenameTemp.c_str(), fullPath.c_str());
+				g_imGuiLogger->AddLog("[system] Custom palette '%s' successfully saved to:\n'%s'\n", filenameTemp.c_str(), fullPath.c_str());
 				messageText += "' saved successfully";
 
 				ReloadSavedPalette(palNameBuf);
 			}
 			else
 			{
-				WindowManager::getInstance().AddLog("[error] Custom palette '%s' failed to be saved.\n", filenameTemp.c_str());
+				g_imGuiLogger->AddLog("[error] Custom palette '%s' failed to be saved.\n", filenameTemp.c_str());
 				messageText += "' save failed";
 			}
 
@@ -391,16 +391,16 @@ void PaletteEditorWindow::SavePaletteToFile()
 
 void PaletteEditorWindow::ReloadSavedPalette(const char* palName)
 {
-	WindowManager::getInstance().SetLogging(false);
+	g_imGuiLogger->EnableLog(false);
 	g_interfaces.pPaletteManager->ReloadAllPalettes();
-	WindowManager::getInstance().SetLogging(true);
+	g_imGuiLogger->EnableLog(true);
 
 	//find the newly loaded custom pal
 	m_selectedPalIndex = g_interfaces.pPaletteManager->FindCustomPalIndex(m_selectedCharIndex, palName);
 
 	if (m_selectedPalIndex < 0)
 	{
-		WindowManager::getInstance().AddLog("[error] Saved custom palette couldn't be reloaded. Not found.\n");
+		g_imGuiLogger->AddLog("[error] Saved custom palette couldn't be reloaded. Not found.\n");
 		m_selectedPalIndex = 0;
 	}
 

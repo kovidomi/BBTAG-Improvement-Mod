@@ -4,6 +4,7 @@
 
 #include "Core/logger.h"
 #include "Core/info.h"
+#include "Overlay/Logger/ImGuiLogger.h"
 #include "Overlay/WindowManager.h"
 
 #include <handleapi.h>
@@ -28,7 +29,7 @@ void CheckUpdate()
 
 	if (strcmp(data.c_str(), "") == 0)
 	{
-		WindowManager::getInstance().AddLog("[error] Update check failed. No data downloaded.\n");
+		g_imGuiLogger->AddLog("[error] Update check failed. No data downloaded.\n");
 		LOG(2, "Update check failed.No data downloaded.\n");
 		return;
 	}
@@ -43,7 +44,7 @@ void CheckUpdate()
 
 	if (m[1].str() == "")
 	{
-		WindowManager::getInstance().AddLog("[error] Update check failed. Regex no match.\n");
+		g_imGuiLogger->AddLog("[error] Update check failed. Regex no match.\n");
 		return;
 	}
 
@@ -52,14 +53,14 @@ void CheckUpdate()
 		newVersionNum = m[1].str();
 
 		LOG(2, "New version found: %s\n", newVersionNum.c_str());
-		WindowManager::getInstance().AddLog("[system] Update available: BBTAG Improvement Mod %s has been released!\n",
+		g_imGuiLogger->AddLog("[system] Update available: BBTAG Improvement Mod %s has been released!\n",
 			newVersionNum.c_str());
 
-		WindowManager::getInstance().SetUpdateAvailable();
+		WindowManager::GetInstance().GetWindowContainer()->GetWindow(WindowType_UpdateNotifier)->Open();
 	}
 	else
 	{
-		WindowManager::getInstance().AddLog("[system] BBTAG Improvement Mod is up-to-date\n");
+		g_imGuiLogger->AddLog("[system] BBTAG Improvement Mod is up-to-date\n");
 	}
 }
 
