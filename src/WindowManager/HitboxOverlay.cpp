@@ -65,9 +65,21 @@ bool HitboxOverlay::HasNullptrInData()
 
 D3DXVECTOR2 HitboxOverlay::CalculateObjWorldPosition(const CharInfo* charObj)
 {
+	//float posX = charObj->position_x_dupe -
+	//	charObj->positionOffsetX_1 +
+	//	(charObj->facingLeft ? -charObj->positionOffsetX_2 : charObj->positionOffsetX_2) +
+	//	(charObj->positionOffsetX_3 * 10) +
+	//	charObj->position_x_dupe_offset_x;
+	//	//- charObj->position_x_dupe_offset;
+
+	//float posY = charObj->position_y_dupe + charObj->position_y_dupe_offset_y;
+
+	float posX = charObj->position_x_dupe - charObj->positionOffsetX_1;
+	float posY = charObj->position_y_dupe;// +charObj->position_y_dupe_offset_y;
+
 	return D3DXVECTOR2(
-		floor((charObj->position_x - charObj->positionOffsetX) / 1000 * m_scale),
-		floor(charObj->position_y / 1000 * m_scale)
+		floor(posX / 1000 * m_scale),
+		floor(posY / 1000 * m_scale)
 	);
 }
 
