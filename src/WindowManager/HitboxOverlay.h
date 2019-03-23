@@ -28,6 +28,7 @@ private:
 
 	D3DXVECTOR2 CalculateObjWorldPosition(const CharInfo * charObj);
 	D3DXVECTOR3 CalculateScreenPosition(D3DXVECTOR3 worldPos);
+	D3DXVECTOR2 RotatePoint(D3DXVECTOR2 center, float angleInRad, D3DXVECTOR2 point);
 
 	void RenderLine(const ImVec2& from, const ImVec2& to, uint32_t color, float thickness = 1.0f);
 	void RenderCircle(const ImVec2& position, float radius, uint32_t color, float thickness = 1.0f, uint32_t segments = 16);

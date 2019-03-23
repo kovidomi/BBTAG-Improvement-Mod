@@ -94,6 +94,30 @@ D3DXVECTOR3 HitboxOverlay::CalculateScreenPosition(D3DXVECTOR3 worldPos)
 	return result;
 }
 
+D3DXVECTOR2 HitboxOverlay::RotatePoint(D3DXVECTOR2 center, float angleInRad, D3DXVECTOR2 point)
+{
+	if (!angleInRad)
+	{
+		return point;
+	}
+
+	// translate point back to origin:
+	point.x -= center.x;
+	point.y -= center.y;
+
+	float s = sin(angleInRad);
+	float c = cos(angleInRad);
+
+	// rotate point
+	float xNew = point.x * c - point.y * s;
+	float yNew = point.x * s + point.y * c;
+
+	// translate point back:
+	point.x = xNew + center.x;
+	point.y = yNew + center.y;
+	return point;
+}
+
 void HitboxOverlay::DrawOriginLine(ImVec2 screenPos)
 {
 	const unsigned int colorOrange = 0xFFFF9900;
@@ -108,31 +132,51 @@ void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR
 {
 	std::vector<JonbEntry> entries = JonbReader::getJonbEntries(charObj);
 
-	for (JonbEntry entry : entries)
+	for (const JonbEntry &entry : entries)
 	{
 		float offsetX =  floor(entry.offsetX * m_scale);
 		float offsetY = -floor(entry.offsetY * m_scale);
 		float width =    floor(entry.width * m_scale);
 		float height =  -floor(entry.height * m_scale);
 
+		float rotationDeg = charObj->positionRotationDegrees / 1000.0f;
+
 		if (!charObj->facingLeft)
 		{
 			offsetX = -offsetX;
 			width = -width;
+			if (rotationDeg)
+			{
+				rotationDeg = 360.0f - rotationDeg;
+			}
 		}
+
+		float rotationRad = D3DXToRadian(rotationDeg);
+
+		D3DXVECTOR2 rotatedRectFrom = RotatePoint(
+			playerWorldPos,
+			rotationRad,
+			D3DXVECTOR2(playerWorldPos.x + offsetX, playerWorldPos.y + offsetY)
+		);
 
 		D3DXVECTOR3 rectFrom = CalculateScreenPosition(
 			D3DXVECTOR3(
-				playerWorldPos.x + offsetX,
-				playerWorldPos.y + offsetY,
+				rotatedRectFrom.x,
+				rotatedRectFrom.y,
 				0.0f
 			)
 		);
 
+		D3DXVECTOR2 rotatedRectTo = RotatePoint(
+			playerWorldPos,
+			rotationRad,
+			D3DXVECTOR2(playerWorldPos.x + offsetX + width, playerWorldPos.y + offsetY + height)
+		);
+
 		D3DXVECTOR3 rectTo = CalculateScreenPosition(
 			D3DXVECTOR3(
-				playerWorldPos.x + offsetX + width,
-				playerWorldPos.y + offsetY + height,
+				rotatedRectTo.x,
+				rotatedRectTo.y,
 				0.0f
 			)
 		);
@@ -226,3 +270,18 @@ void HitboxOverlay::RenderRectFilled(const ImVec2& from, const ImVec2& to, uint3
 
 	window->DrawList->AddRectFilled(from, to, ImGui::GetColorU32({ r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f }), rounding, roundingCornersFlags);
 }
+
+//D3DXVECTOR2 HitboxOverlay::RotatePoint(D3DXVECTOR2 center, D3DXVECTOR2 pt, float degree)
+//{
+//	double x1, x2, y1, y2;
+//	x1 = center.x;
+//	y1 = center.y;
+//	x2 = pt.x;
+//	y2 = pt.y;
+//	double distance = Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
+//	degree *= (float)(Math.PI / 180);
+//	double x3, y3;
+//	x3 = distance * Math.Cos(degree) + x1;
+//	y3 = distance * Math.Sin(degree) + y1;
+//	return D3DXVECTOR2((int)x3, (int)y3);
+//}
