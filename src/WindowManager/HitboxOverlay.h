@@ -11,10 +11,11 @@ class HitboxOverlay
 {
 public:
 	bool windowOpen = false;
+	bool drawOriginLine = false;
 
 	HitboxOverlay() = default;
 	void Update();
-	void DrawOriginLine(ImVec2 screenPos);
+	void DrawOriginLine(ImVec2 worldPos, float rotationRad);
 	void DrawCollisionAreas(const CharInfo* charObj, const ImVec2 playerWorldPos);
 	float& GetScale();
 	void DrawRectThicknessSlider();

@@ -114,14 +114,23 @@ ImVec2 HitboxOverlay::RotatePoint(ImVec2 center, float angleInRad, ImVec2 point)
 	return point;
 }
 
-void HitboxOverlay::DrawOriginLine(ImVec2 screenPos)
+void HitboxOverlay::DrawOriginLine(ImVec2 worldPos, float rotationRad)
 {
 	const unsigned int colorOrange = 0xFFFF9900;
+	const int horizontalLength = 20;
+	const int verticalLength = 50;
 
-	ImVec2 lineFrom = ImVec2(screenPos.x, screenPos.y);
-	ImVec2 lineTo = ImVec2(screenPos.x, screenPos.y - 500);
+	ImVec2 horizontalFrom = RotatePoint(worldPos, rotationRad, ImVec2(worldPos.x - horizontalLength / 2, worldPos.y));
+	ImVec2 horizontalTo = RotatePoint(worldPos, rotationRad, ImVec2(worldPos.x + horizontalLength / 2, worldPos.y));
+	horizontalFrom = CalculateScreenPosition(horizontalFrom);
+	horizontalTo = CalculateScreenPosition(horizontalTo);
+	RenderLine(horizontalFrom, horizontalTo, colorOrange, 3);
 
-	RenderLine(lineFrom, lineTo, colorOrange, 2);
+	ImVec2 verticalFrom = worldPos;
+	ImVec2 verticalTo = RotatePoint(verticalFrom, rotationRad, ImVec2(verticalFrom.x, verticalFrom.y + verticalLength));
+	verticalFrom = CalculateScreenPosition(verticalFrom);
+	verticalTo = CalculateScreenPosition(verticalTo);
+	RenderLine(verticalFrom, verticalTo, colorOrange, 3);
 }
 
 void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const ImVec2 playerWorldPos)
@@ -175,6 +184,11 @@ void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const ImVec2 pla
 		unsigned int transparencyPercentage = ((int)transparency << 24) & 0xFF000000;
 		const unsigned int rectFillColor = clearedTransparencyBits | transparencyPercentage;
 		RenderRectFilled(pointA, pointB, pointC, pointD, rectFillColor);
+
+		if (drawOriginLine)
+		{
+			DrawOriginLine(playerWorldPos, rotationRad);
+		}
 	}
 }
 
@@ -192,7 +206,6 @@ void HitboxOverlay::DrawRectFillTransparencySlider()
 {
 	ImGui::SliderFloat("Fill transparency", &m_rectFillTransparency, 0.0f, 1.0f, "%.2f");
 }
-
 
 void HitboxOverlay::RenderLine(const ImVec2& from, const ImVec2& to, uint32_t color, float thickness)
 {

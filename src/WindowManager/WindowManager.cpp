@@ -913,6 +913,9 @@ void WindowManager::ShowMainWindow(bool * p_open)
 
 			ImGui::TextUnformatted(" "); ImGui::SameLine();
 			m_hitboxOverlay->DrawRectFillTransparencySlider();
+
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			ImGui::Checkbox("Draw origin", &m_hitboxOverlay->drawOriginLine);
 		}
 
 		if (ImGui::CollapsingHeader("Loaded settings.ini values"))
