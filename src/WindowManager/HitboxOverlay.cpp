@@ -46,7 +46,7 @@ void HitboxOverlay::Draw()
 
 		if (isCharacter || isEntityActive)
 		{
-			const D3DXVECTOR2 entityWorldPos = CalculateObjWorldPosition(pEntity);
+			const ImVec2 entityWorldPos = CalculateObjWorldPosition(pEntity);
 			DrawCollisionAreas(pEntity, entityWorldPos);
 		}
 	}
@@ -63,7 +63,7 @@ bool HitboxOverlay::HasNullptrInData()
 	return !g_gameVals.pEntityList;
 }
 
-D3DXVECTOR2 HitboxOverlay::CalculateObjWorldPosition(const CharInfo* charObj)
+ImVec2 HitboxOverlay::CalculateObjWorldPosition(const CharInfo* charObj)
 {
 	//float posX = charObj->position_x_dupe -
 	//	charObj->positionOffsetX_1 +
@@ -77,24 +77,22 @@ D3DXVECTOR2 HitboxOverlay::CalculateObjWorldPosition(const CharInfo* charObj)
 	float posX = charObj->position_x_dupe - charObj->positionOffsetX_1;
 	float posY = charObj->position_y_dupe;// +charObj->position_y_dupe_offset_y;
 
-	return D3DXVECTOR2(
+	return ImVec2(
 		floor(posX / 1000 * m_scale),
 		floor(posY / 1000 * m_scale)
 	);
 }
 
-D3DXVECTOR3 HitboxOverlay::CalculateScreenPosition(D3DXVECTOR3 worldPos)
+ImVec2 HitboxOverlay::CalculateScreenPosition(ImVec2 worldPos)
 {
 	D3DXVECTOR3 result;
-	WorldToScreen(g_interfaces.pD3D9ExWrapper, &worldPos, &result);
+	D3DXVECTOR3 vec3WorldPos(worldPos.x, worldPos.y, 0.0f);
+	WorldToScreen(g_interfaces.pD3D9ExWrapper, &vec3WorldPos, &result);
 
-	result.x = floor(result.x);
-	result.y = floor(result.y);
-
-	return result;
+	return ImVec2(floor(result.x), floor(result.y));
 }
 
-D3DXVECTOR2 HitboxOverlay::RotatePoint(D3DXVECTOR2 center, float angleInRad, D3DXVECTOR2 point)
+ImVec2 HitboxOverlay::RotatePoint(ImVec2 center, float angleInRad, ImVec2 point)
 {
 	if (!angleInRad)
 	{
@@ -128,7 +126,7 @@ void HitboxOverlay::DrawOriginLine(ImVec2 screenPos)
 	RenderLine(lineFrom, lineTo, colorOrange, 2);
 }
 
-void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR2 playerWorldPos)
+void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const ImVec2 playerWorldPos)
 {
 	std::vector<JonbEntry> entries = JonbReader::getJonbEntries(charObj);
 
@@ -151,47 +149,34 @@ void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const D3DXVECTOR
 			}
 		}
 
+		ImVec2 pointA(playerWorldPos.x + offsetX, playerWorldPos.y + offsetY);
+		ImVec2 pointB(playerWorldPos.x + offsetX + width, playerWorldPos.y + offsetY);
+		ImVec2 pointC(playerWorldPos.x + offsetX + width, playerWorldPos.y + offsetY + height);
+		ImVec2 pointD(playerWorldPos.x + offsetX, playerWorldPos.y + offsetY + height);
+
 		float rotationRad = D3DXToRadian(rotationDeg);
 
-		D3DXVECTOR2 rotatedRectFrom = RotatePoint(
-			playerWorldPos,
-			rotationRad,
-			D3DXVECTOR2(playerWorldPos.x + offsetX, playerWorldPos.y + offsetY)
-		);
-
-		D3DXVECTOR3 rectFrom = CalculateScreenPosition(
-			D3DXVECTOR3(
-				rotatedRectFrom.x,
-				rotatedRectFrom.y,
-				0.0f
-			)
-		);
-
-		D3DXVECTOR2 rotatedRectTo = RotatePoint(
-			playerWorldPos,
-			rotationRad,
-			D3DXVECTOR2(playerWorldPos.x + offsetX + width, playerWorldPos.y + offsetY + height)
-		);
-
-		D3DXVECTOR3 rectTo = CalculateScreenPosition(
-			D3DXVECTOR3(
-				rotatedRectTo.x,
-				rotatedRectTo.y,
-				0.0f
-			)
-		);
+		pointA = RotatePoint(playerWorldPos, rotationRad, pointA);
+		pointB = RotatePoint(playerWorldPos, rotationRad, pointB);
+		pointC = RotatePoint(playerWorldPos, rotationRad, pointC);
+		pointD = RotatePoint(playerWorldPos, rotationRad, pointD);
+		
+		pointA = CalculateScreenPosition(pointA);
+		pointB = CalculateScreenPosition(pointB);
+		pointC = CalculateScreenPosition(pointC);
+		pointD = CalculateScreenPosition(pointD);
 
 		const unsigned int colorBlue = 0xFF0033CC;
 		const unsigned int colorRed = 0xFFFF0000;
 		const unsigned int rectBorderColor = entry.type == JonbChunkType_Hurtbox ? colorBlue : colorRed;
 
-		RenderRect(ImVec2(rectFrom.x, rectFrom.y), ImVec2(rectTo.x, rectTo.y), rectBorderColor, 0, ImDrawCornerFlags_All, m_rectThickness);
+		RenderRect(pointA, pointB, pointC, pointD, rectBorderColor, m_rectThickness);
 
 		const unsigned char transparency = 0xFF * m_rectFillTransparency;
 		unsigned int clearedTransparencyBits = (rectBorderColor & ~0xFF000000);
 		unsigned int transparencyPercentage = ((int)transparency << 24) & 0xFF000000;
 		const unsigned int rectFillColor = clearedTransparencyBits | transparencyPercentage;
-		RenderRectFilled(ImVec2(rectFrom.x, rectFrom.y), ImVec2(rectTo.x, rectTo.y), rectFillColor);
+		RenderRectFilled(pointA, pointB, pointC, pointD, rectFillColor);
 	}
 }
 
@@ -259,6 +244,18 @@ void HitboxOverlay::RenderRect(const ImVec2& from, const ImVec2& to, uint32_t co
 	window->DrawList->AddRect(from, to, ImGui::GetColorU32({ r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f }), rounding, roundingCornersFlags, thickness);
 }
 
+void HitboxOverlay::RenderRect(const ImVec2& pointA, const ImVec2& pointB, const ImVec2& pointC, const ImVec2& pointD, uint32_t color, float thickness)
+{
+	ImGuiWindow* window = ImGui::GetCurrentWindow();
+
+	float a = (color >> 24) & 0xFF;
+	float r = (color >> 16) & 0xFF;
+	float g = (color >> 8) & 0xFF;
+	float b = (color) & 0xFF;
+
+	window->DrawList->AddQuad(pointA, pointB, pointC, pointD, ImGui::GetColorU32({ r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f }), thickness);
+}
+
 void HitboxOverlay::RenderRectFilled(const ImVec2& from, const ImVec2& to, uint32_t color, float rounding, uint32_t roundingCornersFlags)
 {
 	ImGuiWindow* window = ImGui::GetCurrentWindow();
@@ -269,4 +266,16 @@ void HitboxOverlay::RenderRectFilled(const ImVec2& from, const ImVec2& to, uint3
 	float b = (color) & 0xFF;
 
 	window->DrawList->AddRectFilled(from, to, ImGui::GetColorU32({ r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f }), rounding, roundingCornersFlags);
+}
+
+void HitboxOverlay::RenderRectFilled(const ImVec2& pointA, const ImVec2& pointB, const ImVec2& pointC, const ImVec2& pointD, uint32_t color)
+{
+	ImGuiWindow* window = ImGui::GetCurrentWindow();
+
+	float a = (color >> 24) & 0xFF;
+	float r = (color >> 16) & 0xFF;
+	float g = (color >> 8) & 0xFF;
+	float b = (color) & 0xFF;
+
+	window->DrawList->AddQuadFilled(pointA, pointB, pointC, pointD, ImGui::GetColorU32({ r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f }));
 }
