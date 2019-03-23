@@ -270,18 +270,3 @@ void HitboxOverlay::RenderRectFilled(const ImVec2& from, const ImVec2& to, uint3
 
 	window->DrawList->AddRectFilled(from, to, ImGui::GetColorU32({ r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f }), rounding, roundingCornersFlags);
 }
-
-//D3DXVECTOR2 HitboxOverlay::RotatePoint(D3DXVECTOR2 center, D3DXVECTOR2 pt, float degree)
-//{
-//	double x1, x2, y1, y2;
-//	x1 = center.x;
-//	y1 = center.y;
-//	x2 = pt.x;
-//	y2 = pt.y;
-//	double distance = Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
-//	degree *= (float)(Math.PI / 180);
-//	double x3, y3;
-//	x3 = distance * Math.Cos(degree) + x1;
-//	y3 = distance * Math.Sin(degree) + y1;
-//	return D3DXVECTOR2((int)x3, (int)y3);
-//}
