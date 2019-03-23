@@ -24,7 +24,7 @@ public:
 	char pad_0280[4]; //0x0280
 	int32_t positionOffsetX_1; // _moveslide; //0x0284
 	char pad_0288[4]; //0x0288
-	int32_t positionOffsetX_2; // _(carmine_proj); //0x028C
+	int32_t positionRotationDegrees; //0x028C
 	char pad_0290[88]; //0x0290
 	float positionOffsetX_3; // _(deadspike); //0x02E8
 	int32_t position_x_dupe; //0x02EC
