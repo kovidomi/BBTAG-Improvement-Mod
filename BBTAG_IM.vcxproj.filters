@@ -173,7 +173,6 @@
     <ClCompile Include="src\Core\dllmain.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\WindowManager\WorldToScreen.cpp" />
     <ClCompile Include="src\WindowManager\HitboxOverlay.cpp" />
     <ClCompile Include="src\Game\JonbReader.cpp" />
   </ItemGroup>
@@ -311,7 +310,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\info.h" />
-    <ClInclude Include="src\WindowManager\WorldToScreen.h" />
     <ClInclude Include="src\WindowManager\HitboxOverlay.h" />
     <ClInclude Include="src\Game\JonbEntry.h" />
     <ClInclude Include="src\Game\JonbReader.h" />

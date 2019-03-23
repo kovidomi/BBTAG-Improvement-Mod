@@ -160,7 +160,6 @@
     <ClCompile Include="src\WindowManager\CustomHud.cpp" />
     <ClCompile Include="src\WindowManager\fonts.cpp" />
     <ClCompile Include="src\WindowManager\HitboxOverlay.cpp" />
-    <ClCompile Include="src\WindowManager\WorldToScreen.cpp" />
     <ClCompile Include="src\WindowManager\PaletteEditor.cpp" />
     <ClCompile Include="src\WindowManager\WindowManager.cpp" />
   </ItemGroup>
@@ -214,7 +213,6 @@
     <ClInclude Include="src\WindowManager\CustomHud.h" />
     <ClInclude Include="src\WindowManager\fonts.h" />
     <ClInclude Include="src\WindowManager\HitboxOverlay.h" />
-    <ClInclude Include="src\WindowManager\WorldToScreen.h" />
     <ClInclude Include="src\WindowManager\PaletteEditor.h" />
     <ClInclude Include="src\WindowManager\WindowManager.h" />
   </ItemGroup>

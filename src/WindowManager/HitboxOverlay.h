@@ -1,5 +1,5 @@
 #pragma once
-#include "../Game/CharInfo.h"
+#include "Game/CharInfo.h"
 
 #include <imgui.h>
 
@@ -26,6 +26,7 @@ private:
 	void Draw();
 	void AfterDraw();
 
+	bool WorldToScreen(LPDIRECT3DDEVICE9 pDevice, D3DXMATRIX* view, D3DXMATRIX* proj, D3DXVECTOR3* pos, D3DXVECTOR3* out);
 	ImVec2 CalculateObjWorldPosition(const CharInfo * charObj);
 	ImVec2 CalculateScreenPosition(ImVec2 worldPos);
 	ImVec2 RotatePoint(ImVec2 center, float angleInRad, ImVec2 point);

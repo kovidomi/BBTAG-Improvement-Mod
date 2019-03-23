@@ -1,7 +1,5 @@
 #include "HitboxOverlay.h"
 
-#include "WorldToScreen.h"
-
 #include "Core/interfaces.h"
 #include "Game/JonbReader.h"
 #include "imgui_internal.h"
@@ -87,7 +85,7 @@ ImVec2 HitboxOverlay::CalculateScreenPosition(ImVec2 worldPos)
 {
 	D3DXVECTOR3 result;
 	D3DXVECTOR3 vec3WorldPos(worldPos.x, worldPos.y, 0.0f);
-	WorldToScreen(g_interfaces.pD3D9ExWrapper, &vec3WorldPos, &result);
+	WorldToScreen(g_interfaces.pD3D9ExWrapper, g_gameVals.viewMatrix, g_gameVals.projMatrix, &vec3WorldPos, &result);
 
 	return ImVec2(floor(result.x), floor(result.y));
 }
@@ -278,4 +276,19 @@ void HitboxOverlay::RenderRectFilled(const ImVec2& pointA, const ImVec2& pointB,
 	float b = (color) & 0xFF;
 
 	window->DrawList->AddQuadFilled(pointA, pointB, pointC, pointD, ImGui::GetColorU32({ r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f }));
+}
+
+bool HitboxOverlay::WorldToScreen(LPDIRECT3DDEVICE9 pDevice, D3DXMATRIX* view, D3DXMATRIX* proj, D3DXVECTOR3* pos, D3DXVECTOR3* out)
+{
+	D3DVIEWPORT9 viewPort;
+	D3DXMATRIX world;
+
+	pDevice->GetViewport(&viewPort);
+	D3DXMatrixIdentity(&world);
+
+	D3DXVec3Project(out, pos, &viewPort, proj, view, &world);
+	if (out->z < 1) {
+		return true;
+	}
+	return false;
 }
