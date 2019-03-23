@@ -22,8 +22,20 @@ public:
 	int32_t position_x; //0x0278
 	int32_t position_y; //0x027C
 	char pad_0280[4]; //0x0280
-	int32_t positionOffsetX; //0x0284
-	char pad_0288[208]; //0x0288
+	int32_t positionOffsetX_1; // _moveslide; //0x0284
+	char pad_0288[4]; //0x0288
+	int32_t positionOffsetX_2; // _(carmine_proj); //0x028C
+	char pad_0290[88]; //0x0290
+	float positionOffsetX_3; // _(deadspike); //0x02E8
+	int32_t position_x_dupe; //0x02EC
+	int32_t position_y_dupe; //0x02F0
+	int32_t position_x_dupe_2; //0x02F4
+	int32_t position_y_dupe_2; //0x02F8
+	char pad_02FC[8]; //0x02FC
+	int32_t position_x_dupe_offset_x; // (vatista_orb); //0x0304
+	int32_t position_x_dupe_offset; //0x0308
+	int32_t position_y_dupe_offset_y; // (weiss_proj); //0x030C
+	char pad_0310[72]; //0x0310
 	int32_t stageEdgeTouchTimer; //0x0358
 	char pad_035C[888]; //0x035C
 	uint32_t deny_opponent_burst; //0x06D4
@@ -41,5 +53,4 @@ public:
 	uint32_t unique_meter_max_val; //0x210D0
 	uint32_t unique_meter_cur_val; //0x210D4
 	char pad_210D8[40]; //0x210D8
-
 }; //Size: 0x21100
