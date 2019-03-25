@@ -20,7 +20,7 @@ void LogWindow::Draw()
 	if (copyPressed)
 	{
 		ImGui::LogToClipboard();
-		m_logger.AddLog("[system] Log has been copied to clipboard\n");
+		m_logger.Log("[system] Log has been copied to clipboard\n");
 	}
 
 	ImGuiLogBuffer* logBuffer = (ImGuiLogBuffer*)m_logger.GetBuffer();

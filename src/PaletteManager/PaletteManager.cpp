@@ -59,7 +59,7 @@ void PaletteManager::LoadPalettesFromFolder()
 	InitCustomPaletteVector();
 
 	LOG(2, "LoadPaletteFiles\n");
-	g_imGuiLogger->AddLog("[system] Loading local custom palettes...\n");
+	g_imGuiLogger->Log("[system] Loading local custom palettes...\n");
 
 	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
 	for (int i = 0; i < (CHAR_NAMES_COUNT - 1); i++)
@@ -70,7 +70,7 @@ void PaletteManager::LoadPalettesFromFolder()
 
 	InitOnlinePalsIndexVector();
 
-	g_imGuiLogger->AddLog("[system] Finished loading local custom palettes\n");
+	g_imGuiLogger->Log("[system] Finished loading local custom palettes\n");
 }
 
 void PaletteManager::InitOnlinePalsIndexVector()
@@ -105,7 +105,7 @@ void PaletteManager::ApplyDefaultCustomPalette(CharIndex charIndex, CharPaletteH
 
 	if (foundCustomPalIndex < 0)
 	{
-		g_imGuiLogger->AddLog("[error] Palette file '%s' cannot be set as default: File not found.\n", palName);
+		g_imGuiLogger->Log("[error] Palette file '%s' cannot be set as default: File not found.\n", palName);
 		return;
 	}
 
@@ -149,7 +149,7 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 
 			if (fileName.find(".impl") == std::string::npos)
 			{
-				g_imGuiLogger->AddLog("[error] Unable to open '%s' : not an .impl file\n", fileName.c_str());
+				g_imGuiLogger->Log("[error] Unable to open '%s' : not an .impl file\n", fileName.c_str());
 				continue;
 			}
 
@@ -157,7 +157,7 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 			if(!utils_ReadFile(fullPath.c_str(), &fileContents, sizeof(IMPL_t), true))
 			{
 				LOG(2, "\tCouldn't open %s!\n", strerror(errno));
-				g_imGuiLogger->AddLog("[error] Unable to open '%s' : %s\n", fileName.c_str(), strerror(errno));
+				g_imGuiLogger->Log("[error] Unable to open '%s' : %s\n", fileName.c_str(), strerror(errno));
 				continue;
 			}
 
@@ -165,14 +165,14 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 			if (strcmp(fileContents.header.filesig, "IMPL") != 0)
 			{
 				LOG(2, "ERROR, unrecognized file format!\n");
-				g_imGuiLogger->AddLog("[error] '%s' unrecognized file format!\n", fileName.c_str());
+				g_imGuiLogger->Log("[error] '%s' unrecognized file format!\n", fileName.c_str());
 				continue;
 			}
 
 			if (fileContents.header.datalen != sizeof(IMPL_data_t))
 			{
 				LOG(2, "ERROR, data size mismatch!\n");
-				g_imGuiLogger->AddLog("[error] '%s' data size mismatch!\n", fileName.c_str());
+				g_imGuiLogger->Log("[error] '%s' data size mismatch!\n", fileName.c_str());
 				continue;
 			}
 
@@ -182,7 +182,7 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 					fileName.c_str(), charNames[fileContents.header.charindex].c_str(),
 					charNames[charIndex].c_str());
 
-				g_imGuiLogger->AddLog("[warning] '%s' belongs to character '%s', but is placed in folder '%s'\n", 
+				g_imGuiLogger->Log("[warning] '%s' belongs to character '%s', but is placed in folder '%s'\n", 
 					fileName.c_str(), charNames[fileContents.header.charindex],
 					charNames[charIndex].c_str());
 				//keep going
@@ -212,7 +212,7 @@ void PaletteManager::LoadPaletteSettingsFile()
 	if (!PathFileExists(wFullPath.c_str()))
 	{
 		LOG(2, "\t'palettes.ini' file was not found!\n");
-		g_imGuiLogger->AddLog("[error] 'palettes.ini' file was not found!\n");
+		g_imGuiLogger->Log("[error] 'palettes.ini' file was not found!\n");
 		return;
 	}
 
@@ -257,7 +257,7 @@ void PaletteManager::LoadPaletteSettingsFile()
 //	if (PathFileExists(wFullPath.c_str()))
 //	{
 //		LOG(2, "\t'palettes.ini' already exists\n");
-//		g_imGuiLogger->AddLog("[system] 'palettes.ini' already exists\n");
+//		g_imGuiLogger->Log("[system] 'palettes.ini' already exists\n");
 //		return true;
 //	}
 //
@@ -269,7 +269,7 @@ void PaletteManager::LoadPaletteSettingsFile()
 //	if (!file.is_open())
 //	{
 //		LOG(2, "\tCouldn't open %s!\n", strerror(errno));
-//		g_imGuiLogger->AddLog("[error] Unable to open '%s' : %s\n", path.c_str(), strerror(errno));
+//		g_imGuiLogger->Log("[error] Unable to open '%s' : %s\n", path.c_str(), strerror(errno));
 //		return false;
 //	}
 //
@@ -310,7 +310,7 @@ void PaletteManager::LoadPaletteSettingsFile()
 //	}
 //
 //	LOG(2, "\tCreated '%s'\n", path.c_str());
-//	g_imGuiLogger->AddLog("[system] Created '%s'\n", path.c_str());
+//	g_imGuiLogger->Log("[system] Created '%s'\n", path.c_str());
 //
 //	return true;
 //}
@@ -344,13 +344,13 @@ bool PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & f
 
 	if (charIndex > CHAR_NAMES_COUNT)
 	{
-		g_imGuiLogger->AddLog("[error] Custom palette couldn't be loaded: CharIndex out of bound.\n");
+		g_imGuiLogger->Log("[error] Custom palette couldn't be loaded: CharIndex out of bound.\n");
 		LOG(2, "ERROR, CharIndex out of bound\n");
 		return false;
 	}
 	if (FindCustomPalIndex(charIndex, filledPalData.palname) > 0)
 	{
-		g_imGuiLogger->AddLog(
+		g_imGuiLogger->Log(
 			"[error] Custom palette couldn't be loaded: a palette with name '%s' is already loaded.\n",
 			filledPalData.palname
 		);
@@ -360,7 +360,7 @@ bool PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & f
 
 	m_customPalettes[charIndex].push_back(filledPalData);
 
-	g_imGuiLogger->AddLog(
+	g_imGuiLogger->Log(
 		"[system] Loaded '%s.impl' for character '%s'\n",
 		filledPalData.palname, charNames[charIndex].c_str()
 	);
@@ -383,7 +383,7 @@ bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filled
 	if (!utils_WriteFile(path.c_str(), &IMPL_file, sizeof(IMPL_t), true))
 	{
 		LOG(2, "\tCouldn't open %s!\n", strerror(errno));
-		g_imGuiLogger->AddLog("[error] Unable to open '%s' : %s\n", path.c_str(), strerror(errno));
+		g_imGuiLogger->Log("[error] Unable to open '%s' : %s\n", path.c_str(), strerror(errno));
 		return false;
 	}
 
@@ -404,8 +404,8 @@ void PaletteManager::LoadAllPalettes()
 void PaletteManager::ReloadAllPalettes()
 {
 	LOG(2, "ReloadAllPalettes\n");
-	g_imGuiLogger->AddLogSeparator();
-	g_imGuiLogger->AddLog("[system] Reloading custom palettes...\n");
+	g_imGuiLogger->LogSeparator();
+	g_imGuiLogger->Log("[system] Reloading custom palettes...\n");
 
 	LoadAllPalettes();
 }

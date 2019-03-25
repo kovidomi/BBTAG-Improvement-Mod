@@ -16,9 +16,9 @@ class ImGuiLogger : public Logger
 public:
 	ImGuiLogger() : m_textBuffer(m_buffer.textBuffer), m_lineOffsets(m_buffer.lineOffsets) {}
 	~ImGuiLogger() override = default;
-	void AddLog(LogLevel_ logLevel, const char* fmt, ...) override;
-	void AddLog(const char* fmt, ...) override;
-	void AddLogSeparator() override;
+	void Log(LogLevel_ logLevel, const char* fmt, ...) override;
+	void Log(const char* fmt, ...) override;
+	void LogSeparator() override;
 	void Clear() override;
 	void ToFile(FILE* file) const override { fprintf(file, "%s", m_buffer.textBuffer.begin()); }
 	void EnableLog(bool value) override { m_loggingEnabled = value; }

@@ -55,7 +55,7 @@ void FetchDonators()
 		}
 		return;
 	}
-	g_imGuiLogger->AddLog("[error] Donators fetch failed. No data downloaded.\n");
+	g_imGuiLogger->Log("[error] Donators fetch failed. No data downloaded.\n");
 	LOG(2, "Donators fetch failed. No data downloaded.\n");
 
 	//X-MACRO, loading donators and tiers from file

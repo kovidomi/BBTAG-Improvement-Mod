@@ -39,7 +39,7 @@ const std::string ImGuiLogger::GetDate()
 	return oss.str();
 }
 
-void ImGuiLogger::AddLog(LogLevel_ logLevel, const char* fmt, ...)
+void ImGuiLogger::Log(LogLevel_ logLevel, const char* fmt, ...)
 {
 	if (!m_loggingEnabled)
 	{
@@ -52,7 +52,7 @@ void ImGuiLogger::AddLog(LogLevel_ logLevel, const char* fmt, ...)
 	//va_end(args);
 }
 
-void ImGuiLogger::AddLog(const char * fmt, ...)
+void ImGuiLogger::Log(const char * fmt, ...)
 {
 	if (!m_loggingEnabled)
 	{
@@ -84,7 +84,7 @@ void ImGuiLogger::AddLog(const char * fmt, ...)
 	}
 }
 
-void ImGuiLogger::AddLogSeparator()
+void ImGuiLogger::LogSeparator()
 {
-	AddLog("------------------------------------------------------------------\n");
+	Log("------------------------------------------------------------------\n");
 }

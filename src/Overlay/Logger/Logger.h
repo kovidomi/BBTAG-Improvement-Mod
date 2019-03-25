@@ -16,9 +16,9 @@ class Logger
 {
 public:
 	virtual ~Logger() = default;
-	virtual void AddLog(LogLevel_ logLevel, const char* fmt, ...) = 0;
-	virtual void AddLog(const char* fmt, ...) = 0;
-	virtual void AddLogSeparator() = 0;
+	virtual void Log(LogLevel_ logLevel, const char* fmt, ...) = 0;
+	virtual void Log(const char* fmt, ...) = 0;
+	virtual void LogSeparator() = 0;
 	virtual void Clear() = 0;
 	virtual void ToFile(FILE* file) const = 0;
 	virtual void EnableLog(bool value) = 0;

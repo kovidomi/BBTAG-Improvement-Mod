@@ -26,13 +26,13 @@ void SteamApiHelper::OnUpdateNumberOfCurrentPlayers(NumberOfCurrentPlayers_t *pC
 {
 	if (bIOFailure || !pCallback->m_bSuccess)
 	{
-		g_imGuiLogger->AddLog("[error] Failed to update the current number of ingame players\n");
+		g_imGuiLogger->Log("[error] Failed to update the current number of ingame players\n");
 		current_players = -1;
 		return;
 	}
 	//printf("Number of players currently playing: %d\n", pCallback->m_cPlayers);
 #ifdef ENABLE_LOGGING
-	g_imGuiLogger->AddLog("[debug] Updated the current number of ingame players: %d\n", pCallback->m_cPlayers);
+	g_imGuiLogger->Log("[debug] Updated the current number of ingame players: %d\n", pCallback->m_cPlayers);
 #endif
 	current_players = pCallback->m_cPlayers;
 }

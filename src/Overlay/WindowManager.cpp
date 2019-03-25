@@ -89,7 +89,7 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 
 	m_pLogger = g_imGuiLogger;
 
-	m_pLogger->AddLog("[system] Initialization starting...\n");
+	m_pLogger->Log("[system] Initialization starting...\n");
 
 	m_windowContainer = new WindowContainerImpl();
 
@@ -109,13 +109,13 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 		ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(DroidSans_compressed_data, DroidSans_compressed_size, 20);
 
 	toggle_key = Settings::getButtonValue(Settings::settingsIni.togglebutton);
-	m_pLogger->AddLog("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
+	m_pLogger->Log("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
 
 	toggleHUD_key = Settings::getButtonValue(Settings::settingsIni.toggleHUDbutton);
-	m_pLogger->AddLog("[system] HUD toggling key set to '%s'\n", Settings::settingsIni.toggleHUDbutton.c_str());
+	m_pLogger->Log("[system] HUD toggling key set to '%s'\n", Settings::settingsIni.toggleHUDbutton.c_str());
 
 	toggleCustomHUD_key = Settings::getButtonValue(Settings::settingsIni.togglecustomHUDbutton);
-	m_pLogger->AddLog("[system] CustomHUD toggling key set to '%s'\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
+	m_pLogger->Log("[system] CustomHUD toggling key set to '%s'\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
 
 	g_interfaces.pPaletteManager->LoadAllPalettes();
 
@@ -148,8 +148,8 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 	StartAsyncUpdateCheck();
 	StartAsyncDonatorsFetch();
 
-	m_pLogger->AddLog("[system] Finished initialization\n");
-	m_pLogger->AddLogSeparator();
+	m_pLogger->Log("[system] Finished initialization\n");
+	m_pLogger->LogSeparator();
 	LOG(2, "Init end\n");
 
 	return true;
