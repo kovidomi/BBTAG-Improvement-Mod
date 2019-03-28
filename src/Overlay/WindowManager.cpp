@@ -216,12 +216,6 @@ void WindowManager::Update()
 	io.MouseDrawCursor = m_windowContainer->GetWindow(WindowType_Main)->IsOpen() | isLogWindowOpen
 		| isPaletteEditorWindowOpen | isUpdateNotifierWindowOpen; // show_notification_window | show_demo_window;
 
-	if (Settings::settingsIni.viewportoverride == VIEWPORT_OVERRIDE)
-	{
-		io.DisplaySize =
-			ImVec2((float)Settings::settingsIni.renderwidth, (float)Settings::settingsIni.renderheight);
-	}
-
 	LOG(7, "END OF WindowManager::Update\n");
 }
 
