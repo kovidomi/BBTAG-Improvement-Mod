@@ -14,8 +14,8 @@ public:
 	void Shutdown();
 	void InvalidateDeviceObjects();
 	void CreateDeviceObjects();
-	bool IsInitialized() const;
-	WindowContainer* GetWindowContainer() const;
+	bool IsInitialized() const { return m_initialized; }
+	WindowContainer* GetWindowContainer() const { return m_windowContainer; }
 	void OnMatchInit();
 
 private:

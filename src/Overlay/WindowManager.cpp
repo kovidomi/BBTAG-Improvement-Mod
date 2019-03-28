@@ -42,16 +42,6 @@ void WindowManager::OnMatchInit()
 	m_windowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->OnMatchInit();
 }
 
-bool WindowManager::IsInitialized() const
-{
-	return m_initialized;
-}
-
-WindowContainer * WindowManager::GetWindowContainer() const
-{
-	return m_windowContainer;
-}
-
 WindowManager & WindowManager::GetInstance()
 {
 	if (m_instance == nullptr)
