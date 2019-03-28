@@ -47,8 +47,6 @@ void PaletteEditorWindow::OnMatchInit()
 
 	InitializeSelectedCharacters();
 
-	m_customPaletteVector = g_interfaces.pPaletteManager->GetCustomPalettesVector();
-
 	m_selectedCharIndex = (CharIndex)m_allSelectedCharHandles[0]->GetData()->char_index;
 	m_selectedCharName = m_allSelectedCharNames[0];
 	m_selectedCharPalHandle = &m_allSelectedCharHandles[0]->GetPalHandle();
