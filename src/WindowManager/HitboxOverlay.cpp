@@ -63,17 +63,8 @@ bool HitboxOverlay::HasNullptrInData()
 
 ImVec2 HitboxOverlay::CalculateObjWorldPosition(const CharInfo* charObj)
 {
-	//float posX = charObj->position_x_dupe -
-	//	charObj->positionOffsetX_1 +
-	//	(charObj->facingLeft ? -charObj->positionOffsetX_2 : charObj->positionOffsetX_2) +
-	//	(charObj->positionOffsetX_3 * 10) +
-	//	charObj->position_x_dupe_offset_x;
-	//	//- charObj->position_x_dupe_offset;
-
-	//float posY = charObj->position_y_dupe + charObj->position_y_dupe_offset_y;
-
-	float posX = charObj->position_x_dupe - charObj->positionOffsetX_1;
-	float posY = charObj->position_y_dupe;// +charObj->position_y_dupe_offset_y;
+	float posX = charObj->position_x_dupe - charObj->offsetX_1 + charObj->offsetX_2;
+	float posY = charObj->position_y_dupe;
 
 	return ImVec2(
 		floor(posX / 1000 * m_scale),
@@ -139,12 +130,14 @@ void HitboxOverlay::DrawCollisionAreas(const CharInfo* charObj, const ImVec2 pla
 
 	for (const JonbEntry &entry : entries)
 	{
-		float offsetX =  floor(entry.offsetX * m_scale);
-		float offsetY = -floor(entry.offsetY * m_scale);
-		float width =    floor(entry.width * m_scale);
-		float height =  -floor(entry.height * m_scale);
+		float scaleX = charObj->scaleX / 1000.0f;
+		float scaleY = charObj->scaleY / 1000.0f;
+		float offsetX =  floor(entry.offsetX * m_scale * scaleX);
+		float offsetY = -floor(entry.offsetY * m_scale * scaleY);
+		float width =    floor(entry.width * m_scale * scaleX);
+		float height =  -floor(entry.height * m_scale * scaleY);
 
-		float rotationDeg = charObj->positionRotationDegrees / 1000.0f;
+		float rotationDeg = charObj->rotationDegrees / 1000.0f;
 
 		if (!charObj->facingLeft)
 		{
