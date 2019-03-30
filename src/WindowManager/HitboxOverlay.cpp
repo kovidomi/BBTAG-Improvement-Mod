@@ -64,7 +64,7 @@ bool HitboxOverlay::HasNullptrInData()
 ImVec2 HitboxOverlay::CalculateObjWorldPosition(const CharInfo* charObj)
 {
 	float posX = charObj->position_x_dupe - charObj->offsetX_1 + charObj->offsetX_2;
-	float posY = charObj->position_y_dupe;
+	float posY = charObj->position_y_dupe + charObj->offsetY_2;
 
 	return ImVec2(
 		floor(posX / 1000 * m_scale),

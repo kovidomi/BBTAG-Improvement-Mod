@@ -33,7 +33,9 @@ public:
 	int32_t position_y_dupe; //0x02F0
 	char pad_02F4[16]; //0x02F4
 	int32_t offsetX_2; //0x0304
-	char pad_0308[80]; //0x0308
+	char pad_0308[4]; //0x0308
+	int32_t offsetY_2; //0x030C
+	char pad_0310[72]; //0x0310
 	int32_t stageEdgeTouchTimer; //0x0358
 	char pad_035C[888]; //0x035C
 	uint32_t deny_opponent_burst; //0x06D4
