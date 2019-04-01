@@ -7,6 +7,11 @@
 
 void MatchState::OnMatchInit()
 {
+	if (!WindowManager::GetInstance().IsInitialized())
+	{
+		return;
+	}
+
 	g_interfaces.pPaletteManager->OnMatchInit(
 		g_interfaces.player1.GetChar1(),
 		g_interfaces.player1.GetChar2(),
