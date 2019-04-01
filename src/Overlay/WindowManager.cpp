@@ -180,6 +180,8 @@ void WindowManager::Render()
 
 	ImGui_ImplDX9_NewFrame();
 
+	bool isMainWindowOpen =
+		m_windowContainer->GetWindow(WindowType_Main)->IsOpen();
 	bool isUpdateNotifierWindowOpen =
 		m_windowContainer->GetWindow(WindowType_UpdateNotifier)->IsOpen();
 	bool isPaletteEditorWindowOpen =
@@ -189,9 +191,8 @@ void WindowManager::Render()
 	bool isDebugWindowOpen =
 		m_windowContainer->GetWindow(WindowType_Debug)->IsOpen();
 
-	ImGuiIO& io = ImGui::GetIO();
-	io.MouseDrawCursor = m_windowContainer->GetWindow(WindowType_Main)->IsOpen() | isLogWindowOpen
-		| isPaletteEditorWindowOpen | isUpdateNotifierWindowOpen | isDebugWindowOpen;
+	ImGui::GetIO().MouseDrawCursor = isMainWindowOpen | isLogWindowOpen | isPaletteEditorWindowOpen
+		| isUpdateNotifierWindowOpen | isDebugWindowOpen;
 
 	WindowDrawer::DrawAllWindows(m_windowContainer);
 
