@@ -52,12 +52,12 @@ WindowManager & WindowManager::GetInstance()
 	return *m_instance;
 }
 
-bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
+bool WindowManager::Initialize(void *hwnd, IDirect3DDevice9 *device)
 {
 	if (m_initialized)
 		return true;
 
-	LOG(2, "WindowManager::Init\n");
+	LOG(2, "WindowManager::Initialize\n");
 
 	if (!hwnd)
 	{
@@ -140,7 +140,7 @@ bool WindowManager::Init(void *hwnd, IDirect3DDevice9 *device)
 
 	m_pLogger->Log("[system] Finished initialization\n");
 	m_pLogger->LogSeparator();
-	LOG(2, "Init end\n");
+	LOG(2, "Initialize end\n");
 
 	return true;
 }

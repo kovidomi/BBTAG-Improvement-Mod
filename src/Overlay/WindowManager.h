@@ -8,14 +8,14 @@ class WindowManager
 {
 public:
 	static WindowManager& GetInstance();
-	bool Init(void *hwnd, IDirect3DDevice9 *device);
+	WindowContainer* GetWindowContainer() const { return m_windowContainer; }
+	bool Initialize(void *hwnd, IDirect3DDevice9 *device);
+	void Shutdown();
 	void Update();
 	void Render();
-	void Shutdown();
 	void InvalidateDeviceObjects();
 	void CreateDeviceObjects();
 	bool IsInitialized() const { return m_initialized; }
-	WindowContainer* GetWindowContainer() const { return m_windowContainer; }
 	void OnMatchInit();
 
 private:
