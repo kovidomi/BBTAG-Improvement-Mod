@@ -19,9 +19,9 @@
 
 #define DEFAULT_ALPHA 0.87f
 
-int toggle_key;
-int toggleHUD_key;
-int toggleCustomHUD_key;
+int keyToggleMainWindow;
+int keyToggleHud;
+int keyToggleCustomHud;
 
 WindowManager* WindowManager::m_instance = nullptr;
 
@@ -84,13 +84,13 @@ bool WindowManager::Initialize(void *hwnd, IDirect3DDevice9 *device)
 		ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(DroidSans_compressed_data, DroidSans_compressed_size, 20);
 	}
 
-	toggle_key = Settings::getButtonValue(Settings::settingsIni.togglebutton);
+	keyToggleMainWindow = Settings::getButtonValue(Settings::settingsIni.togglebutton);
 	m_pLogger->Log("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
 
-	toggleHUD_key = Settings::getButtonValue(Settings::settingsIni.toggleHUDbutton);
+	keyToggleHud = Settings::getButtonValue(Settings::settingsIni.toggleHUDbutton);
 	m_pLogger->Log("[system] HUD toggling key set to '%s'\n", Settings::settingsIni.toggleHUDbutton.c_str());
 
-	toggleCustomHUD_key = Settings::getButtonValue(Settings::settingsIni.togglecustomHUDbutton);
+	keyToggleCustomHud = Settings::getButtonValue(Settings::settingsIni.togglecustomHUDbutton);
 	m_pLogger->Log("[system] CustomHUD toggling key set to '%s'\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
 
 	g_interfaces.pPaletteManager->LoadAllPalettes();
@@ -206,17 +206,17 @@ void WindowManager::HandleButtons()
 		return;
 	}
 
-	if (ImGui::IsKeyPressed(toggleHUD_key) && g_gameVals.pIsHUDHidden)
+	if (ImGui::IsKeyPressed(keyToggleHud) && g_gameVals.pIsHUDHidden)
 	{
 		*g_gameVals.pIsHUDHidden ^= 1;
 	}
 
-	if (ImGui::IsKeyPressed(toggleCustomHUD_key))
+	if (ImGui::IsKeyPressed(keyToggleCustomHud))
 	{
 		m_windowContainer->GetWindow(WindowType_CustomHud)->ToggleOpen();
 	}
 
-	if (ImGui::IsKeyPressed(toggle_key))
+	if (ImGui::IsKeyPressed(keyToggleMainWindow))
 	{
 		m_windowContainer->GetWindow(WindowType_Main)->ToggleOpen();
 	}
