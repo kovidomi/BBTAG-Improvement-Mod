@@ -20,7 +20,6 @@ public:
 
 private:
 	WindowManager() = default;
-	void WriteLogToFile();
 	void HandleButtons();
 
 	static WindowManager* m_instance;

@@ -151,7 +151,6 @@ void WindowManager::Shutdown()
 		return;
 
 	LOG(2, "WindowManager::Shutdown\n");
-	WriteLogToFile();
 
 	SAFE_DELETE(m_windowContainer);
 	delete m_instance;
@@ -217,65 +216,6 @@ void WindowManager::Update()
 		| isPaletteEditorWindowOpen | isUpdateNotifierWindowOpen; // show_notification_window | show_demo_window;
 
 	LOG(7, "END OF WindowManager::Update\n");
-}
-
-void WindowManager::WriteLogToFile()
-{
-	if (!m_initialized)
-		return;
-
-	FILE *file = fopen("BBTAG_IM\\log.txt", "a");
-
-	if (!file)
-	{
-		LOG(2, "WindowManager::WriteLogToFile file opening failed!!\n");
-		return;
-	}
-
-	char* time = getFullDate();
-
-	if (time)
-	{
-		fprintf(file, "BBTAGIM %s -- %s\n", MOD_VERSION_NUM, time);
-		free(time);
-	}
-	else
-	{
-		fprintf(file, "{Couldn't get the current time}\n");
-	}
-
-	fprintf(file, "-------------------------------------\n\n");
-	fprintf(file, "settings.ini config:\n");
-
-	//TODO: Put the strings into the X-Macro as well. Somehow...
-	//strings cant be put into the X-Macro (.c_str() cannot be put on non-std::string types)
-	fprintf(file, "\t- ToggleButton: %s\n", Settings::settingsIni.togglebutton.c_str());
-	fprintf(file, "\t- ToggleHUDButton: %s\n", Settings::settingsIni.toggleHUDbutton.c_str());
-	fprintf(file, "\t- ToggleCustomHUDButton: %s\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
-
-	std::string printText = "";
-
-	//X-Macro
-#define SETTING(_type, _var, _inistring, _defaultval) \
-	printText = "\t- "; \
-	printText += _inistring; \
-	if(strcmp(#_type, "bool") == 0 || strcmp(#_type, "int") == 0) \
-		printText += ": %d\n"; \
-	else if(strcmp(#_type, "float") == 0) \
-		printText += ": %.2f\n"; \
-	if(strcmp(#_type, "std::string") != 0) \
-		fprintf(file, printText.c_str(), Settings::settingsIni.##_var);
-#include "Core/settings.def"
-#undef SETTING
-
-	fprintf(file, "\n");
-
-	//d3dparams here
-
-	m_pLogger->ToFile(file);
-	fprintf(file, "\n#####################################\n\n\n");
-
-	fclose(file);
 }
 
 void WindowManager::HandleButtons()
