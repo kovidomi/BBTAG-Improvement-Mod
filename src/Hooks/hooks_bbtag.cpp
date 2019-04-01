@@ -5,6 +5,7 @@
 
 #include "Core/interfaces.h"
 #include "Core/logger.h"
+#include "Game/MatchState.h"
 #include "Game/gamestates.h"
 #include "Overlay/WindowManager.h"
 #include "SteamApiWrapper/SteamMatchmakingWrapper.h"
@@ -197,7 +198,7 @@ void __declspec(naked)GetTimer()
 	}
 
 	__asm pushad
-	WindowManager::GetInstance().OnMatchInit();
+	MatchState::OnMatchInit();
 	__asm popad
 
 	__asm
@@ -370,16 +371,13 @@ EXIT:
 
 int PassKeyboardInputToGame()
 {
-	int result = 0;
+	if (GetForegroundWindow() != g_gameProc.hWndGameWindow
+		|| ImGui::GetIO().WantCaptureKeyboard)
+	{
+		return 0;
+	}
 
-	if (GetForegroundWindow() != g_gameProc.hWndGameWindow)
-		result = 0;
-	else if (ImGui::GetIO().WantCaptureKeyboard)
-		result = 0;
-	else
-		result = 1;
-
-	return result;
+	return 1;
 }
 
 DWORD DenyKeyboardInputFromGameJmpBackAddr = 0;
@@ -516,11 +514,7 @@ void __declspec(naked)VictoryScreen()
 	LOG_ASM(2, "VictoryScreen\n");
 
 	__asm pushad
-	g_interfaces.pPaletteManager->OnMatchEnd(
-		g_interfaces.player1.GetChar1(),
-		g_interfaces.player1.GetChar2(),
-		g_interfaces.player2.GetChar1(),
-		g_interfaces.player2.GetChar2());
+	MatchState::OnMatchEnd();
 	__asm popad
 
 	__asm

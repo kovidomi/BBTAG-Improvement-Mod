@@ -11,12 +11,10 @@ public:
 	WindowContainer* GetWindowContainer() const { return m_windowContainer; }
 	bool Initialize(void *hwnd, IDirect3DDevice9 *device);
 	void Shutdown();
-	void Update();
 	void Render();
 	void InvalidateDeviceObjects();
 	void CreateDeviceObjects();
 	bool IsInitialized() const { return m_initialized; }
-	void OnMatchInit();
 
 private:
 	WindowManager() = default;

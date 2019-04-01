@@ -4,6 +4,7 @@
 
 #include "Core/interfaces.h"
 #include "Core/logger.h"
+#include "Game/MatchState.h"
 #include "Hooks/hooks_bbtag.h"
 #include "Overlay/WindowManager.h"
 
@@ -344,9 +345,6 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::GetDepthStencilSurface(IDirect3DSurfa
 HRESULT APIENTRY Direct3DDevice9ExWrapper::BeginScene()
 {
 	LOG(7, "BeginScene\n");
-
-	WindowManager::GetInstance().Update();
-
 	return m_Direct3DDevice9Ex->BeginScene();
 }
 
@@ -354,6 +352,7 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::EndScene()
 {
 	LOG(7, "EndScene\n");
 
+	MatchState::OnUpdate();
 	WindowManager::GetInstance().Render();
 
 	return m_Direct3DDevice9Ex->EndScene();

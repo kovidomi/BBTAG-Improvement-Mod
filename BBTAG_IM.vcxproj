@@ -128,6 +128,7 @@
     <ClCompile Include="src\Game\characters.cpp" />
     <ClCompile Include="src\Game\CharHandle.cpp" />
     <ClCompile Include="src\Game\CharPaletteHandle.cpp" />
+    <ClCompile Include="src\Game\MatchState.cpp" />
     <ClCompile Include="src\Game\Player.cpp" />
     <ClCompile Include="src\Hooks\HookManager.cpp" />
     <ClCompile Include="src\Hooks\hooks_bbtag.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="src\Game\CharInfo.h" />
     <ClInclude Include="src\Game\CharPaletteHandle.h" />
     <ClInclude Include="src\Game\gamestates.h" />
+    <ClInclude Include="src\Game\MatchState.h" />
     <ClInclude Include="src\Game\MeterInfo.h" />
     <ClInclude Include="src\Game\Player.h" />
     <ClInclude Include="src\Hooks\HookManager.h" />

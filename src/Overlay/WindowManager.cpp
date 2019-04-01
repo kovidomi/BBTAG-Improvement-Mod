@@ -4,10 +4,7 @@
 #include "WindowDrawer.h"
 #include "WindowContainer/WindowContainerImpl.h"
 #include "Window/LogWindow.h"
-#include "Window/PaletteEditorWindow.h"
-#include "Window/UpdateNotifierWindow.h"
 
-#include "Core/info.h"
 #include "Core/interfaces.h"
 #include "Core/logger.h"
 #include "Core/Settings.h"
@@ -28,27 +25,12 @@ int toggle_key;
 int toggleHUD_key;
 int toggleCustomHUD_key;
 
-void WindowManager::OnMatchInit()
-{
-	if (!m_initialized)
-		return;
-
-	g_interfaces.pPaletteManager->OnMatchInit(
-		g_interfaces.player1.GetChar1(),
-		g_interfaces.player1.GetChar2(),
-		g_interfaces.player2.GetChar1(),
-		g_interfaces.player2.GetChar2());
-
-	m_windowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->OnMatchInit();
-}
-
 WindowManager & WindowManager::GetInstance()
 {
 	if (m_instance == nullptr)
 	{
 		m_instance = new WindowManager();
 	}
-
 	return *m_instance;
 }
 
@@ -183,39 +165,26 @@ void WindowManager::Render()
 
 	LOG(7, "WindowManager::Render\n");
 
-	WindowDrawer::DrawAllWindows(m_windowContainer);
-	ImGui::Render();
-}
-
-void WindowManager::Update()
-{
-	if (!m_initialized)
-		return;
-
-	LOG(7, "WindowManager::Update\n");
-
-	g_interfaces.pPaletteManager->OnUpdate(
-		g_interfaces.player1.GetChar1().GetPalHandle(),
-		g_interfaces.player1.GetChar2().GetPalHandle(),
-		g_interfaces.player2.GetChar1().GetPalHandle(),
-		g_interfaces.player2.GetChar2().GetPalHandle());
-
 	HandleButtons();
 
 	ImGui_ImplDX9_NewFrame();
 
 	bool isUpdateNotifierWindowOpen =
-		m_windowContainer->GetWindow<UpdateNotifierWindow>(WindowType_UpdateNotifier)->IsOpen();
+		m_windowContainer->GetWindow(WindowType_UpdateNotifier)->IsOpen();
 	bool isPaletteEditorWindowOpen =
-		m_windowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->IsOpen();
+		m_windowContainer->GetWindow(WindowType_PaletteEditor)->IsOpen();
 	bool isLogWindowOpen =
-		m_windowContainer->GetWindow<LogWindow>(WindowType_Log)->IsOpen();
+		m_windowContainer->GetWindow(WindowType_Log)->IsOpen();
+	bool isDebugWindowOpen =
+		m_windowContainer->GetWindow(WindowType_Debug)->IsOpen();
 
 	ImGuiIO& io = ImGui::GetIO();
 	io.MouseDrawCursor = m_windowContainer->GetWindow(WindowType_Main)->IsOpen() | isLogWindowOpen
-		| isPaletteEditorWindowOpen | isUpdateNotifierWindowOpen; // show_notification_window | show_demo_window;
+		| isPaletteEditorWindowOpen | isUpdateNotifierWindowOpen | isDebugWindowOpen;
 
-	LOG(7, "END OF WindowManager::Update\n");
+	WindowDrawer::DrawAllWindows(m_windowContainer);
+
+	ImGui::Render();
 }
 
 void WindowManager::HandleButtons()
