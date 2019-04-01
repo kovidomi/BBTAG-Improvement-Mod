@@ -85,4 +85,15 @@ void DebugWindow::Draw()
 		ImGui::ColoredProgressBar(1.0f, ImVec2(-1.0f, 0.0f), color, NULL, NULL, NULL);
 		ImGui::ColorEdit4("ColEdit", col);
 	}
+
+	static bool showDemoWindow = false;
+	if (ImGui::Button("Demo"))
+	{
+		showDemoWindow = !showDemoWindow;
+	}
+
+	if (showDemoWindow)
+	{
+		ImGui::ShowDemoWindow(&showDemoWindow);
+	}
 }
