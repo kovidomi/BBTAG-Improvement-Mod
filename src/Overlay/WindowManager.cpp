@@ -107,8 +107,7 @@ bool WindowManager::Initialize(void *hwnd, IDirect3DDevice9 *device)
 	config.GlyphExtraSpacing.x = 1.0f;
 	strcpy(config.Name, "CustomHUD");
 	float hudScaleY = ((float)Settings::settingsIni.renderheight * Settings::settingsIni.customhudscale) / 1042.0f;
-	float fontSize = 30.0f;
-	fontSize *= hudScaleY;
+	float fontSize = 30.0f * hudScaleY;
 	LOG(2, "CustomHUD fontsize: %f\n", fontSize);
 	ImFont* font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedBase85TTF(TinyFont_compressed_data_base85, fontSize, &config);
 	font->DisplayOffset.y += 1;
