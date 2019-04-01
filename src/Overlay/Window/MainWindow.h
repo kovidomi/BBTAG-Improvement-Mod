@@ -12,7 +12,6 @@ public:
 	{
 		SetMainWindowTitle();
 	}
-
 	~MainWindow() override = default;
 	void SetMainWindowTitle(const std::string text = "");
 	void SetWindowContainer(WindowContainer& windowContainer);

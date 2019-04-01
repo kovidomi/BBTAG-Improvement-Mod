@@ -24,7 +24,9 @@ static char palCreatorBuf[IMPL_CREATOR_LENGTH] = "";
 void PaletteEditorWindow::ShowAllPaletteSelections()
 {
 	if (HasNullPointer())
+	{
 		return;
+	}
 
 	ShowPaletteSelectButton(g_interfaces.player1.GetChar1(), "P1Ch1 palette", "select1-1");
 	ShowPaletteSelectButton(g_interfaces.player1.GetChar2(), "P1Ch2 palette", "select1-2");
@@ -43,7 +45,9 @@ void PaletteEditorWindow::ShowReloadAllPalettesButton()
 void PaletteEditorWindow::OnMatchInit()
 {
 	if (HasNullPointer())
+	{
 		return;
+	}
 
 	InitializeSelectedCharacters();
 
@@ -113,7 +117,9 @@ void PaletteEditorWindow::CharacterSelection()
 	LOG(7, "PaletteEditorWindow CharacterSelection\n");
 
 	if (ImGui::Button("Select character"))
+	{
 		ImGui::OpenPopup("select_char_pal");
+	}
 	ImGui::SameLine();
 
 	ImGui::Text(m_selectedCharName);
@@ -146,7 +152,9 @@ void PaletteEditorWindow::PaletteSelection()
 	LOG(7, "PaletteEditorWindow PaletteSelection\n");
 
 	if (ImGui::Button("Select palette  "))
+	{
 		ImGui::OpenPopup("select_custom_pal");
+	}
 
 	ImGui::SameLine();
 	ImGui::Text(m_customPaletteVector[m_selectedCharIndex][m_selectedPalIndex].palname);
@@ -159,7 +167,9 @@ void PaletteEditorWindow::FileSelection()
 	LOG(7, "PaletteEditorWindow FileSelection\n");
 
 	if (ImGui::Button("Select file     "))
+	{
 		ImGui::OpenPopup("select_file_pal");
+	}
 	ImGui::SameLine();
 
 	ImGui::Text(palFileNames[m_selectedFile]);
@@ -186,10 +196,12 @@ void PaletteEditorWindow::EditingModesSelection()
 	ImGui::Separator();
 	if (ImGui::Checkbox("Show transparency values", &m_showAlpha))
 	{
+		m_colorEditFlags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoAlpha;
 		if (m_showAlpha)
-			m_colorEditFlags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_AlphaPreview | ImGuiColorEditFlags_AlphaBar;
-		else
-			m_colorEditFlags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoAlpha;
+		{
+			m_colorEditFlags &= ~ImGuiColorEditFlags_NoAlpha;
+			m_colorEditFlags |= ImGuiColorEditFlags_AlphaPreview | ImGuiColorEditFlags_AlphaBar;
+		}
 	}
 
 	ImGui::SameLine();
@@ -218,7 +230,9 @@ void PaletteEditorWindow::EditingModesSelection()
 	ImGui::Checkbox("Show indexes", &m_showIndexes);
 
 	if (ImGui::Button("Gradient generator"))
+	{
 		ImGui::OpenPopup("gradient");
+	}
 	ShowGradientPopup();
 
 	ImGui::Separator();
@@ -244,9 +258,13 @@ void PaletteEditorWindow::ShowPaletteBoxes()
 		int curColorBoxOffset = (i * sizeof(int));
 
 		if (m_highlightMode)
+		{
 			pressed = ImGui::ColorButtonOn32Bit("##PalColorButton", (unsigned char*)m_paletteEditorArray + curColorBoxOffset, m_colorEditFlags);
+		}
 		else
+		{
 			pressed = ImGui::ColorEdit4On32Bit("##PalColorEdit", (unsigned char*)m_paletteEditorArray + curColorBoxOffset, m_colorEditFlags);
+		}
 
 		if (pressed)
 		{
@@ -322,68 +340,71 @@ void PaletteEditorWindow::SavePaletteToFile()
 
 	static bool show_overwrite_popup = false;
 
-	if (pressed || show_overwrite_popup)
+	if (!pressed && !show_overwrite_popup)
 	{
-		if (strncmp(palNameBuf, "", IMPL_PALNAME_LENGTH) == 0)
+		return;
+	}
+
+	if (strncmp(palNameBuf, "", IMPL_PALNAME_LENGTH) == 0)
+	{
+		memcpy(message, "Error, no filename given", 25);
+		g_imGuiLogger->Log("[error] Could not save custom palette, no filename was given\n");
+		return;
+	}
+
+	if (strncmp(palNameBuf, "Default", IMPL_PALNAME_LENGTH) == 0 || strncmp(palNameBuf, "Random", IMPL_PALNAME_LENGTH) == 0)
+	{
+		memcpy(message, "Error, not a valid filename", 28);
+		g_imGuiLogger->Log("[error] Could not save custom palette: not a valid filename\n");
+		return;
+	}
+
+	TCHAR pathBuf[MAX_PATH];
+	GetModuleFileName(NULL, pathBuf, MAX_PATH);
+	std::wstring::size_type pos = std::wstring(pathBuf).find_last_of(L"\\");
+	std::wstring wFullPath = std::wstring(pathBuf).substr(0, pos);
+
+	wFullPath += L"\\BBTAG_IM\\Palettes\\";
+	wFullPath += wCharNames[m_selectedCharIndex];
+	wFullPath += L"\\";
+
+	std::string filenameTemp(palNameBuf);
+	std::wstring wFilename(filenameTemp.begin(), filenameTemp.end());
+	wFullPath += wFilename;
+
+	if (wFilename.find(L".impl") == std::wstring::npos)
+	{
+		wFullPath += L".impl";
+		filenameTemp += ".impl";
+	}
+
+	if (ShowOverwritePopup(&show_overwrite_popup, wFullPath.c_str(), filenameTemp.c_str()))
+	{
+
+		IMPL_data_t curPalData = g_interfaces.pPaletteManager->GetCurrentPalData(*m_selectedCharPalHandle);
+
+		strncpy(curPalData.creator, palCreatorBuf, IMPL_CREATOR_LENGTH);
+		strncpy(curPalData.palname, palNameBuf, IMPL_PALNAME_LENGTH);
+		strncpy(curPalData.desc, palDescBuf, IMPL_DESC_LENGTH);
+
+		std::string messageText = "'";
+		messageText += filenameTemp.c_str();
+
+		if (g_interfaces.pPaletteManager->WritePaletteToFile(m_selectedCharIndex, &curPalData))
 		{
-			memcpy(message, "Error, no filename given", 25);
-			g_imGuiLogger->Log("[error] Could not save custom palette, no filename was given\n");
-			return;
+			std::string fullPath(wFullPath.begin(), wFullPath.end());
+			g_imGuiLogger->Log("[system] Custom palette '%s' successfully saved to:\n'%s'\n", filenameTemp.c_str(), fullPath.c_str());
+			messageText += "' saved successfully";
+
+			ReloadSavedPalette(palNameBuf);
 		}
-		else if (strncmp(palNameBuf, "Default", IMPL_PALNAME_LENGTH) == 0 || strncmp(palNameBuf, "Random", IMPL_PALNAME_LENGTH) == 0)
+		else
 		{
-			memcpy(message, "Error, not a valid filename", 28);
-			g_imGuiLogger->Log("[error] Could not save custom palette: not a valid filename\n");
-			return;
+			g_imGuiLogger->Log("[error] Custom palette '%s' failed to be saved.\n", filenameTemp.c_str());
+			messageText += "' save failed";
 		}
 
-		TCHAR pathBuf[MAX_PATH];
-		GetModuleFileName(NULL, pathBuf, MAX_PATH);
-		std::wstring::size_type pos = std::wstring(pathBuf).find_last_of(L"\\");
-		std::wstring wFullPath = std::wstring(pathBuf).substr(0, pos);
-
-		wFullPath += L"\\BBTAG_IM\\Palettes\\";
-		wFullPath += wCharNames[m_selectedCharIndex];
-		wFullPath += L"\\";
-
-		std::string filenameTemp(palNameBuf);
-		std::wstring wFilename(filenameTemp.begin(), filenameTemp.end());
-		wFullPath += wFilename;
-
-		if (wFilename.find(L".impl") == std::wstring::npos)
-		{
-			wFullPath += L".impl";
-			filenameTemp += ".impl";
-		}
-
-		if (ShowOverwritePopup(&show_overwrite_popup, wFullPath.c_str(), filenameTemp.c_str()))
-		{
-
-			IMPL_data_t curPalData = g_interfaces.pPaletteManager->GetCurrentPalData(*m_selectedCharPalHandle);
-
-			strncpy(curPalData.creator, palCreatorBuf, IMPL_CREATOR_LENGTH);
-			strncpy(curPalData.palname, palNameBuf, IMPL_PALNAME_LENGTH);
-			strncpy(curPalData.desc, palDescBuf, IMPL_DESC_LENGTH);
-
-			std::string messageText = "'";
-			messageText += filenameTemp.c_str();
-
-			if (g_interfaces.pPaletteManager->WritePaletteToFile(m_selectedCharIndex, &curPalData))
-			{
-				std::string fullPath(wFullPath.begin(), wFullPath.end());
-				g_imGuiLogger->Log("[system] Custom palette '%s' successfully saved to:\n'%s'\n", filenameTemp.c_str(), fullPath.c_str());
-				messageText += "' saved successfully";
-
-				ReloadSavedPalette(palNameBuf);
-			}
-			else
-			{
-				g_imGuiLogger->Log("[error] Custom palette '%s' failed to be saved.\n", filenameTemp.c_str());
-				messageText += "' save failed";
-			}
-
-			memcpy(message, messageText.c_str(), messageText.length() + 1);
-		}
+		memcpy(message, messageText.c_str(), messageText.length() + 1);
 	}
 }
 
@@ -431,7 +452,6 @@ bool PaletteEditorWindow::ShowOverwritePopup(bool *p_open, const wchar_t* wFullP
 		{
 			ImGui::CloseCurrentPopup();
 			*p_open = false;
-			isOverwriteAllowed = false;
 		}
 		ImGui::EndPopup();
 
@@ -459,13 +479,17 @@ void PaletteEditorWindow::ShowPaletteSelectButton(CharHandle & charHandle, const
 	CharIndex charIndex = (CharIndex)charHandle.GetData()->char_index;
 
 	if (charIndex >= CHAR_NAMES_COUNT - 1)
+	{
 		return;
+	}
 
 	ShowPaletteRandomizerButton(popupID, charHandle);
 	ImGui::SameLine();
 
 	if (ImGui::Button(btnText))
+	{
 		ImGui::OpenPopup(popupID);
+	}
 
 	ImGui::SameLine();
 	ImGui::TextUnformatted(m_customPaletteVector[charIndex][selected_pal_index].palname);
@@ -509,7 +533,9 @@ void PaletteEditorWindow::ShowPaletteSelectPopup(CharPaletteHandle& charPalHandl
 				}
 			}
 			if (ImGui::IsItemHovered())
+			{
 				hoveredPalIndex = i;
+			}
 			ShowHoveredPaletteToolTip(charPalHandle, charIndex, i);
 		}
 		ImGui::EndPopup();
@@ -520,7 +546,9 @@ void PaletteEditorWindow::ShowPaletteSelectPopup(CharPaletteHandle& charPalHandl
 void PaletteEditorWindow::ShowHoveredPaletteToolTip(CharPaletteHandle& charPalHandle, CharIndex charIndex, int palIndex)
 {
 	if (!ImGui::IsItemHovered())
+	{
 		return;
+	}
 
 	const char* creatorText = m_customPaletteVector[charIndex][palIndex].creator;
 	const char* descText = m_customPaletteVector[charIndex][palIndex].desc;
@@ -568,7 +596,9 @@ void PaletteEditorWindow::HandleHoveredPaletteSelection(CharPaletteHandle* charP
 	else if (ImGui::IsPopupOpen(popupID) && prevPalIndex != palIndex)
 	{
 		if (!paletteSwitched)
+		{
 			origPalIndex = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(*charPalHandle);
+		}
 
 		palFileAddr = g_interfaces.pPaletteManager->GetCustomPalFile(charIndex, palIndex, PaletteFile_Character, *charPalHandle);
 		g_interfaces.pPaletteManager->ReplacePaletteFile(palFileAddr, PaletteFile_Character, *charPalHandle);
@@ -651,7 +681,9 @@ void PaletteEditorWindow::ShowGradientPopup()
 		int minVal_idx2 = idx1 + 1;
 
 		if (idx2 <= idx1)
+		{
 			idx2 = minVal_idx2;
+		}
 
 		ImGui::SliderInt("Start index", &idx1, 1, NUMBER_OF_COLOR_BOXES - 1);
 		ImGui::SliderInt("End index", &idx2, minVal_idx2, NUMBER_OF_COLOR_BOXES);
@@ -687,7 +719,9 @@ void PaletteEditorWindow::GenerateGradient(int idx1, int idx2, int color1, int c
 
 	int steps = idx2 - idx1;
 	if (steps < 1)
+	{
 		return;
+	}
 
 	float frac = 1.0 / (float)(idx2 - idx1);
 

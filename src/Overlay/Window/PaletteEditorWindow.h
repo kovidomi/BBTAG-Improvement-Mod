@@ -18,16 +18,12 @@ public:
 	{
 		OnMatchInit();
 	}
-
 	~PaletteEditorWindow() override = default;
-
 	void ShowAllPaletteSelections();
 	void ShowReloadAllPalettesButton();
 	void OnMatchInit();
-
 protected:
 	void Draw() override;
-
 private:
 	bool HasNullPointer();
 	void InitializeSelectedCharacters();

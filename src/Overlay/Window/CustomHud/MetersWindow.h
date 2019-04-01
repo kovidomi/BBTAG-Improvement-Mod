@@ -10,7 +10,6 @@ public:
 	MetersWindow(const std::string& windowTitle, bool windowClosable,
 		ImGuiWindowFlags windowFlags)
 		: Window(windowTitle, windowClosable, windowFlags) {}
-
 	~MetersWindow() override = default;
 	void SetMeterData(const MeterInfo** ppMeterData) { m_ppMetersData = ppMeterData; }
 	void SetScale(const ImVec2& scale)

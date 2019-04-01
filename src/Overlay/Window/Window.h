@@ -10,7 +10,6 @@ public:
 		: m_windowTitle(windowTitle),
 		m_windowClosable(windowClosable),
 		m_windowFlags(windowFlags) {}
-
 	virtual ~Window() = default;
 	virtual void Update();
 	void Open();
@@ -25,7 +24,6 @@ protected:
 	virtual void AfterDraw() {}
 private:
 	bool* GetWindowOpenPointer();
-
 protected:
 	std::string       m_windowTitle;
 	bool              m_windowClosable;

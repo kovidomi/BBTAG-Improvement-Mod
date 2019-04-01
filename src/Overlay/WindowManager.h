@@ -15,7 +15,6 @@ public:
 	void InvalidateDeviceObjects();
 	void CreateDeviceObjects();
 	bool IsInitialized() const { return m_initialized; }
-
 private:
 	WindowManager() = default;
 	void HandleButtons();

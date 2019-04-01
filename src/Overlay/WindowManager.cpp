@@ -19,11 +19,11 @@
 
 #define DEFAULT_ALPHA 0.87f
 
-WindowManager* WindowManager::m_instance = nullptr;
-
 int toggle_key;
 int toggleHUD_key;
 int toggleCustomHUD_key;
+
+WindowManager* WindowManager::m_instance = nullptr;
 
 WindowManager & WindowManager::GetInstance()
 {
@@ -37,7 +37,9 @@ WindowManager & WindowManager::GetInstance()
 bool WindowManager::Initialize(void *hwnd, IDirect3DDevice9 *device)
 {
 	if (m_initialized)
+	{
 		return true;
+	}
 
 	LOG(2, "WindowManager::Initialize\n");
 
@@ -78,7 +80,9 @@ bool WindowManager::Initialize(void *hwnd, IDirect3DDevice9 *device)
 		font->DisplayOffset.y += 1;
 	}
 	else if (Settings::settingsIni.menusize == 3)
+	{
 		ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(DroidSans_compressed_data, DroidSans_compressed_size, 20);
+	}
 
 	toggle_key = Settings::getButtonValue(Settings::settingsIni.togglebutton);
 	m_pLogger->Log("[system] Toggling key set to '%s'\n", Settings::settingsIni.togglebutton.c_str());
@@ -102,11 +106,11 @@ bool WindowManager::Initialize(void *hwnd, IDirect3DDevice9 *device)
 	config.OversampleV = 3;
 	config.GlyphExtraSpacing.x = 1.0f;
 	strcpy(config.Name, "CustomHUD");
-	float hud_scale_y = ((float)Settings::settingsIni.renderheight * Settings::settingsIni.customhudscale) / 1042.0f;
-	float fontsize = 30.0f;
-	fontsize *= hud_scale_y;
-	LOG(2, "CustomHUD fontsize: %f\n", fontsize);
-	ImFont* font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedBase85TTF(TinyFont_compressed_data_base85, fontsize, &config);
+	float hudScaleY = ((float)Settings::settingsIni.renderheight * Settings::settingsIni.customhudscale) / 1042.0f;
+	float fontSize = 30.0f;
+	fontSize *= hudScaleY;
+	LOG(2, "CustomHUD fontsize: %f\n", fontSize);
+	ImFont* font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedBase85TTF(TinyFont_compressed_data_base85, fontSize, &config);
 	font->DisplayOffset.y += 1;
 
 	/*Calling a frame to initialize beforehand to prevent a crash upon first call of
@@ -130,7 +134,9 @@ bool WindowManager::Initialize(void *hwnd, IDirect3DDevice9 *device)
 void WindowManager::Shutdown()
 {
 	if (!m_initialized)
+	{
 		return;
+	}
 
 	LOG(2, "WindowManager::Shutdown\n");
 
@@ -143,7 +149,9 @@ void WindowManager::Shutdown()
 void WindowManager::InvalidateDeviceObjects()
 {
 	if (!m_initialized)
+	{
 		return;
+	}
 
 	LOG(2, "WindowManager::InvalidateDeviceObjects\n");
 	ImGui_ImplDX9_InvalidateDeviceObjects();
@@ -152,7 +160,9 @@ void WindowManager::InvalidateDeviceObjects()
 void WindowManager::CreateDeviceObjects()
 {
 	if (!m_initialized)
+	{
 		return;
+	}
 
 	LOG(2, "WindowManager::CreateDeviceObjects\n");
 	ImGui_ImplDX9_CreateDeviceObjects();
@@ -161,7 +171,9 @@ void WindowManager::CreateDeviceObjects()
 void WindowManager::Render()
 {
 	if (!m_initialized)
+	{
 		return;
+	}
 
 	LOG(7, "WindowManager::Render\n");
 

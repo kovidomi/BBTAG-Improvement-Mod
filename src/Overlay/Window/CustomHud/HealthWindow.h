@@ -9,7 +9,6 @@ public:
 	HealthWindow(const std::string& windowTitle, bool windowClosable,
 		ImGuiWindowFlags windowFlags)
 		: Window(windowTitle, windowClosable, windowFlags) {}
-
 	~HealthWindow() override = default;
 	void SetCharObj(const CharInfo& charObj) { m_pCharObj = &charObj; }
 	void SetScale(const ImVec2& scale) { m_healthBarSize = ImVec2(635.0f * scale.x, 45.0f * scale.y); }
