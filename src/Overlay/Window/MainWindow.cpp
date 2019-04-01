@@ -120,9 +120,6 @@ void MainWindow::Draw()
 	}
 
 #ifdef _DEBUG
-	//if (ImGui::Button("Demo"))
-	//	show_demo_window ^= 1;
-
 	if (ImGui::Button("DEBUG"))
 	{
 		m_pWindowContainer->GetWindow(WindowType_Debug)->Open();
