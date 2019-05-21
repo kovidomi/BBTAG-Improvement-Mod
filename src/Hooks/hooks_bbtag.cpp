@@ -443,7 +443,7 @@ void __declspec(naked)GetPaletteIndexAddrOnline()
 	__asm
 	{
 		pushad
-		add esi, 24D8h
+		add esi, 27A8h
 		mov pPalIndex, esi
 	}
 
@@ -453,7 +453,7 @@ void __declspec(naked)GetPaletteIndexAddrOnline()
 	__asm
 	{
 		popad
-		mov dword ptr[esi + 24F4h], 64h
+		mov dword ptr[esi + 27C4h], 64h
 		jmp[GetPaletteIndexAddrOnlineJmpBackAddr]
 	}
 }
@@ -582,7 +582,7 @@ bool placeHooks_bbtag()
 	GetGameUpdatePauseJmpBackAddr = HookManager::SetHook("GetGameUpdatePause", "\x83\x78\x08\x00\x75\x00\xe8",
 		"xxxxx?x", 6, GetGameUpdatePause);
 
-	GetPaletteIndexAddrOnlineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOnline", "\xc7\x86\xf4\x24\x00\x00\x64\x00\x00\x00\x8b\x87\x58\x06\x00\x00",
+	GetPaletteIndexAddrOnlineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOnline", "\xc7\x86\xc4\x27\x00\x00\x64\x00\x00\x00\x8b\x87\x5c\x06\x00\x00",
 		"xxxxxxxxxxxxxxxx", 10, GetPaletteIndexAddrOnline);
 
 	GetPaletteIndexAddrRankedJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrRanked", "\x8b\x06\x89\x01\x8b\xcb\x0f\xb6\x76\xec",
