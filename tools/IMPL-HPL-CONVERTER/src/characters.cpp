@@ -42,7 +42,11 @@ const char* charNames[TOTAL_CHAR_INDEXES]
 	"Weiss",	// 37,
 	"Blake",	// 38,
 	"Yang",		// 39,
-	"Boss",		// 40
+	"NaotoKurogane", // 40,
+	"Teddy",	// 41,
+	"Seth",		// 42,
+	"Heart",	// 43,
+	"Boss"		// 44
 };
 
 const wchar_t* wCharNames[TOTAL_CHAR_INDEXES]
@@ -87,7 +91,11 @@ const wchar_t* wCharNames[TOTAL_CHAR_INDEXES]
 	L"Weiss",	// 37,
 	L"Blake",	// 38,
 	L"Yang",	// 39,
-	L"Boss",	// 40
+	L"NaotoKurogane", // 40,
+	L"Teddy",	// 41,
+	L"Seth",	// 42,
+	L"Heart",	// 43,
+	L"Boss"		// 44
 };
 
 
@@ -104,6 +112,7 @@ const wchar_t* wOrderedCharNames[TOTAL_CHAR_INDEXES]
 	L"Gordeau",	// 31
 	L"Hakumen",	// 5
 	L"Hazama",	// 7
+	L"Heart",	// 43
 	L"Hyde",	// 26
 	L"Izayoi",	// 10
 	L"Jin",		// 1
@@ -117,6 +126,7 @@ const wchar_t* wOrderedCharNames[TOTAL_CHAR_INDEXES]
 	L"Mika",	// 35
 	L"Mitsuru",	// 22
 	L"Naoto",	// 21
+	L"NaotoKurogane", // 40
 	L"Nine",	// 12
 	L"Noel",	// 2
 	L"Nu",		// 6
@@ -125,7 +135,9 @@ const wchar_t* wOrderedCharNames[TOTAL_CHAR_INDEXES]
 	L"Rachel",	// 3
 	L"Ragna",	// 0
 	L"Ruby",	// 36
+	L"Seth",	// 42
 	L"Tager",	// 4
+	L"Teddy",	// 41
 	L"Vatista",	// 33
 	L"Waldstein",// 28
 	L"Weiss",	// 37

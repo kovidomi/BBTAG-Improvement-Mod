@@ -18,7 +18,7 @@ void __declspec(naked)PassMsgToImGui()
 	{
 		push ebp
 		mov ebp, esp
-		mov eax, [ebp + 8h]
+		mov edx, [ebp + 8h]
 	}
 	LOG_ASM(7, "PassMsgToImGui\n");
 
@@ -144,9 +144,9 @@ void __declspec(naked)GetIsHUDHidden()
 
 	__asm
 	{
-		or dword ptr[eax + 3DD06Ch], 4
+		or dword ptr[eax + 3E906Ch], 4
 		push eax
-		add eax, 3DD06Ch
+		add eax, 3E906Ch
 		mov g_gameVals.pIsHUDHidden, eax
 		pop eax
 		jmp[GetIsHUDHiddenJmpBackAddr]
@@ -241,7 +241,7 @@ void __declspec(naked)ForcePromptControlSchemeLayout()
 	{
 		push eax
 		mov eax, [Settings::settingsIni.forcepromptbuttonlayout];
-		mov[ecx + 177B40h], eax
+		mov[ecx + 177B80h], eax
 		pop eax
 
 		jmp[ForcePromptControlSchemeLayoutJmpBackAddr]
@@ -443,7 +443,7 @@ void __declspec(naked)GetPaletteIndexAddrOnline()
 	__asm
 	{
 		pushad
-		add esi, 24D8h
+		add esi, 27A8h
 		mov pPalIndex, esi
 	}
 
@@ -453,7 +453,7 @@ void __declspec(naked)GetPaletteIndexAddrOnline()
 	__asm
 	{
 		popad
-		mov dword ptr[esi + 24F4h], 64h
+		mov dword ptr[esi + 27C4h], 64h
 		jmp[GetPaletteIndexAddrOnlineJmpBackAddr]
 	}
 }
@@ -536,8 +536,8 @@ bool placeHooks_bbtag()
 {
 	LOG(1, "placeHooks_bbtag\n");
 
-	WindowMsgHandlerJmpBackAddr = HookManager::SetHook("WindowMsgHandler", "\x55\x8b\xec\x8b\x45\x08\x83\xe8\x02\x74\x00\x8b\x55\x0c",
-		"xxxxxxxxxx?xxx", 6, PassMsgToImGui);
+	WindowMsgHandlerJmpBackAddr = HookManager::SetHook("WindowMsgHandler", "\x55\x8b\xec\x8b\x55\x08\x56\x8b\x75\x0c\x83\xfa\x10",
+		"xxxxxxxxxxxxx", 6, PassMsgToImGui);
 
 	DenyKeyboardInputFromGameJmpBackAddr = HookManager::SetHook("DenyKeyboardInputFromGame", "\x8d\x46\x28\x50\xff\x15", 
 		"xxxxxx", 10, DenyKeyboardInputFromGame);
@@ -550,7 +550,7 @@ bool placeHooks_bbtag()
 
 	if (Settings::settingsIni.forcepromptbuttonlayout != FORCE_PROMPT_LAYOUT_OFF)
 	{
-		ForcePromptControlSchemeLayoutJmpBackAddr = HookManager::SetHook("ForcePromptControlSchemeLayout", "\x89\x81\x40\x7b\x17\x00\xc3",
+		ForcePromptControlSchemeLayoutJmpBackAddr = HookManager::SetHook("ForcePromptControlSchemeLayout", "\x89\x81\x80\x7b\x17\x00\xc3",
 			"xxxxxxx", 6, ForcePromptControlSchemeLayout);
 	}
 
@@ -563,7 +563,7 @@ bool placeHooks_bbtag()
 	VictoryScreenJmpBackAddr = HookManager::SetHook("VictoryScreen", "\xc7\x80\x14\x01\x00\x00\x0c\x00\x00\x00\xe8",
 		"xxxxxxxxxxx", 10, VictoryScreen);
 
-	GetIsHUDHiddenJmpBackAddr = HookManager::SetHook("GetIsHUDHidden", "\x83\x88\x6c\xd0\x3d\x00\x04\x8b\x06\xff\x50\x24", 
+	GetIsHUDHiddenJmpBackAddr = HookManager::SetHook("GetIsHUDHidden", "\x83\x88\x6c\x90\x3e\x00\x04\x8b\x06\xff\x50\x24", 
 		"xxxxxxxxxxxx", 7, GetIsHUDHidden);
 
 	GetCharObjectsJmpBackAddr = HookManager::SetHook("GetCharObjects", "\xc7\x01\x00\x00\x00\x00\xb8\x00\x00\x00\x00\xc7\x41\x04\x00\x00\x00\x00", 
@@ -582,7 +582,7 @@ bool placeHooks_bbtag()
 	GetGameUpdatePauseJmpBackAddr = HookManager::SetHook("GetGameUpdatePause", "\x83\x78\x08\x00\x75\x00\xe8",
 		"xxxxx?x", 6, GetGameUpdatePause);
 
-	GetPaletteIndexAddrOnlineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOnline", "\xc7\x86\xf4\x24\x00\x00\x64\x00\x00\x00\x8b\x87\x58\x06\x00\x00",
+	GetPaletteIndexAddrOnlineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOnline", "\xc7\x86\xc4\x27\x00\x00\x64\x00\x00\x00\x8b\x87\x5c\x06\x00\x00",
 		"xxxxxxxxxxxxxxxx", 10, GetPaletteIndexAddrOnline);
 
 	GetPaletteIndexAddrRankedJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrRanked", "\x8b\x06\x89\x01\x8b\xcb\x0f\xb6\x76\xec",

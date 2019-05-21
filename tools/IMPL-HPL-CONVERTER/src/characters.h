@@ -1,6 +1,6 @@
 #pragma once
 
-#define TOTAL_CHAR_INDEXES 41
+#define TOTAL_CHAR_INDEXES 45
 
 extern const char* charNames[TOTAL_CHAR_INDEXES];
 extern const wchar_t* wCharNames[TOTAL_CHAR_INDEXES];
@@ -48,5 +48,9 @@ enum CharIndex
 	CharIndex_Weiss = 37,
 	CharIndex_Blake = 38,
 	CharIndex_Yang = 39,
-	CharIndex_Boss = 40,
+	CharIndex_NaotoKurogane = 40,
+	CharIndex_Teddy = 41,
+	CharIndex_Seth = 42,
+	CharIndex_Heart = 43,
+	CharIndex_Boss = 44
 };

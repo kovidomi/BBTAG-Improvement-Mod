@@ -42,7 +42,11 @@ const std::vector<std::string> meterCharNames
 	"Weiss",	// 37,
 	"Blake",	// 38,
 	"Yang",		// 39,
-	"Boss",		// 40
+	"NaotoKurogane", // 40
+	"Teddy",	// 41
+	"Seth",		// 42
+	"Heart",	// 43
+	"Boss",		// 44
 };
 
 ImVec4 meter_color_platinum(1.0f, 0.186f, 0.713f, 1.0f);

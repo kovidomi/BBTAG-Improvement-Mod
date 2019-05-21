@@ -1,7 +1,7 @@
 #include "characters.h"
 
 // TODO: rework this file with better data structures
-const int CHAR_NAMES_COUNT = 41; // charNames.size();
+const int CHAR_NAMES_COUNT = 45; // charNames.size();
 
 const std::vector<std::string> charNames
 {
@@ -45,7 +45,11 @@ const std::vector<std::string> charNames
 	"Weiss",	// 37,
 	"Blake",	// 38,
 	"Yang",		// 39,
-	"Boss",		// 40
+	"NaotoKurogane", // 40,
+	"Teddy",	// 41,
+	"Seth",		// 42,
+	"Heart",	// 43,
+	"Boss",		// 44
 };
 
 const std::vector<std::wstring> wCharNames
@@ -90,5 +94,9 @@ const std::vector<std::wstring> wCharNames
 	L"Weiss",	// 37,
 	L"Blake",	// 38,
 	L"Yang",	// 39,
-	L"Boss",	// 40
+	L"NaotoKurogane", // 40,
+	L"Teddy",	// 41,
+	L"Seth",	// 42,
+	L"Heart",	// 43,
+	L"Boss",	// 44
 };
