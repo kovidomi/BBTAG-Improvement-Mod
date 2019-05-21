@@ -241,7 +241,7 @@ void __declspec(naked)ForcePromptControlSchemeLayout()
 	{
 		push eax
 		mov eax, [Settings::settingsIni.forcepromptbuttonlayout];
-		mov[ecx + 177B40h], eax
+		mov[ecx + 177B80h], eax
 		pop eax
 
 		jmp[ForcePromptControlSchemeLayoutJmpBackAddr]
@@ -550,7 +550,7 @@ bool placeHooks_bbtag()
 
 	if (Settings::settingsIni.forcepromptbuttonlayout != FORCE_PROMPT_LAYOUT_OFF)
 	{
-		ForcePromptControlSchemeLayoutJmpBackAddr = HookManager::SetHook("ForcePromptControlSchemeLayout", "\x89\x81\x40\x7b\x17\x00\xc3",
+		ForcePromptControlSchemeLayoutJmpBackAddr = HookManager::SetHook("ForcePromptControlSchemeLayout", "\x89\x81\x80\x7b\x17\x00\xc3",
 			"xxxxxxx", 6, ForcePromptControlSchemeLayout);
 	}
 
