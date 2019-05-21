@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 
+#include "HitboxOverlay.h"
 #include "PaletteEditorWindow.h"
 #include "CustomHud/CustomHudWindow.h"
 
@@ -111,6 +112,45 @@ void MainWindow::Draw()
 		else if (*g_gameVals.pGameMode == GameMode_Training && pressed)
 		{
 			m_pWindowContainer->GetWindow(WindowType_PaletteEditor)->Open();
+		}
+	}
+
+	if (ImGui::CollapsingHeader("Hitbox overlay"))
+	{
+		if (*g_gameVals.pGameState != GameState_Match)
+		{
+			ImGui::Text(" "); ImGui::SameLine();
+			ImGui::TextDisabled("Not in match!");
+		}
+		else if (*g_gameVals.pGameMode != GameMode_Training)
+		{
+			ImGui::SameLine(); ImGui::TextDisabled("Not in training mode!");
+		}
+		else
+		{
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			static bool isOpen = false;
+			if (ImGui::Checkbox("Enable", &isOpen))
+			{
+				if (isOpen)
+				{
+					m_pWindowContainer->GetWindow(WindowType_HitboxOverlay)->Open();
+				}
+				else
+				{
+					m_pWindowContainer->GetWindow(WindowType_HitboxOverlay)->Close();
+				}
+			}
+
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectThicknessSlider();
+
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectFillTransparencySlider();
+
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			ImGui::Checkbox("Draw origin",
+				&m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawOriginLine);
 		}
 	}
 

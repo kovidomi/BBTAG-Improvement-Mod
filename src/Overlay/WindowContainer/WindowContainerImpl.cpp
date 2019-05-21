@@ -3,6 +3,7 @@
 #include "Overlay/Window/CustomHud/CustomHudWindow.h"
 #include "Overlay/Window/DebugWindow.h"
 #include "Overlay/Window/DonatorsWindow.h"
+#include "Overlay/Window/HitboxOverlay.h"
 #include "Overlay/Window/LogWindow.h"
 #include "Overlay/Window/MainWindow.h"
 #include "Overlay/Window/PaletteEditorWindow.h"
@@ -35,6 +36,9 @@ void WindowContainerImpl::FillWindowContainer()
 
 	AddWindow(WindowType_PaletteEditor,
 		new PaletteEditorWindow("Palette Editor", true));
+
+	AddWindow(WindowType_HitboxOverlay,
+		new HitboxOverlay("##HitboxOverlay", false, ImGuiWindowFlags_NoCollapse));
 
 	CustomHudWindow* pCustomHud = new CustomHudWindow("Custom Hud", false,
 		ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove

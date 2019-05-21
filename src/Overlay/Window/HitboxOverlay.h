@@ -1,32 +1,33 @@
 #pragma once
+#include "Window.h"
+
 #include "Game/CharInfo.h"
 
 #include <imgui.h>
-
 #include <d3dx9.h>
 
 typedef unsigned int uint32_t;
 
-class HitboxOverlay
+class HitboxOverlay : public Window
 {
 public:
-	bool windowOpen = false;
 	bool drawOriginLine = false;
 
-	HitboxOverlay() = default;
-	void Update();
+	HitboxOverlay(const std::string& windowTitle, bool windowClosable,
+		ImGuiWindowFlags windowFlags)
+		: Window(windowTitle, windowClosable, windowFlags) {}
+	void Update() override;
 	void DrawOriginLine(ImVec2 worldPos, float rotationRad);
 	void DrawCollisionAreas(const CharInfo* charObj, const ImVec2 playerWorldPos);
 	float& GetScale();
 	void DrawRectThicknessSlider();
 	void DrawRectFillTransparencySlider();
 	bool HasNullptrInData();
-
+protected:
+	void BeforeDraw() override;
+	void Draw() override;
+	void AfterDraw() override;
 private:
-	void BeforeDraw();
-	void Draw();
-	void AfterDraw();
-
 	bool WorldToScreen(LPDIRECT3DDEVICE9 pDevice, D3DXMATRIX* view, D3DXMATRIX* proj, D3DXVECTOR3* pos, D3DXVECTOR3* out);
 	ImVec2 CalculateObjWorldPosition(const CharInfo * charObj);
 	ImVec2 CalculateScreenPosition(ImVec2 worldPos);
@@ -45,7 +46,7 @@ private:
 	float m_rectThickness = 2.5f;
 	float m_rectFillTransparency = 0.5f;
 
-	ImGuiWindowFlags m_windowFlags = ImGuiWindowFlags_NoTitleBar
+	ImGuiWindowFlags m_overlayWindowFlags = ImGuiWindowFlags_NoTitleBar
 		| ImGuiWindowFlags_NoInputs
 		| ImGuiWindowFlags_NoBringToFrontOnFocus
 		| ImGuiWindowFlags_NoFocusOnAppearing;

@@ -181,6 +181,7 @@
     </ClCompile>
     <ClCompile Include="src\Overlay\Logger\ImGuiLogger.cpp" />
     <ClCompile Include="src\Game\MatchState.cpp" />
+    <ClCompile Include="src\Overlay\Window\HitboxOverlay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -341,6 +342,7 @@
     <ClInclude Include="src\Overlay\Logger\Logger.h" />
     <ClInclude Include="src\Overlay\Logger\ImGuiLogger.h" />
     <ClInclude Include="src\Game\MatchState.h" />
+    <ClInclude Include="src\Overlay\Window\HitboxOverlay.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">

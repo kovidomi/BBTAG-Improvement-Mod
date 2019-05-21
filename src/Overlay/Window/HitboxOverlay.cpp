@@ -6,14 +6,14 @@
 
 void HitboxOverlay::Update()
 {
-	if (HasNullptrInData())
+	if (HasNullptrInData() || !m_windowOpen)
 	{
 		return;
 	}
 
 	BeforeDraw();
 
-	ImGui::Begin("##HitboxOverlay", nullptr, m_windowFlags);
+	ImGui::Begin("##HitboxOverlay", nullptr, m_overlayWindowFlags);
 
 	Draw();
 

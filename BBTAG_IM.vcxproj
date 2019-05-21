@@ -153,6 +153,7 @@
     <ClCompile Include="src\Overlay\Window\CustomHud\TimerWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\DebugWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\DonatorsWindow.cpp" />
+    <ClCompile Include="src\Overlay\Window\HitboxOverlay.cpp" />
     <ClCompile Include="src\Overlay\Window\LogWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\MainWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\NotificationWindow.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="src\Overlay\Window\CustomHud\CustomHudWindow.h" />
     <ClInclude Include="src\Overlay\Window\DebugWindow.h" />
     <ClInclude Include="src\Overlay\Window\DonatorsWindow.h" />
+    <ClInclude Include="src\Overlay\Window\HitboxOverlay.h" />
     <ClInclude Include="src\Overlay\Window\LogWindow.h" />
     <ClInclude Include="src\Overlay\Window\MainWindow.h" />
     <ClInclude Include="src\Overlay\Window\NotificationWindow.h" />
