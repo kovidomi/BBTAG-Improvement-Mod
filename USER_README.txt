@@ -71,8 +71,13 @@ Keep in mind that the mod may partially, or completely stop working whenever a n
 Changelog
 ==========================
 
-??-??-2018 -- version 1.07
+??-05-2019 -- version 1.07
 ===============================
+- Fixed crashing upon startup with the game updated to v1.50
+- Fixed being able to manually resize the game's window using the cursor in windowed mode
+- Added hitbox overlay in training mode
+	 Calculations are not pixel perfect, expect slight margin of error
+	 Personas upon disappearing may leave their hitboxes behind in weird ways
 - Added gradient generator to the palette editor
 - Added indexing mode to the palette editor
 - "Drag and drop" of the color boxes now works on the palette editor
