@@ -273,7 +273,7 @@ BOOL WINAPI hook_SetWindowPos(_In_ HWND hWnd, _In_opt_ HWND hWndInsertAfter, _In
 		}
 		else if (Settings::settingsIni.displaymode == DISPLAYMODE_WINDOWED)
 		{
-			SetWindowLong(hWnd, GWL_STYLE, GetWindowLong(hWnd, GWL_STYLE) | WS_OVERLAPPEDWINDOW);
+			SetWindowLong(hWnd, GWL_STYLE, GetWindowLong(hWnd, GWL_STYLE) | WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME);
 
 			RECT rc;
 			GetWindowRect(hWnd, &rc);

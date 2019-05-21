@@ -4,7 +4,7 @@
 
 #include "Core/info.h"
 #include "Core/logger.h"
-#include "WindowManager/WindowManager.h"
+#include "Overlay/Logger/ImGuiLogger.h"
 
 #include <sstream>
 
@@ -55,7 +55,7 @@ void FetchDonators()
 		}
 		return;
 	}
-	WindowManager::AddLog("[error] Donators fetch failed. No data downloaded.\n");
+	g_imGuiLogger->Log("[error] Donators fetch failed. No data downloaded.\n");
 	LOG(2, "Donators fetch failed. No data downloaded.\n");
 
 	//X-MACRO, loading donators and tiers from file
@@ -64,4 +64,9 @@ void FetchDonators()
 	donatorTiers.push_back(_tier); }
 #include "../../resource/donators.txt"
 #undef DONATOR
+}
+
+void StartAsyncDonatorsFetch()
+{
+	CloseHandle(CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)FetchDonators, nullptr, 0, nullptr));
 }

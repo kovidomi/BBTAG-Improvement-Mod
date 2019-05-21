@@ -36,7 +36,13 @@ struct interfaces_t
 
 struct gameVals_t
 {
+	// *pIsHUDHidden is a bitfield:
+	// 0x00 - hud is visible
+	// 0x01 - hud is hidden (intro)
+	// 0x02 - hud is hidden (astral)
+	// 0x04 - loading icon is shown
 	int* pIsHUDHidden;
+
 	int* pGameTimer;
 
 	int* pGameState;
