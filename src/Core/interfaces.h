@@ -11,6 +11,13 @@
 #include "SteamApiWrapper/SteamApiHelper.h"
 #include <steam_api.h>
 
+struct lookat_t
+{
+	D3DXVECTOR3 *pEye;
+	D3DXVECTOR3 *pAt;
+	D3DXVECTOR3 *pUp;
+};
+
 struct interfaces_t
 {
 	SteamFriendsWrapper* pSteamFriendsWrapper;
@@ -42,6 +49,13 @@ struct gameVals_t
 	int* pGameMode;
 
 	bool isPaletteModePaused;
+
+	lookat_t lookAtVector;
+	D3DXMATRIX* viewMatrix;
+	D3DXMATRIX* projMatrix;
+
+	int* pEntityList;
+	int entityCount;
 };
 
 struct gameProc_t

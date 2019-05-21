@@ -158,6 +158,7 @@
     <ClCompile Include="src\Core\dllmain.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\JonbReader.cpp" />
     <ClCompile Include="src\Overlay\Window\DebugWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\DonatorsWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\LogWindow.cpp" />
@@ -180,6 +181,7 @@
     </ClCompile>
     <ClCompile Include="src\Overlay\Logger\ImGuiLogger.cpp" />
     <ClCompile Include="src\Game\MatchState.cpp" />
+    <ClCompile Include="src\Overlay\Window\HitboxOverlay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depends\imgui\imconfig.h">
@@ -300,6 +302,8 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\info.h" />
+    <ClInclude Include="src\Game\JonbEntry.h" />
+    <ClInclude Include="src\Game\JonbReader.h" />
     <ClInclude Include="src\Core\interfaces.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -338,6 +342,7 @@
     <ClInclude Include="src\Overlay\Logger\Logger.h" />
     <ClInclude Include="src\Overlay\Logger\ImGuiLogger.h" />
     <ClInclude Include="src\Game\MatchState.h" />
+    <ClInclude Include="src\Overlay\Window\HitboxOverlay.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\donators.txt">

@@ -128,6 +128,7 @@
     <ClCompile Include="src\Game\characters.cpp" />
     <ClCompile Include="src\Game\CharHandle.cpp" />
     <ClCompile Include="src\Game\CharPaletteHandle.cpp" />
+    <ClCompile Include="src\Game\JonbReader.cpp" />
     <ClCompile Include="src\Game\MatchState.cpp" />
     <ClCompile Include="src\Game\Player.cpp" />
     <ClCompile Include="src\Hooks\HookManager.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="src\Overlay\Window\CustomHud\TimerWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\DebugWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\DonatorsWindow.cpp" />
+    <ClCompile Include="src\Overlay\Window\HitboxOverlay.cpp" />
     <ClCompile Include="src\Overlay\Window\LogWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\MainWindow.cpp" />
     <ClCompile Include="src\Overlay\Window\NotificationWindow.cpp" />
@@ -197,6 +199,8 @@
     <ClInclude Include="src\Game\CharPaletteHandle.h" />
     <ClInclude Include="src\Game\gamestates.h" />
     <ClInclude Include="src\Game\MatchState.h" />
+    <ClInclude Include="src\Game\JonbEntry.h" />
+    <ClInclude Include="src\Game\JonbReader.h" />
     <ClInclude Include="src\Game\MeterInfo.h" />
     <ClInclude Include="src\Game\Player.h" />
     <ClInclude Include="src\Hooks\HookManager.h" />
@@ -219,6 +223,7 @@
     <ClInclude Include="src\Overlay\Window\CustomHud\CustomHudWindow.h" />
     <ClInclude Include="src\Overlay\Window\DebugWindow.h" />
     <ClInclude Include="src\Overlay\Window\DonatorsWindow.h" />
+    <ClInclude Include="src\Overlay\Window\HitboxOverlay.h" />
     <ClInclude Include="src\Overlay\Window\LogWindow.h" />
     <ClInclude Include="src\Overlay\Window\MainWindow.h" />
     <ClInclude Include="src\Overlay\Window\NotificationWindow.h" />

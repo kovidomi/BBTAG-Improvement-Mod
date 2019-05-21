@@ -33,7 +33,8 @@ public:
 	static bool SetJmpBackAddr(const char* label, DWORD newJmpBackAddr);
 	static DWORD GetStartAddress(const char* label);
 	static JMPBACKADDR RegisterHook(const char *label, const char *pattern, const char *mask, const int len);
-	static int GetBytesFromAddr(const char *label, int startIndex = 0, int bytesToReturn = 4);
+	static int GetOriginalBytes(const char *label, int startIndex, int bytesToReturn);
+	static int GetBytesFromAddr(const char *label, int startIndex, int bytesToReturn);
 	static int OverWriteBytes(void* startAddress, void* endAddress, const char *pattern, const char *mask, const char *newBytes);
 	static void Cleanup(); //empty atm
 private:

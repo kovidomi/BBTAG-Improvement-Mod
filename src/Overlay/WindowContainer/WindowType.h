@@ -8,5 +8,6 @@ enum WindowType_
 	WindowType_Donators,
 	WindowType_UpdateNotifier,
 	WindowType_PaletteEditor,
-	WindowType_CustomHud
+	WindowType_CustomHud,
+	WindowType_HitboxOverlay
 };

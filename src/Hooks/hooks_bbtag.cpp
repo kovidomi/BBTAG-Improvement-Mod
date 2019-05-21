@@ -524,6 +524,96 @@ void __declspec(naked)VictoryScreen()
 	}
 }
 
+DWORD GetLookAtVectorJmpBackAddr = 0;
+void __declspec(naked)GetLookAtVector()
+{
+	static D3DXMATRIX* pViewMatrix;
+	static D3DXVECTOR3* pVec;
+
+	LOG_ASM(7, "GetLookAtVecAndViewMatrix\n");
+
+	__asm pushad
+	__asm lea eax, [esi + 10h]
+	__asm mov pVec, eax
+	g_gameVals.lookAtVector.pUp = pVec;
+
+	__asm lea eax, [esi + 1Ch]
+	__asm mov pVec, eax
+	g_gameVals.lookAtVector.pAt = pVec;
+
+	__asm lea eax, [esi + 4]
+	__asm mov pVec, eax
+	g_gameVals.lookAtVector.pEye = pVec;
+
+	//__asm lea eax, [esi + 4Ch]
+	//__asm mov pViewMatrix, eax
+	//g_gameVals.viewMatrix = pViewMatrix;
+	//LOG_ASM(7, "GetViewMatrix: 0x%x\n", pViewMatrix);
+	__asm popad
+
+	__asm
+	{
+		push    eax
+		lea     eax, [esi + 4Ch]
+		push    eax
+		jmp[GetLookAtVectorJmpBackAddr]
+	}
+}
+
+DWORD GetViewAndProjMatrixesJmpBackAddr = 0;
+void __declspec(naked)GetViewAndProjMatrixes()
+{
+	__asm
+	{
+		mov g_gameVals.viewMatrix, eax;
+
+		push eax
+		mov eax, [esp + 4]
+		mov g_gameVals.projMatrix, eax;
+		pop eax
+	}
+
+	__asm
+	{
+		mov DWORD PTR [ebp - 24h], 3F800000h
+		push    eax
+		lea     eax, [ebp - 88h]
+		jmp[GetViewAndProjMatrixesJmpBackAddr]
+	}
+}
+
+DWORD GetEntityListAddrJmpBackAddr = 0;
+int entityListSize = 0;
+void __declspec(naked)GetEntityListAddr()
+{
+	LOG_ASM(7, "GetEntityListAddr\n");
+
+	__asm mov [g_gameVals.pEntityList], eax
+
+// Original:
+// push    650h
+// mov[esi + 0A4210h], eax
+	__asm
+	{
+		push[entityListSize]
+		mov[esi + 0A4210h], eax
+		jmp[GetEntityListAddrJmpBackAddr]
+	}
+}
+
+DWORD GetEntityListDeleteAddrJmpBackAddr = 0;
+void __declspec(naked)GetEntityListDeleteAddr()
+{
+	LOG_ASM(7, "GetEntityListDeleteAddr\n");
+
+	_asm
+	{
+		mov [g_gameVals.pEntityList], 0
+		mov [esi + 0A4210h], edi
+		jmp [GetEntityListDeleteAddrJmpBackAddr]
+	}
+}
+
 //runs in additional_hooks.cpp in the hook_steamnetworking and ID3D9EXWrapper_Device.cpp in constructor, since unlike in CF in this game this method runs after steam init
 //These functions can be hooked after steam drm does its thing and d3d9device is up
 bool placeHooks_bbtag()
@@ -584,6 +674,19 @@ bool placeHooks_bbtag()
 
 	GetPaletteIndexAddrOfflineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOffline", "\xc7\x40\x24\x64\x00\x00\x00\xe8\x00\x00\x00\x00\x46", 
 		"xxxxxxxx????x", 7, GetPaletteIndexAddrOffline);
+
+	GetEntityListAddrJmpBackAddr = HookManager::SetHook("GetEntityListAddr", "\x68\x00\x00\x00\x00\x89\x86\x10\x42\x0a\x00",
+		"x????xxxxxx", 11, GetEntityListAddr);
+	entityListSize = HookManager::GetOriginalBytes("GetEntityListAddr", 1, 4);
+	g_gameVals.entityCount = entityListSize / 4;
+
+	GetEntityListDeleteAddrJmpBackAddr = HookManager::SetHook("GetEntityListDeleteAddr", "\x89\xbe\x10\x42\x0a\x00\x89\xbe\x14\x42\x0a\x00",
+		"xxxxxxxxxxxx", 6, GetEntityListDeleteAddr);
+
+	GetLookAtVectorJmpBackAddr = HookManager::SetHook("GetLookAtVector", "\x50\x8d\x46\x4c\x50", "xxxxx", 5, GetLookAtVector);
+
+	GetViewAndProjMatrixesJmpBackAddr = HookManager::SetHook("GetViewAndProjMatrixes", "\xc7\x45\xdc\x00\x00\x80\x3f\x50\x8d\x85\x78\xff\xff\xff",
+		"xxxxxxxxxxxxxx", 14, GetViewAndProjMatrixes);
 
 	///////////////// EXPERIMENTAL HOOKS BELOW ////////////////////////////
 
