@@ -44,7 +44,11 @@ const std::vector<std::string> meterCharNames
 	"Weiss",    // 37,
 	"Blake",    // 38,
 	"Yang",     // 39,
-	"Boss",     // 40
+	"NaotoKurogane", // 40
+	"Teddy",	// 41
+	"Seth",		// 42
+	"Heart",	// 43
+	"Boss",		// 44
 };
 
 const ImVec4 COLOR_BAR_DEFAULT          (1.000f, 1.000f, 1.000f, 1.000f);
