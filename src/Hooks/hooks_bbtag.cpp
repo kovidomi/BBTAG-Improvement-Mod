@@ -144,9 +144,9 @@ void __declspec(naked)GetIsHUDHidden()
 
 	__asm
 	{
-		or dword ptr[eax + 3DD06Ch], 4
+		or dword ptr[eax + 3E906Ch], 4
 		push eax
-		add eax, 3DD06Ch
+		add eax, 3E906Ch
 		mov g_gameVals.pIsHUDHidden, eax
 		pop eax
 		jmp[GetIsHUDHiddenJmpBackAddr]
@@ -563,7 +563,7 @@ bool placeHooks_bbtag()
 	VictoryScreenJmpBackAddr = HookManager::SetHook("VictoryScreen", "\xc7\x80\x14\x01\x00\x00\x0c\x00\x00\x00\xe8",
 		"xxxxxxxxxxx", 10, VictoryScreen);
 
-	GetIsHUDHiddenJmpBackAddr = HookManager::SetHook("GetIsHUDHidden", "\x83\x88\x6c\xd0\x3d\x00\x04\x8b\x06\xff\x50\x24", 
+	GetIsHUDHiddenJmpBackAddr = HookManager::SetHook("GetIsHUDHidden", "\x83\x88\x6c\x90\x3e\x00\x04\x8b\x06\xff\x50\x24", 
 		"xxxxxxxxxxxx", 7, GetIsHUDHidden);
 
 	GetCharObjectsJmpBackAddr = HookManager::SetHook("GetCharObjects", "\xc7\x01\x00\x00\x00\x00\xb8\x00\x00\x00\x00\xc7\x41\x04\x00\x00\x00\x00", 
