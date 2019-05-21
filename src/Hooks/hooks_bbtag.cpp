@@ -18,7 +18,7 @@ void __declspec(naked)PassMsgToImGui()
 	{
 		push ebp
 		mov ebp, esp
-		mov eax, [ebp + 8h]
+		mov edx, [ebp + 8h]
 	}
 	LOG_ASM(7, "PassMsgToImGui\n");
 
@@ -536,8 +536,8 @@ bool placeHooks_bbtag()
 {
 	LOG(1, "placeHooks_bbtag\n");
 
-	WindowMsgHandlerJmpBackAddr = HookManager::SetHook("WindowMsgHandler", "\x55\x8b\xec\x8b\x45\x08\x83\xe8\x02\x74\x00\x8b\x55\x0c",
-		"xxxxxxxxxx?xxx", 6, PassMsgToImGui);
+	WindowMsgHandlerJmpBackAddr = HookManager::SetHook("WindowMsgHandler", "\x55\x8b\xec\x8b\x55\x08\x56\x8b\x75\x0c\x83\xfa\x10",
+		"xxxxxxxxxxxxx", 6, PassMsgToImGui);
 
 	DenyKeyboardInputFromGameJmpBackAddr = HookManager::SetHook("DenyKeyboardInputFromGame", "\x8d\x46\x28\x50\xff\x15", 
 		"xxxxxx", 10, DenyKeyboardInputFromGame);
