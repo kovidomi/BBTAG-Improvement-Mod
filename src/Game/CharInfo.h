@@ -39,18 +39,18 @@ public:
 	int32_t stageEdgeTouchTimer; //0x0358
 	char pad_035C[888]; //0x035C
 	uint32_t deny_opponent_burst; //0x06D4
-	char pad_06D8[972]; //0x06D8
-	uint32_t cur_hp; //0x0AA4
-	uint32_t max_hp; //0x0AA8
-	char pad_0AAC[7504]; //0x0AAC
-	uint32_t is_char_active2; //0x27FC
-	char pad_2800[4]; //0x2800
-	uint32_t recoverable_hp; //0x2804
-	uint32_t is_char_active; //0x2808
-	char pad_280C[116580]; //0x280C
-	uint32_t naoto_is_enemy_marked; //0x1EF70
-	char pad_1EF74[8540]; //0x1EF74
-	uint32_t unique_meter_max_val; //0x210D0
-	uint32_t unique_meter_cur_val; //0x210D4
-	char pad_210D8[40]; //0x210D8
+	char pad_06D8[996]; //0x06D8
+	uint32_t cur_hp; //0x0ABC
+	uint32_t max_hp; //0x0AC0
+	char pad_0AC4[7508]; //0x0AC4
+	uint32_t is_char_active2; //0x2818
+	char pad_281C[4]; //0x281C
+	uint32_t recoverable_hp; //0x2820
+	uint32_t is_char_active; //0x2824
+	char pad_2828[116588]; //0x2828
+	uint32_t naoto_is_enemy_marked; //0x1EF94
+	char pad_1EF98[8540]; //0x1EF98
+	uint32_t unique_meter_max_val; //0x210F4
+	uint32_t unique_meter_cur_val; //0x210F8
+	char pad_210FC[4]; //0x210FC
 }; //Size: 0x21100
