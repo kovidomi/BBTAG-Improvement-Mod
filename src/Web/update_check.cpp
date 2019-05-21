@@ -4,8 +4,11 @@
 
 #include "Core/logger.h"
 #include "Core/info.h"
-#include "WindowManager/WindowManager.h"
+#include "Overlay/Logger/ImGuiLogger.h"
+#include "Overlay/WindowManager.h"
 
+#include <handleapi.h>
+#include <processthreadsapi.h>
 #include <regex>
 
 std::string newVersionNum = "";
@@ -13,9 +16,10 @@ std::string newVersionNum = "";
 std::string GetNewVersionNum()
 {
 	if (newVersionNum != "")
+	{
 		return newVersionNum;
-	else
-		return "";
+	}
+	return "";
 }
 
 void CheckUpdate()
@@ -25,7 +29,7 @@ void CheckUpdate()
 
 	if (strcmp(data.c_str(), "") == 0)
 	{
-		WindowManager::AddLog("[error] Update check failed. No data downloaded.\n");
+		g_imGuiLogger->Log("[error] Update check failed. No data downloaded.\n");
 		LOG(2, "Update check failed.No data downloaded.\n");
 		return;
 	}
@@ -40,19 +44,30 @@ void CheckUpdate()
 
 	if (m[1].str() == "")
 	{
-		WindowManager::AddLog("[error] Update check failed. Regex no match.\n");
+		g_imGuiLogger->Log("[error] Update check failed. Regex no match.\n");
 		return;
 	}
 
 	if (strcmp(m[1].str().c_str(), MOD_VERSION_NUM) != 0)
 	{
 		newVersionNum = m[1].str();
+
 		LOG(2, "New version found: %s\n", newVersionNum.c_str());
-		WindowManager::AddLog("[system] Update available: BBTAG Improvement Mod %s has been released!\n", newVersionNum.c_str());
-		WindowManager::IsUpdateAvailable = true;
+		g_imGuiLogger->Log("[system] Update available: BBTAG Improvement Mod %s has been released!\n",
+			newVersionNum.c_str());
+
+		WindowManager::GetInstance().GetWindowContainer()->GetWindow(WindowType_UpdateNotifier)->Open();
 	}
 	else
 	{
-		WindowManager::AddLog("[system] BBTAG Improvement Mod is up-to-date\n");
+		g_imGuiLogger->Log("[system] BBTAG Improvement Mod is up-to-date\n");
+	}
+}
+
+void StartAsyncUpdateCheck()
+{
+	if (Settings::settingsIni.checkupdates)
+	{
+		CloseHandle(CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)CheckUpdate, nullptr, 0, nullptr));
 	}
 }

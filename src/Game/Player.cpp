@@ -19,6 +19,11 @@ const MeterInfo * Player::GetMeters() const
 	return m_meters;
 }
 
+const MeterInfo ** Player::GetMetersMemberRef()
+{
+	return &m_meters;
+}
+
 void Player::SetMeterPtr(const void * addr)
 {
 	m_meters = (MeterInfo*)addr;

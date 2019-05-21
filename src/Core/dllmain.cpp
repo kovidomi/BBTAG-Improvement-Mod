@@ -4,8 +4,8 @@
 #include "Settings.h"
 
 #include "Hooks/hooks_detours.h"
+#include "Overlay/WindowManager.h"
 #include "PaletteManager/PaletteManager.h"
-#include "WindowManager/WindowManager.h"
 
 #include <Windows.h>
 
@@ -30,7 +30,7 @@ void CreateCustomDirectories()
 
 void BBTAG_IM_Shutdown()
 {
-	WindowManager::Shutdown();
+	WindowManager::GetInstance().Shutdown();
 	CleanupInterfaces();
 	closeLogger();
 }

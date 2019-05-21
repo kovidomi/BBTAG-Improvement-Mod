@@ -4,8 +4,9 @@
 
 #include "Core/interfaces.h"
 #include "Core/logger.h"
-#include "WindowManager/WindowManager.h"
+#include "Game/MatchState.h"
 #include "Hooks/hooks_bbtag.h"
+#include "Overlay/WindowManager.h"
 
 #include <steam_api.h>
 
@@ -145,11 +146,11 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::Reset(D3DPRESENT_PARAMETERS* pPresent
 	Settings::applySettingsIni(pPresentationParameters);
 	logD3DPParams(pPresentationParameters, false);
 
-	WindowManager::InvalidateDeviceObjects();
+	WindowManager::GetInstance().InvalidateDeviceObjects();
 
 	HRESULT ret = m_Direct3DDevice9Ex->Reset(pPresentationParameters);
 
-	WindowManager::CreateDeviceObjects();
+	WindowManager::GetInstance().CreateDeviceObjects();
 
 	return ret;
 }
@@ -344,9 +345,6 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::GetDepthStencilSurface(IDirect3DSurfa
 HRESULT APIENTRY Direct3DDevice9ExWrapper::BeginScene()
 {
 	LOG(7, "BeginScene\n");
-
-	WindowManager::OnUpdate();
-
 	return m_Direct3DDevice9Ex->BeginScene();
 }
 
@@ -354,7 +352,8 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::EndScene()
 {
 	LOG(7, "EndScene\n");
 
-	WindowManager::OnRender();
+	MatchState::OnUpdate();
+	WindowManager::GetInstance().Render();
 
 	return m_Direct3DDevice9Ex->EndScene();
 }
@@ -966,11 +965,11 @@ HRESULT APIENTRY Direct3DDevice9ExWrapper::ResetEx(D3DPRESENT_PARAMETERS* pPrese
 	Settings::applySettingsIni(pPresentationParameters);
 	logD3DPParams(pPresentationParameters, false);
 	
-	WindowManager::InvalidateDeviceObjects();
+	WindowManager::GetInstance().InvalidateDeviceObjects();
 
 	HRESULT ret = m_Direct3DDevice9Ex->ResetEx(pPresentationParameters, pFullscreenDisplayMode);
 
-	WindowManager::CreateDeviceObjects();
+	WindowManager::GetInstance().CreateDeviceObjects();
 
 	return ret;
 }
