@@ -4,8 +4,6 @@
 
 #include <cstdio>
 
-#define ADD_EMPTY_LINE() ImGui::TextUnformatted("")
-
 const ImVec4 COLOR_PLATINUM    (0.328f, 1.000f, 0.901f, 1.000f);
 const ImVec4 COLOR_GOLD        (1.000f, 0.794f, 0.000f, 1.000f);
 const ImVec4 COLOR_SILVER      (0.848f, 0.848f, 0.848f, 1.000f);
@@ -92,14 +90,13 @@ void DonatorsWindow::PrintDonators() const
 {
 	const auto donatorNames = GetDonatorNames();
 	const auto donatorTiers = GetDonatorTiers();
-	ImVec4 donatorColor = COLOR_BRONZE;
 
 	for (int i = 0; i < donatorNames.size(); i++)
 	{
 		if (i == 0)
 		{
 			ImGui::TextColored(COLOR_TRANSPARENT, "TOP DONATOR");
-
+			
 			float width = ImGui::GetItemRectSize().x;
 			ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (width / 2));
 
@@ -109,23 +106,19 @@ void DonatorsWindow::PrintDonators() const
 			ImGui::SetCursorPosY(ImGui::GetCursorPosY() - height - (ImGui::GetStyle().ItemSpacing.y * 2));
 		}
 
-		std::string donatorName = donatorNames[i].c_str();
-		ImGui::TextColored(COLOR_TRANSPARENT, donatorName.c_str());
-
-		float width = ImGui::GetItemRectSize().x;
-		ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (width / 2));
-
 		int tierLevel = 99;
 		if (i < donatorTiers.size())
 		{
 			tierLevel = donatorTiers[i];
 		}
 
-		donatorColor = GetDonatorTierColor(tierLevel);
-		ImGui::TextColored(donatorColor, donatorName.c_str());
+		const char* donatorName = donatorNames[i].c_str();
+		if (i % 3 != 1)
+		{
+			ImGui::SameLine(0, 30);
+		}
+		ImGui::TextColored(GetDonatorTierColor(tierLevel), donatorName);
 	}
-
-	ADD_EMPTY_LINE();
 }
 
 bool DonatorsWindow::DrawOkButton() const
