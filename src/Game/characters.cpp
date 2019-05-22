@@ -46,7 +46,7 @@ const std::vector<std::string> charNames
 	"Blake",	// 38,
 	"Yang",		// 39,
 	"NaotoKurogane", // 40,
-	"Teddy",	// 41,
+	"Teddie",	// 41,
 	"Seth",		// 42,
 	"Heart",	// 43,
 	"Boss",		// 44
@@ -95,7 +95,7 @@ const std::vector<std::wstring> wCharNames
 	L"Blake",	// 38,
 	L"Yang",	// 39,
 	L"NaotoKurogane", // 40,
-	L"Teddy",	// 41,
+	L"Teddie",	// 41,
 	L"Seth",	// 42,
 	L"Heart",	// 43,
 	L"Boss",	// 44

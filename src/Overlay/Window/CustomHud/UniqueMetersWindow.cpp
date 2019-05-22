@@ -45,7 +45,7 @@ const std::vector<std::string> meterCharNames
 	"Blake",    // 38,
 	"Yang",     // 39,
 	"NaotoKurogane", // 40
-	"Teddy",	// 41
+	"Teddie",	// 41
 	"Seth",		// 42
 	"Heart",	// 43
 	"Boss",		// 44
