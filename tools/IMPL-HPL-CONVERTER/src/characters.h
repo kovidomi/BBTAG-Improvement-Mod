@@ -49,7 +49,7 @@ enum CharIndex
 	CharIndex_Blake = 38,
 	CharIndex_Yang = 39,
 	CharIndex_NaotoKurogane = 40,
-	CharIndex_Teddy = 41,
+	CharIndex_Teddie = 41,
 	CharIndex_Seth = 42,
 	CharIndex_Heart = 43,
 	CharIndex_Boss = 44

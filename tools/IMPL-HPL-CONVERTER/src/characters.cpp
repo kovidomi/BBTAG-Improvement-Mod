@@ -43,7 +43,7 @@ const char* charNames[TOTAL_CHAR_INDEXES]
 	"Blake",	// 38,
 	"Yang",		// 39,
 	"NaotoKurogane", // 40,
-	"Teddy",	// 41,
+	"Teddie",	// 41,
 	"Seth",		// 42,
 	"Heart",	// 43,
 	"Boss"		// 44
@@ -92,7 +92,7 @@ const wchar_t* wCharNames[TOTAL_CHAR_INDEXES]
 	L"Blake",	// 38,
 	L"Yang",	// 39,
 	L"NaotoKurogane", // 40,
-	L"Teddy",	// 41,
+	L"Teddie",	// 41,
 	L"Seth",	// 42,
 	L"Heart",	// 43,
 	L"Boss"		// 44
@@ -137,7 +137,7 @@ const wchar_t* wOrderedCharNames[TOTAL_CHAR_INDEXES]
 	L"Ruby",	// 36
 	L"Seth",	// 42
 	L"Tager",	// 4
-	L"Teddy",	// 41
+	L"Teddie",	// 41
 	L"Vatista",	// 33
 	L"Waldstein",// 28
 	L"Weiss",	// 37
