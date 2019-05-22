@@ -3,6 +3,7 @@ BBTAG Improvement Mod (v1.07) by KoviDomi -- README
 
 What this mod provides
 ==========================
+In-game hitbox overlay
 In-game palette editor
 Options to improve the performance of the game.
 More flexibility to change the graphics options.
@@ -50,7 +51,8 @@ Restore the default settings in the settings.ini file.
 Reboot your system.
 
 4. The custom HUD is all over the place, not positioned properly:
-The elements of the custom HUD needs to be positioned MANUALLY by the user with the mouse cursor (press F1 by default). The positions are saved upon exiting.
+The elements of the custom HUD needs to be positioned MANUALLY by the user with the mouse cursor (press F1 by default to open the menu,
+and tick the "Move windows" option in the CUSTOM HUD section). The positions are saved upon exiting.
 The elements are movable only when the BBTAG_IM mod's main window and the ingame cursor is visible (press F1 by default).
 Recommend picking Aegis, Rachel, Yukiko, and Makoto in the training mode for adjusting the custom HUD elements.
 
