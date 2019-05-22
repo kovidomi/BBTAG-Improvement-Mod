@@ -23,7 +23,7 @@ To compile, you should only need to load the sln file and compile as-is. No chan
 Copy the compiled binary, settings.ini, and palettes.ini file from the bin/ folder into the game's root folder.
 
 ## Requirements:
-- Visual Studio 2017 (toolset v141) (Windows SDK 8.1)
+- Visual Studio 2017 (toolset v141) (Windows SDK 10.0.17763.0)
 - Detours 1.5
 - DirectX SDK
 - Steamworks SDK (v1.42)
@@ -65,6 +65,7 @@ If you feel like throwing some dollars my way feel free to, it enables me spendi
 ## Thanks to the people who have helped the mod along the way:
 * Neptune
 * Rouzel
+* Labryz
 * Dormin
 * NeoStrayCat
 * Everybody in the BlazBlue PC community that has given support or feedback of any kind!

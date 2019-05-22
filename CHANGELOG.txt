@@ -1,14 +1,14 @@
-??-05-2019 -- version 1.07
+22-05-2019 -- version 1.07
 ===============================
-- Fixed crashing upon startup with the game updated to v1.50
-- Fixed being able to manually resize the game's window using the cursor in windowed mode
+- Updated for official patch v1.50
 - Added hitbox overlay in training mode
-	 Calculations are not pixel perfect, expect slight margin of error
-	 Personas upon disappearing may leave their hitboxes behind in weird ways
+    * Calculations are not pixel perfect, expect slight margin of error
+    * Personas upon disappearing may leave their hitboxes behind in weird ways
 - Added gradient generator to the palette editor
 - Added indexing mode to the palette editor
 - "Drag and drop" of the color boxes now works on the palette editor
-- Palettes are now previewed if hovered over their selections
+- Palettes are now previewed when hovered over their selections
+- Fixed being able to manually resize the game's window using the cursor in windowed mode
 
 07-08-2018 -- version 1.06
 ===============================
