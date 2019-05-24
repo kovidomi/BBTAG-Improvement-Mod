@@ -183,7 +183,7 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 					charNames[charIndex].c_str());
 
 				g_imGuiLogger->Log("[warning] '%s' belongs to character '%s', but is placed in folder '%s'\n", 
-					fileName.c_str(), charNames[fileContents.header.charindex],
+					fileName.c_str(), charNames[fileContents.header.charindex].c_str(),
 					charNames[charIndex].c_str());
 				//keep going
 			}

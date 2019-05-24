@@ -23,9 +23,9 @@ void GetPalettesFromArchive()
 	
 	if (!decompressObj.OpenArchive(L"BBTAG_IM/Download/palettes.tar.gz"))
 	{
-		char* pStr = CT2A((LPCTSTR)decompressObj.GetErrorText());
-		g_imGuiLogger->Log("[error] 'BBTAG_IM/Download/palettes.tar.gz'could not be opened: %s\n", pStr);
-		LOG(2, "ERROR, 'BBTAG_IM/Download/palettes.tar.gz'could not be opened: %s\n", pStr);
+		std::string pStr = CT2A((LPCTSTR)decompressObj.GetErrorText());
+		g_imGuiLogger->Log("[error] 'BBTAG_IM/Download/palettes.tar.gz'could not be opened: %s\n", pStr.c_str());
+		LOG(2, "ERROR, 'BBTAG_IM/Download/palettes.tar.gz'could not be opened: %s\n", pStr.c_str());
 		return;
 	}
 
