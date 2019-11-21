@@ -1,9 +1,5 @@
 #pragma once
-#include <vector>
-
-extern const int CHAR_NAMES_COUNT;
-extern const std::vector<std::string> charNames;
-extern const std::vector<std::wstring> wCharNames;
+#include <string>
 
 enum CharIndex
 {
@@ -51,5 +47,20 @@ enum CharIndex
 	CharIndex_Teddie = 41,
 	CharIndex_Seth = 42,
 	CharIndex_Heart = 43,
-	CharIndex_Boss = 44
+	CharIndex_Celica = 44,
+	CharIndex_Susanoo = 45,
+	CharIndex_Adachi = 46,
+	CharIndex_Elizabeth = 47,
+	CharIndex_Akatsuki = 48,
+	CharIndex_Hilda = 49,
+	CharIndex_Neo = 50,
+	CharIndex_Yumi = 51,
+	CharIndex_Blitztank = 52,
+	CharIndex_Boss = 53
 };
+
+int getCharactersCount();
+
+std::string getCharacterNameByIndexA(int charIndex);
+
+std::wstring getCharacterNameByIndexW(int charIndex);

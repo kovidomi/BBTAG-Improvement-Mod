@@ -1,7 +1,5 @@
 #include "characters.h"
-
-// TODO: rework this file with better data structures
-const int CHAR_NAMES_COUNT = 45; // charNames.size();
+#include <vector>
 
 const std::vector<std::string> charNames
 {
@@ -49,54 +47,33 @@ const std::vector<std::string> charNames
 	"Teddie",	// 41,
 	"Seth",		// 42,
 	"Heart",	// 43,
-	"Boss",		// 44
+	"Celica",	// 44,
+	"Susanoo",	// 45,
+	"Adachi",	// 46,
+	"Elizabeth",// 47,
+	"Akatsuki",	// 48,
+	"Hilda",	// 49,
+	"Neo",		// 50,
+	"Yumi",		// 51,
+	"Blitztank",// 52,
+	"Boss",		// 53,
 };
 
-const std::vector<std::wstring> wCharNames
+int getCharactersCount()
 {
-	L"Ragna",	// 0,
-	L"Jin",		// 1,
-	L"Noel",	// 2,
-	L"Rachel",	// 3,
-	L"Tager",	// 4,
-	L"Hakumen",	// 5,
-	L"Nu",		// 6,
-	L"Hazama",	// 7,
-	L"Makoto",	// 8,
-	L"Platinum", // 9,
-	L"Izayoi",	// 10,
-	L"Azrael",	// 11,
-	L"Nine",	// 12,
-	L"Es",		// 13,
-	L"Mai",		// 14,
-	L"Jubei",	// 15,
-	L"Yu",		// 16,
-	L"Yosuke",	// 17,
-	L"Chie",	// 18,
-	L"Yukiko",	// 19,
-	L"Kanji",	// 20,
-	L"Naoto",	// 21,
-	L"Mitsuru",	// 22,
-	L"Akihiko",	// 23,
-	L"Aegis",	// 24,
-	L"Labrys",	// 25,
-	L"Hyde",	// 26,
-	L"Linne",	// 27,
-	L"Waldstein",// 28,
-	L"Carmine",	// 29,
-	L"Orie",	// 30,
-	L"Gordeau",	// 31,
-	L"Merkava",	// 32,
-	L"Vatista",	// 33,
-	L"Yuzuriha",// 34,
-	L"Mika",	// 35,
-	L"Ruby",	// 36,
-	L"Weiss",	// 37,
-	L"Blake",	// 38,
-	L"Yang",	// 39,
-	L"NaotoKurogane", // 40,
-	L"Teddie",	// 41,
-	L"Seth",	// 42,
-	L"Heart",	// 43,
-	L"Boss",	// 44
-};
+	return charNames.size();
+}
+
+std::string getCharacterNameByIndexA(int charIndex)
+{
+	if (charIndex < getCharactersCount())
+		return charNames[charIndex];
+
+	return "Unknown";
+}
+
+std::wstring getCharacterNameByIndexW(int charIndex)
+{
+	std::string charName = getCharacterNameByIndexA(charIndex);
+	return std::wstring(charName.begin(), charName.end());
+}

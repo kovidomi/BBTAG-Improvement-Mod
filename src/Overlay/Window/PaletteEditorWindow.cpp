@@ -106,10 +106,10 @@ void PaletteEditorWindow::InitializeSelectedCharacters()
 	m_allSelectedCharHandles[2] = &g_interfaces.player2.GetChar1();
 	m_allSelectedCharHandles[3] = &g_interfaces.player2.GetChar2();
 
-	m_allSelectedCharNames[0] = charNames[m_allSelectedCharHandles[0]->GetData()->char_index].c_str();
-	m_allSelectedCharNames[1] = charNames[m_allSelectedCharHandles[1]->GetData()->char_index].c_str();
-	m_allSelectedCharNames[2] = charNames[m_allSelectedCharHandles[2]->GetData()->char_index].c_str();
-	m_allSelectedCharNames[3] = charNames[m_allSelectedCharHandles[3]->GetData()->char_index].c_str();
+	m_allSelectedCharNames[0] = getCharacterNameByIndexA(m_allSelectedCharHandles[0]->GetData()->char_index).c_str();
+	m_allSelectedCharNames[1] = getCharacterNameByIndexA(m_allSelectedCharHandles[1]->GetData()->char_index).c_str();
+	m_allSelectedCharNames[2] = getCharacterNameByIndexA(m_allSelectedCharHandles[2]->GetData()->char_index).c_str();
+	m_allSelectedCharNames[3] = getCharacterNameByIndexA(m_allSelectedCharHandles[3]->GetData()->char_index).c_str();
 }
 
 void PaletteEditorWindow::CharacterSelection()
@@ -365,7 +365,7 @@ void PaletteEditorWindow::SavePaletteToFile()
 	std::wstring wFullPath = std::wstring(pathBuf).substr(0, pos);
 
 	wFullPath += L"\\BBTAG_IM\\Palettes\\";
-	wFullPath += wCharNames[m_selectedCharIndex];
+	wFullPath += getCharacterNameByIndexW(m_selectedCharIndex);
 	wFullPath += L"\\";
 
 	std::string filenameTemp(palNameBuf);
@@ -478,7 +478,7 @@ void PaletteEditorWindow::ShowPaletteSelectButton(CharHandle & charHandle, const
 	int selected_pal_index = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(charPalHandle);
 	CharIndex charIndex = (CharIndex)charHandle.GetData()->char_index;
 
-	if (charIndex >= CHAR_NAMES_COUNT - 1)
+	if (charIndex >= getCharactersCount() - 1)
 	{
 		return;
 	}
@@ -506,7 +506,7 @@ void PaletteEditorWindow::ShowPaletteSelectPopup(CharPaletteHandle& charPalHandl
 
 	if (ImGui::BeginPopup(popupID))
 	{
-		ImGui::TextUnformatted(charNames[charIndex].c_str());
+		ImGui::TextUnformatted(getCharacterNameByIndexA(charIndex).c_str());
 		ImGui::Separator();
 		for (int i = 0; i < m_customPaletteVector[charIndex].size(); i++)
 		{

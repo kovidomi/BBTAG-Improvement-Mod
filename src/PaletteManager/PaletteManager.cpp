@@ -6,7 +6,6 @@
 #include "Overlay/Logger/ImGuiLogger.h"
 #include "Web/palette_download.h"
 
-#include <sstream>
 #include <atlstr.h>
 
 #define MAX_NUM_OF_PAL_INDEXES 16
@@ -30,10 +29,10 @@ void PaletteManager::CreatePaletteFolders()
 	CreateDirectory(L"BBTAG_IM\\Download", NULL);
 	CreateDirectory(L"BBTAG_IM\\Palettes", NULL);
 
-	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
-	for (int i = 0; i < (CHAR_NAMES_COUNT - 1); i++)
+	//(getCharactersCount() - 1) to exclude the boss
+	for (int i = 0; i < (getCharactersCount() - 1); i++)
 	{
-		std::wstring path = std::wstring(L"BBTAG_IM\\Palettes\\") + wCharNames[i];
+		std::wstring path = std::wstring(L"BBTAG_IM\\Palettes\\") + getCharacterNameByIndexW(i);
 		CreateDirectory(path.c_str(), NULL);
 	}
 }
@@ -43,10 +42,10 @@ void PaletteManager::InitCustomPaletteVector()
 	LOG(2, "InitCustomPaletteVector\n");
 
 	m_customPalettes.clear();
-	m_customPalettes.resize(CHAR_NAMES_COUNT);
+	m_customPalettes.resize(getCharactersCount());
 
-	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
-	for (int i = 0; i < (CHAR_NAMES_COUNT - 1); i++)
+	//(getCharactersCount() - 1) to exclude the boss
+	for (int i = 0; i < (getCharactersCount() - 1); i++)
 	{
 		//make the character palette array's 0th element an empty one, that will be used to set back to the default palette
 		IMPL_data_t customPal { "Default" };
@@ -61,10 +60,10 @@ void PaletteManager::LoadPalettesFromFolder()
 	LOG(2, "LoadPaletteFiles\n");
 	g_imGuiLogger->Log("[system] Loading local custom palettes...\n");
 
-	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
-	for (int i = 0; i < (CHAR_NAMES_COUNT - 1); i++)
+	//(getCharactersCount() - 1) to exclude the boss
+	for (int i = 0; i < (getCharactersCount() - 1); i++)
 	{
-		std::wstring wPath = std::wstring(L"BBTAG_IM\\Palettes\\") + wCharNames[i] + L"\\*";
+		std::wstring wPath = std::wstring(L"BBTAG_IM\\Palettes\\") + getCharacterNameByIndexW(i) + L"\\*";
 		LoadPalettesIntoVector((CharIndex)i, wPath);
 	}
 
@@ -77,7 +76,7 @@ void PaletteManager::InitOnlinePalsIndexVector()
 {
 	m_onlinePalsStartIndex.clear();
 
-	for (int i = 0; i < (CHAR_NAMES_COUNT - 1); i++)
+	for (int i = 0; i < (getCharactersCount() - 1); i++)
 	{
 		m_onlinePalsStartIndex.push_back(m_customPalettes[i].size());
 	}
@@ -87,7 +86,7 @@ void PaletteManager::ApplyDefaultCustomPalette(CharIndex charIndex, CharPaletteH
 {
 	LOG(2, "ApplyDefaultCustomPalette\n");
 
-	if (charIndex > CHAR_NAMES_COUNT - 1)
+	if (charIndex > getCharactersCount() - 1)
 		return;
 
 	const int curPalIndex = charPalHandle.GetOrigPalIndex();
@@ -179,12 +178,12 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 			if (charIndex != fileContents.header.charindex)
 			{
 				LOG(2, "WARNING, '%s' belongs to character %s, but is placed in folder %s\n",
-					fileName.c_str(), charNames[fileContents.header.charindex].c_str(),
-					charNames[charIndex].c_str());
+					fileName.c_str(), getCharacterNameByIndexA(fileContents.header.charindex).c_str(),
+					getCharacterNameByIndexA(charIndex).c_str());
 
 				g_imGuiLogger->Log("[warning] '%s' belongs to character '%s', but is placed in folder '%s'\n", 
-					fileName.c_str(), charNames[fileContents.header.charindex].c_str(),
-					charNames[charIndex].c_str());
+					fileName.c_str(), getCharacterNameByIndexA(fileContents.header.charindex).c_str(),
+					getCharacterNameByIndexA(charIndex).c_str());
 				//keep going
 			}
 
@@ -221,11 +220,11 @@ void PaletteManager::LoadPaletteSettingsFile()
 	strBuffer.ReleaseBuffer();
 	m_loadOnlinePalettes = _ttoi(strBuffer);
 
-	for (int i = 0; i < (CHAR_NAMES_COUNT - 1); i++)
+	for (int i = 0; i < (getCharactersCount() - 1); i++)
 	{
 		for (int iSlot = 1; iSlot <= MAX_NUM_OF_PAL_INDEXES; iSlot++)
 		{
-			GetPrivateProfileString(wCharNames[i].c_str(), std::to_wstring(iSlot).c_str(),
+			GetPrivateProfileString(getCharacterNameByIndexW(i).c_str(), std::to_wstring(iSlot).c_str(),
 				L"", strBuffer.GetBuffer(MAX_PATH), MAX_PATH, wFullPath.c_str());
 			strBuffer.ReleaseBuffer();
 
@@ -303,8 +302,8 @@ void PaletteManager::LoadPaletteSettingsFile()
 //
 //	WritePrivateProfileString(L"General", L"ShowDonatorPalettes", L"1\r\n", wFullPath.c_str());
 //
-//	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
-//	for (int i = 0; i < (TOTAL_CHAR_INDEXES - 1); i++)
+//	//(getCharactersCount() - 1) to exclude the boss
+//	for (int i = 0; i < (getCharactersCount() - 1); i++)
 //	{
 //		WritePrivateProfileString(wOrderedCharNames[i], L"1", L"\"Default\"\r\n", wFullPath.c_str());
 //	}
@@ -320,10 +319,10 @@ void PaletteManager::InitPaletteSlotsVector()
 	LOG(2, "InitPaletteSlotsVector\n");
 
 	m_paletteSlots.clear();
-	m_paletteSlots.resize(CHAR_NAMES_COUNT);
+	m_paletteSlots.resize(getCharactersCount());
 
-	//(TOTAL_CHAR_INDEXES - 1) to exclude the boss
-	for (int i = 0; i < (CHAR_NAMES_COUNT - 1); i++)
+	//(getCharactersCount() - 1) to exclude the boss
+	for (int i = 0; i < (getCharactersCount() - 1); i++)
 	{
 		for (int iSlot = 0; iSlot < MAX_NUM_OF_PAL_INDEXES; iSlot++)
 		{
@@ -342,7 +341,7 @@ bool PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & f
 {
 	LOG(7, "PushImplFileIntoVector <overload>\n");
 
-	if (charIndex > CHAR_NAMES_COUNT)
+	if (charIndex > getCharactersCount())
 	{
 		g_imGuiLogger->Log("[error] Custom palette couldn't be loaded: CharIndex out of bound.\n");
 		LOG(2, "ERROR, CharIndex out of bound\n");
@@ -362,7 +361,7 @@ bool PaletteManager::PushImplFileIntoVector(CharIndex charIndex, IMPL_data_t & f
 
 	g_imGuiLogger->Log(
 		"[system] Loaded '%s.impl' for character '%s'\n",
-		filledPalData.palname, charNames[charIndex].c_str()
+		filledPalData.palname, getCharacterNameByIndexA(charIndex).c_str()
 	);
 	return true;
 }
@@ -371,7 +370,7 @@ bool PaletteManager::WritePaletteToFile(CharIndex charIndex, IMPL_data_t *filled
 {
 	LOG(2, "WritePaletteToFile\n");
 
-	std::string path = std::string("BBTAG_IM\\Palettes\\") + charNames[charIndex] + "\\" + filledPalData->palname + ".impl";
+	std::string path = std::string("BBTAG_IM\\Palettes\\") + getCharacterNameByIndexA(charIndex) + "\\" + filledPalData->palname + ".impl";
 
 	IMPL_t IMPL_file {};
 
@@ -412,7 +411,7 @@ void PaletteManager::ReloadAllPalettes()
 
 int PaletteManager::GetOnlinePalsStartIndex(CharIndex charIndex)
 {
-	if (charIndex > CHAR_NAMES_COUNT)
+	if (charIndex > getCharactersCount())
 		return MAXINT32;
 
 	return m_onlinePalsStartIndex[charIndex];
@@ -440,7 +439,7 @@ int PaletteManager::FindCustomPalIndex(CharIndex charIndex, const char * palName
 {
 	LOG(2, "FindCustomPalIndex\n");
 
-	if (charIndex > CHAR_NAMES_COUNT)
+	if (charIndex > getCharactersCount())
 		return -2;
 
 	if (strcmp(palNameToFind, "") == 0 || strcmp(palNameToFind, "Default") == 0)
@@ -485,7 +484,7 @@ const char * PaletteManager::GetPalFileAddr(PaletteFile palFile, CharPaletteHand
 
 const char * PaletteManager::GetCustomPalFile(CharIndex charIndex, int palIndex, PaletteFile palFile, CharPaletteHandle& palHandle)
 {
-	if (charIndex > CHAR_NAMES_COUNT)
+	if (charIndex > getCharactersCount())
 		charIndex = CharIndex_Ragna;
 
 	if (palIndex > m_customPalettes[charIndex].size())

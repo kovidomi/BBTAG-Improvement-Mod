@@ -77,9 +77,9 @@ const char * HealthWindow::GetCharacterName() const
 	const char* charname = "<UNKNOWN>";
 	const int charIndex = m_pCharObj->char_index;
 
-	if (charIndex < CHAR_NAMES_COUNT - 1)
+	if (charIndex < getCharactersCount() - 1)
 	{
-		charname = charNames[charIndex].c_str();
+		charname = getCharacterNameByIndexA(charIndex).c_str();
 	}
 
 	return charname;

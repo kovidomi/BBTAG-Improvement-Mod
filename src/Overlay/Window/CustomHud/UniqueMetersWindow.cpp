@@ -2,6 +2,8 @@
 
 #include "Game/characters.h"
 
+#include <vector>
+
 const std::vector<std::string> meterCharNames
 {
 	"Ragna",    // 0,
