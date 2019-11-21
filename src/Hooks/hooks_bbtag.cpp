@@ -242,7 +242,7 @@ void __declspec(naked)ForcePromptControlSchemeLayout()
 	{
 		push eax
 		mov eax, [Settings::settingsIni.forcepromptbuttonlayout];
-		mov[ecx + 177B80h], eax
+		mov[ecx + 177C10h], eax
 		pop eax
 
 		jmp[ForcePromptControlSchemeLayoutJmpBackAddr]
@@ -634,11 +634,11 @@ bool placeHooks_bbtag()
 
 	if (Settings::settingsIni.forcepromptbuttonlayout != FORCE_PROMPT_LAYOUT_OFF)
 	{
-		ForcePromptControlSchemeLayoutJmpBackAddr = HookManager::SetHook("ForcePromptControlSchemeLayout", "\x89\x81\x80\x7b\x17\x00\xc3",
+		ForcePromptControlSchemeLayoutJmpBackAddr = HookManager::SetHook("ForcePromptControlSchemeLayout", "\x89\x81\x10\x7c\x17\x00\xc3",
 			"xxxxxxx", 6, ForcePromptControlSchemeLayout);
 	}
 
-	GetGameStateAndModeTitleScreenJmpBackAddr = HookManager::SetHook("GetGameStateAndModeTitleScreen", "\xc7\x87\x14\x01\x00\x00\x04\x00\x00\x00\xc7\x46\x58\x00\x00\x00\x00", 
+	GetGameStateAndModeTitleScreenJmpBackAddr = HookManager::SetHook("GetGameStateAndModeTitleScreen", "\xc7\x87\x14\x01\x00\x00\x04\x00\x00\x00\xc7\x46\x78\x00\x00\x00\x00",
 		"xxxxxxxxxxxxxxxxx", 10, GetGameStateAndModeTitleScreen);
 
 	GetGameStateAndModeEntranceScreenJmpBackAddr = HookManager::SetHook("GetGameStateAndModeEntranceScreen", "\xc7\x80\x14\x01\x00\x00\x17\x00\x00\x00\xe8", 
