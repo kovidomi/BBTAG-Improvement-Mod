@@ -77,3 +77,15 @@ std::wstring getCharacterNameByIndexW(int charIndex)
 	std::string charName = getCharacterNameByIndexA(charIndex);
 	return std::wstring(charName.begin(), charName.end());
 }
+
+bool isCharacterIndexOutOfBound(int charIndex)
+{
+	const int charactersCountWithoutBoss = getCharactersCount() - 1;
+
+	if (charIndex < charactersCountWithoutBoss || charactersCountWithoutBoss < charIndex)
+	{
+		return true;
+	}
+
+	return false;
+}

@@ -64,3 +64,5 @@ int getCharactersCount();
 std::string getCharacterNameByIndexA(int charIndex);
 
 std::wstring getCharacterNameByIndexW(int charIndex);
+
+bool isCharacterIndexOutOfBound(int charIndex);

@@ -175,20 +175,26 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 				continue;
 			}
 
-			if (charIndex != fileContents.header.charindex)
+			if (isCharacterIndexOutOfBound(charIndex))
 			{
-				LOG(2, "WARNING, '%s' belongs to character %s, but is placed in folder %s\n",
-					fileName.c_str(), getCharacterNameByIndexA(fileContents.header.charindex).c_str(),
-					getCharacterNameByIndexA(charIndex).c_str());
-
-				g_imGuiLogger->Log("[warning] '%s' belongs to character '%s', but is placed in folder '%s'\n", 
-					fileName.c_str(), getCharacterNameByIndexA(fileContents.header.charindex).c_str(),
-					getCharacterNameByIndexA(charIndex).c_str());
-				//keep going
+				LOG(2, "ERROR, '%s' has invalid character index in the header\n");
+				g_imGuiLogger->Log("[error] '%s' has invalid character index in the header\n");
 			}
+			else if (charIndex != fileContents.header.charindex)
+			{
+				LOG(2, "ERROR, '%s' belongs to character %s, but is placed in folder %s\n",
+					fileName.c_str(), getCharacterNameByIndexA(fileContents.header.charindex).c_str(),
+					getCharacterNameByIndexA(charIndex).c_str());
 
-			OverwriteIMPLDataPalName(fileName, fileContents.paldata);
-			PushImplFileIntoVector(charIndex, fileContents.paldata);
+				g_imGuiLogger->Log("[error] '%s' belongs to character '%s', but is placed in folder '%s'\n", 
+					fileName.c_str(), getCharacterNameByIndexA(fileContents.header.charindex).c_str(),
+					getCharacterNameByIndexA(charIndex).c_str());
+			}
+			else
+			{
+				OverwriteIMPLDataPalName(fileName, fileContents.paldata);
+				PushImplFileIntoVector(charIndex, fileContents.paldata);
+			}
 
 		} while (FindNextFile(hFind, &data));
 		FindClose(hFind);
