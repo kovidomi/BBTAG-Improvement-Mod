@@ -15,9 +15,6 @@
     <ClCompile Include="src\hpl.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\characters.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.h">
@@ -27,9 +24,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\hpl.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\characters.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\impl_format.h">

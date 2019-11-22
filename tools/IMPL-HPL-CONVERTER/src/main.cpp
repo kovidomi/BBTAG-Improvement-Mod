@@ -1,8 +1,5 @@
 #include "hpl.h"
 #include "impl.h"
-#include <iostream>
-#include <sstream>
-#include <fstream>
 #include <vector>
 #include <atlstr.h>
 

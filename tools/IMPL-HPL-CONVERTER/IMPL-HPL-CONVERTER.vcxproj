@@ -144,13 +144,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\characters.cpp" />
     <ClCompile Include="src\hpl.cpp" />
     <ClCompile Include="src\impl.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\characters.h" />
     <ClInclude Include="src\hpl.h" />
     <ClInclude Include="src\impl.h" />
     <ClInclude Include="src\impl_format.h" />
