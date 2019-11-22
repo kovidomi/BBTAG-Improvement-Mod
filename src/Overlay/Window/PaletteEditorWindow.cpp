@@ -52,7 +52,7 @@ void PaletteEditorWindow::OnMatchInit()
 	InitializeSelectedCharacters();
 
 	m_selectedCharIndex = (CharIndex)m_allSelectedCharHandles[0]->GetData()->char_index;
-	m_selectedCharName = m_allSelectedCharNames[0];
+	m_selectedCharName = m_allSelectedCharNames[0].c_str();
 	m_selectedCharPalHandle = &m_allSelectedCharHandles[0]->GetPalHandle();
 	m_selectedPalIndex = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(*m_selectedCharPalHandle);
 	CopyPalTextsToTextBoxes(*m_selectedCharPalHandle);
@@ -106,10 +106,10 @@ void PaletteEditorWindow::InitializeSelectedCharacters()
 	m_allSelectedCharHandles[2] = &g_interfaces.player2.GetChar1();
 	m_allSelectedCharHandles[3] = &g_interfaces.player2.GetChar2();
 
-	m_allSelectedCharNames[0] = getCharacterNameByIndexA(m_allSelectedCharHandles[0]->GetData()->char_index).c_str();
-	m_allSelectedCharNames[1] = getCharacterNameByIndexA(m_allSelectedCharHandles[1]->GetData()->char_index).c_str();
-	m_allSelectedCharNames[2] = getCharacterNameByIndexA(m_allSelectedCharHandles[2]->GetData()->char_index).c_str();
-	m_allSelectedCharNames[3] = getCharacterNameByIndexA(m_allSelectedCharHandles[3]->GetData()->char_index).c_str();
+	m_allSelectedCharNames[0] = getCharacterNameByIndexA(m_allSelectedCharHandles[0]->GetData()->char_index);
+	m_allSelectedCharNames[1] = getCharacterNameByIndexA(m_allSelectedCharHandles[1]->GetData()->char_index);
+	m_allSelectedCharNames[2] = getCharacterNameByIndexA(m_allSelectedCharHandles[2]->GetData()->char_index);
+	m_allSelectedCharNames[3] = getCharacterNameByIndexA(m_allSelectedCharHandles[3]->GetData()->char_index);
 }
 
 void PaletteEditorWindow::CharacterSelection()
@@ -131,12 +131,12 @@ void PaletteEditorWindow::CharacterSelection()
 		for (int i = 0; i < NUMBER_OF_CHARS; i++)
 		{
 			ImGui::PushID(i);
-			if (ImGui::Selectable(m_allSelectedCharNames[i]))
+			if (ImGui::Selectable(m_allSelectedCharNames[i].c_str()))
 			{
 				DisableHighlightModes();
 
 				m_selectedCharIndex = (CharIndex)m_allSelectedCharHandles[i]->GetData()->char_index;
-				m_selectedCharName = m_allSelectedCharNames[i];
+				m_selectedCharName = m_allSelectedCharNames[i].c_str();
 				m_selectedCharPalHandle = &m_allSelectedCharHandles[i]->GetPalHandle();
 				m_selectedPalIndex = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(*m_selectedCharPalHandle);
 				CopyPalFileToEditorArray(m_selectedFile, *m_selectedCharPalHandle);

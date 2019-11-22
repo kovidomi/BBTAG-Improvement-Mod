@@ -51,7 +51,7 @@ private:
 
 	std::vector<std::vector<IMPL_data_t>>& m_customPaletteVector;
 	CharHandle*         m_allSelectedCharHandles[4];
-	const char*         m_allSelectedCharNames[4];
+	std::string         m_allSelectedCharNames[4];
 	const char*         m_selectedCharName;
 	CharPaletteHandle*  m_selectedCharPalHandle;
 	CharIndex           m_selectedCharIndex;
