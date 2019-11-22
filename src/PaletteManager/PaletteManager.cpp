@@ -8,7 +8,7 @@
 
 #include <atlstr.h>
 
-#define MAX_NUM_OF_PAL_INDEXES 16
+#define MAX_NUM_OF_PAL_INDEXES 20
 
 PaletteManager::PaletteManager()
 {
@@ -177,8 +177,8 @@ void PaletteManager::LoadPalettesIntoVector(CharIndex charIndex, std::wstring& w
 
 			if (isCharacterIndexOutOfBound(charIndex))
 			{
-				LOG(2, "ERROR, '%s' has invalid character index in the header\n");
-				g_imGuiLogger->Log("[error] '%s' has invalid character index in the header\n");
+				LOG(2, "ERROR, '%s' has invalid character index in the header\n", fileName.c_str());
+				g_imGuiLogger->Log("[error] '%s' has invalid character index in the header\n", fileName.c_str());
 			}
 			else if (charIndex != fileContents.header.charindex)
 			{
