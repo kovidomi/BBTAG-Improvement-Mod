@@ -3,7 +3,7 @@
 #include <vector>
 #include <atlstr.h>
 
-#define TITLE "IMPL-HPL-CONVERTER (v1.00) - by KoviDomi\n\n"
+#define TITLE "IMPL-HPL-CONVERTER (v1.01) - by KoviDomi\n\n"
 
 void ConvertHplsToImpl()
 {
