@@ -152,7 +152,6 @@
     <ClInclude Include="src\hpl.h" />
     <ClInclude Include="src\impl.h" />
     <ClInclude Include="src\impl_format.h" />
-    <ClInclude Include="src\main.h" />
     <ClInclude Include="src\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

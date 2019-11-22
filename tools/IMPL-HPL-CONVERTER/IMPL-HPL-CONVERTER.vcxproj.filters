@@ -17,9 +17,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\main.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\impl.h">
       <Filter>src</Filter>
     </ClInclude>
