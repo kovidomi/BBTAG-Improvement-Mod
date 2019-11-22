@@ -1,4 +1,4 @@
-BBTAG Improvement Mod (v1.07) by KoviDomi -- README
+BBTAG Improvement Mod (v1.08) by KoviDomi -- README
 ==========================
 
 What this mod provides
@@ -72,6 +72,11 @@ Keep in mind that the mod may partially, or completely stop working whenever a n
 
 Changelog
 ==========================
+
+22-11-2019 -- version 1.08
+===============================
+- Updated for official patch v2.0
+- Updated palettes.ini for new characters and extra palette slots
 
 22-05-2019 -- version 1.07
 ===============================
