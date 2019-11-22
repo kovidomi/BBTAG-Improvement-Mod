@@ -82,7 +82,7 @@ bool isCharacterIndexOutOfBound(int charIndex)
 {
 	const int charactersCountWithoutBoss = getCharactersCount() - 1;
 
-	if (charIndex < charactersCountWithoutBoss || charactersCountWithoutBoss < charIndex)
+	if (charactersCountWithoutBoss < charIndex)
 	{
 		return true;
 	}
