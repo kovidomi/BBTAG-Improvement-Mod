@@ -21,7 +21,7 @@ private:
 	void DrawHealthBarRecoverable() const;
 	void DrawHealthBarCurrent() const;
 	void DrawCharacterName(const ImVec2& healthBarSize) const;
-	const char* GetCharacterName() const;
+	std::string GetCharacterName() const;
 	void SetCursorPosForCharacterName(const char * charname, const ImVec2& healthBarSize) const;
 
 	const CharInfo* m_pCharObj = nullptr;

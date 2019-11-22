@@ -67,19 +67,19 @@ void HealthWindow::DrawHealthBarCurrent() const
 
 void HealthWindow::DrawCharacterName(const ImVec2& healthBarSize) const
 {
-	const char* charname = GetCharacterName();
-	SetCursorPosForCharacterName(charname, healthBarSize);
-	ImGui::Text("%s", charname);
+	std::string charname = GetCharacterName();
+	SetCursorPosForCharacterName(charname.c_str(), healthBarSize);
+	ImGui::Text("%s", charname.c_str());
 }
 
-const char * HealthWindow::GetCharacterName() const
+std::string HealthWindow::GetCharacterName() const
 {
-	const char* charname = "<UNKNOWN>";
+	std::string charname = "<UNKNOWN>";
 	const int charIndex = m_pCharObj->char_index;
 
 	if (charIndex < getCharactersCount() - 1)
 	{
-		charname = getCharacterNameByIndexA(charIndex).c_str();
+		charname = getCharacterNameByIndexA(charIndex);
 	}
 
 	return charname;
