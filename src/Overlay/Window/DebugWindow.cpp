@@ -50,7 +50,7 @@ void DebugWindow::Draw()
 		ImGui::Text("pPalIndex_P2Char2 0x%p", &(g_interfaces.player2.GetChar2().GetPalHandle().GetPalIndexRef()));
 
 		const int PAL_INDEX_MIN = 0;
-		const int PAL_INDEX_MAX = 15;
+		const int PAL_INDEX_MAX = 19;
 		if (!g_interfaces.player1.GetChar1().GetPalHandle().IsNullPointerPalIndex())
 			ImGui::SliderInt("PalIndex_P1Char1", &g_interfaces.player1.GetChar1().GetPalHandle().GetPalIndexRef(), PAL_INDEX_MIN, PAL_INDEX_MAX);
 
