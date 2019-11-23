@@ -64,12 +64,14 @@ int getCharactersCount()
 	return charNames.size();
 }
 
-std::string getCharacterNameByIndexA(int charIndex)
+const std::string& getCharacterNameByIndexA(int charIndex)
 {
+	const std::string unknown = "Unknown";
+
 	if (charIndex < getCharactersCount())
 		return charNames[charIndex];
 
-	return "Unknown";
+	return unknown;
 }
 
 std::wstring getCharacterNameByIndexW(int charIndex)
