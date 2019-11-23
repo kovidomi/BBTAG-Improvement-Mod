@@ -47,10 +47,36 @@ const std::vector<std::string> meterCharNames
 	"Blake",    // 38,
 	"Yang",     // 39,
 	"NaotoKurogane", // 40
-	"Teddie",	// 41
+	"Te",		// 41
 	"Seth",		// 42
 	"Heart",	// 43
-	"Boss",		// 44
+	"Celica",	// 44,
+	"Susanoo",	// 45,
+	"Ad",		// 46,
+	"El",		// 47,
+	"Akatsuki",	// 48,
+	"Hilda",	// 49,
+	"Neo",		// 50,
+	"Yumi",		// 51,
+	"Blitztank",// 52,
+	"Boss",		// 53,
+};
+
+const char* teddieItems[]
+{
+	"MF-06", // 1
+	"Dr. Salt",	// 2
+	"Agni", // 3
+	"Drink", // 4
+	"Bomb", // 5
+	"Drum", // 6
+	"Cracker", // 7
+	"Ice", // 8
+	"Ball", // 9
+	"Food", // 10
+	"Pinwheel", // 11
+	"Lightning", // 12
+	"Buckets" // 13
 };
 
 const ImVec4 COLOR_BAR_DEFAULT          (1.000f, 1.000f, 1.000f, 1.000f);
@@ -82,14 +108,17 @@ bool UniqueMetersWindow::CharacterHasUniqueMeterToDraw() const
 	switch (m_pCharObj->char_index)
 	{
 	case CharIndex_Aegis:
+	case CharIndex_Adachi:
 	case CharIndex_Akihiko:
 	case CharIndex_Chie:
+	case CharIndex_Elizabeth:
 	case CharIndex_Labrys:
 	case CharIndex_Makoto:
 	case CharIndex_Naoto:
 	case CharIndex_Nine:
 	case CharIndex_Platinum:
 	case CharIndex_Rachel:
+	case CharIndex_Teddie:
 	case CharIndex_Yukiko:
 		return (ShouldShowUniqueMeterNumber() || ShouldShowUniqueMeterBar()) && m_pCharObj->cur_hp != 0;
 	default:
@@ -127,9 +156,26 @@ std::string UniqueMetersWindow::GetUniqueMeterNumberString() const
 	{
 		m_pCharObj->naoto_is_enemy_marked == 1 ? valueToShow = "X" : valueToShow = " ";
 	}
+	else if (charIndex == CharIndex_Adachi)
+	{
+		m_pCharObj->unique_meter_cur_val == 1 ? valueToShow = "X" : valueToShow = " ";
+	}
+	else if (charIndex == CharIndex_Elizabeth)
+	{
+		m_pCharObj->elizabeth_awakened2 == 1 ? valueToShow = "X" : valueToShow = " ";
+	}
 	else if (charIndex == CharIndex_Chie)
 	{
 		valueToShow = std::to_string(m_pCharObj->chie_charge_lvl);
+	}
+	else if (charIndex == CharIndex_Teddie)
+	{
+		// Fix right alignment
+		//if (m_pCharObj->teddie_item)
+		//{
+		//	valueToShow = teddieItems[m_pCharObj->teddie_item - 1];
+		//}
+		valueToShow = std::to_string(m_pCharObj->teddie_item);
 	}
 
 	return valueToShow;
@@ -191,12 +237,15 @@ bool UniqueMetersWindow::ShouldShowUniqueMeterNumber() const
 	const CharIndex charIndex = (CharIndex)m_pCharObj->char_index;
 
 	//Always show
-	if (charIndex == CharIndex_Yukiko)
+	if (charIndex == CharIndex_Yukiko
+		|| charIndex == CharIndex_Teddie)
 	{
 		return true;
 	}
 
-	if (charIndex == CharIndex_Naoto && m_pCharObj->naoto_is_enemy_marked)
+	if (charIndex == CharIndex_Naoto && m_pCharObj->naoto_is_enemy_marked
+		|| charIndex == CharIndex_Adachi && m_pCharObj->unique_meter_cur_val
+		|| charIndex == CharIndex_Elizabeth && m_pCharObj->elizabeth_awakened2)
 	{
 		return true;
 	}
@@ -300,7 +349,7 @@ ImVec4 UniqueMetersWindow::GetBarColor() const
 		return COLOR_BAR_MAKOTO;
 	}
 
-	if (charIndex == CharIndex_Naoto)
+	if (charIndex == CharIndex_Naoto || charIndex == CharIndex_Adachi || charIndex == CharIndex_Elizabeth)
 	{
 		return COLOR_BAR_NAOTO;
 	}
