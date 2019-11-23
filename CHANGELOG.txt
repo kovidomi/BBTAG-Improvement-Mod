@@ -1,3 +1,9 @@
+24-11-2019 -- version 1.08
+===============================
+- Updated for official patch v2.0
+- Updated "palettes.ini" file for new characters and extra palette slots
+- Fixed crash due to non-existent character index in manually edited impl file headers
+
 22-05-2019 -- version 1.07
 ===============================
 - Updated for official patch v1.50

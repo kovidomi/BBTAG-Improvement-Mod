@@ -73,10 +73,11 @@ Keep in mind that the mod may partially, or completely stop working whenever a n
 Changelog
 ==========================
 
-22-11-2019 -- version 1.08
+24-11-2019 -- version 1.08
 ===============================
 - Updated for official patch v2.0
-- Updated palettes.ini for new characters and extra palette slots
+- Updated "palettes.ini" file for new characters and extra palette slots
+- Fixed crash due to non-existent character index in manually edited impl file headers
 
 22-05-2019 -- version 1.07
 ===============================
