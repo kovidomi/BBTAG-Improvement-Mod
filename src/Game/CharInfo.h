@@ -42,15 +42,24 @@ public:
 	char pad_06D8[996]; //0x06D8
 	uint32_t cur_hp; //0x0ABC
 	uint32_t max_hp; //0x0AC0
-	char pad_0AC4[7508]; //0x0AC4
-	uint32_t is_char_active2; //0x2818
-	char pad_281C[4]; //0x281C
-	uint32_t recoverable_hp; //0x2820
-	uint32_t is_char_active; //0x2824
-	char pad_2828[116588]; //0x2828
-	uint32_t naoto_is_enemy_marked; //0x1EF94
-	char pad_1EF98[8540]; //0x1EF98
-	uint32_t unique_meter_max_val; //0x210F4
-	uint32_t unique_meter_cur_val; //0x210F8
-	char pad_210FC[4]; //0x210FC
-}; //Size: 0x21100
+	char pad_0AC4[6904]; //0x0AC4
+	char prev_action[32]; //0x25BC
+	char cur_action[32]; //0x25DC
+	char pad_25FC[544]; //0x25FC
+	uint32_t is_char_active2; //0x281C
+	char pad_2820[8]; //0x2820
+	uint32_t recoverable_hp; //0x2828
+	uint32_t is_char_active; //0x282C
+	char pad_2830[128624]; //0x2830
+	uint32_t elizabeth_awakened2; //0x21EA0
+	uint32_t teddie_item; //0x21EA4
+	uint32_t naoto_is_enemy_marked; //0x21EA8
+	char pad_21EAC[8672]; //0x21EAC
+	uint32_t elizabeth_awakened; //0x2408C
+	char pad_24090[8]; //0x24090
+	uint32_t unique_meter_max_val; //0x24098
+	uint32_t unique_meter_cur_val; //0x2409C
+}; //Size: 0x240A0
+
+
+
