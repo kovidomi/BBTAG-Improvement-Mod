@@ -3,6 +3,7 @@
 #include "Core/interfaces.h"
 #include "Core/logger.h"
 #include "Game/gamestates.h"
+#include "Overlay/imgui_utils.h"
 #include "Overlay/Logger/ImGuiLogger.h"
 #include "PaletteManager/impl_format.h"
 
@@ -489,6 +490,7 @@ void PaletteEditorWindow::ShowPaletteSelectButton(CharHandle & charHandle, const
 	{
 		ImGui::OpenPopup(popupID);
 	}
+	HoverTooltip(getCharacterNameByIndexA(charHandle.GetData()->char_index).c_str());
 
 	ImGui::SameLine();
 	ImGui::TextUnformatted(m_customPaletteVector[charIndex][selected_pal_index].palname);
