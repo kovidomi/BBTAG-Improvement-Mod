@@ -3,6 +3,10 @@
 - Updated for official patch v2.0
 - Updated "palettes.ini" file for new characters and extra palette slots
 - Enabled palette editor in versus mode
+- Hitbox overlay now can be toggled for each characters separately
+- Added frame freezing option to hitbox overlay
+- Added frame stepping function to hitbox overlay
+- Added tooltip to show the character names on the custom palette selection buttons
 - The online palettes archive is now only downloaded if there has been a change
 - Fixed crash due to non-existent character index in manually edited impl file headers
 
