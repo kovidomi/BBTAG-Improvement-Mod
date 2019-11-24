@@ -64,6 +64,11 @@ int getCharactersCount()
 	return charNames.size();
 }
 
+int getCharactersCountWithoutBoss()
+{
+	return charNames.size() - 1;
+}
+
 const std::string& getCharacterNameByIndexA(int charIndex)
 {
 	const std::string unknown = "Unknown";
@@ -82,9 +87,7 @@ std::wstring getCharacterNameByIndexW(int charIndex)
 
 bool isCharacterIndexOutOfBound(int charIndex)
 {
-	const int charactersCountWithoutBoss = getCharactersCount() - 1;
-
-	if (charactersCountWithoutBoss < charIndex)
+	if (getCharactersCountWithoutBoss() < charIndex)
 	{
 		return true;
 	}

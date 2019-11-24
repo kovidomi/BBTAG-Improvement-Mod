@@ -477,7 +477,7 @@ void PaletteEditorWindow::ShowPaletteSelectButton(CharHandle & charHandle, const
 	int selected_pal_index = g_interfaces.pPaletteManager->GetCurrentCustomPalIndex(charPalHandle);
 	CharIndex charIndex = (CharIndex)charHandle.GetData()->char_index;
 
-	if (charIndex >= getCharactersCount() - 1)
+	if (charIndex >= getCharactersCountWithoutBoss())
 	{
 		return;
 	}

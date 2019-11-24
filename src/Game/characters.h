@@ -61,6 +61,8 @@ enum CharIndex
 
 int getCharactersCount();
 
+int getCharactersCountWithoutBoss();
+
 const std::string& getCharacterNameByIndexA(int charIndex);
 
 std::wstring getCharacterNameByIndexW(int charIndex);

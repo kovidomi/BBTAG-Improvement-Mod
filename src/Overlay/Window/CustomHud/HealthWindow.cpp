@@ -77,7 +77,7 @@ std::string HealthWindow::GetCharacterName() const
 	std::string charname = "<UNKNOWN>";
 	const int charIndex = m_pCharObj->char_index;
 
-	if (charIndex < getCharactersCount() - 1)
+	if (charIndex < getCharactersCountWithoutBoss())
 	{
 		charname = getCharacterNameByIndexA(charIndex);
 	}

@@ -29,8 +29,7 @@ void PaletteManager::CreatePaletteFolders()
 	CreateDirectory(L"BBTAG_IM\\Download", NULL);
 	CreateDirectory(L"BBTAG_IM\\Palettes", NULL);
 
-	//(getCharactersCount() - 1) to exclude the boss
-	for (int i = 0; i < (getCharactersCount() - 1); i++)
+	for (int i = 0; i < getCharactersCountWithoutBoss(); i++)
 	{
 		std::wstring path = std::wstring(L"BBTAG_IM\\Palettes\\") + getCharacterNameByIndexW(i);
 		CreateDirectory(path.c_str(), NULL);
@@ -44,8 +43,7 @@ void PaletteManager::InitCustomPaletteVector()
 	m_customPalettes.clear();
 	m_customPalettes.resize(getCharactersCount());
 
-	//(getCharactersCount() - 1) to exclude the boss
-	for (int i = 0; i < (getCharactersCount() - 1); i++)
+	for (int i = 0; i < getCharactersCountWithoutBoss(); i++)
 	{
 		//make the character palette array's 0th element an empty one, that will be used to set back to the default palette
 		IMPL_data_t customPal { "Default" };
@@ -60,8 +58,7 @@ void PaletteManager::LoadPalettesFromFolder()
 	LOG(2, "LoadPaletteFiles\n");
 	g_imGuiLogger->Log("[system] Loading local custom palettes...\n");
 
-	//(getCharactersCount() - 1) to exclude the boss
-	for (int i = 0; i < (getCharactersCount() - 1); i++)
+	for (int i = 0; i < getCharactersCountWithoutBoss(); i++)
 	{
 		std::wstring wPath = std::wstring(L"BBTAG_IM\\Palettes\\") + getCharacterNameByIndexW(i) + L"\\*";
 		LoadPalettesIntoVector((CharIndex)i, wPath);
@@ -76,7 +73,7 @@ void PaletteManager::InitOnlinePalsIndexVector()
 {
 	m_onlinePalsStartIndex.clear();
 
-	for (int i = 0; i < (getCharactersCount() - 1); i++)
+	for (int i = 0; i < getCharactersCountWithoutBoss(); i++)
 	{
 		m_onlinePalsStartIndex.push_back(m_customPalettes[i].size());
 	}
@@ -86,7 +83,7 @@ void PaletteManager::ApplyDefaultCustomPalette(CharIndex charIndex, CharPaletteH
 {
 	LOG(2, "ApplyDefaultCustomPalette\n");
 
-	if (charIndex > getCharactersCount() - 1)
+	if (charIndex > getCharactersCountWithoutBoss())
 		return;
 
 	const int curPalIndex = charPalHandle.GetOrigPalIndex();
@@ -226,7 +223,7 @@ void PaletteManager::LoadPaletteSettingsFile()
 	strBuffer.ReleaseBuffer();
 	m_loadOnlinePalettes = _ttoi(strBuffer);
 
-	for (int i = 0; i < (getCharactersCount() - 1); i++)
+	for (int i = 0; i < getCharactersCountWithoutBoss(); i++)
 	{
 		for (int iSlot = 1; iSlot <= MAX_NUM_OF_PAL_INDEXES; iSlot++)
 		{
@@ -308,8 +305,7 @@ void PaletteManager::LoadPaletteSettingsFile()
 //
 //	WritePrivateProfileString(L"General", L"ShowDonatorPalettes", L"1\r\n", wFullPath.c_str());
 //
-//	//(getCharactersCount() - 1) to exclude the boss
-//	for (int i = 0; i < (getCharactersCount() - 1); i++)
+//	for (int i = 0; i < getCharactersCountWithoutBoss(); i++)
 //	{
 //		WritePrivateProfileString(wOrderedCharNames[i], L"1", L"\"Default\"\r\n", wFullPath.c_str());
 //	}
@@ -327,8 +323,7 @@ void PaletteManager::InitPaletteSlotsVector()
 	m_paletteSlots.clear();
 	m_paletteSlots.resize(getCharactersCount());
 
-	//(getCharactersCount() - 1) to exclude the boss
-	for (int i = 0; i < (getCharactersCount() - 1); i++)
+	for (int i = 0; i < getCharactersCountWithoutBoss(); i++)
 	{
 		for (int iSlot = 0; iSlot < MAX_NUM_OF_PAL_INDEXES; iSlot++)
 		{
