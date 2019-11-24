@@ -24,3 +24,4 @@ enum GameMode_
 };
 
 bool isPaletteEditingEnabledInCurrentGameMode();
+bool isHitboxOverlayEnabledInCurrentGameMode();

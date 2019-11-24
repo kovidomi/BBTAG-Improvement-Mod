@@ -1,12 +1,18 @@
 #include "HitboxOverlay.h"
 
 #include "Core/interfaces.h"
+#include "Game/gamestates.h"
 #include "Game/JonbReader.h"
 #include "imgui_internal.h"
 
 void HitboxOverlay::Update()
 {
 	if (HasNullptrInData() || !m_windowOpen)
+	{
+		return;
+	}
+
+	if (!isHitboxOverlayEnabledInCurrentGameMode())
 	{
 		return;
 	}

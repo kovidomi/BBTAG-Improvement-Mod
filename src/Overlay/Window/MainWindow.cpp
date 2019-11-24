@@ -205,7 +205,7 @@ void MainWindow::DrawHitboxOverlaySection() const
 			return;
 		}
 
-		if (*g_gameVals.pGameMode != GameMode_Training)
+		if (!isHitboxOverlayEnabledInCurrentGameMode())
 		{
 			ImGui::TextUnformatted(" "); ImGui::SameLine();
 			ImGui::TextDisabled("Not in training mode!");
@@ -222,37 +222,76 @@ void MainWindow::DrawHitboxOverlaySection() const
 			}
 			else
 			{
+				g_gameVals.isFrameFrozen = false;
 				m_pWindowContainer->GetWindow(WindowType_HitboxOverlay)->Close();
 			}
 		}
-		ImGui::SameLine(); ImGui::TextUnformatted(" "); ImGui::SameLine();
-		ImGui::Checkbox("Freeze frame", &g_gameVals.isFrameFrozen);
 
-		ImGui::TextUnformatted(" "); ImGui::SameLine();
-		ImGui::Checkbox("P1Ch1", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[0]);
-		HoverTooltip(getCharacterNameByIndexA(g_interfaces.player1.GetChar1().GetData()->char_index).c_str());
+		if (isOpen)
+		{
+			ImGui::TextUnformatted(" ");
 
-		ImGui::SameLine(); ImGui::TextUnformatted(" "); ImGui::SameLine();
-		ImGui::Checkbox("P2Ch1", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[1]);
-		HoverTooltip(getCharacterNameByIndexA(g_interfaces.player2.GetChar1().GetData()->char_index).c_str());
+			if (g_interfaces.player1.GetChar1().GetData()
+				&& g_interfaces.player2.GetChar1().GetData()
+				&& g_interfaces.player1.GetChar2().GetData()
+				&& g_interfaces.player2.GetChar2().GetData())
+			{
+				ImGui::TextUnformatted(" "); ImGui::SameLine();
+				ImGui::Checkbox("P1Ch1", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[0]);
+				HoverTooltip(getCharacterNameByIndexA(g_interfaces.player1.GetChar1().GetData()->char_index).c_str());
 
-		ImGui::TextUnformatted(" "); ImGui::SameLine();
-		ImGui::Checkbox("P1Ch2", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[2]);
-		HoverTooltip(getCharacterNameByIndexA(g_interfaces.player1.GetChar2().GetData()->char_index).c_str());
+				ImGui::SameLine(); ImGui::TextUnformatted(" "); ImGui::SameLine();
+				ImGui::Checkbox("P2Ch1", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[1]);
+				HoverTooltip(getCharacterNameByIndexA(g_interfaces.player2.GetChar1().GetData()->char_index).c_str());
 
-		ImGui::SameLine(); ImGui::TextUnformatted(" "); ImGui::SameLine();
-		ImGui::Checkbox("P2Ch2", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[3]);
-		HoverTooltip(getCharacterNameByIndexA(g_interfaces.player2.GetChar2().GetData()->char_index).c_str());
+				ImGui::TextUnformatted(" "); ImGui::SameLine();
+				ImGui::Checkbox("P1Ch2", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[2]);
+				HoverTooltip(getCharacterNameByIndexA(g_interfaces.player1.GetChar2().GetData()->char_index).c_str());
 
-		ImGui::TextUnformatted(" "); ImGui::SameLine();
-		m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectThicknessSlider();
+				ImGui::SameLine(); ImGui::TextUnformatted(" "); ImGui::SameLine();
+				ImGui::Checkbox("P2Ch2", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[3]);
+				HoverTooltip(getCharacterNameByIndexA(g_interfaces.player2.GetChar2().GetData()->char_index).c_str());
+			}
 
-		ImGui::TextUnformatted(" "); ImGui::SameLine();
-		m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectFillTransparencySlider();
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectThicknessSlider();
 
-		ImGui::TextUnformatted(" "); ImGui::SameLine();
-		ImGui::Checkbox("Draw origin",
-			&m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawOriginLine);
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectFillTransparencySlider();
+
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			ImGui::Checkbox("Draw origin",
+				&m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawOriginLine);
+
+			ImGui::TextUnformatted(" ");
+
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			ImGui::Checkbox("Freeze frame:", &g_gameVals.isFrameFrozen);
+			if (g_gameVals.pFrameCount)
+			{
+				ImGui::SameLine();
+				ImGui::Text("%d", *g_gameVals.pFrameCount);
+				ImGui::SameLine();
+				if (ImGui::Button("Reset"))
+				{
+					*g_gameVals.pFrameCount = 0;
+					g_gameVals.framesToReach = 0;
+				}
+			}
+
+			if (g_gameVals.isFrameFrozen)
+			{
+				static int framesToStep = 1;
+				ImGui::TextUnformatted(" "); ImGui::SameLine();
+				if (ImGui::Button("Step frames"))
+				{
+					g_gameVals.framesToReach = *g_gameVals.pFrameCount + framesToStep;
+				}
+
+				ImGui::SameLine();
+				ImGui::SliderInt("", &framesToStep, 1, 60);
+			}
+		}
 	}
 }
 

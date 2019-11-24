@@ -49,6 +49,8 @@ struct gameVals_t
 	int* pGameMode;
 
 	bool isFrameFrozen;
+	unsigned framesToReach;
+	unsigned* pFrameCount;
 
 	lookat_t lookAtVector;
 	D3DXMATRIX* viewMatrix;

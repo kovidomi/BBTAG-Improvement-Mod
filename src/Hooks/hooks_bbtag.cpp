@@ -356,7 +356,14 @@ void __declspec(naked)GetGameUpdatePause()
 		je ORIG_CODE
 
 		cmp g_gameVals.isFrameFrozen, 0
-		jnz EXIT
+		je ORIG_CODE
+
+		push eax
+		mov eax, g_gameVals.pFrameCount
+		mov eax, [eax]
+		cmp g_gameVals.framesToReach, eax
+		pop eax
+		jle EXIT
 
 ORIG_CODE:
 		cmp dword ptr[eax + 8], 0
@@ -618,6 +625,24 @@ void __declspec(naked)GetEntityListDeleteAddr()
 	}
 }
 
+DWORD GetFrameCounterJmpBackAddr = 0;
+void __declspec(naked)GetFrameCounter()
+{
+	LOG_ASM(7, "GetFrameCounter\n");
+
+	_asm
+	{
+		push ecx
+		add ecx, 8
+		mov g_gameVals.pFrameCount, ecx
+		pop ecx
+
+		inc dword ptr[ecx + 8]
+		retn 4
+	}
+}
+
+
 //runs in additional_hooks.cpp in the hook_steamnetworking and ID3D9EXWrapper_Device.cpp in constructor, since unlike in CF in this game this method runs after steam init
 //These functions can be hooked after steam drm does its thing and d3d9device is up
 bool placeHooks_bbtag()
@@ -691,6 +716,9 @@ bool placeHooks_bbtag()
 
 	GetViewAndProjMatrixesJmpBackAddr = HookManager::SetHook("GetViewAndProjMatrixes", "\xc7\x45\xdc\x00\x00\x80\x3f\x50\x8d\x85\x78\xff\xff\xff",
 		"xxxxxxxxxxxxxx", 14, GetViewAndProjMatrixes);
+
+	GetFrameCounterJmpBackAddr = HookManager::SetHook("GetFrameCounter", "\xff\x41\x08\xc2\x04\x00",
+		"xxxxxx", 6, GetFrameCounter);
 
 	///////////////// EXPERIMENTAL HOOKS BELOW ////////////////////////////
 
