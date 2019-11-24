@@ -1,4 +1,4 @@
-IMPL-HPL-CONVERTER (v1.00) by KoviDomi -- README
+IMPL-HPL-CONVERTER (v1.01) by KoviDomi -- README
 ==========================
 
 HPL to IMPL 
@@ -17,6 +17,10 @@ IMPL to HPL
 
 Changelog
 ==========================
+
+24-11-2019 -- version 1.01
+===============================
+- Updated templates
 
 18-07-2018 -- version 1.00
 ===============================
