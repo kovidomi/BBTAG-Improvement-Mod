@@ -18,6 +18,8 @@ void MatchState::OnMatchInit()
 		g_interfaces.player2.GetChar1(),
 		g_interfaces.player2.GetChar2());
 
+	g_gameVals.isFrameFrozen = false;
+
 	WindowManager::GetInstance().GetWindowContainer()->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->OnMatchInit();
 }
 

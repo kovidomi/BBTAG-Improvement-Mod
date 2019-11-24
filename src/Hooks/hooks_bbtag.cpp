@@ -355,7 +355,7 @@ void __declspec(naked)GetGameUpdatePause()
 		pop eax
 		je ORIG_CODE
 
-		cmp g_gameVals.isPaletteModePaused, 0
+		cmp g_gameVals.isFrameFrozen, 0
 		jnz EXIT
 
 ORIG_CODE:

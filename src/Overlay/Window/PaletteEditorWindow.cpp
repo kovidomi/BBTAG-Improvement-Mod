@@ -64,8 +64,6 @@ void PaletteEditorWindow::OnMatchInit()
 	m_showAlpha = false;
 
 	CopyPalFileToEditorArray(m_selectedFile, *m_selectedCharPalHandle);
-
-	g_gameVals.isPaletteModePaused = false;
 }
 
 void PaletteEditorWindow::Draw()
@@ -206,7 +204,7 @@ void PaletteEditorWindow::EditingModesSelection()
 
 	ImGui::SameLine();
 	int nextLineColumnPosX = ImGui::GetCursorPosX();
-	ImGui::Checkbox("Freeze frame", &g_gameVals.isPaletteModePaused);
+	ImGui::Checkbox("Freeze frame", &g_gameVals.isFrameFrozen);
 	
 	if (ImGui::Checkbox("Highlight mode", &m_highlightMode))
 	{

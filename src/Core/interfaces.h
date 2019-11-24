@@ -48,7 +48,7 @@ struct gameVals_t
 	int* pGameState;
 	int* pGameMode;
 
-	bool isPaletteModePaused;
+	bool isFrameFrozen;
 
 	lookat_t lookAtVector;
 	D3DXMATRIX* viewMatrix;

@@ -225,6 +225,9 @@ void MainWindow::DrawHitboxOverlaySection() const
 				m_pWindowContainer->GetWindow(WindowType_HitboxOverlay)->Close();
 			}
 		}
+		ImGui::SameLine(); ImGui::TextUnformatted(" "); ImGui::SameLine();
+		ImGui::Checkbox("Freeze frame", &g_gameVals.isFrameFrozen);
+
 		ImGui::TextUnformatted(" "); ImGui::SameLine();
 		ImGui::Checkbox("P1Ch1", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[0]);
 		HoverTooltip(getCharacterNameByIndexA(g_interfaces.player1.GetChar1().GetData()->char_index).c_str());
