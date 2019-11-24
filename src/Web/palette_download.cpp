@@ -10,8 +10,125 @@
 
 #include <vector>
 #include <sstream>
+#include <iomanip>
 
 #pragma comment(lib, "DecompressLibrary.lib")
+
+#define BUFSIZE 1024
+#define MD5LEN  16
+
+std::string calculateMD5()
+{
+	std::string result = "";
+
+	DWORD dwStatus = 0;
+	BOOL bResult = FALSE;
+	HCRYPTPROV hProv = 0;
+	HCRYPTHASH hHash = 0;
+	HANDLE hFile = NULL;
+	BYTE rgbFile[BUFSIZE];
+	DWORD cbRead = 0;
+	BYTE rgbHash[MD5LEN];
+	DWORD cbHash = 0;
+	CHAR rgbDigits[] = "0123456789abcdef";
+	LPCWSTR filename = L"BBTAG_IM/Download/palettes.tar.gz";
+	// Logic to check usage goes here.
+
+	hFile = CreateFile(filename,
+		GENERIC_READ,
+		FILE_SHARE_READ,
+		NULL,
+		OPEN_EXISTING,
+		FILE_FLAG_SEQUENTIAL_SCAN,
+		NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+	{
+		dwStatus = GetLastError();
+		LOG(1, "Error opening file %s\nError: %d\n", filename,
+			dwStatus);
+		return result;
+	}
+
+	// Get handle to the crypto provider
+	if (!CryptAcquireContext(&hProv,
+		NULL,
+		NULL,
+		PROV_RSA_FULL,
+		CRYPT_VERIFYCONTEXT))
+	{
+		dwStatus = GetLastError();
+		LOG(1, "CryptAcquireContext failed: %d\n", dwStatus);
+		CloseHandle(hFile);
+		return result;
+	}
+
+	if (!CryptCreateHash(hProv, CALG_MD5, 0, 0, &hHash))
+	{
+		dwStatus = GetLastError();
+		LOG(1, "CryptAcquireContext failed: %d\n", dwStatus);
+		CloseHandle(hFile);
+		CryptReleaseContext(hProv, 0);
+		return result;
+	}
+
+	while (bResult = ReadFile(hFile, rgbFile, BUFSIZE,
+		&cbRead, NULL))
+	{
+		if (0 == cbRead)
+		{
+			break;
+		}
+
+		if (!CryptHashData(hHash, rgbFile, cbRead, 0))
+		{
+			dwStatus = GetLastError();
+			LOG(1, "CryptHashData failed: %d\n", dwStatus);
+			CryptReleaseContext(hProv, 0);
+			CryptDestroyHash(hHash);
+			CloseHandle(hFile);
+			return result;
+		}
+	}
+
+	if (!bResult)
+	{
+		dwStatus = GetLastError();
+		LOG(1, "ReadFile failed: %d\n", dwStatus);
+		CryptReleaseContext(hProv, 0);
+		CryptDestroyHash(hHash);
+		CloseHandle(hFile);
+		return result;
+	}
+
+	cbHash = MD5LEN;
+	if (CryptGetHashParam(hHash, HP_HASHVAL, rgbHash, &cbHash, 0))
+	{
+		std::stringstream stream;
+		for (DWORD i = 0; i < cbHash; i++)
+		{
+			stream << rgbDigits[rgbHash[i] >> 4];
+			stream << rgbDigits[rgbHash[i] & 0xf];
+		}
+		result = stream.str();
+
+#ifdef _DEBUG
+		LOG(1, "MD5 hash of palette archive is: %s\n", result.c_str());
+		g_imGuiLogger->Log("[debug] MD5 hash of palette archive is: %s\n", result.c_str());
+#endif
+	}
+	else
+	{
+		dwStatus = GetLastError();
+		LOG(1, "CryptGetHashParam failed: %d\n", dwStatus);
+	}
+
+	CryptDestroyHash(hHash);
+	CryptReleaseContext(hProv, 0);
+	CloseHandle(hFile);
+
+	return result;
+}
 
 void GetPalettesFromArchive()
 {
@@ -126,12 +243,29 @@ void DownloadPaletteArchive()
 		}
 		SAFE_DELETE_ARRAY(downlBuf);
 	}
+}
+
+void Start()
+{
+	std::wstring wUrl = MOD_LINK_PALETTES_HASH;
+	std::string onlinePaletteArchiveHash = DownloadUrl(wUrl);
+	std::string localPaletteArchiveHash = calculateMD5();
+
+	if (onlinePaletteArchiveHash != localPaletteArchiveHash)
+	{
+		g_imGuiLogger->Log("[system] Online palettes archive 'palettes.tar.gz' is out-of-date\n");
+		DownloadPaletteArchive();
+	}
+	else
+	{
+		g_imGuiLogger->Log("[system] Online palettes archive 'palettes.tar.gz' is up-to-date\n");
+	}
 
 	GetPalettesFromArchive();
 }
 
 void StartAsyncPaletteArchiveDownload()
 {
-	CloseHandle(CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)DownloadPaletteArchive, nullptr, 0, nullptr));
+	CloseHandle(CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)Start, nullptr, 0, nullptr));
 }
 
