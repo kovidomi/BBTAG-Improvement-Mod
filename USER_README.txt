@@ -77,6 +77,8 @@ Changelog
 ===============================
 - Updated for official patch v2.0
 - Updated "palettes.ini" file for new characters and extra palette slots
+- Enabled palette editor in versus mode
+- The online palettes archive is now only downloaded if there has been a change
 - Fixed crash due to non-existent character index in manually edited impl file headers
 
 22-05-2019 -- version 1.07
