@@ -22,3 +22,5 @@ enum GameMode_
 	GameMode_Versus = 5,
 	GameMode_Training = 6,
 };
+
+bool isPaletteEditingEnabledInCurrentGameMode();

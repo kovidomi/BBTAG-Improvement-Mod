@@ -69,8 +69,7 @@ void PaletteEditorWindow::OnMatchInit()
 
 void PaletteEditorWindow::Draw()
 {
-	if (*g_gameVals.pGameMode != GameMode_Training
-		|| HasNullPointer())
+	if (!isPaletteEditingEnabledInCurrentGameMode() || HasNullPointer())
 	{
 		Close();
 		return;

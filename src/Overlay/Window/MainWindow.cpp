@@ -105,11 +105,11 @@ void MainWindow::Draw()
 		ImGui::Text(" "); ImGui::SameLine();
 		bool pressed = ImGui::Button("Palette editor");
 
-		if (*g_gameVals.pGameMode != GameMode_Training)
+		if (!isPaletteEditingEnabledInCurrentGameMode())
 		{
-			ImGui::SameLine(); ImGui::TextDisabled("Not in training mode!");
+			ImGui::SameLine(); ImGui::TextDisabled("Not in training or versus modes!");
 		}
-		else if (*g_gameVals.pGameMode == GameMode_Training && pressed)
+		else if (isPaletteEditingEnabledInCurrentGameMode() && pressed)
 		{
 			m_pWindowContainer->GetWindow(WindowType_PaletteEditor)->Open();
 		}
@@ -119,12 +119,13 @@ void MainWindow::Draw()
 	{
 		if (*g_gameVals.pGameState != GameState_Match)
 		{
-			ImGui::Text(" "); ImGui::SameLine();
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
 			ImGui::TextDisabled("Not in match!");
 		}
 		else if (*g_gameVals.pGameMode != GameMode_Training)
 		{
-			ImGui::SameLine(); ImGui::TextDisabled("Not in training mode!");
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			ImGui::TextDisabled("Not in training mode!");
 		}
 		else
 		{

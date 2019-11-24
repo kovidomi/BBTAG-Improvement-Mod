@@ -128,6 +128,7 @@
     <ClCompile Include="src\Game\characters.cpp" />
     <ClCompile Include="src\Game\CharHandle.cpp" />
     <ClCompile Include="src\Game\CharPaletteHandle.cpp" />
+    <ClCompile Include="src\Game\gamestates.cpp" />
     <ClCompile Include="src\Game\JonbReader.cpp" />
     <ClCompile Include="src\Game\MatchState.cpp" />
     <ClCompile Include="src\Game\Player.cpp" />

@@ -348,8 +348,12 @@ void __declspec(naked)GetGameUpdatePause()
 		je ORIG_CODE
 
 		mov ecx, g_gameVals.pGameMode
-		cmp [ecx], GameMode_Training
-		jne ORIG_CODE
+
+		push eax
+		call isPaletteEditingEnabledInCurrentGameMode
+		cmp al, 0
+		pop eax
+		je ORIG_CODE
 
 		cmp g_gameVals.isPaletteModePaused, 0
 		jnz EXIT
