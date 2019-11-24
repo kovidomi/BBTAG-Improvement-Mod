@@ -14,7 +14,7 @@ void LogWindow::Draw()
 	ImGui::SameLine();
 	bool copyPressed = ImGui::Button("Copy to clipboard");
 	ImGui::SameLine();
-	m_filter.Draw("Filter", -100.0f);
+	m_filter.Draw("Search", -100.0f);
 	ImGui::Separator();
 	ImGui::BeginChild("scrolling", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 	if (copyPressed)
