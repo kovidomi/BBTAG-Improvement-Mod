@@ -8,6 +8,7 @@
 #include "Core/info.h"
 #include "Core/interfaces.h"
 #include "Game/gamestates.h"
+#include "Overlay/imgui_utils.h"
 #include "Web/donators_fetch.h"
 
 void MainWindow::SetMainWindowTitle(const std::string text)
@@ -65,95 +66,11 @@ void MainWindow::Draw()
 
 	ImGui::Text("");
 
-	if (ImGui::CollapsingHeader("Custom HUD"))
-	{
-		if (g_gameVals.pIsHUDHidden)
-		{
-			ImGui::Text(" "); ImGui::SameLine();
-			ImGui::Checkbox("Show HUD", (bool*)g_gameVals.pIsHUDHidden);
-			if (Settings::settingsIni.forcecustomhud)
-			{
-				ImGui::SameLine(); ImGui::TextDisabled("(ForceCustomHUD is ON)");
-			}
-		}
+	DrawCustomHudSection();
 
-		ImGui::Text(" "); ImGui::SameLine();
-		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawShowCustomHudWindowCheckbox();
+	DrawCustomPalettesSection();
 
-		ImGui::Text(" "); ImGui::SameLine();
-		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawSetWindowsMovableCheckbox();
-
-		ImGui::Text(" "); ImGui::SameLine();
-		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawResetWindowsPositionsButton();
-	}
-
-	if (ImGui::CollapsingHeader("Custom palettes"))
-	{
-		if (*g_gameVals.pGameState != GameState_Match)
-		{
-			ImGui::Text(" "); ImGui::SameLine();
-			ImGui::TextDisabled("Not in match!");
-		}
-		else
-		{
-			m_pWindowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->ShowAllPaletteSelections();
-		}
-
-		ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
-		m_pWindowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->ShowReloadAllPalettesButton();
-
-		ImGui::Text(" "); ImGui::SameLine();
-		bool pressed = ImGui::Button("Palette editor");
-
-		if (!isPaletteEditingEnabledInCurrentGameMode())
-		{
-			ImGui::SameLine(); ImGui::TextDisabled("Not in training or versus modes!");
-		}
-		else if (isPaletteEditingEnabledInCurrentGameMode() && pressed)
-		{
-			m_pWindowContainer->GetWindow(WindowType_PaletteEditor)->Open();
-		}
-	}
-
-	if (ImGui::CollapsingHeader("Hitbox overlay"))
-	{
-		if (*g_gameVals.pGameState != GameState_Match)
-		{
-			ImGui::TextUnformatted(" "); ImGui::SameLine();
-			ImGui::TextDisabled("Not in match!");
-		}
-		else if (*g_gameVals.pGameMode != GameMode_Training)
-		{
-			ImGui::TextUnformatted(" "); ImGui::SameLine();
-			ImGui::TextDisabled("Not in training mode!");
-		}
-		else
-		{
-			ImGui::TextUnformatted(" "); ImGui::SameLine();
-			static bool isOpen = false;
-			if (ImGui::Checkbox("Enable", &isOpen))
-			{
-				if (isOpen)
-				{
-					m_pWindowContainer->GetWindow(WindowType_HitboxOverlay)->Open();
-				}
-				else
-				{
-					m_pWindowContainer->GetWindow(WindowType_HitboxOverlay)->Close();
-				}
-			}
-
-			ImGui::TextUnformatted(" "); ImGui::SameLine();
-			m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectThicknessSlider();
-
-			ImGui::TextUnformatted(" "); ImGui::SameLine();
-			m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectFillTransparencySlider();
-
-			ImGui::TextUnformatted(" "); ImGui::SameLine();
-			ImGui::Checkbox("Draw origin",
-				&m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawOriginLine);
-		}
-	}
+	DrawHitboxOverlaySection();
 
 	if (ImGui::CollapsingHeader("Loaded settings.ini values"))
 	{
@@ -218,6 +135,121 @@ void MainWindow::DrawDonatorsButton()
 	if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
 	{
 		m_pWindowContainer->GetWindow(WindowType_Donators)->Open();
+	}
+}
+
+void MainWindow::DrawCustomHudSection() const
+{
+	if (ImGui::CollapsingHeader("Custom HUD"))
+	{
+		if (g_gameVals.pIsHUDHidden)
+		{
+			ImGui::Text(" "); ImGui::SameLine();
+			ImGui::Checkbox("Show HUD", (bool*)g_gameVals.pIsHUDHidden);
+			if (Settings::settingsIni.forcecustomhud)
+			{
+				ImGui::SameLine(); ImGui::TextDisabled("(ForceCustomHUD is ON)");
+			}
+		}
+
+		ImGui::Text(" "); ImGui::SameLine();
+		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawShowCustomHudWindowCheckbox();
+
+		ImGui::Text(" "); ImGui::SameLine();
+		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawSetWindowsMovableCheckbox();
+
+		ImGui::Text(" "); ImGui::SameLine();
+		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawResetWindowsPositionsButton();
+	}
+}
+
+void MainWindow::DrawCustomPalettesSection() const
+{
+	if (ImGui::CollapsingHeader("Custom palettes"))
+	{
+		if (*g_gameVals.pGameState != GameState_Match)
+		{
+			ImGui::Text(" "); ImGui::SameLine();
+			ImGui::TextDisabled("Not in match!");
+		}
+		else
+		{
+			m_pWindowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->ShowAllPaletteSelections();
+		}
+
+		ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
+		m_pWindowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->ShowReloadAllPalettesButton();
+
+		ImGui::Text(" "); ImGui::SameLine();
+		bool pressed = ImGui::Button("Palette editor");
+
+		if (!isPaletteEditingEnabledInCurrentGameMode())
+		{
+			ImGui::SameLine(); ImGui::TextDisabled("Not in training or versus modes!");
+		}
+		else if (isPaletteEditingEnabledInCurrentGameMode() && pressed)
+		{
+			m_pWindowContainer->GetWindow(WindowType_PaletteEditor)->Open();
+		}
+	}
+}
+
+void MainWindow::DrawHitboxOverlaySection() const
+{
+	if (ImGui::CollapsingHeader("Hitbox overlay"))
+	{
+		if (*g_gameVals.pGameState != GameState_Match)
+		{
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			ImGui::TextDisabled("Not in match!");
+			return;
+		}
+
+		if (*g_gameVals.pGameMode != GameMode_Training)
+		{
+			ImGui::TextUnformatted(" "); ImGui::SameLine();
+			ImGui::TextDisabled("Not in training mode!");
+			return;
+		}
+
+		ImGui::TextUnformatted(" "); ImGui::SameLine();
+		static bool isOpen = false;
+		if (ImGui::Checkbox("Enable", &isOpen))
+		{
+			if (isOpen)
+			{
+				m_pWindowContainer->GetWindow(WindowType_HitboxOverlay)->Open();
+			}
+			else
+			{
+				m_pWindowContainer->GetWindow(WindowType_HitboxOverlay)->Close();
+			}
+		}
+		ImGui::TextUnformatted(" "); ImGui::SameLine();
+		ImGui::Checkbox("P1Ch1", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[0]);
+		HoverTooltip(getCharacterNameByIndexA(g_interfaces.player1.GetChar1().GetData()->char_index).c_str());
+
+		ImGui::SameLine(); ImGui::TextUnformatted(" "); ImGui::SameLine();
+		ImGui::Checkbox("P2Ch1", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[1]);
+		HoverTooltip(getCharacterNameByIndexA(g_interfaces.player2.GetChar1().GetData()->char_index).c_str());
+
+		ImGui::TextUnformatted(" "); ImGui::SameLine();
+		ImGui::Checkbox("P1Ch2", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[2]);
+		HoverTooltip(getCharacterNameByIndexA(g_interfaces.player1.GetChar2().GetData()->char_index).c_str());
+
+		ImGui::SameLine(); ImGui::TextUnformatted(" "); ImGui::SameLine();
+		ImGui::Checkbox("P2Ch2", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[3]);
+		HoverTooltip(getCharacterNameByIndexA(g_interfaces.player2.GetChar2().GetData()->char_index).c_str());
+
+		ImGui::TextUnformatted(" "); ImGui::SameLine();
+		m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectThicknessSlider();
+
+		ImGui::TextUnformatted(" "); ImGui::SameLine();
+		m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectFillTransparencySlider();
+
+		ImGui::TextUnformatted(" "); ImGui::SameLine();
+		ImGui::Checkbox("Draw origin",
+			&m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawOriginLine);
 	}
 }
 

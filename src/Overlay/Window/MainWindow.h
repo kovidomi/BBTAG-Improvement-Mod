@@ -23,6 +23,9 @@ private:
 	void DrawSingleLinkButton(const std::string& label, const wchar_t* url) const;
 	void DrawLinkButtons() const;
 	void DrawLoadedSettingsValues() const;
+	void DrawCustomHudSection() const;
+	void DrawCustomPalettesSection() const;
+	void DrawHitboxOverlaySection() const;
 
 	WindowContainer* m_pWindowContainer = nullptr;
 };

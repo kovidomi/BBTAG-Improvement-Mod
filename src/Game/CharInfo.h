@@ -17,7 +17,9 @@ public:
 	char* current_sprite; //0x00D8
 	char pad_00DC[204]; //0x00DC
 	uint32_t chie_charge_lvl; //0x01A8
-	char pad_01AC[200]; //0x01AC
+	char pad_01AC[72]; //0x01AC
+	class CharInfo* ownerEntity; //0x01F4
+	char pad_01F8[124]; //0x01F8
 	int32_t facingLeft; //0x0274
 	int32_t position_x; //0x0278
 	int32_t position_y; //0x027C
@@ -60,6 +62,4 @@ public:
 	uint32_t unique_meter_max_val; //0x24098
 	uint32_t unique_meter_cur_val; //0x2409C
 }; //Size: 0x240A0
-
-
 

@@ -12,6 +12,7 @@ class HitboxOverlay : public Window
 {
 public:
 	bool drawOriginLine = false;
+	bool drawCharacterHitbox[4] = {true, true, true, true};
 
 	HitboxOverlay(const std::string& windowTitle, bool windowClosable,
 		ImGuiWindowFlags windowFlags)
@@ -28,6 +29,7 @@ protected:
 	void Draw() override;
 	void AfterDraw() override;
 private:
+	bool IsOwnerEnabled(CharInfo* ownerCharInfo);
 	bool WorldToScreen(LPDIRECT3DDEVICE9 pDevice, D3DXMATRIX* view, D3DXMATRIX* proj, D3DXVECTOR3* pos, D3DXVECTOR3* out);
 	ImVec2 CalculateObjWorldPosition(const CharInfo * charObj);
 	ImVec2 CalculateScreenPosition(ImVec2 worldPos);

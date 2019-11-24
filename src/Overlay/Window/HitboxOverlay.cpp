@@ -44,6 +44,11 @@ void HitboxOverlay::Draw()
 
 		if (isCharacter || isEntityActive)
 		{
+			if (!IsOwnerEnabled(pEntity->ownerEntity))
+			{
+				continue;
+			}
+
 			const ImVec2 entityWorldPos = CalculateObjWorldPosition(pEntity);
 			DrawCollisionAreas(pEntity, entityWorldPos);
 		}
@@ -54,6 +59,19 @@ void HitboxOverlay::AfterDraw()
 {
 	ImGui::PopStyleColor();
 	ImGui::PopStyleVar(2);
+}
+
+bool HitboxOverlay::IsOwnerEnabled(CharInfo * ownerCharInfo)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (ownerCharInfo == (CharInfo*)g_gameVals.pEntityList[i])
+		{
+			return drawCharacterHitbox[i];
+		}
+	}
+
+	return false;
 }
 
 bool HitboxOverlay::HasNullptrInData()
