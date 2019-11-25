@@ -19,6 +19,7 @@ private:
 	char* ConstructWindowTitle(char* outBuffer) const;
 	ImVec4 GetDonatorTierColor(int tierLevel) const;
 	void PrintDonators() const;
-	bool DrawOkButton() const;
+	void DrawDonateButton() const;
+	bool DrawCloseButton() const;
 	void PositionWindowToMiddleScreen() const;
 };

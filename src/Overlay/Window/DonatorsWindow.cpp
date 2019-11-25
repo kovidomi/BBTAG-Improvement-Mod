@@ -1,5 +1,7 @@
 #include "DonatorsWindow.h"
 
+#include "Core/info.h"
+#include "Overlay/imgui_utils.h"
 #include "Web/donators_fetch.h"
 
 #include <cstdio>
@@ -22,15 +24,18 @@ void DonatorsWindow::BeforeDraw()
 	backupWindowTitleAlign = ImGui::GetStyle().WindowTitleAlign;
 	ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f); // middle
 	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.0f);
-	ImGui::SetNextWindowSizeConstraints(ImVec2(200, 50), ImVec2(500, 500));
 }
 
 void DonatorsWindow::Draw()
 {
+	ImGui::BeginChild("donator_list", ImVec2(275, 400), true);
 	PrintDonators();
+	ImGui::EndChild();
 
-	const bool buttonPressed = DrawOkButton();
-	if (buttonPressed)
+	DrawDonateButton();
+	ImGui::TextUnformatted(" ");
+	const bool closePressed = DrawCloseButton();
+	if (closePressed)
 	{
 		Close();
 	}
@@ -86,48 +91,79 @@ ImVec4 DonatorsWindow::GetDonatorTierColor(int tierLevel) const
 	return DONATOR_TIER_COLORS[tierLevel];
 }
 
+void alignTextHorizontalCenter(const ImVec4 color, const char* text)
+{
+	ImGui::TextColored(COLOR_TRANSPARENT, text);
+
+	float width = ImGui::GetItemRectSize().x;
+	float height = ImGui::GetItemRectSize().y;
+	ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (width / 2));
+	ImGui::SetCursorPosY(ImGui::GetCursorPosY() - height);
+
+	ImGui::TextColored(color, text);
+}
+
 void DonatorsWindow::PrintDonators() const
 {
 	const auto donatorNames = GetDonatorNames();
 	const auto donatorTiers = GetDonatorTiers();
 
+	int previousTierLevel = 100;
+
 	for (int i = 0; i < donatorNames.size(); i++)
 	{
-		if (i == 0)
-		{
-			ImGui::TextColored(COLOR_TRANSPARENT, "TOP DONATOR");
-			
-			float width = ImGui::GetItemRectSize().x;
-			ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (width / 2));
-
-			ImGui::TextColored(COLOR_PLATINUM, "TOP DONATOR");
-
-			float height = ImGui::GetItemRectSize().y;
-			ImGui::SetCursorPosY(ImGui::GetCursorPosY() - height - (ImGui::GetStyle().ItemSpacing.y * 2));
-		}
-
 		int tierLevel = 99;
 		if (i < donatorTiers.size())
 		{
 			tierLevel = donatorTiers[i];
 		}
 
-		const char* donatorName = donatorNames[i].c_str();
-		if (i % 3 != 1)
+		if (previousTierLevel != tierLevel)
 		{
-			ImGui::SameLine(0, 30);
+			if (tierLevel == 0)
+			{
+				alignTextHorizontalCenter(COLOR_PLATINUM, "----  TOP DONATOR  ----");
+			}
+			else
+			{
+				ImGui::TextUnformatted(" ");
+				switch (tierLevel)
+				{
+				case 1:
+					alignTextHorizontalCenter(COLOR_GOLD, "----  GOLD DONATORS  ----");
+					break;
+				case 2:
+					alignTextHorizontalCenter(COLOR_SILVER, "----  SILVER DONATORS  ----");
+					break;
+				case 3:
+					alignTextHorizontalCenter(COLOR_BRONZE, "----  BRONZE DONATORS  ----");
+					break;
+				}
+			}
 		}
-		ImGui::TextColored(GetDonatorTierColor(tierLevel), donatorName);
+
+		const char* donatorName = donatorNames[i].c_str();
+		alignTextHorizontalCenter(GetDonatorTierColor(tierLevel), donatorName);
+		previousTierLevel = tierLevel;
 	}
 }
 
-bool DonatorsWindow::DrawOkButton() const
+void DonatorsWindow::DrawDonateButton() const
 {
-	const ImVec2 okBtnSize(100, 30);
-	const float buttonPosMiddleWindowX = ImGui::GetWindowSize().x / 2 - (okBtnSize.x / 2);
+	const ImVec2 btnSize(100, 30);
+	const float buttonPosMiddleWindowX = ImGui::GetWindowSize().x / 2 - (btnSize.x / 2);
 	ImGui::SetCursorPosX(buttonPosMiddleWindowX);
 
-	if (ImGui::Button("OK", okBtnSize))
+	DrawUrlButton("DONATE", MOD_LINK_DONATE, btnSize);
+}
+
+bool DonatorsWindow::DrawCloseButton() const
+{
+	const ImVec2 btnSize(100, 30);
+	const float buttonPosMiddleWindowX = ImGui::GetWindowSize().x / 2 - (btnSize.x / 2);
+	ImGui::SetCursorPosX(buttonPosMiddleWindowX);
+
+	if (ImGui::Button("CLOSE", btnSize))
 	{
 		return true;
 	}
