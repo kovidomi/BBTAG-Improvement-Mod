@@ -22,3 +22,4 @@ SETTING(int, regionlock, "Regionlock", "3");
 SETTING(bool, cpuusagefix, "CpuUsageFix", "0");
 SETTING(bool, notificationpopups, "NotificationPopups", "1");
 SETTING(bool, checkupdates, "CheckUpdates", "1");
+SETTING(std::string, dinput8dllWrapper, "Dinput8dllWrapper", "none");
