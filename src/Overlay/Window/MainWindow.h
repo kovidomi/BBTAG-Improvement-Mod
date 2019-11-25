@@ -20,7 +20,6 @@ protected:
 	void Draw() override;
 private:
 	void DrawDonatorsButton();
-	void DrawSingleLinkButton(const std::string& label, const wchar_t* url) const;
 	void DrawLinkButtons() const;
 	void DrawLoadedSettingsValues() const;
 	void DrawCustomHudSection() const;

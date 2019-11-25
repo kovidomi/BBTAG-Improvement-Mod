@@ -138,6 +138,13 @@ void MainWindow::DrawDonatorsButton()
 	{
 		m_pWindowContainer->GetWindow(WindowType_Donators)->ToggleOpen();
 	}
+
+	if (ImGui::IsItemHovered())
+	{
+		ImGui::BeginTooltip();
+		ImGui::TextUnformatted("Donators");
+		ImGui::EndTooltip();
+	}
 }
 
 void MainWindow::DrawCustomHudSection() const
@@ -297,29 +304,21 @@ void MainWindow::DrawHitboxOverlaySection() const
 	}
 }
 
-void MainWindow::DrawSingleLinkButton(const std::string& label, const wchar_t* url) const
-{
-	if (ImGui::Button(label.c_str()))
-	{
-		ShellExecute(nullptr, L"open", url, nullptr, nullptr, SW_SHOWNORMAL);
-	}
-}
-
 void MainWindow::DrawLinkButtons() const
 {
-	DrawSingleLinkButton("Discord", MOD_LINK_DISCORD);
+	DrawUrlButton("Discord", MOD_LINK_DISCORD);
 
 	ImGui::SameLine();
-	DrawSingleLinkButton("Forum", MOD_LINK_FORUM);
+	DrawUrlButton("Forum", MOD_LINK_FORUM);
 
 	ImGui::SameLine();
-	DrawSingleLinkButton("Nexusmods", MOD_LINK_NEXUSMODS);
+	DrawUrlButton("Nexusmods", MOD_LINK_NEXUSMODS);
 
 	ImGui::SameLine();
-	DrawSingleLinkButton("GitHub", MOD_LINK_GITHUB);
+	DrawUrlButton("GitHub", MOD_LINK_GITHUB);
 
 	ImGui::SameLine();
-	DrawSingleLinkButton("Donate", MOD_LINK_DONATE);
+	DrawUrlButton("Donate", MOD_LINK_DONATE);
 }
 
 void MainWindow::DrawLoadedSettingsValues() const
@@ -329,14 +328,18 @@ void MainWindow::DrawLoadedSettingsValues() const
 
 	std::ostringstream oss;
 
+	ImGui::BeginChild("loaded_settings", ImVec2(0, 300.0f), true, ImGuiWindowFlags_HorizontalScrollbar);
+
 	//X-Macro
 #define SETTING(_type, _var, _inistring, _defaultval) \
 	oss << " " << _inistring; \
-	ImGui::TextUnformatted(oss.str().c_str()); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f); \
+	ImGui::TextUnformatted(oss.str().c_str()); ImGui::SameLine(ImGui::GetWindowWidth() * 0.6f); \
 	oss.str(""); \
 	oss << "= " << Settings::settingsIni.##_var; \
 	ImGui::TextUnformatted(oss.str().c_str()); ImGui::Separator(); \
 	oss.str("");
 #include "Core/settings.def"
 #undef SETTING
+
+	ImGui::EndChild();
 }
