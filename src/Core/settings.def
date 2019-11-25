@@ -5,6 +5,7 @@
 SETTING(std::string, togglebutton, "ToggleButton", "F1");
 SETTING(std::string, toggleHUDbutton, "ToggleHUDButton", "F2");
 SETTING(std::string, togglecustomHUDbutton, "ToggleCustomHUDButton", "F3");
+SETTING(std::string, dinputDllWrapper, "DinputDllWrapper", "none");
 SETTING(bool, viewportoverride, "ViewportOverride", "1");
 SETTING(int, displaymode, "DisplayMode", "1");
 SETTING(int, windowwidth, "WindowWidth", "1920");

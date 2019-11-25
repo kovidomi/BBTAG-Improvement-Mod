@@ -73,6 +73,11 @@ Keep in mind that the mod may partially, or completely stop working whenever a n
 Changelog
 ==========================
 
+??-??-2019 -- version 1.09
+===============================
+- Added dinput dll chaining to use other dinput8.dll wrappers together with the mod
+- Window opening buttons now toggle windows instead of just opening them
+
 24-11-2019 -- version 1.08
 ===============================
 - Updated for official patch v2.0

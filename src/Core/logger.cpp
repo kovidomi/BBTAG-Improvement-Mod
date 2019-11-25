@@ -1,6 +1,6 @@
 #include "logger.h"
 
-#include <fstream>
+#include <sstream>
 #include <time.h>
 
 bool hookSucceeded(PBYTE addr, const char* funcName)
@@ -87,27 +87,15 @@ void logSettingsIni()
 {
 	LOG(1, "settings.ini config:\n");
 
-	//TODO: Put the strings into the X-Macro as well. Somehow...
-	//strings cant be put into the X-Macro ( .c_str() cannot be applied on non-std::string types )
-	LOG(1, "\t- ToggleButton: %s\n", Settings::settingsIni.togglebutton.c_str());
-	LOG(1, "\t- ToggleHUDButton: %s\n", Settings::settingsIni.toggleHUDbutton.c_str());
-	LOG(1, "\t- ToggleCustomHUDButton: %s\n", Settings::settingsIni.togglecustomHUDbutton.c_str());
-
-	std::string printText = "";
+	std::ostringstream oss;
 
 	//X-Macro
 #define SETTING(_type, _var, _inistring, _defaultval) \
-	printText = "\t- "; \
-	printText += _inistring; \
-	if(strcmp(#_type, "bool") == 0 || strcmp(#_type, "int") == 0) \
-		printText += ": %d\n"; \
-	else if(strcmp(#_type, "float") == 0) \
-		printText += ": %.2f\n"; \
-	if(strcmp(#_type, "std::string") != 0) { \
-		LOG(1, printText.c_str(), Settings::settingsIni.##_var); }
+	oss << "\t- " << _inistring << " = " << Settings::settingsIni.##_var << "\n";
 #include "settings.def"
 #undef SETTING
 
+	LOG(1, oss.str().c_str());
 }
 
 void logD3DPParams(D3DPRESENT_PARAMETERS* pPresentationParameters, bool isOriginalSettings)

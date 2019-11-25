@@ -89,13 +89,13 @@ float Settings::readSettingsFilePropertyFloat(LPCWSTR key, LPCWSTR defaultVal, L
 	return _ttof(strCustomHUDScale);
 }
 
-const char* Settings::readSettingsFilePropertyString(LPCWSTR key, LPCWSTR defaultVal, LPCWSTR filename)
+std::string Settings::readSettingsFilePropertyString(LPCWSTR key, LPCWSTR defaultVal, LPCWSTR filename)
 {
 	CString strBuffer;
 	GetPrivateProfileString(_T("Settings"), key, defaultVal, strBuffer.GetBuffer(MAX_PATH), MAX_PATH, filename);
 	strBuffer.ReleaseBuffer();
 	CT2CA pszConvertedAnsiString(strBuffer);
-	return pszConvertedAnsiString;
+	return pszConvertedAnsiString.m_psz;
 }
 
 bool Settings::loadSettingsFile()
@@ -126,13 +126,13 @@ void *iniPtr = 0;
 #undef SETTING
 
 //set buttons back to default if their values are incorrect
-if (settingsIni.togglebutton.length() > 2 || settingsIni.togglebutton[0] != 'F')
+if (settingsIni.togglebutton.length() != 2 || settingsIni.togglebutton[0] != 'F')
 	settingsIni.togglebutton = "F1";
 
-if (settingsIni.toggleHUDbutton.length() > 2 || settingsIni.toggleHUDbutton[0] != 'F')
+if (settingsIni.toggleHUDbutton.length() != 2 || settingsIni.toggleHUDbutton[0] != 'F')
 	settingsIni.toggleHUDbutton = "F2";
 
-if (settingsIni.togglecustomHUDbutton.length() > 2 || settingsIni.togglecustomHUDbutton[0] != 'F')
+if (settingsIni.togglecustomHUDbutton.length() != 2 || settingsIni.togglecustomHUDbutton[0] != 'F')
 	settingsIni.togglecustomHUDbutton = "F3";
 
 	return true;
@@ -165,25 +165,24 @@ short Settings::getButtonValue(std::string button)
 {
 	if (button == "F1")
 		return 112;
-	else if (button == "F2")
+	if (button == "F2")
 		return 113;
-	else if (button == "F3")
+	if (button == "F3")
 		return 114;
-	else if (button == "F4")
+	if (button == "F4")
 		return 115;
-	else if (button == "F5")
+	if (button == "F5")
 		return 116;
-	else if (button == "F6")
+	if (button == "F6")
 		return 117;
-	else if (button == "F7")
+	if (button == "F7")
 		return 118;
-	else if (button == "F8")
+	if (button == "F8")
 		return 119;
-	else if (button == "F9")
+	if (button == "F9")
 		return 120;
-	else//default to F1
-	{
-		button = "F1";
-		return 112;
-	}
+
+	//default to F1
+	button = "F1";
+	return 112;
 }

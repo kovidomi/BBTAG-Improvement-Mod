@@ -11,6 +11,8 @@
 #include "Overlay/imgui_utils.h"
 #include "Web/donators_fetch.h"
 
+#include <sstream>
+
 void MainWindow::SetMainWindowTitle(const std::string text)
 {
 	if (text != "")
@@ -80,12 +82,12 @@ void MainWindow::Draw()
 #ifdef _DEBUG
 	if (ImGui::Button("DEBUG"))
 	{
-		m_pWindowContainer->GetWindow(WindowType_Debug)->Open();
+		m_pWindowContainer->GetWindow(WindowType_Debug)->ToggleOpen();
 	}
 #endif
 	if (ImGui::Button("Log"))
 	{
-		m_pWindowContainer->GetWindow(WindowType_Log)->Open();
+		m_pWindowContainer->GetWindow(WindowType_Log)->ToggleOpen();
 	}
 
 	ImGui::Text("Current online players:"); ImGui::SameLine();
@@ -134,7 +136,7 @@ void MainWindow::DrawDonatorsButton()
 	sprintf(buf, "%s", donatorName.c_str());
 	if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
 	{
-		m_pWindowContainer->GetWindow(WindowType_Donators)->Open();
+		m_pWindowContainer->GetWindow(WindowType_Donators)->ToggleOpen();
 	}
 }
 
@@ -189,7 +191,7 @@ void MainWindow::DrawCustomPalettesSection() const
 		}
 		else if (isPaletteEditingEnabledInCurrentGameMode() && pressed)
 		{
-			m_pWindowContainer->GetWindow(WindowType_PaletteEditor)->Open();
+			m_pWindowContainer->GetWindow(WindowType_PaletteEditor)->ToggleOpen();
 		}
 	}
 }
@@ -325,34 +327,16 @@ void MainWindow::DrawLoadedSettingsValues() const
 	//not using ImGui columns here because they are bugged if the window has always_autoresize flag. The window 
 	//starts extending to infinity, if the left edge of the window touches any edges of the screen
 
-	//TODO: Put the strings into the X-Macro as well. Somehow...
-	//strings cant be put into the X-Macro (.c_str() cannot be put on non-std::string types)
-	ImGui::Separator();
-	ImGui::Text(" ToggleButton"); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f);
-	ImGui::Text("= %s", Settings::settingsIni.togglebutton.c_str());
-	ImGui::Separator();
-
-	ImGui::Text(" ToggleHUDButton"); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f);
-	ImGui::Text("= %s", Settings::settingsIni.toggleHUDbutton.c_str());
-	ImGui::Separator();
-
-	ImGui::Text(" ToggleCustomHUDButton"); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f);
-	ImGui::Text("= %s", Settings::settingsIni.togglecustomHUDbutton.c_str());
-	ImGui::Separator();
-
-	std::string printText = "";
+	std::ostringstream oss;
 
 	//X-Macro
 #define SETTING(_type, _var, _inistring, _defaultval) \
-	if(strcmp(#_type, "std::string") != 0) { \
-	printText = " "; \
-	printText += _inistring; \
-	ImGui::Text(printText.c_str()); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f); \
-	if(strcmp(#_type, "bool") == 0 || strcmp(#_type, "int") == 0) \
-		printText = "= %d"; \
-	else if(strcmp(#_type, "float") == 0) \
-		printText = "= %.2f"; \
-	ImGui::Text(printText.c_str(), Settings::settingsIni.##_var); ImGui::Separator(); }
+	oss << " " << _inistring; \
+	ImGui::TextUnformatted(oss.str().c_str()); ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f); \
+	oss.str(""); \
+	oss << "= " << Settings::settingsIni.##_var; \
+	ImGui::TextUnformatted(oss.str().c_str()); ImGui::Separator(); \
+	oss.str("");
 #include "Core/settings.def"
 #undef SETTING
 }
