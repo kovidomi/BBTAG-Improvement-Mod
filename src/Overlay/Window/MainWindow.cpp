@@ -82,12 +82,12 @@ void MainWindow::Draw()
 #ifdef _DEBUG
 	if (ImGui::Button("DEBUG"))
 	{
-		m_pWindowContainer->GetWindow(WindowType_Debug)->Open();
+		m_pWindowContainer->GetWindow(WindowType_Debug)->ToggleOpen();
 	}
 #endif
 	if (ImGui::Button("Log"))
 	{
-		m_pWindowContainer->GetWindow(WindowType_Log)->Open();
+		m_pWindowContainer->GetWindow(WindowType_Log)->ToggleOpen();
 	}
 
 	ImGui::Text("Current online players:"); ImGui::SameLine();
@@ -136,7 +136,7 @@ void MainWindow::DrawDonatorsButton()
 	sprintf(buf, "%s", donatorName.c_str());
 	if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
 	{
-		m_pWindowContainer->GetWindow(WindowType_Donators)->Open();
+		m_pWindowContainer->GetWindow(WindowType_Donators)->ToggleOpen();
 	}
 }
 
@@ -191,7 +191,7 @@ void MainWindow::DrawCustomPalettesSection() const
 		}
 		else if (isPaletteEditingEnabledInCurrentGameMode() && pressed)
 		{
-			m_pWindowContainer->GetWindow(WindowType_PaletteEditor)->Open();
+			m_pWindowContainer->GetWindow(WindowType_PaletteEditor)->ToggleOpen();
 		}
 	}
 }
