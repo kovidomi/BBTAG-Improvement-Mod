@@ -37,7 +37,7 @@ void BBTAG_IM_Shutdown()
 
 bool LoadOriginalDinputDll()
 {
-	if (Settings::settingsIni.dinput8dllWrapper.find("none") == 0 || Settings::settingsIni.dinput8dllWrapper == "")
+	if (Settings::settingsIni.dinputDllWrapper.find("none") == 0 || Settings::settingsIni.dinputDllWrapper == "")
 	{
 		char dllPath[MAX_PATH];
 		GetSystemDirectoryA(dllPath, MAX_PATH);
@@ -47,8 +47,8 @@ bool LoadOriginalDinputDll()
 	}
 	else
 	{
-		LOG(2, "Loading dinput wrapper: %s\n", Settings::settingsIni.dinput8dllWrapper.c_str());
-		hOriginalDinput = LoadLibraryA(Settings::settingsIni.dinput8dllWrapper.c_str());
+		LOG(2, "Loading dinput wrapper: %s\n", Settings::settingsIni.dinputDllWrapper.c_str());
+		hOriginalDinput = LoadLibraryA(Settings::settingsIni.dinputDllWrapper.c_str());
 	}
 
 	if (hOriginalDinput == INVALID_HANDLE_VALUE)
