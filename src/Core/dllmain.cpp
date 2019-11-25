@@ -37,11 +37,20 @@ void BBTAG_IM_Shutdown()
 
 bool LoadOriginalDinputDll()
 {
-	char dllPath[MAX_PATH];
-	GetSystemDirectoryA(dllPath, MAX_PATH);
-	strcat_s(dllPath, "\\dinput8.dll");
+	if (Settings::settingsIni.dinput8dllWrapper.find("none") == 0 || Settings::settingsIni.dinput8dllWrapper == "")
+	{
+		char dllPath[MAX_PATH];
+		GetSystemDirectoryA(dllPath, MAX_PATH);
+		strcat_s(dllPath, "\\dinput8.dll");
 
-	hOriginalDinput = LoadLibraryA(dllPath);
+		hOriginalDinput = LoadLibraryA(dllPath);
+	}
+	else
+	{
+		LOG(2, "Loading dinput wrapper: %s\n", Settings::settingsIni.dinput8dllWrapper.c_str());
+		hOriginalDinput = LoadLibraryA(Settings::settingsIni.dinput8dllWrapper.c_str());
+	}
+
 	if (hOriginalDinput == INVALID_HANDLE_VALUE)
 	{
 		return false;
@@ -64,25 +73,26 @@ DWORD WINAPI BBTAG_IM_Start(HMODULE hModule)
 	CreateCustomDirectories();
 	SetUnhandledExceptionFilter(UnhandledExFilter);
 
+	if (!Settings::loadSettingsFile())
+	{
+		ExitProcess(0);
+	}
+	logSettingsIni();
+	Settings::initSavedSettings();
+
 	if (!LoadOriginalDinputDll())
 	{
 		MessageBoxA(nullptr, "Could not load original dinput8.dll!", "BBTAGIM", MB_OK);
 		ExitProcess(0);
 	}
 
-	if (Settings::loadSettingsFile())
+	if (!placeHooks_detours())
 	{
-		logSettingsIni();
-		Settings::initSavedSettings();
-
-		if (!placeHooks_detours())
-		{
-			MessageBoxA(nullptr, "Failed IAT hook", "BBTAGIM", MB_OK);
-			ExitProcess(0);
-		}
-
-		g_interfaces.pPaletteManager = new PaletteManager();
+		MessageBoxA(nullptr, "Failed IAT hook", "BBTAGIM", MB_OK);
+		ExitProcess(0);
 	}
+
+	g_interfaces.pPaletteManager = new PaletteManager();
 
 	return 0;
 }
