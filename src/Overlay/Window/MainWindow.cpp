@@ -312,9 +312,6 @@ void MainWindow::DrawLinkButtons() const
 	DrawUrlButton("Forum", MOD_LINK_FORUM);
 
 	ImGui::SameLine();
-	DrawUrlButton("Nexusmods", MOD_LINK_NEXUSMODS);
-
-	ImGui::SameLine();
 	DrawUrlButton("GitHub", MOD_LINK_GITHUB);
 
 	ImGui::SameLine();
