@@ -11,7 +11,6 @@ const ImVec4 COLOR_GOLD        (1.000f, 0.794f, 0.000f, 1.000f);
 const ImVec4 COLOR_SILVER      (0.848f, 0.848f, 0.848f, 1.000f);
 const ImVec4 COLOR_BRONZE      (0.824f, 0.497f, 0.170f, 1.000f);
 const ImVec4 COLOR_DEFAULT     (1.000f, 1.000f, 1.000f, 1.000f);
-const ImVec4 COLOR_TRANSPARENT (0.000f, 0.000f, 0.000f, 0.000f);
 
 const std::vector<ImVec4> DONATOR_TIER_COLORS = { COLOR_PLATINUM, COLOR_GOLD, COLOR_SILVER, COLOR_BRONZE };
 ImVec2 backupWindowTitleAlign;
@@ -91,18 +90,6 @@ ImVec4 DonatorsWindow::GetDonatorTierColor(int tierLevel) const
 	return DONATOR_TIER_COLORS[tierLevel];
 }
 
-void alignTextHorizontalCenter(const ImVec4 color, const char* text)
-{
-	ImGui::TextColored(COLOR_TRANSPARENT, text);
-
-	float width = ImGui::GetItemRectSize().x;
-	float height = ImGui::GetItemRectSize().y;
-	ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (width / 2));
-	ImGui::SetCursorPosY(ImGui::GetCursorPosY() - height);
-
-	ImGui::TextColored(color, text);
-}
-
 void DonatorsWindow::PrintDonators() const
 {
 	const auto donatorNames = GetDonatorNames();
@@ -122,7 +109,7 @@ void DonatorsWindow::PrintDonators() const
 		{
 			if (tierLevel == 0)
 			{
-				alignTextHorizontalCenter(COLOR_PLATINUM, "----  TOP DONATOR  ----");
+				TextColoredAlignedHorizontalCenter(COLOR_PLATINUM, "----  TOP DONATOR  ----");
 			}
 			else
 			{
@@ -130,20 +117,20 @@ void DonatorsWindow::PrintDonators() const
 				switch (tierLevel)
 				{
 				case 1:
-					alignTextHorizontalCenter(COLOR_GOLD, "----  GOLD DONATORS  ----");
+					TextColoredAlignedHorizontalCenter(COLOR_GOLD, "----  GOLD DONATORS  ----");
 					break;
 				case 2:
-					alignTextHorizontalCenter(COLOR_SILVER, "----  SILVER DONATORS  ----");
+					TextColoredAlignedHorizontalCenter(COLOR_SILVER, "----  SILVER DONATORS  ----");
 					break;
 				case 3:
-					alignTextHorizontalCenter(COLOR_BRONZE, "----  BRONZE DONATORS  ----");
+					TextColoredAlignedHorizontalCenter(COLOR_BRONZE, "----  BRONZE DONATORS  ----");
 					break;
 				}
 			}
 		}
 
 		const char* donatorName = donatorNames[i].c_str();
-		alignTextHorizontalCenter(GetDonatorTierColor(tierLevel), donatorName);
+		TextColoredAlignedHorizontalCenter(GetDonatorTierColor(tierLevel), donatorName);
 		previousTierLevel = tierLevel;
 	}
 }
@@ -151,17 +138,15 @@ void DonatorsWindow::PrintDonators() const
 void DonatorsWindow::DrawDonateButton() const
 {
 	const ImVec2 btnSize(100, 30);
-	const float buttonPosMiddleWindowX = ImGui::GetWindowSize().x / 2 - (btnSize.x / 2);
-	ImGui::SetCursorPosX(buttonPosMiddleWindowX);
+	AlignItemHorizontalCenter(btnSize.x);
 
-	DrawUrlButton("DONATE", MOD_LINK_DONATE, btnSize);
+	ButtonUrl("DONATE", MOD_LINK_DONATE, btnSize);
 }
 
 bool DonatorsWindow::DrawCloseButton() const
 {
 	const ImVec2 btnSize(100, 30);
-	const float buttonPosMiddleWindowX = ImGui::GetWindowSize().x / 2 - (btnSize.x / 2);
-	ImGui::SetCursorPosX(buttonPosMiddleWindowX);
+	AlignItemHorizontalCenter(btnSize.x);
 
 	if (ImGui::Button("CLOSE", btnSize))
 	{

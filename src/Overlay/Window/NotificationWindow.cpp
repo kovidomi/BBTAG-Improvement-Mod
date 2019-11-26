@@ -1,7 +1,9 @@
 #include "NotificationWindow.h"
 
-#include <sstream>
 #include "Core/Settings.h"
+#include "Overlay/imgui_utils.h"
+
+#include <sstream>
 
 void NotificationWindow::SetNotification(const std::string & text, float timeToShowInSec)
 {
@@ -34,7 +36,7 @@ void NotificationWindow::Draw()
 	std::string timeLeft(stringBuf.str());
 
 	const ImVec2 buttonSize = ImVec2(100, 30);
-	ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (buttonSize.x / 2));
+	AlignItemHorizontalCenter(buttonSize.x);
 
 	if (ImGui::Button(timeLeft.c_str(), buttonSize))
 	{

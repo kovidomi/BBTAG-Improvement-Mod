@@ -80,12 +80,12 @@ void MainWindow::Draw()
 	}
 
 #ifdef _DEBUG
-	if (ImGui::Button("DEBUG"))
+	if (ImGui::Button("DEBUG", BTN_SIZE))
 	{
 		m_pWindowContainer->GetWindow(WindowType_Debug)->ToggleOpen();
 	}
 #endif
-	if (ImGui::Button("Log"))
+	if (ImGui::Button("Log", BTN_SIZE))
 	{
 		m_pWindowContainer->GetWindow(WindowType_Log)->ToggleOpen();
 	}
@@ -134,7 +134,7 @@ void MainWindow::DrawDonatorsButton()
 
 	char buf[128];
 	sprintf(buf, "%s", donatorName.c_str());
-	if (ImGui::Button(buf, ImVec2(-1.0f, 0.0f)))
+	if (ImGui::Button(buf, ImVec2(-1.0f, 24)))
 	{
 		m_pWindowContainer->GetWindow(WindowType_Donators)->ToggleOpen();
 	}
@@ -306,16 +306,16 @@ void MainWindow::DrawHitboxOverlaySection() const
 
 void MainWindow::DrawLinkButtons() const
 {
-	DrawUrlButton("Discord", MOD_LINK_DISCORD);
+	ButtonUrl("Discord", MOD_LINK_DISCORD, BTN_SIZE);
 
 	ImGui::SameLine();
-	DrawUrlButton("Forum", MOD_LINK_FORUM);
+	ButtonUrl("Forum", MOD_LINK_FORUM, BTN_SIZE);
 
 	ImGui::SameLine();
-	DrawUrlButton("GitHub", MOD_LINK_GITHUB);
+	ButtonUrl("GitHub", MOD_LINK_GITHUB, BTN_SIZE);
 
 	ImGui::SameLine();
-	DrawUrlButton("Donate", MOD_LINK_DONATE);
+	ButtonUrl("Donate", MOD_LINK_DONATE, BTN_SIZE);
 }
 
 void MainWindow::DrawLoadedSettingsValues() const
