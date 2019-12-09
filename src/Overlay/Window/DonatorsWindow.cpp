@@ -31,8 +31,10 @@ void DonatorsWindow::Draw()
 	PrintDonators();
 	ImGui::EndChild();
 
+	VerticalSpacing(5.0f);
 	DrawDonateButton();
-	ImGui::TextUnformatted(" ");
+
+	VerticalSpacing(2.0f);
 	const bool closePressed = DrawCloseButton();
 	if (closePressed)
 	{
@@ -113,7 +115,7 @@ void DonatorsWindow::PrintDonators() const
 			}
 			else
 			{
-				ImGui::TextUnformatted(" ");
+				ImGui::Spacing(); ImGui::Spacing();
 				switch (tierLevel)
 				{
 				case 1:
