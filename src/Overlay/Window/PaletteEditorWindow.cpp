@@ -614,7 +614,6 @@ void PaletteEditorWindow::ShowPaletteRandomizerButton(const char * btnID, CharHa
 	char buf[12];
 	sprintf(buf, "?##%s", btnID);
 	
-	ImGui::Text(" "); ImGui::SameLine();
 	if (ImGui::Button(buf) && m_customPaletteVector[charIndex].size() > 1)
 	{
 		CharPaletteHandle& charPalHandle = charHandle.GetPalHandle();

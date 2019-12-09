@@ -13,6 +13,8 @@
 
 #include <sstream>
 
+#define SECTION_INDENT_WIDTH 3.0f
+
 void MainWindow::SetMainWindowTitle(const std::string text)
 {
 	if (text != "")
@@ -51,7 +53,7 @@ void MainWindow::BeforeDraw()
 			windowSizeConstraints = ImVec2(400, 230);
 			break;
 		default:
-			windowSizeConstraints = ImVec2(330, 230);
+			windowSizeConstraints = ImVec2(350, 230);
 	}
 
 	ImGui::SetNextWindowSizeConstraints(windowSizeConstraints, ImVec2(1000, 1000));
@@ -65,13 +67,9 @@ void MainWindow::Draw()
 	ImGui::Separator();
 
 	DrawDonatorsButton();
-
-	ImGui::Text("");
-
+	VerticalSpacing(10.0f);
 	DrawCustomHudSection();
-
 	DrawCustomPalettesSection();
-
 	DrawHitboxOverlaySection();
 
 	if (ImGui::CollapsingHeader("Loaded settings.ini values"))
@@ -151,24 +149,25 @@ void MainWindow::DrawCustomHudSection() const
 {
 	if (ImGui::CollapsingHeader("Custom HUD"))
 	{
+		ImGui::Indent(SECTION_INDENT_WIDTH);
+		ImGui::BeginChild("customhud_settings", ImVec2(0, 100), true);
+
 		if (g_gameVals.pIsHUDHidden)
 		{
-			ImGui::Text(" "); ImGui::SameLine();
 			ImGui::Checkbox("Show HUD", (bool*)g_gameVals.pIsHUDHidden);
 			if (Settings::settingsIni.forcecustomhud)
 			{
-				ImGui::SameLine(); ImGui::TextDisabled("(ForceCustomHUD is ON)");
+				ImGui::SameLine();
+				ImGui::TextDisabled("(ForceCustomHUD is ON)");
 			}
 		}
 
-		ImGui::Text(" "); ImGui::SameLine();
 		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawShowCustomHudWindowCheckbox();
-
-		ImGui::Text(" "); ImGui::SameLine();
 		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawSetWindowsMovableCheckbox();
-
-		ImGui::Text(" "); ImGui::SameLine();
 		m_pWindowContainer->GetWindow<CustomHudWindow>(WindowType_CustomHud)->DrawResetWindowsPositionsButton();
+
+		ImGui::EndChild();
+		ImGui::Unindent(SECTION_INDENT_WIDTH);
 	}
 }
 
@@ -176,30 +175,37 @@ void MainWindow::DrawCustomPalettesSection() const
 {
 	if (ImGui::CollapsingHeader("Custom palettes"))
 	{
+		ImGui::Indent(SECTION_INDENT_WIDTH);
+		ImGui::BeginChild("palette_settings", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
+
 		if (*g_gameVals.pGameState != GameState_Match)
 		{
-			ImGui::Text(" "); ImGui::SameLine();
+			ImGui::Indent(SECTION_INDENT_WIDTH);
 			ImGui::TextDisabled("Not in match!");
+			ImGui::Unindent(SECTION_INDENT_WIDTH);
 		}
 		else
 		{
 			m_pWindowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->ShowAllPaletteSelections();
 		}
 
-		ImGui::Text(""); ImGui::Text(" "); ImGui::SameLine();
+		VerticalSpacing(15.0f);
 		m_pWindowContainer->GetWindow<PaletteEditorWindow>(WindowType_PaletteEditor)->ShowReloadAllPalettesButton();
 
-		ImGui::Text(" "); ImGui::SameLine();
 		bool pressed = ImGui::Button("Palette editor");
 
 		if (!isPaletteEditingEnabledInCurrentGameMode())
 		{
-			ImGui::SameLine(); ImGui::TextDisabled("Not in training or versus modes!");
+			ImGui::SameLine();
+			ImGui::TextDisabled("Not in training or versus modes!");
 		}
 		else if (isPaletteEditingEnabledInCurrentGameMode() && pressed)
 		{
 			m_pWindowContainer->GetWindow(WindowType_PaletteEditor)->ToggleOpen();
 		}
+
+		ImGui::EndChild();
+		ImGui::Unindent(SECTION_INDENT_WIDTH);
 	}
 }
 
@@ -236,71 +242,72 @@ void MainWindow::DrawHitboxOverlaySection() const
 			}
 		}
 
-		if (isOpen)
+		if (!isOpen)
 		{
-			ImGui::TextUnformatted(" ");
+			return;
+		}
+		ImGui::Indent(SECTION_INDENT_WIDTH);
+		ImGui::BeginChild("hitboxoverlay_settings", ImVec2(0, 200), true);
 
-			if (g_interfaces.player1.GetChar1().GetData()
-				&& g_interfaces.player2.GetChar1().GetData()
-				&& g_interfaces.player1.GetChar2().GetData()
-				&& g_interfaces.player2.GetChar2().GetData())
+		if (g_interfaces.player1.GetChar1().GetData()
+			&& g_interfaces.player2.GetChar1().GetData()
+			&& g_interfaces.player1.GetChar2().GetData()
+			&& g_interfaces.player2.GetChar2().GetData())
+		{
+			ImGui::Checkbox("P1Ch1", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[0]);
+			HoverTooltip(getCharacterNameByIndexA(g_interfaces.player1.GetChar1().GetData()->char_index).c_str());
+
+			ImGui::SameLine();
+			ImGui::Checkbox("P2Ch1", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[1]);
+			HoverTooltip(getCharacterNameByIndexA(g_interfaces.player2.GetChar1().GetData()->char_index).c_str());
+
+			VerticalSpacing(2);
+
+			ImGui::Checkbox("P1Ch2", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[2]);
+			HoverTooltip(getCharacterNameByIndexA(g_interfaces.player1.GetChar2().GetData()->char_index).c_str());
+
+			ImGui::SameLine();
+			ImGui::Checkbox("P2Ch2", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[3]);
+			HoverTooltip(getCharacterNameByIndexA(g_interfaces.player2.GetChar2().GetData()->char_index).c_str());
+		}
+
+		VerticalSpacing(10);
+
+		m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectThicknessSlider();
+		m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectFillTransparencySlider();
+
+		ImGui::Checkbox("Draw origin",
+			&m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawOriginLine);
+
+		VerticalSpacing(10);
+
+		ImGui::Checkbox("Freeze frame:", &g_gameVals.isFrameFrozen);
+		if (g_gameVals.pFrameCount)
+		{
+			ImGui::SameLine();
+			ImGui::Text("%d", *g_gameVals.pFrameCount);
+			ImGui::SameLine();
+			if (ImGui::Button("Reset"))
 			{
-				ImGui::TextUnformatted(" "); ImGui::SameLine();
-				ImGui::Checkbox("P1Ch1", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[0]);
-				HoverTooltip(getCharacterNameByIndexA(g_interfaces.player1.GetChar1().GetData()->char_index).c_str());
-
-				ImGui::SameLine(); ImGui::TextUnformatted(" "); ImGui::SameLine();
-				ImGui::Checkbox("P2Ch1", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[1]);
-				HoverTooltip(getCharacterNameByIndexA(g_interfaces.player2.GetChar1().GetData()->char_index).c_str());
-
-				ImGui::TextUnformatted(" "); ImGui::SameLine();
-				ImGui::Checkbox("P1Ch2", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[2]);
-				HoverTooltip(getCharacterNameByIndexA(g_interfaces.player1.GetChar2().GetData()->char_index).c_str());
-
-				ImGui::SameLine(); ImGui::TextUnformatted(" "); ImGui::SameLine();
-				ImGui::Checkbox("P2Ch2", &m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawCharacterHitbox[3]);
-				HoverTooltip(getCharacterNameByIndexA(g_interfaces.player2.GetChar2().GetData()->char_index).c_str());
-			}
-
-			ImGui::TextUnformatted(" "); ImGui::SameLine();
-			m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectThicknessSlider();
-
-			ImGui::TextUnformatted(" "); ImGui::SameLine();
-			m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->DrawRectFillTransparencySlider();
-
-			ImGui::TextUnformatted(" "); ImGui::SameLine();
-			ImGui::Checkbox("Draw origin",
-				&m_pWindowContainer->GetWindow<HitboxOverlay>(WindowType_HitboxOverlay)->drawOriginLine);
-
-			ImGui::TextUnformatted(" ");
-
-			ImGui::TextUnformatted(" "); ImGui::SameLine();
-			ImGui::Checkbox("Freeze frame:", &g_gameVals.isFrameFrozen);
-			if (g_gameVals.pFrameCount)
-			{
-				ImGui::SameLine();
-				ImGui::Text("%d", *g_gameVals.pFrameCount);
-				ImGui::SameLine();
-				if (ImGui::Button("Reset"))
-				{
-					*g_gameVals.pFrameCount = 0;
-					g_gameVals.framesToReach = 0;
-				}
-			}
-
-			if (g_gameVals.isFrameFrozen)
-			{
-				static int framesToStep = 1;
-				ImGui::TextUnformatted(" "); ImGui::SameLine();
-				if (ImGui::Button("Step frames"))
-				{
-					g_gameVals.framesToReach = *g_gameVals.pFrameCount + framesToStep;
-				}
-
-				ImGui::SameLine();
-				ImGui::SliderInt("", &framesToStep, 1, 60);
+				*g_gameVals.pFrameCount = 0;
+				g_gameVals.framesToReach = 0;
 			}
 		}
+
+		if (g_gameVals.isFrameFrozen)
+		{
+			static int framesToStep = 1;
+			if (ImGui::Button("Step frames"))
+			{
+				g_gameVals.framesToReach = *g_gameVals.pFrameCount + framesToStep;
+			}
+
+			ImGui::SameLine();
+			ImGui::SliderInt("", &framesToStep, 1, 60);
+		}
+
+		ImGui::EndChild();
+		ImGui::Unindent(SECTION_INDENT_WIDTH);
 	}
 }
 
@@ -320,16 +327,13 @@ void MainWindow::DrawLinkButtons() const
 
 void MainWindow::DrawLoadedSettingsValues() const
 {
-	//not using ImGui columns here because they are bugged if the window has always_autoresize flag. The window 
-	//starts extending to infinity, if the left edge of the window touches any edges of the screen
-
-	std::ostringstream oss;
-
+	ImGui::Indent(SECTION_INDENT_WIDTH);
 	ImGui::BeginChild("loaded_settings", ImVec2(0, 300.0f), true, ImGuiWindowFlags_HorizontalScrollbar);
 
+	std::ostringstream oss;
 	//X-Macro
 #define SETTING(_type, _var, _inistring, _defaultval) \
-	oss << " " << _inistring; \
+	oss << _inistring; \
 	ImGui::TextUnformatted(oss.str().c_str()); ImGui::SameLine(ImGui::GetWindowWidth() * 0.6f); \
 	oss.str(""); \
 	oss << "= " << Settings::settingsIni.##_var; \
@@ -339,4 +343,5 @@ void MainWindow::DrawLoadedSettingsValues() const
 #undef SETTING
 
 	ImGui::EndChild();
+	ImGui::Unindent(SECTION_INDENT_WIDTH);
 }
