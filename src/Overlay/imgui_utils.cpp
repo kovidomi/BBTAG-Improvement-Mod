@@ -1,5 +1,7 @@
 #include "imgui_utils.h"
 
+#include "imgui_internal.h"
+
 #include <windows.h>
 
 void HoverTooltip(const char* text)
@@ -56,4 +58,15 @@ void TextColoredAlignedHorizontalCenter(const ImVec4 color, const char* text)
 void AlignItemHorizontalCenter(float itemWidth)
 {
 	ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - (itemWidth / 2));
+}
+
+void VerticalSpacing(float height)
+{
+	ImGuiWindow* window = ImGui::GetCurrentWindow();
+	if (window->SkipItems)
+		return;
+
+	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+	ImGui::ItemSize(ImVec2(0, height));
+	ImGui::PopStyleVar();
 }

@@ -9,3 +9,4 @@ bool ButtonUrl(const std::string& label, const wchar_t* url, const ImVec2& btnSi
 void TextAlignedHorizontalCenter(const char* text, ...);
 void TextColoredAlignedHorizontalCenter(const ImVec4 color, const char* text);
 void AlignItemHorizontalCenter(float itemWidth);
+void VerticalSpacing(float height);
