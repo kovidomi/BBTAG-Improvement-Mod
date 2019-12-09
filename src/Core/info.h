@@ -1,7 +1,7 @@
 #pragma once
 
-#define MOD_VERSION_NUM	"v1.08"
-#define MOD_VERSION_NUM_INTERNAL 108
+#define MOD_VERSION_NUM	"v1.09"
+#define MOD_VERSION_NUM_INTERNAL 109
 #define MOD_WINDOW_TITLE "BBTAG Improvement Mod"
 
 //Links
