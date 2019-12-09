@@ -6,6 +6,7 @@
 #include "Core/logger.h"
 #include "Core/info.h"
 #include "Core/interfaces.h"
+#include "Core/utils.h"
 #include "Overlay/Logger/ImGuiLogger.h"
 
 #include <vector>
