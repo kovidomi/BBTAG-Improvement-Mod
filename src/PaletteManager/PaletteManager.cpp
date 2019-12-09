@@ -8,7 +8,7 @@
 
 #include <atlstr.h>
 
-#define MAX_NUM_OF_PAL_INDEXES 20
+#define MAX_NUM_OF_PAL_SLOTS 20
 
 PaletteManager::PaletteManager()
 {
@@ -225,7 +225,7 @@ void PaletteManager::LoadPaletteSettingsFile()
 
 	for (int i = 0; i < getCharactersCountWithoutBoss(); i++)
 	{
-		for (int iSlot = 1; iSlot <= MAX_NUM_OF_PAL_INDEXES; iSlot++)
+		for (int iSlot = 1; iSlot <= MAX_NUM_OF_PAL_SLOTS; iSlot++)
 		{
 			GetPrivateProfileString(getCharacterNameByIndexW(i).c_str(), std::to_wstring(iSlot).c_str(),
 				L"", strBuffer.GetBuffer(MAX_PATH), MAX_PATH, wFullPath.c_str());
@@ -325,7 +325,7 @@ void PaletteManager::InitPaletteSlotsVector()
 
 	for (int i = 0; i < getCharactersCountWithoutBoss(); i++)
 	{
-		for (int iSlot = 0; iSlot < MAX_NUM_OF_PAL_INDEXES; iSlot++)
+		for (int iSlot = 0; iSlot < MAX_NUM_OF_PAL_SLOTS; iSlot++)
 		{
 			m_paletteSlots[i].push_back("");
 		}

@@ -1,8 +1,7 @@
 #pragma once
-#include "Core/utils.h"
 #include "PaletteManager/impl_format.h"
 
-#define MAX_PAL_INDEX 15
+#define MAX_PAL_INDEX 19
 #define TOTAL_PALETTE_FILES 8
 
 extern char* palFileNames[TOTAL_PALETTE_FILES];
