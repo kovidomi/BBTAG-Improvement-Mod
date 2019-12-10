@@ -70,7 +70,7 @@ void __declspec(naked)GetGameStateAndModeTitleScreen()
 	__asm
 	{
 		pushad
-		add edi, 110h
+		add edi, 114h
 		lea ebx, g_gameVals.pGameMode
 		mov[ebx], edi
 
@@ -86,7 +86,7 @@ void __declspec(naked)GetGameStateAndModeTitleScreen()
 	__asm
 	{
 		popad
-		mov dword ptr [edi + 114h], 4 
+		mov dword ptr [edi + 118h], 4
 		jmp[GetGameStateAndModeTitleScreenJmpBackAddr]
 	}
 }
@@ -99,7 +99,7 @@ void __declspec(naked)GetGameStateAndModeEntranceScreen()
 	__asm
 	{
 		pushad
-		add eax, 110h
+		add eax, 114h
 		lea ebx, g_gameVals.pGameMode
 		mov[ebx], eax
 
@@ -117,7 +117,7 @@ void __declspec(naked)GetGameStateAndModeEntranceScreen()
 	__asm
 	{
 		popad
-		mov dword ptr[eax + 114h], 17h //original bytes
+		mov dword ptr[eax + 118h], 17h //original bytes
 		jmp[GetGameStateAndModeEntranceScreenJmpBackAddr]
 	}
 }
@@ -452,8 +452,8 @@ void __declspec(naked)GetPaletteIndexAddrOnline()
 	__asm
 	{
 		pushad
-		add esi, 27A8h
-		mov pPalIndex, esi
+		add ebx, 27B0h
+		mov pPalIndex, ebx
 	}
 
 	//read comment above the SetPalIndexAddr definition
@@ -462,7 +462,7 @@ void __declspec(naked)GetPaletteIndexAddrOnline()
 	__asm
 	{
 		popad
-		mov dword ptr[esi + 27C4h], 64h
+		mov dword ptr[ebx + 27CCh], 64h
 		jmp[GetPaletteIndexAddrOnlineJmpBackAddr]
 	}
 }
@@ -530,7 +530,7 @@ void __declspec(naked)VictoryScreen()
 
 	__asm
 	{
-		mov dword ptr[eax + 114h], 0Ch
+		mov dword ptr[eax + 118h], 0Ch
 		jmp[VictoryScreenJmpBackAddr]
 	}
 }
@@ -667,13 +667,13 @@ bool placeHooks_bbtag()
 			"xxxxxxx", 6, ForcePromptControlSchemeLayout);
 	}
 
-	GetGameStateAndModeTitleScreenJmpBackAddr = HookManager::SetHook("GetGameStateAndModeTitleScreen", "\xc7\x87\x14\x01\x00\x00\x04\x00\x00\x00\xc7\x46\x78\x00\x00\x00\x00",
+	GetGameStateAndModeTitleScreenJmpBackAddr = HookManager::SetHook("GetGameStateAndModeTitleScreen", "\xc7\x87\x18\x01\x00\x00\x04\x00\x00\x00\xc7\x46\x78\x00\x00\x00\x00",
 		"xxxxxxxxxxxxxxxxx", 10, GetGameStateAndModeTitleScreen);
 
-	GetGameStateAndModeEntranceScreenJmpBackAddr = HookManager::SetHook("GetGameStateAndModeEntranceScreen", "\xc7\x80\x14\x01\x00\x00\x17\x00\x00\x00\xe8", 
+	GetGameStateAndModeEntranceScreenJmpBackAddr = HookManager::SetHook("GetGameStateAndModeEntranceScreen", "\xc7\x80\x18\x01\x00\x00\x17\x00\x00\x00\xe8",
 		"xxxxxxxxxxx", 10, GetGameStateAndModeEntranceScreen);
 
-	VictoryScreenJmpBackAddr = HookManager::SetHook("VictoryScreen", "\xc7\x80\x14\x01\x00\x00\x0c\x00\x00\x00\xe8",
+	VictoryScreenJmpBackAddr = HookManager::SetHook("VictoryScreen", "\xc7\x80\x18\x01\x00\x00\x0c\x00\x00\x00\xe8",
 		"xxxxxxxxxxx", 10, VictoryScreen);
 
 	GetIsHUDHiddenJmpBackAddr = HookManager::SetHook("GetIsHUDHidden", "\x83\x88\x6c\x90\x3e\x00\x04\x8b\x06\xff\x50\x24", 
@@ -695,7 +695,7 @@ bool placeHooks_bbtag()
 	GetGameUpdatePauseJmpBackAddr = HookManager::SetHook("GetGameUpdatePause", "\x83\x78\x08\x00\x75\x00\xe8",
 		"xxxxx?x", 6, GetGameUpdatePause);
 
-	GetPaletteIndexAddrOnlineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOnline", "\xc7\x86\xc4\x27\x00\x00\x64\x00\x00\x00\x8b\x87\x5c\x06\x00\x00",
+	GetPaletteIndexAddrOnlineJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrOnline", "\xc7\x83\xcc\x27\x00\x00\x64\x00\x00\x00\x8b\x82\x64\x06\x00\x00",
 		"xxxxxxxxxxxxxxxx", 10, GetPaletteIndexAddrOnline);
 
 	GetPaletteIndexAddrRankedJmpBackAddr = HookManager::SetHook("GetPaletteIndexAddrRanked", "\x8b\x06\x89\x01\x8b\xcb\x0f\xb6\x76\xec",
