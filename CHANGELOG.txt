@@ -1,10 +1,12 @@
 11-12-2019 -- version 1.09
 ===============================
 - Updated for official patch v2.2
-- Added dinput dll chaining to use other dinput8.dll wrappers together with the mod
-- Window opening buttons now toggle windows instead of just opening them
-- Fixed crash upon assigning custom palettes to slots 17-20 in palettes.ini
+- Added dinput dll chaining to settings.ini to use other dinput8.dll wrappers together with the mod
+- Buttons that open windows now toggle them instead of just opening
+- Added button to open the mod's download page upon new update on the update notification window
+- Reworked donators window
 - Slight visual changes
+- Fixed crash upon assigning custom palettes to slots 17-20 in palettes.ini
 
 24-11-2019 -- version 1.08
 ===============================
