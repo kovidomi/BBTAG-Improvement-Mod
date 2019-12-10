@@ -73,12 +73,13 @@ Keep in mind that the mod may partially, or completely stop working whenever a n
 Changelog
 ==========================
 
-09-12-2019 -- version 1.09
+11-12-2019 -- version 1.09
 ===============================
 - Updated for official patch v2.2
 - Added dinput dll chaining to use other dinput8.dll wrappers together with the mod
 - Window opening buttons now toggle windows instead of just opening them
-- Fixed crash upon setting custom palettes to autoload on slots 17-20
+- Fixed crash upon assigning custom palettes to slots 17-20 in palettes.ini
+- Slight visual changes
 
 24-11-2019 -- version 1.08
 ===============================
